@@ -16,7 +16,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     meta: {
-      titleSuffix: '- test',
+      titleSuffix: '- Tecnológico de Monterrey',
       favicon: '/assets/tdm-logo.png',
       ogImage: '/assets/tdm-og.png',
     },
