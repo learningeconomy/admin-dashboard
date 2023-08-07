@@ -7,6 +7,9 @@ import CredentialsBatchesCollection from './collections/CredentialBatches';
 import CredentialsCollection from './collections/Credentials';
 import EmailTemplatesCollection from './collections/EmailTemplates';
 
+//components
+import { Logo } from './components/Logo';
+
 export default buildConfig({
   serverURL: 'http://localhost:3000',
   admin: {
@@ -16,6 +19,11 @@ export default buildConfig({
       favicon: '/assets/tdm-logo.png',
       ogImage: '/assets/tdm-og.png',
     },
+    components: {
+      graphics: {
+        Logo,
+      }
+    }
   },
   collections: [
     Users,
