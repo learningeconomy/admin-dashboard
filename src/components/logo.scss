@@ -1,12 +1,23 @@
 .logo {
-    img {
-      max-height: 200px;
-      margin: auto;
-    }
-  
-    h1 {
-      margin: 3rem auto;
-      text-align: center;
-    }
+  img {
+    max-height: 200px;
+    margin: auto;
   }
-            
+
+  h1 {
+    margin: 3rem auto;
+    text-align: center;
+  }
+}
+
+.icon {
+  img {
+    max-height: 60px;
+    margin: auto;
+  }
+
+  h1 {
+    margin: 3rem auto;
+    text-align: center;
+  }
+}

@@ -9,6 +9,7 @@ import EmailTemplatesCollection from './collections/EmailTemplates';
 
 //components
 import { Logo } from './components/Logo';
+import { Icon } from './components/Icon';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
@@ -22,6 +23,7 @@ export default buildConfig({
     components: {
       graphics: {
         Logo,
+        Icon,
       }
     }
   },
