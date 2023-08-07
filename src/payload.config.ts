@@ -11,6 +11,11 @@ export default buildConfig({
   serverURL: 'http://localhost:3000',
   admin: {
     user: Users.slug,
+    meta: {
+      titleSuffix: '- test',
+      favicon: '/assets/tdm-logo.png',
+      ogImage: '/assets/tdm-og.png',
+    },
   },
   collections: [
     Users,
