@@ -11,6 +11,10 @@ import EmailTemplatesCollection from './collections/EmailTemplates';
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
 
+// custom component for flows
+import CreateBatch from './components/flows/CreateBatch';
+import CreateTemplate from './components/flows/CreateTemplate';
+
 export default buildConfig({
   serverURL: 'http://localhost:3000',
   admin: {
@@ -24,7 +28,17 @@ export default buildConfig({
       graphics: {
         Logo,
         Icon,
-      }
+      },
+      routes: [
+        {
+          path: '/batches',
+          Component: CreateBatch,
+        },
+        {
+          path: '/templates',
+          Component: CreateTemplate,
+        }
+      ]
     }
   },
   collections: [
