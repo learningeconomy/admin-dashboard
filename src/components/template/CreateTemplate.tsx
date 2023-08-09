@@ -1,9 +1,16 @@
 import React from "react"
+import { Props } from "../types";
+
+const CreateTemplate: React.FC = ( props: Props) => {
+
+    return (
+        <section>
+            <h1>Create Template Flow</h1>
 
 
-const CreateTemplate: React.FC = () => {
+        </section>
 
-    return <></>
+    );
 }
 
 export default CreateTemplate;

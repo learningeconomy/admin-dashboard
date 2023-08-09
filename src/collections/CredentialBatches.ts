@@ -1,5 +1,6 @@
 import { CollectionConfig } from "payload/types";
 import BatchPageDescription from "../components/batch/BatchPageDescription";
+import CreateBatch from "../components/batch/CreateBatch";
 
 const CredentialsBatchesCollection: CollectionConfig = {
   slug: "credential-batches",
@@ -7,6 +8,11 @@ const CredentialsBatchesCollection: CollectionConfig = {
     defaultColumns: ["title", "id", "status"],
     useAsTitle: "title",
     description: BatchPageDescription,
+    components: {
+      views: {
+        Edit: CreateBatch,
+      },
+    }
   },
   versions: {
     drafts: true,
