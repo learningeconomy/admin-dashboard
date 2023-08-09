@@ -1,0 +1,17 @@
+.collection-list__header {
+  a:first-child {
+    display: none !important;
+  }
+}
+
+.view-description {
+  a {
+    display: flex !important;
+    background-color: blue;
+    max-width: 150px;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+  }
+}

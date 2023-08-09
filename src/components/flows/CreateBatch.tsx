@@ -1,9 +1,14 @@
 import React from "react"
-import '../batch.scss'
+import './batch.scss';
+import '../global.scss';
 
 const CreateBatch: React.FC = () => {
 
-    return <></>
+    return  (<div>
+
+        <h2> Create New Batch</h2>
+
+    </div>)
 }
 
 export default CreateBatch;

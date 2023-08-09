@@ -22,18 +22,18 @@ const AfterNavLinks: React.FC = () => {
         <NavLink
           className="nav__link"
           activeClassName="active"
-          to={`${adminRoute}/batches`}
+          to={`${adminRoute}/createbatch`}
         >
           <Chevron />
-          Batches
+        Create Batch Flow
         </NavLink>
         <NavLink
           className="nav__link"
           activeClassName="active"
-          to={`${adminRoute}/templates`}
+          to={`${adminRoute}/createtemplate`}
         >
           <Chevron />
-         Templates
+        Create Template Flow
         </NavLink>
         
       </nav>

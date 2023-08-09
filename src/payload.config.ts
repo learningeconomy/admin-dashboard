@@ -34,11 +34,11 @@ export default buildConfig({
       ],
       routes: [
         {
-          path: '/batches',
+          path: '/createbatch',
           Component: CreateBatch,
         },
         {
-          path: '/templates',
+          path: '/createtemplate',
           Component: CreateTemplate,
         }
       ]

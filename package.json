@@ -1,6 +1,6 @@
 {
   "name": "admin-dashboard",
-  "description": "Payload project created from blank template",
+  "description": "Admin dashboard project",
   "version": "1.0.0",
   "main": "dist/server.js",
   "license": "MIT",
