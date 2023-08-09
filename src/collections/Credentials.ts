@@ -1,5 +1,5 @@
 import { CollectionConfig } from "payload/types";
-import CreateBatch from "../components/flows/CreateBatch";
+import CreateBatch from "../components/batch/CreateBatch";
 
 const CredentialsCollection: CollectionConfig = {
   slug: "credential",

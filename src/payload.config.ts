@@ -12,8 +12,8 @@ import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
 
 // custom component for flows
-import CreateBatch from './components/flows/CreateBatch';
-import CreateTemplate from './components/flows/CreateTemplate';
+import CreateBatch from './components/batch/CreateBatch';
+import CreateTemplate from './components/template/CreateTemplate';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
