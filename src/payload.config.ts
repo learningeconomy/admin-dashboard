@@ -6,7 +6,7 @@ import CredentialsTemplatesCollection from './collections/CredentialTemplates';
 import CredentialsBatchesCollection from './collections/CredentialBatches';
 import CredentialsCollection from './collections/Credentials';
 import EmailTemplatesCollection from './collections/EmailTemplates';
-
+import AfterNavLinks from './components/AfterNavLinks';
 //components
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
@@ -29,6 +29,9 @@ export default buildConfig({
         Logo,
         Icon,
       },
+      afterNavLinks: [
+        AfterNavLinks,
+      ],
       routes: [
         {
           path: '/batches',

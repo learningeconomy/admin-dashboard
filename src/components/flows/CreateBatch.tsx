@@ -1,5 +1,5 @@
 import React from "react"
-
+import '../batch.scss'
 
 const CreateBatch: React.FC = () => {
 

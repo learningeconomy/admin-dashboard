@@ -1,10 +1,11 @@
 import { CollectionConfig } from "payload/types";
-
+import BatchPageDescription from "../components/BatchPageDescription";
 const CredentialsBatchesCollection: CollectionConfig = {
   slug: "credential-batches",
   admin: {
     defaultColumns: ["title", "id", "status"],
     useAsTitle: "title",
+    description: BatchPageDescription,
   },
   versions: {
     drafts: true,
