@@ -51,6 +51,13 @@ const CredentialsBatchesCollection: CollectionConfig = {
       relationTo: "credential-templates",
       hasMany: false,
     },
+    {
+      name: "emailTemplate",
+      type: "relationship",
+      required: true,
+      relationTo: "email-templates",
+      hasMany: false,
+    },
   ],
 };
 
