@@ -29,19 +29,6 @@ export default buildConfig({
         Logo,
         Icon,
       },
-      afterNavLinks: [
-        AfterNavLinks,
-      ],
-      routes: [
-        {
-          path: '/createbatch',
-          Component: CreateBatch,
-        },
-        {
-          path: '/createtemplate',
-          Component: CreateTemplate,
-        }
-      ]
     }
   },
   collections: [
