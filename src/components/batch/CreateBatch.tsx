@@ -67,7 +67,7 @@ const CreateBatch: React.FC = (props: Props) => {
         setFormFields(formFields);
     }
 
-  },[fields])
+  },[fields, step])
 
   const operation = isEditing ? "update" : "create";
 
@@ -86,6 +86,12 @@ const CreateBatch: React.FC = (props: Props) => {
     },
     [id, onSaveFromProps, auth, user, refreshCookieAsync]
   );
+
+  const handleNextStep=()=> {
+    setStep(step + 1)
+  }
+
+  console.log('///internalState', internalState);
 
   return (
     <OperationContext.Provider value={operation}>
@@ -110,8 +116,10 @@ const CreateBatch: React.FC = (props: Props) => {
               fieldSchema={formFields}
             />
           )}
+           <div><button onClick={handleNextStep}>Next Step</button></div>
         </section>
       </Form>
+     
     </OperationContext.Provider>
   );
 };
