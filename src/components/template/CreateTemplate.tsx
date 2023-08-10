@@ -1,56 +1,79 @@
-import React from "react"
+import React, { useCallback } from "react";
 import { Props } from "../types";
+import { useAuth } from "payload/components/utilities";
+import { OperationContext } from "payload/dist/admin/components/utilities/OperationProvider";
+import CustomRenderFields from "../CustomRenderFields";
+import fieldTypes from "payload/dist/admin/components/forms/field-types";
+const baseClass = "collection-edit";
+import RenderFields from "payload/dist/admin/components/forms/RenderFields";
 
-import { OperationContext } from 'payload/dist/admin/components/utilities/OperationProvider'
+const CreateTemplate: React.FC = (props: Props) => {
+  const { user, refreshCookieAsync } = useAuth();
+  const {
+    collection,
+    isEditing,
+    data,
+    onSave: onSaveFromProps,
+    permissions,
+    isLoading,
+    internalState,
+    apiURL,
+    action,
+    hasSavePermission,
+    disableEyebrow,
+    disableActions,
+    disableLeaveWithoutSaving,
+    customHeader,
+    id,
+    updatedAt,
+  } = props;
 
-const CreateTemplate: React.FC = ( props: Props) => {
+  const {
+    slug,
+    fields,
+    admin: { useAsTitle, disableDuplicate, preview, hideAPIURL },
+    versions,
+    timestamps,
+    auth,
+    upload,
+  } = collection;
 
-    const {
-        collection,
-        isEditing,
-        data,
-        onSave: onSaveFromProps,
-        permissions,
-        isLoading,
-        internalState,
-        apiURL,
-        action,
-        hasSavePermission,
-        disableEyebrow,
-        disableActions,
-        disableLeaveWithoutSaving,
-        customHeader,
-        id,
-        updatedAt,
-      } = props;
+  const operation = isEditing ? "update" : "create";
 
-      const {
-        slug,
-        fields,
-        admin: {
-          useAsTitle,
-          disableDuplicate,
-          preview,
-          hideAPIURL,
-        },
-        versions,
-        timestamps,
-        auth,
-        upload,
-      } = collection;
+  const onSave = useCallback(
+    async (json) => {
+      if (auth && id === user.id) {
+        await refreshCookieAsync();
+      }
 
-    const operation = isEditing ? 'update' : 'create';
+      if (typeof onSaveFromProps === "function") {
+        onSaveFromProps({
+          ...json,
+          operation: id ? "update" : "create",
+        });
+      }
+    },
+    [id, onSaveFromProps, auth, user, refreshCookieAsync]
+  );
 
-    return (
-        <OperationContext.Provider value={operation}>
-        <section>
-            <h1>Create Template Flow</h1>
-
-
-        </section>
-        </OperationContext.Provider>
-
-    );
-}
+  return (
+    <OperationContext.Provider value={operation}>
+      <section className="flow-container">
+        <h1>Create Template Flow</h1>
+        {!isLoading && (
+          <CustomRenderFields
+            readOnly={!hasSavePermission}
+            permissions={permissions.fields}
+            filter={(field) =>
+              !field?.admin?.position || field?.admin?.position !== "sidebar"
+            }
+            fieldTypes={fieldTypes}
+            fieldSchema={fields}
+          />
+        )}
+      </section>
+    </OperationContext.Provider>
+  );
+};
 
 export default CreateTemplate;
