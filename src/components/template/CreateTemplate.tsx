@@ -4,6 +4,8 @@ import { useAuth } from "payload/components/utilities";
 import { OperationContext } from "payload/dist/admin/components/utilities/OperationProvider";
 import CustomRenderFields from "../CustomRenderFields";
 import fieldTypes from "payload/dist/admin/components/forms/field-types";
+import Form from "payload/dist/admin/components/forms/Form";
+
 const baseClass = "collection-edit";
 import RenderFields from "payload/dist/admin/components/forms/RenderFields";
 
@@ -58,20 +60,29 @@ const CreateTemplate: React.FC = (props: Props) => {
 
   return (
     <OperationContext.Provider value={operation}>
-      <section className="flow-container">
-        <h1>Create Template Flow</h1>
-        {!isLoading && (
-          <CustomRenderFields
-            readOnly={!hasSavePermission}
-            permissions={permissions.fields}
-            filter={(field) =>
-              !field?.admin?.position || field?.admin?.position !== "sidebar"
-            }
-            fieldTypes={fieldTypes}
-            fieldSchema={fields}
-          />
-        )}
-      </section>
+      <Form
+        className={`${baseClass}__form`}
+        method={id ? "patch" : "post"}
+        action={action}
+        onSuccess={onSave}
+        disabled={!hasSavePermission}
+        initialState={internalState}
+      >
+        <section className="flow-container">
+          <h1>Create Template Flow</h1>
+          {!isLoading && (
+            <CustomRenderFields
+              readOnly={!hasSavePermission}
+              permissions={permissions.fields}
+              filter={(field) =>
+                !field?.admin?.position || field?.admin?.position !== "sidebar"
+              }
+              fieldTypes={fieldTypes}
+              fieldSchema={fields}
+            />
+          )}
+        </section>
+      </Form>
     </OperationContext.Provider>
   );
 };
