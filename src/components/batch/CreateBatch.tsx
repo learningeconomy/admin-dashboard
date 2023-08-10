@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { Props } from "../types";
 import { useAuth } from "payload/components/utilities";
 import { OperationContext } from "payload/dist/admin/components/utilities/OperationProvider";
@@ -11,8 +11,27 @@ import '../global.scss';
 const baseClass = "collection-edit";
 import RenderFields from "payload/dist/admin/components/forms/RenderFields";
 
+const MAP_FIELDS_TO_STEPS = {
+    1: ['title', 'description', 'internalNotes'],
+    2: ['template'],
+    3: [],
+}
+
+
+const getFieldsForStep = (step: number = 1, fieldSchema) => {
+    const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
+    const stepFields = fieldSchema.filter( field => fieldsForStep.includes(field.name));
+    return stepFields;
+}
+
 const CreateBatch: React.FC = (props: Props) => {
   const { user, refreshCookieAsync } = useAuth();
+
+
+  const [ step, setStep ] = useState<number>(1);
+  const [formFields, setFormFields ] = useState()
+
+
   const {
     collection,
     isEditing,
@@ -41,6 +60,14 @@ const CreateBatch: React.FC = (props: Props) => {
     auth,
     upload,
   } = collection;
+
+  useEffect(()=> {
+    if(fields){
+        const formFields = getFieldsForStep(step, fields)
+        setFormFields(formFields);
+    }
+
+  },[fields])
 
   const operation = isEditing ? "update" : "create";
 
@@ -80,7 +107,7 @@ const CreateBatch: React.FC = (props: Props) => {
                 !field?.admin?.position || field?.admin?.position !== "sidebar"
               }
               fieldTypes={fieldTypes}
-              fieldSchema={fields}
+              fieldSchema={formFields}
             />
           )}
         </section>
@@ -90,3 +117,5 @@ const CreateBatch: React.FC = (props: Props) => {
 };
 
 export default CreateBatch;
+
+
