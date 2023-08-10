@@ -13,6 +13,12 @@ const intersectionObserverOptions = {
   rootMargin: '1000px',
 };
 
+const MAP_FIELDS_TO_STEPS = {
+    1: ['title', 'description', 'internalNotes'],
+    2: ['template'],
+    3: [],
+}
+
 const RenderBatchFlowFields: React.FC<Props> = (props) => {
 
   const {
