@@ -10,7 +10,7 @@ import {
 import { useOperation } from "payload/dist/admin/components/utilities/OperationProvider/index";
 import { getTranslation } from "payload/dist/utilities/getTranslation";
 import { Swiper as SwiperInterface } from 'swiper';
-
+import { useAllFormFields, reduceFieldsToValues, getSiblingData } from 'payload/components/forms';
 const baseClass = "render-fields";
 
 const intersectionObserverOptions = {
@@ -176,10 +176,10 @@ const SwiperTest = (props: Props) => {
         onSwiper={swiper => setSlidesRef(swiper)}
       >
         <SwiperSlide>
-          <RenderSlide formProps={props} step={1} />
+          <RenderSlide formProps={props} step={2} />
         </SwiperSlide>
         <SwiperSlide>
-          <RenderSlide formProps={props} step={2} />
+          <RenderSlide formProps={props} step={1} />
         </SwiperSlide>
         <SwiperSlide>
           <RenderSlide formProps={props} step={3} />
@@ -198,6 +198,22 @@ const SwiperTest = (props: Props) => {
 };
 
 const RenderBatchFlowFields: React.FC<Props> = (props) => {
+
+     // the `fields` const will be equal to all fields' state,
+  // and the `dispatchFields` method is usable to send field state up to the form
+  const [fields, dispatchFields] = useAllFormFields();
+
+  // Pass in fields, and indicate if you'd like to "unflatten" field data.
+  // The result below will reflect the data stored in the form at the given time
+  const formData = reduceFieldsToValues(fields, true);
+
+  // Pass in field state and a path,
+  // and you will be sent all sibling data of the path that you've specified
+  const siblingData = getSiblingData(fields, 'someFieldName');
+
+
+  console.log('///USEALLFORMFIELDS HOOK fields', fields, 'formData', formData);
+
   const {
     fieldSchema,
     fieldTypes,
