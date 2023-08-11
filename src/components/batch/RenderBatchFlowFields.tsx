@@ -162,13 +162,23 @@ const SwiperTest = (props: Props) => {
     slidesRef?.slidePrev();
   };
 
+  useEffect(()=>{
+    if(slidesRef){
+        slidesRef.touchEventsData.formElemetns = 'undefined';
+    }
+
+  },[slidesRef])
+
   return (
     <>
       <Swiper
         spaceBetween={50}
         slidesPerView={1}
-        preventInteractionOnTransition={true}
         allowTouchMove={false}
+        touchStartPreventDefault={false}
+        preventClicksPropagation={false}
+        preventClicks={false}
+        simulateTouch={false}
         allowSlideNext={true}
         allowSlidePrev={true}
         effect={"fade"}
