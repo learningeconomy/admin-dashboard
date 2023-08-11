@@ -7,14 +7,16 @@ import fieldTypes from "payload/dist/admin/components/forms/field-types";
 import Form from "payload/dist/admin/components/forms/Form";
 import './batch.scss';
 import '../global.scss';
-
+import { RenderFieldProps } from '../types';
 const baseClass = "collection-edit";
 import RenderFields from "payload/dist/admin/components/forms/RenderFields";
+
+
 
 const MAP_FIELDS_TO_STEPS = {
     1: ['title', 'description', 'internalNotes'],
     2: ['template'],
-    3: [],
+    3: ['emailTemplate'],
 }
 
 
@@ -107,13 +109,13 @@ const CreateBatch: React.FC = (props: Props) => {
           <h1>Create Batch Flow</h1>
           {!isLoading && (
             <RenderBatchFlowFields
-              readOnly={!hasSavePermission}
-              permissions={permissions.fields}
-              filter={(field) =>
-                !field?.admin?.position || field?.admin?.position !== "sidebar"
-              }
-              fieldTypes={fieldTypes}
-              fieldSchema={formFields}
+            readOnly={!hasSavePermission}
+            permissions={permissions.fields}
+            filter={(field) =>
+              !field?.admin?.position || field?.admin?.position !== "sidebar"
+            }
+            fieldTypes={fieldTypes}
+            fieldSchema={fields}
             />
           )}
            <div><button onClick={handleNextStep}>Next Step</button></div>

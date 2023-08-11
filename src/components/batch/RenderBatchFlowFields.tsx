@@ -14,6 +14,151 @@ const intersectionObserverOptions = {
 };
 
 
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+
+
+const MAP_FIELDS_TO_STEPS = {
+    1: ['title', 'description', 'internalNotes'],
+    2: ['template'],
+    3: [],
+    4: ['emailTemplate']
+}
+const getFieldsForStep = (step: number = 1, fieldSchema) => {
+    const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
+    const stepFields = fieldSchema.filter( field => fieldsForStep.includes(field.name));
+    return stepFields;
+}
+
+type RenderSlideProps = {
+    step: number;
+    formProps: Props,
+}
+
+const RenderSlide:React.FC<RenderSlideProps> = ( {step, formProps}) => {
+    const { t, i18n } = useTranslation('general');
+    const operation = useOperation();
+
+    console.log('///step', step);
+    const {
+        fieldSchema,
+        fieldTypes,
+        filter,
+        permissions,
+        readOnly: readOnlyOverride,
+        className,
+        forceRender,
+        indexPath: incomingIndexPath,
+      } = formProps;
+
+      const stepFormFields = getFieldsForStep(step, fieldSchema);
+   
+      const renderFields = stepFormFields?.map((field, fieldIndex) => {
+        const fieldIsPresentational = fieldIsPresentationalOnly(field);
+        let FieldComponent = fieldTypes[field.type];
+
+        if (fieldIsPresentational || (!field?.hidden && field?.admin?.disabled !== true)) {
+          if ((filter && typeof filter === 'function' && filter(field)) || !filter) {
+            if (fieldIsPresentational) {
+              return (
+                <FieldComponent
+                  {...field}
+                  key={fieldIndex}
+                />
+              );
+            }
+
+            if (field?.admin?.hidden) {
+              FieldComponent = fieldTypes.hidden;
+            }
+
+            const isFieldAffectingData = fieldAffectsData(field);
+
+            const fieldPermissions = isFieldAffectingData ? permissions?.[field.name] : permissions;
+
+            let { admin: { readOnly } = {} } = field;
+
+            if (readOnlyOverride && readOnly !== false) readOnly = true;
+
+            if ((isFieldAffectingData && permissions?.[field?.name]?.read?.permission !== false) || !isFieldAffectingData) {
+              if (isFieldAffectingData && permissions?.[field?.name]?.[operation]?.permission === false) {
+                readOnly = true;
+              }
+
+              if (FieldComponent) {
+                return (
+                  <RenderCustomComponent
+                    key={fieldIndex}
+                    CustomComponent={field?.admin?.components?.Field}
+                    DefaultComponent={FieldComponent}
+                    componentProps={{
+                      ...field,
+                      path: field.path || (isFieldAffectingData ? field.name : ''),
+                      fieldTypes,
+                      indexPath: incomingIndexPath ? `${incomingIndexPath}.${fieldIndex}` : `${fieldIndex}`,
+                      admin: {
+                        ...(field.admin || {}),
+                        readOnly,
+                      },
+                      permissions: fieldPermissions,
+                    }}
+                  />
+                );
+              }
+
+              return (
+                <div
+                  className="missing-field"
+                  key={fieldIndex}
+                >
+                  {t('error:noMatchedField', { label: fieldAffectsData(field) ? getTranslation(field.label || field.name, i18n) : field.path })}
+                </div>
+              );
+            }
+          }
+
+          return null;
+        }
+    })
+
+    return (
+        renderFields
+    )
+}
+
+const SwiperTest = (props: Props) => {
+
+    return(
+        <Swiper
+        spaceBetween={50}
+        slidesPerView={1}
+        preventInteractionOnTransition={true}
+        allowTouchMove={false}
+        allowSlideNext={false}
+        allowSlidePrev={false}
+        effect = {'fade'}
+        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        <SwiperSlide>
+            <RenderSlide formProps={props} step={1}/>
+        </SwiperSlide>
+        <SwiperSlide>
+            <RenderSlide formProps={props} step={2} />
+        </SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+        ...
+      </Swiper>
+
+
+    )
+}
+
+
 
 const RenderBatchFlowFields: React.FC<Props> = (props) => {
 
@@ -50,6 +195,8 @@ const RenderBatchFlowFields: React.FC<Props> = (props) => {
     className,
   ].filter(Boolean).join(' ');
 
+  
+
   if (fieldSchema) {
     return (
       <div
@@ -57,75 +204,7 @@ const RenderBatchFlowFields: React.FC<Props> = (props) => {
         className={classes}
       >
         {hasRendered && (
-          fieldSchema.map((field, fieldIndex) => {
-            const fieldIsPresentational = fieldIsPresentationalOnly(field);
-            let FieldComponent = fieldTypes[field.type];
-
-            if (fieldIsPresentational || (!field?.hidden && field?.admin?.disabled !== true)) {
-              if ((filter && typeof filter === 'function' && filter(field)) || !filter) {
-                if (fieldIsPresentational) {
-                  return (
-                    <FieldComponent
-                      {...field}
-                      key={fieldIndex}
-                    />
-                  );
-                }
-
-                if (field?.admin?.hidden) {
-                  FieldComponent = fieldTypes.hidden;
-                }
-
-                const isFieldAffectingData = fieldAffectsData(field);
-
-                const fieldPermissions = isFieldAffectingData ? permissions?.[field.name] : permissions;
-
-                let { admin: { readOnly } = {} } = field;
-
-                if (readOnlyOverride && readOnly !== false) readOnly = true;
-
-                if ((isFieldAffectingData && permissions?.[field?.name]?.read?.permission !== false) || !isFieldAffectingData) {
-                  if (isFieldAffectingData && permissions?.[field?.name]?.[operation]?.permission === false) {
-                    readOnly = true;
-                  }
-
-                  if (FieldComponent) {
-                    return (
-                      <RenderCustomComponent
-                        key={fieldIndex}
-                        CustomComponent={field?.admin?.components?.Field}
-                        DefaultComponent={FieldComponent}
-                        componentProps={{
-                          ...field,
-                          path: field.path || (isFieldAffectingData ? field.name : ''),
-                          fieldTypes,
-                          indexPath: incomingIndexPath ? `${incomingIndexPath}.${fieldIndex}` : `${fieldIndex}`,
-                          admin: {
-                            ...(field.admin || {}),
-                            readOnly,
-                          },
-                          permissions: fieldPermissions,
-                        }}
-                      />
-                    );
-                  }
-
-                  return (
-                    <div
-                      className="missing-field"
-                      key={fieldIndex}
-                    >
-                      {t('error:noMatchedField', { label: fieldAffectsData(field) ? getTranslation(field.label || field.name, i18n) : field.path })}
-                    </div>
-                  );
-                }
-              }
-
-              return null;
-            }
-
-            return null;
-          })
+            <SwiperTest  {...props} />
         )}
       </div>
     );
