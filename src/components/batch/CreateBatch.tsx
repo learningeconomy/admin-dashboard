@@ -29,11 +29,6 @@ const getFieldsForStep = (step: number = 1, fieldSchema) => {
 const CreateBatch: React.FC = (props: Props) => {
   const { user, refreshCookieAsync } = useAuth();
 
-
-  const [ step, setStep ] = useState<number>(1);
-  const [formFields, setFormFields ] = useState()
-
-
   const {
     collection,
     isEditing,
@@ -63,13 +58,7 @@ const CreateBatch: React.FC = (props: Props) => {
     upload,
   } = collection;
 
-  useEffect(()=> {
-    if(fields){
-        const formFields = getFieldsForStep(step, fields)
-        setFormFields(formFields);
-    }
 
-  },[fields, step])
 
   const operation = isEditing ? "update" : "create";
 
@@ -89,9 +78,6 @@ const CreateBatch: React.FC = (props: Props) => {
     [id, onSaveFromProps, auth, user, refreshCookieAsync]
   );
 
-  const handleNextStep=()=> {
-    setStep(step + 1)
-  }
 
   console.log('///internalState', internalState);
 

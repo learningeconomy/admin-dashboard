@@ -156,7 +156,8 @@ const SwiperTest = (props: Props) => {
    
   };
 
-  const handlePrevStep = () => {
+  const handlePrevStep = (e) => {
+    e.preventDefault();
     console.log("///handlePrevStep");
     slidesRef?.slidePrev();
   };
@@ -169,7 +170,7 @@ const SwiperTest = (props: Props) => {
         preventInteractionOnTransition={true}
         allowTouchMove={false}
         allowSlideNext={true}
-        allowSlidePrev={false}
+        allowSlidePrev={true}
         effect={"fade"}
         onSlideChange={() => console.log("slide change")}
         onSwiper={swiper => setSlidesRef(swiper)}
@@ -189,6 +190,7 @@ const SwiperTest = (props: Props) => {
         ...
       </Swiper>
       <div>
+      <button onClick={handlePrevStep}>Prev Step</button>
         <button onClick={handleNextStep}>Next Step</button>
       </div>
     </>
