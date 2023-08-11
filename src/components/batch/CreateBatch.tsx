@@ -118,7 +118,7 @@ const CreateBatch: React.FC = (props: Props) => {
             fieldSchema={fields}
             />
           )}
-           <div><button onClick={handleNextStep}>Next Step</button></div>
+         
         </section>
       </Form>
      

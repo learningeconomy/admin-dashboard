@@ -1,167 +1,201 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import RenderCustomComponent from  'payload/dist/admin/components/utilities/RenderCustomComponent';
-import useIntersect from 'payload/dist/admin/hooks/useIntersect';
-import { RenderFieldProps as Props } from '../types';
-import { fieldAffectsData, fieldIsPresentationalOnly } from 'payload/dist/fields/config/types';
-import { useOperation } from 'payload/dist/admin/components/utilities/OperationProvider/index';
-import { getTranslation } from 'payload/dist/utilities/getTranslation';
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import RenderCustomComponent from "payload/dist/admin/components/utilities/RenderCustomComponent";
+import useIntersect from "payload/dist/admin/hooks/useIntersect";
+import { RenderFieldProps as Props } from "../types";
+import {
+  fieldAffectsData,
+  fieldIsPresentationalOnly,
+} from "payload/dist/fields/config/types";
+import { useOperation } from "payload/dist/admin/components/utilities/OperationProvider/index";
+import { getTranslation } from "payload/dist/utilities/getTranslation";
+import { Swiper as SwiperInterface } from 'swiper';
 
-const baseClass = 'render-fields';
+const baseClass = "render-fields";
 
 const intersectionObserverOptions = {
-  rootMargin: '1000px',
+  rootMargin: "1000px",
 };
 
-
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/css';
-
+import "swiper/css";
 
 const MAP_FIELDS_TO_STEPS = {
-    1: ['title', 'description', 'internalNotes'],
-    2: ['template'],
-    3: [],
-    4: ['emailTemplate']
-}
+  1: ["title", "description", "internalNotes"],
+  2: ["template"],
+  3: [],
+  4: ["emailTemplate"],
+};
 const getFieldsForStep = (step: number = 1, fieldSchema) => {
-    const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
-    const stepFields = fieldSchema.filter( field => fieldsForStep.includes(field.name));
-    return stepFields;
-}
+  const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
+  const stepFields = fieldSchema.filter((field) =>
+    fieldsForStep.includes(field.name)
+  );
+  return stepFields;
+};
 
 type RenderSlideProps = {
-    step: number;
-    formProps: Props,
-}
+  step: number;
+  formProps: Props;
+};
 
-const RenderSlide:React.FC<RenderSlideProps> = ( {step, formProps}) => {
-    const { t, i18n } = useTranslation('general');
-    const operation = useOperation();
+const RenderSlide: React.FC<RenderSlideProps> = ({ step, formProps }) => {
+  const { t, i18n } = useTranslation("general");
+  const operation = useOperation();
 
-    console.log('///step', step);
-    const {
-        fieldSchema,
-        fieldTypes,
-        filter,
-        permissions,
-        readOnly: readOnlyOverride,
-        className,
-        forceRender,
-        indexPath: incomingIndexPath,
-      } = formProps;
+  console.log("///step", step);
+  const {
+    fieldSchema,
+    fieldTypes,
+    filter,
+    permissions,
+    readOnly: readOnlyOverride,
+    className,
+    forceRender,
+    indexPath: incomingIndexPath,
+  } = formProps;
 
-      const stepFormFields = getFieldsForStep(step, fieldSchema);
-   
-      const renderFields = stepFormFields?.map((field, fieldIndex) => {
-        const fieldIsPresentational = fieldIsPresentationalOnly(field);
-        let FieldComponent = fieldTypes[field.type];
+  const stepFormFields = getFieldsForStep(step, fieldSchema);
 
-        if (fieldIsPresentational || (!field?.hidden && field?.admin?.disabled !== true)) {
-          if ((filter && typeof filter === 'function' && filter(field)) || !filter) {
-            if (fieldIsPresentational) {
-              return (
-                <FieldComponent
-                  {...field}
-                  key={fieldIndex}
-                />
-              );
-            }
+  const renderFields = stepFormFields?.map((field, fieldIndex) => {
+    const fieldIsPresentational = fieldIsPresentationalOnly(field);
+    let FieldComponent = fieldTypes[field.type];
 
-            if (field?.admin?.hidden) {
-              FieldComponent = fieldTypes.hidden;
-            }
+    if (
+      fieldIsPresentational ||
+      (!field?.hidden && field?.admin?.disabled !== true)
+    ) {
+      if (
+        (filter && typeof filter === "function" && filter(field)) ||
+        !filter
+      ) {
+        if (fieldIsPresentational) {
+          return <FieldComponent {...field} key={fieldIndex} />;
+        }
 
-            const isFieldAffectingData = fieldAffectsData(field);
+        if (field?.admin?.hidden) {
+          FieldComponent = fieldTypes.hidden;
+        }
 
-            const fieldPermissions = isFieldAffectingData ? permissions?.[field.name] : permissions;
+        const isFieldAffectingData = fieldAffectsData(field);
 
-            let { admin: { readOnly } = {} } = field;
+        const fieldPermissions = isFieldAffectingData
+          ? permissions?.[field.name]
+          : permissions;
 
-            if (readOnlyOverride && readOnly !== false) readOnly = true;
+        let { admin: { readOnly } = {} } = field;
 
-            if ((isFieldAffectingData && permissions?.[field?.name]?.read?.permission !== false) || !isFieldAffectingData) {
-              if (isFieldAffectingData && permissions?.[field?.name]?.[operation]?.permission === false) {
-                readOnly = true;
-              }
+        if (readOnlyOverride && readOnly !== false) readOnly = true;
 
-              if (FieldComponent) {
-                return (
-                  <RenderCustomComponent
-                    key={fieldIndex}
-                    CustomComponent={field?.admin?.components?.Field}
-                    DefaultComponent={FieldComponent}
-                    componentProps={{
-                      ...field,
-                      path: field.path || (isFieldAffectingData ? field.name : ''),
-                      fieldTypes,
-                      indexPath: incomingIndexPath ? `${incomingIndexPath}.${fieldIndex}` : `${fieldIndex}`,
-                      admin: {
-                        ...(field.admin || {}),
-                        readOnly,
-                      },
-                      permissions: fieldPermissions,
-                    }}
-                  />
-                );
-              }
-
-              return (
-                <div
-                  className="missing-field"
-                  key={fieldIndex}
-                >
-                  {t('error:noMatchedField', { label: fieldAffectsData(field) ? getTranslation(field.label || field.name, i18n) : field.path })}
-                </div>
-              );
-            }
+        if (
+          (isFieldAffectingData &&
+            permissions?.[field?.name]?.read?.permission !== false) ||
+          !isFieldAffectingData
+        ) {
+          if (
+            isFieldAffectingData &&
+            permissions?.[field?.name]?.[operation]?.permission === false
+          ) {
+            readOnly = true;
           }
 
-          return null;
-        }
-    })
+          if (FieldComponent) {
+            return (
+              <RenderCustomComponent
+                key={fieldIndex}
+                CustomComponent={field?.admin?.components?.Field}
+                DefaultComponent={FieldComponent}
+                componentProps={{
+                  ...field,
+                  path: field.path || (isFieldAffectingData ? field.name : ""),
+                  fieldTypes,
+                  indexPath: incomingIndexPath
+                    ? `${incomingIndexPath}.${fieldIndex}`
+                    : `${fieldIndex}`,
+                  admin: {
+                    ...(field.admin || {}),
+                    readOnly,
+                  },
+                  permissions: fieldPermissions,
+                }}
+              />
+            );
+          }
 
-    return (
-        renderFields
-    )
-}
+          return (
+            <div className="missing-field" key={fieldIndex}>
+              {t("error:noMatchedField", {
+                label: fieldAffectsData(field)
+                  ? getTranslation(field.label || field.name, i18n)
+                  : field.path,
+              })}
+            </div>
+          );
+        }
+      }
+
+      return null;
+    }
+  });
+
+  return renderFields;
+};
 
 const SwiperTest = (props: Props) => {
+      // ref storing swiper instance
+      const [slidesRef, setSlidesRef] = useState<SwiperInterface>();
 
-    return(
-        <Swiper
+
+  const handleNextStep = (e) => {
+    e.preventDefault();
+    console.log("///handleNextStep");
+    slidesRef?.slideNext();
+   
+  };
+
+  const handlePrevStep = () => {
+    console.log("///handlePrevStep");
+    slidesRef?.slidePrev();
+  };
+
+  return (
+    <>
+      <Swiper
         spaceBetween={50}
         slidesPerView={1}
         preventInteractionOnTransition={true}
         allowTouchMove={false}
-        allowSlideNext={false}
+        allowSlideNext={true}
         allowSlidePrev={false}
-        effect = {'fade'}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}
+        effect={"fade"}
+        onSlideChange={() => console.log("slide change")}
+        onSwiper={swiper => setSlidesRef(swiper)}
       >
         <SwiperSlide>
-            <RenderSlide formProps={props} step={1}/>
+          <RenderSlide formProps={props} step={1} />
         </SwiperSlide>
         <SwiperSlide>
-            <RenderSlide formProps={props} step={2} />
+          <RenderSlide formProps={props} step={2} />
         </SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
+        <SwiperSlide>
+          <RenderSlide formProps={props} step={3} />
+        </SwiperSlide>
+        <SwiperSlide>
+          <RenderSlide formProps={props} step={4} />
+        </SwiperSlide>
         ...
       </Swiper>
-
-
-    )
-}
-
-
+      <div>
+        <button onClick={handleNextStep}>Next Step</button>
+      </div>
+    </>
+  );
+};
 
 const RenderBatchFlowFields: React.FC<Props> = (props) => {
-
   const {
     fieldSchema,
     fieldTypes,
@@ -173,9 +207,9 @@ const RenderBatchFlowFields: React.FC<Props> = (props) => {
     indexPath: incomingIndexPath,
   } = props;
 
-  console.log('//CustomRenderFields props', props);
+  console.log("//CustomRenderFields props", props);
 
-  const { t, i18n } = useTranslation('general');
+  const { t, i18n } = useTranslation("general");
   const [hasRendered, setHasRendered] = useState(Boolean(forceRender));
   const [intersectionRef, entry] = useIntersect(intersectionObserverOptions);
   const operation = useOperation();
@@ -190,22 +224,12 @@ const RenderBatchFlowFields: React.FC<Props> = (props) => {
     }
   }, [shouldRender, hasRendered]);
 
-  const classes = [
-    baseClass,
-    className,
-  ].filter(Boolean).join(' ');
-
-  
+  const classes = [baseClass, className].filter(Boolean).join(" ");
 
   if (fieldSchema) {
     return (
-      <div
-        ref={intersectionRef}
-        className={classes}
-      >
-        {hasRendered && (
-            <SwiperTest  {...props} />
-        )}
+      <div ref={intersectionRef} className={classes}>
+        {hasRendered && <SwiperTest {...props} />}
       </div>
     );
   }
