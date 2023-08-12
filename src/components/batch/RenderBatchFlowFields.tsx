@@ -20,8 +20,10 @@ const intersectionObserverOptions = {
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
+
+
 // Import Swiper styles
-import "swiper/css";
+import 'swiper/swiper.scss';
 
 const MAP_FIELDS_TO_STEPS = {
   1: ["title", "description", "internalNotes"],
