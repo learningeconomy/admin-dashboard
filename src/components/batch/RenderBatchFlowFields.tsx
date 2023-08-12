@@ -188,10 +188,10 @@ const SwiperTest = (props: Props) => {
         onSwiper={swiper => setSlidesRef(swiper)}
       >
         <SwiperSlide>
-          <RenderSlide formProps={props} step={2} />
+          <RenderSlide formProps={props} step={1} />
         </SwiperSlide>
         <SwiperSlide>
-          <RenderSlide formProps={props} step={1} />
+          <RenderSlide formProps={props} step={2} />
         </SwiperSlide>
         <SwiperSlide>
           <RenderSlide formProps={props} step={3} />
