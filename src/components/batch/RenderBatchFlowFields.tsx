@@ -9,8 +9,15 @@ import {
 } from "payload/dist/fields/config/types";
 import { useOperation } from "payload/dist/admin/components/utilities/OperationProvider/index";
 import { getTranslation } from "payload/dist/utilities/getTranslation";
-import { Swiper as SwiperInterface } from 'swiper';
-import { useAllFormFields, reduceFieldsToValues, getSiblingData } from 'payload/components/forms';
+import { Swiper as SwiperInterface } from "swiper";
+import {
+  useAllFormFields,
+  reduceFieldsToValues,
+  getSiblingData,
+  useForm,
+} from "payload/components/forms";
+import { Fields } from "payload/dist/admin/components/forms/Form/types";
+
 const baseClass = "render-fields";
 
 const intersectionObserverOptions = {
@@ -20,11 +27,9 @@ const intersectionObserverOptions = {
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
-
-
 // Import Swiper styles
-import 'swiper/swiper.scss';
-
+import "swiper/swiper.scss";
+// hardcoded for now, but could be perhaps be defined in the database
 const MAP_FIELDS_TO_STEPS = {
   1: ["title", "description", "internalNotes"],
   2: ["template"],
@@ -36,7 +41,18 @@ const getFieldsForStep = (step: number = 1, fieldSchema) => {
   const stepFields = fieldSchema.filter((field) =>
     fieldsForStep.includes(field.name)
   );
+  console.log("///stepFields", stepFields);
   return stepFields;
+};
+
+const getInvalidFormFieldsForStep = (step: number, formFields: Fields) => {
+  const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
+  const failedValidationFields = fieldsForStep.filter((field) => {
+    return !formFields[field].valid;
+  });
+  console.log("///failedValidationField", failedValidationFields);
+  if (failedValidationFields?.length > 0) return false;
+  return true;
 };
 
 type RenderSlideProps = {
@@ -147,15 +163,47 @@ const RenderSlide: React.FC<RenderSlideProps> = ({ step, formProps }) => {
 };
 
 const SwiperTest = (props: Props) => {
-      // ref storing swiper instance
-      const [slidesRef, setSlidesRef] = useState<SwiperInterface>();
+  // ref storing swiper instance
+  const [slidesRef, setSlidesRef] = useState<SwiperInterface>();
+  const { submit, reset, getData, setSubmit, validateForm } = useForm();
+  // the `fields` const will be equal to all fields' state,
+  // and the `dispatchFields` method is usable to send field state up to the form
+  const [fields, dispatchFields] = useAllFormFields();
 
+  // Pass in fields, and indicate if you'd like to "unflatten" field data.
+  // The result below will reflect the data stored in the form at the given time
+  const formData = reduceFieldsToValues(fields, true);
 
-  const handleNextStep = (e) => {
+  // Pass in field state and a path,
+  // and you will be sent all sibling data of the path that you've specified
+  const siblingData = getSiblingData(fields, "someFieldName");
+
+  console.log("///USEALLFORMFIELDS HOOK fields", fields, "formData", formData);
+
+  const handleSave = async () => {
+    // const formData = await getData();
+    // console.log('///formData', formData);
+
+    await submit();
+    // setSubmit(false);
+
+    console.log("///handleSave");
+  };
+
+  const handleNextStep = async (e) => {
     e.preventDefault();
     console.log("///handleNextStep");
-    slidesRef?.slideNext();
-   
+    const formStepValid = getInvalidFormFieldsForStep(
+      slidesRef.activeIndex + 1,
+      fields
+    );
+    if (!formStepValid) {
+      await handleSave();
+    }
+    if (formStepValid) {
+      setSubmit(false);
+      slidesRef?.slideNext();
+    }
   };
 
   const handlePrevStep = (e) => {
@@ -163,13 +211,6 @@ const SwiperTest = (props: Props) => {
     console.log("///handlePrevStep");
     slidesRef?.slidePrev();
   };
-
-  useEffect(()=>{
-    if(slidesRef){
-        slidesRef.touchEventsData.formElemetns = 'undefined';
-    }
-
-  },[slidesRef])
 
   return (
     <>
@@ -185,7 +226,7 @@ const SwiperTest = (props: Props) => {
         allowSlidePrev={true}
         effect={"fade"}
         onSlideChange={() => console.log("slide change")}
-        onSwiper={swiper => setSlidesRef(swiper)}
+        onSwiper={(swiper) => setSlidesRef(swiper)}
       >
         <SwiperSlide>
           <RenderSlide formProps={props} step={1} />
@@ -202,7 +243,7 @@ const SwiperTest = (props: Props) => {
         ...
       </Swiper>
       <div>
-      <button onClick={handlePrevStep}>Prev Step</button>
+        <button onClick={handlePrevStep}>Prev Step</button>
         <button onClick={handleNextStep}>Next Step</button>
       </div>
     </>
@@ -210,22 +251,6 @@ const SwiperTest = (props: Props) => {
 };
 
 const RenderBatchFlowFields: React.FC<Props> = (props) => {
-
-     // the `fields` const will be equal to all fields' state,
-  // and the `dispatchFields` method is usable to send field state up to the form
-  const [fields, dispatchFields] = useAllFormFields();
-
-  // Pass in fields, and indicate if you'd like to "unflatten" field data.
-  // The result below will reflect the data stored in the form at the given time
-  const formData = reduceFieldsToValues(fields, true);
-
-  // Pass in field state and a path,
-  // and you will be sent all sibling data of the path that you've specified
-  const siblingData = getSiblingData(fields, 'someFieldName');
-
-
-  console.log('///USEALLFORMFIELDS HOOK fields', fields, 'formData', formData);
-
   const {
     fieldSchema,
     fieldTypes,
