@@ -4,13 +4,14 @@ import { useAuth } from "payload/components/utilities";
 import { OperationContext } from "payload/dist/admin/components/utilities/OperationProvider";
 import RenderBatchFlowFields from "./RenderBatchFlowFields";
 import fieldTypes from "payload/dist/admin/components/forms/field-types";
-import Form from "payload/dist/admin/components/forms/Form";
+import Form from "../Form/Form";
 import './batch.scss';
 import '../global.scss';
 import { RenderFieldProps } from '../types';
 const baseClass = "collection-edit";
 import RenderFields from "payload/dist/admin/components/forms/RenderFields";
 import { useAllFormFields, reduceFieldsToValues, getSiblingData } from 'payload/components/forms';
+
 
 
 const MAP_FIELDS_TO_STEPS = {
@@ -67,6 +68,8 @@ const CreateBatch: React.FC = (props: Props) => {
       if (auth && id === user.id) {
         await refreshCookieAsync();
       }
+
+      console.log('//onSave invocation')
 
       if (typeof onSaveFromProps === "function") {
         onSaveFromProps({
