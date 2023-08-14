@@ -30,6 +30,12 @@ import React, {
   import { setsAreEqual } from 'payload/dist/utilities/setsAreEqual';
   import { buildFieldSchemaMap } from 'payload/dist/admin/components/forms/Form/buildFieldSchemaMap';
   import { isNumber } from 'payload/dist/utilities/isNumber';
+
+  type CustomSubmitType = {
+    setSubmit?: any;
+  }
+
+  type CustomFormContextType = FormContextType & CustomSubmitType;
   
   const baseClass = 'form';
 
@@ -61,9 +67,9 @@ const Form: React.FC<Props> = (props) => {
   const [processing, setProcessing] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formattedInitialData, setFormattedInitialData] = useState(buildInitialState(initialData));
-
+  console.log('///submitted', submitted);
   const formRef = useRef<HTMLFormElement>(null);
-  const contextRef = useRef({} as FormContextType);
+  const contextRef = useRef({} as CustomFormContextType);
 
   let initialFieldState = {};
 
@@ -491,6 +497,10 @@ const Form: React.FC<Props> = (props) => {
     dispatchFields({ type: 'REPLACE_STATE', state });
   }, [dispatchFields]);
 
+  const setSubmit = (value: boolean) => {
+    setSubmitted(value);
+  }
+
   contextRef.current.submit = submit;
   contextRef.current.getFields = getFields;
   contextRef.current.getField = getField;
@@ -510,6 +520,7 @@ const Form: React.FC<Props> = (props) => {
   contextRef.current.addFieldRow = addFieldRow;
   contextRef.current.removeFieldRow = removeFieldRow;
   contextRef.current.replaceFieldRow = replaceFieldRow;
+  contextRef.current.setSubmit = setSubmit;
 
   useEffect(() => {
     if (initialState) {
