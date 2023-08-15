@@ -12,8 +12,6 @@ import { getTranslation } from "payload/dist/utilities/getTranslation";
 import { Swiper as SwiperInterface } from "swiper";
 import {
   useAllFormFields,
-  reduceFieldsToValues,
-  getSiblingData,
   useForm,
 } from "payload/components/forms";
 import { Fields } from "payload/dist/admin/components/forms/Form/types";
@@ -36,12 +34,13 @@ const MAP_FIELDS_TO_STEPS = {
   3: [],
   4: ["emailTemplate"],
 };
+
 const getFieldsForStep = (step: number = 1, fieldSchema) => {
   const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
   const stepFields = fieldSchema.filter((field) =>
     fieldsForStep.includes(field.name)
   );
-  console.log("///stepFields", stepFields);
+
   return stepFields;
 };
 
@@ -50,7 +49,7 @@ const getInvalidFormFieldsForStep = (step: number, formFields: Fields) => {
   const failedValidationFields = fieldsForStep.filter((field) => {
     return !formFields[field].valid;
   });
-  console.log("///failedValidationField", failedValidationFields);
+
   if (failedValidationFields?.length > 0) return false;
   return true;
 };
@@ -64,7 +63,6 @@ const RenderSlide: React.FC<RenderSlideProps> = ({ step, formProps }) => {
   const { t, i18n } = useTranslation("general");
   const operation = useOperation();
 
-  console.log("///step", step);
   const {
     fieldSchema,
     fieldTypes,
@@ -162,7 +160,7 @@ const RenderSlide: React.FC<RenderSlideProps> = ({ step, formProps }) => {
   return renderFields;
 };
 
-const SwiperTest = (props: Props) => {
+const FormSteps = (props: Props) => {
   // ref storing swiper instance
   const [slidesRef, setSlidesRef] = useState<SwiperInterface>();
   const { submit, reset, getData, setSubmit, validateForm } = useForm();
@@ -170,35 +168,15 @@ const SwiperTest = (props: Props) => {
   // and the `dispatchFields` method is usable to send field state up to the form
   const [fields, dispatchFields] = useAllFormFields();
 
-  // Pass in fields, and indicate if you'd like to "unflatten" field data.
-  // The result below will reflect the data stored in the form at the given time
-  const formData = reduceFieldsToValues(fields, true);
-
-  // Pass in field state and a path,
-  // and you will be sent all sibling data of the path that you've specified
-  const siblingData = getSiblingData(fields, "someFieldName");
-
-  console.log("///USEALLFORMFIELDS HOOK fields", fields, "formData", formData);
-
-  const handleSave = async () => {
-    // const formData = await getData();
-    // console.log('///formData', formData);
-
-    await submit();
-    // setSubmit(false);
-
-    console.log("///handleSave");
-  };
-
   const handleNextStep = async (e) => {
     e.preventDefault();
-    console.log("///handleNextStep");
+
     const formStepValid = getInvalidFormFieldsForStep(
       slidesRef.activeIndex + 1,
       fields
     );
     if (!formStepValid) {
-      await handleSave();
+      await submit();
     }
     if (formStepValid) {
       setSubmit(false);
@@ -208,7 +186,7 @@ const SwiperTest = (props: Props) => {
 
   const handlePrevStep = (e) => {
     e.preventDefault();
-    console.log("///handlePrevStep");
+
     slidesRef?.slidePrev();
   };
 
@@ -262,13 +240,9 @@ const RenderBatchFlowFields: React.FC<Props> = (props) => {
     indexPath: incomingIndexPath,
   } = props;
 
-  console.log("//CustomRenderFields props", props);
-
   const { t, i18n } = useTranslation("general");
   const [hasRendered, setHasRendered] = useState(Boolean(forceRender));
   const [intersectionRef, entry] = useIntersect(intersectionObserverOptions);
-  const operation = useOperation();
-
   const isIntersecting = Boolean(entry?.isIntersecting);
   const isAboveViewport = entry?.boundingClientRect?.top < 0;
   const shouldRender = forceRender || isIntersecting || isAboveViewport;
@@ -284,7 +258,7 @@ const RenderBatchFlowFields: React.FC<Props> = (props) => {
   if (fieldSchema) {
     return (
       <div ref={intersectionRef} className={classes}>
-        {hasRendered && <SwiperTest {...props} />}
+        {hasRendered && <FormSteps {...props} />}
       </div>
     );
   }

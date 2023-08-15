@@ -71,8 +71,6 @@ const CreateBatch: React.FC = (props: Props) => {
         await refreshCookieAsync();
       }
 
-      console.log("//onSave invocation");
-
       if (typeof onSaveFromProps === "function") {
         onSaveFromProps({
           ...json,
@@ -82,8 +80,6 @@ const CreateBatch: React.FC = (props: Props) => {
     },
     [id, onSaveFromProps, auth, user, refreshCookieAsync]
   );
-
-  console.log("///internalState", internalState);
 
   return (
     <OperationContext.Provider value={operation}>
