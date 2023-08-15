@@ -8,6 +8,7 @@ import Form from "payload/dist/admin/components/forms/Form";
 import { useForm } from "payload/components/forms";
 const baseClass = "collection-edit";
 import RenderFields from "payload/dist/admin/components/forms/RenderFields";
+import SidebarMenu from "../Form/SidebarMenu";
 
 const TemplateForm: React.FC = (props: Props) => {
   const { submit, validateForm } = useForm();
@@ -41,16 +42,6 @@ const TemplateForm: React.FC = (props: Props) => {
     upload,
   } = collection;
 
-  const handlePublish = (e) => {
-    e.preventDefault();
-    submit();
-  };
-
-  const handleSaveDraft = (e) => {
-    e.preventDefault();
-    submit();
-  };
-
   return (
     <>
       <CustomRenderFields
@@ -62,11 +53,7 @@ const TemplateForm: React.FC = (props: Props) => {
         fieldTypes={fieldTypes}
         fieldSchema={fields}
       />
-      <div>
-        <button onClick={handlePublish}>Publish</button>
-
-        <button onClick={handleSaveDraft}>Save as Draft & Quit</button>
-      </div>
+      <div></div>
     </>
   );
 };
@@ -134,7 +121,12 @@ const CreateTemplate: React.FC = (props: Props) => {
       >
         <section className="flow-container">
           <h1>Create Template Flow</h1>
-          {!isLoading && <TemplateForm {...props} />}
+          {!isLoading && (
+            <>
+              <TemplateForm {...props} />
+              <SidebarMenu {...props} />
+            </>
+          )}
         </section>
       </Form>
     </OperationContext.Provider>
