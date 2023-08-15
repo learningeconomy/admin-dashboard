@@ -5,9 +5,71 @@ import { OperationContext } from "payload/dist/admin/components/utilities/Operat
 import CustomRenderFields from "../CustomRenderFields";
 import fieldTypes from "payload/dist/admin/components/forms/field-types";
 import Form from "payload/dist/admin/components/forms/Form";
-
+import { useForm } from "payload/components/forms";
 const baseClass = "collection-edit";
 import RenderFields from "payload/dist/admin/components/forms/RenderFields";
+
+const TemplateForm: React.FC = (props: Props) => {
+  const { submit, validateForm } = useForm();
+
+  const {
+    collection,
+    isEditing,
+    data,
+    onSave: onSaveFromProps,
+    permissions,
+    isLoading,
+    internalState,
+    apiURL,
+    action,
+    hasSavePermission,
+    disableEyebrow,
+    disableActions,
+    disableLeaveWithoutSaving,
+    customHeader,
+    id,
+    updatedAt,
+  } = props;
+
+  const {
+    slug,
+    fields,
+    admin: { useAsTitle, disableDuplicate, preview, hideAPIURL },
+    versions,
+    timestamps,
+    auth,
+    upload,
+  } = collection;
+
+  const handlePublish = (e) => {
+    e.preventDefault();
+    submit();
+  };
+
+  const handleSaveDraft = (e) => {
+    e.preventDefault();
+    submit();
+  };
+
+  return (
+    <>
+      <CustomRenderFields
+        readOnly={!hasSavePermission}
+        permissions={permissions.fields}
+        filter={(field) =>
+          !field?.admin?.position || field?.admin?.position !== "sidebar"
+        }
+        fieldTypes={fieldTypes}
+        fieldSchema={fields}
+      />
+      <div>
+        <button onClick={handlePublish}>Publish</button>
+
+        <button onClick={handleSaveDraft}>Save as Draft & Quit</button>
+      </div>
+    </>
+  );
+};
 
 const CreateTemplate: React.FC = (props: Props) => {
   const { user, refreshCookieAsync } = useAuth();
@@ -42,6 +104,8 @@ const CreateTemplate: React.FC = (props: Props) => {
 
   const operation = isEditing ? "update" : "create";
 
+  const { submit, validateForm } = useForm();
+
   const onSave = useCallback(
     async (json) => {
       if (auth && id === user.id) {
@@ -70,17 +134,7 @@ const CreateTemplate: React.FC = (props: Props) => {
       >
         <section className="flow-container">
           <h1>Create Template Flow</h1>
-          {!isLoading && (
-            <CustomRenderFields
-              readOnly={!hasSavePermission}
-              permissions={permissions.fields}
-              filter={(field) =>
-                !field?.admin?.position || field?.admin?.position !== "sidebar"
-              }
-              fieldTypes={fieldTypes}
-              fieldSchema={fields}
-            />
-          )}
+          {!isLoading && <TemplateForm {...props} />}
         </section>
       </Form>
     </OperationContext.Provider>
