@@ -5,27 +5,31 @@ import { OperationContext } from "payload/dist/admin/components/utilities/Operat
 import RenderBatchFlowFields from "./RenderBatchFlowFields";
 import fieldTypes from "payload/dist/admin/components/forms/field-types";
 import Form from "../Form/Form";
-import './batch.scss';
-import '../global.scss';
-import { RenderFieldProps } from '../types';
+import "./batch.scss";
+import "../global.scss";
+import { RenderFieldProps } from "../types";
 const baseClass = "collection-edit";
 import RenderFields from "payload/dist/admin/components/forms/RenderFields";
-import { useAllFormFields, reduceFieldsToValues, getSiblingData } from 'payload/components/forms';
-
-
+import {
+  useAllFormFields,
+  reduceFieldsToValues,
+  getSiblingData,
+} from "payload/components/forms";
+import SidebarMenu from "../Form/SidebarMenu";
 
 const MAP_FIELDS_TO_STEPS = {
-    1: ['title', 'description', 'internalNotes'],
-    2: ['template'],
-    3: ['emailTemplate'],
-}
-
+  1: ["title", "description", "internalNotes"],
+  2: ["template"],
+  3: ["emailTemplate"],
+};
 
 const getFieldsForStep = (step: number = 1, fieldSchema) => {
-    const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
-    const stepFields = fieldSchema.filter( field => fieldsForStep.includes(field.name));
-    return stepFields;
-}
+  const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
+  const stepFields = fieldSchema.filter((field) =>
+    fieldsForStep.includes(field.name)
+  );
+  return stepFields;
+};
 
 const CreateBatch: React.FC = (props: Props) => {
   const { user, refreshCookieAsync } = useAuth();
@@ -59,8 +63,6 @@ const CreateBatch: React.FC = (props: Props) => {
     upload,
   } = collection;
 
-
-
   const operation = isEditing ? "update" : "create";
 
   const onSave = useCallback(
@@ -69,7 +71,7 @@ const CreateBatch: React.FC = (props: Props) => {
         await refreshCookieAsync();
       }
 
-      console.log('//onSave invocation')
+      console.log("//onSave invocation");
 
       if (typeof onSaveFromProps === "function") {
         onSaveFromProps({
@@ -81,11 +83,9 @@ const CreateBatch: React.FC = (props: Props) => {
     [id, onSaveFromProps, auth, user, refreshCookieAsync]
   );
 
-
-  console.log('///internalState', internalState);
+  console.log("///internalState", internalState);
 
   return (
-   
     <OperationContext.Provider value={operation}>
       <Form
         className={`${baseClass}__form`}
@@ -98,24 +98,24 @@ const CreateBatch: React.FC = (props: Props) => {
         <section className="flow-container">
           <h1>Create Batch Flow</h1>
           {!isLoading && (
-            <RenderBatchFlowFields
-            readOnly={!hasSavePermission}
-            permissions={permissions.fields}
-            filter={(field) =>
-              !field?.admin?.position || field?.admin?.position !== "sidebar"
-            }
-            fieldTypes={fieldTypes}
-            fieldSchema={fields}
-            />
+            <>
+              <RenderBatchFlowFields
+                readOnly={!hasSavePermission}
+                permissions={permissions.fields}
+                filter={(field) =>
+                  !field?.admin?.position ||
+                  field?.admin?.position !== "sidebar"
+                }
+                fieldTypes={fieldTypes}
+                fieldSchema={fields}
+              />
+              <SidebarMenu {...props} />
+            </>
           )}
-         
         </section>
       </Form>
-     
     </OperationContext.Provider>
   );
 };
 
 export default CreateBatch;
-
-
