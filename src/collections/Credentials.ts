@@ -1,10 +1,16 @@
 import { CollectionConfig } from "payload/types";
+import CreateBatch from "../components/batch/CreateBatch";
 
 const CredentialsCollection: CollectionConfig = {
   slug: "credential",
   admin: {
     defaultColumns: ["credentialName", "id", "status"],
     useAsTitle: "credentialName",
+    components: {
+      views: {
+        Edit: CreateBatch,
+      },
+    }
   },
   versions: {
     drafts: true,

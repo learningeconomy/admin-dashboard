@@ -1,4 +1,6 @@
 import { CollectionConfig } from "payload/types";
+import CreateTemplate from "../components/template/CreateTemplate";
+import TemplatePageDescription from "../components/template/TemplatePageDescription";
 
 const placeHolderVc = `{
   "@context": [
@@ -19,6 +21,12 @@ const CredentialsTemplatesCollection: CollectionConfig = {
   admin: {
     defaultColumns: ["title", "id", "status"],
     useAsTitle: "title",
+    description: TemplatePageDescription,
+    components: {
+      views: {
+        Edit: CreateTemplate,
+      },
+    },
   },
   versions: {
     drafts: true,
@@ -47,7 +55,7 @@ const CredentialsTemplatesCollection: CollectionConfig = {
       name: "credentialTemplatesJson", // required
       type: "code", // required
       admin: {
-        language: 'handlebars'
+        language: "handlebars",
       },
       defaultValue: placeHolderVc,
       required: true,

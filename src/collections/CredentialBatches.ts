@@ -1,10 +1,18 @@
 import { CollectionConfig } from "payload/types";
+import BatchPageDescription from "../components/batch/BatchPageDescription";
+import CreateBatch from "../components/batch/CreateBatch";
 
 const CredentialsBatchesCollection: CollectionConfig = {
   slug: "credential-batches",
   admin: {
     defaultColumns: ["title", "id", "status"],
     useAsTitle: "title",
+    description: BatchPageDescription,
+    components: {
+      views: {
+        Edit: CreateBatch,
+      },
+    }
   },
   versions: {
     drafts: true,
@@ -41,6 +49,13 @@ const CredentialsBatchesCollection: CollectionConfig = {
       type: "relationship",
       required: true,
       relationTo: "credential-templates",
+      hasMany: false,
+    },
+    {
+      name: "emailTemplate",
+      type: "relationship",
+      required: true,
+      relationTo: "email-templates",
       hasMany: false,
     },
   ],

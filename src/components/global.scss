@@ -1,0 +1,27 @@
+// .collection-list__header {
+//   a:first-child {
+//     display: none !important;
+//   }
+// }
+
+.view-description {
+  a {
+    display: flex !important;
+    background-color: blue;
+    max-width: 150px;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+  }
+}
+
+.flow-container {
+  padding: 40px;
+  max-width: 750px;
+}
+
+
+.collection-edit__sidebar-wrap {
+  background-color: white !important;
+}

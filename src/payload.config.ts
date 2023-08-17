@@ -6,10 +6,14 @@ import CredentialsTemplatesCollection from './collections/CredentialTemplates';
 import CredentialsBatchesCollection from './collections/CredentialBatches';
 import CredentialsCollection from './collections/Credentials';
 import EmailTemplatesCollection from './collections/EmailTemplates';
-
+import AfterNavLinks from './components/AfterNavLinks';
 //components
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
+
+// custom component for flows
+import CreateBatch from './components/batch/CreateBatch';
+import CreateTemplate from './components/template/CreateTemplate';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
@@ -24,7 +28,7 @@ export default buildConfig({
       graphics: {
         Logo,
         Icon,
-      }
+      },
     }
   },
   collections: [

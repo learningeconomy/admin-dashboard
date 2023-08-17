@@ -1,6 +1,6 @@
 {
   "name": "admin-dashboard",
-  "description": "Payload project created from blank template",
+  "description": "Admin dashboard project",
   "version": "1.0.0",
   "main": "dist/server.js",
   "license": "MIT",
@@ -18,7 +18,8 @@
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "payload": "^1.11.3",
+    "payload": "1.13.4",
+    "swiper": "^6.8.4",
     "react": "^18.2.0"
   },
   "devDependencies": {
