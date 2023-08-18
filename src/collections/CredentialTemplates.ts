@@ -5,15 +5,15 @@ import TemplatePageDescription from "../components/template/TemplatePageDescript
 const placeHolderVc = `{
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
-    "https://www.w3.org/2018/credentials/examples/v1",
+    "https://www.w3.org/2018/credentials/examples/v1"
   ],
   "type": ["VerifiableCredential", "AlumniCredential"],
-  "issuer": { "id": {{ schoolId }} },
-  "name": {{ name }},
-  "description": {{ description }},
-  "issuance"Date: {{ now }},
-  "credentialSubject": { "id": {{ studentId }} },
-  "id": {{ credentialId }}
+  "issuer": { "id": "{{ schoolId }}" },
+  "name": "{{ name }}",
+  "description": "{{ description }}",
+  "issuanceDate": "{{ now }}",
+  "credentialSubject": { "id": "{{ studentId }}" },
+  "id": "{{ credentialId }}"
 }`;
 
 const CredentialsTemplatesCollection: CollectionConfig = {
@@ -58,6 +58,11 @@ const CredentialsTemplatesCollection: CollectionConfig = {
         language: "handlebars",
       },
       defaultValue: placeHolderVc,
+      required: true,
+    },
+    {
+      name: "credentialTemplateJson", // required
+      type: "json", // required
       required: true,
     },
   ],
