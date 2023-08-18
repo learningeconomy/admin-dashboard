@@ -2,7 +2,6 @@ import { CollectionConfig } from "payload/types";
 import CreateTemplate from "../components/template/CreateTemplate";
 import TemplatePageDescription from "../components/template/TemplatePageDescription";
 
-
 const placeHolderVc = `{
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
