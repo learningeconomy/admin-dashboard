@@ -1984,6 +1984,11 @@
   "resolved" "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz"
   "version" "1.5.1"
 
+"better-error-message-for-json-parse@^0.1.6":
+  "integrity" "sha512-l8SKUKC1gs7krbAw4p9PzKE6hlBtEHRBi7MWW8vq6e10Q3/w1cLOTM4bUAE/Op09p0W6b1xeBwqFdps620TFcQ=="
+  "resolved" "https://registry.npmjs.org/better-error-message-for-json-parse/-/better-error-message-for-json-parse-0.1.6.tgz"
+  "version" "0.1.6"
+
 "big.js@^5.2.2":
   "integrity" "sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ=="
   "resolved" "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz"
@@ -2153,6 +2158,11 @@
   "integrity" "sha512-HpX65o1Hnr9HH25ojC1YGs7HCQLq0GCOibSaWER0eNpgJ/Z1MZv2mTc7+xh6WOPxbRVcmgbv4hGU+uSQ/2xFZQ=="
   "resolved" "https://registry.npmjs.org/call-me-maybe/-/call-me-maybe-1.0.2.tgz"
   "version" "1.0.2"
+
+"callsite@^1.0.0":
+  "integrity" "sha512-0vdNRFXn5q+dtOqjfFtmtlI9N2eVZ7LMyEV2iKC5mEEFvSg/69Ml6b/WU2qF8W1nLRa0wiSrDT3Y5jOHZCwKPQ=="
+  "resolved" "https://registry.npmjs.org/callsite/-/callsite-1.0.0.tgz"
+  "version" "1.0.0"
 
 "callsites@^3.0.0":
   "integrity" "sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ=="
@@ -2728,6 +2738,13 @@
   "version" "4.3.4"
   dependencies:
     "ms" "2.1.2"
+
+"decache@^4.5.1":
+  "integrity" "sha512-2LPqkLeu8XWHU8qNCS3kcF6sCcb5zIzvWaAHYSvPfwhdd7mHuah29NssMzrTYyHN4F5oFy2ko9OBYxegtU0FEw=="
+  "resolved" "https://registry.npmjs.org/decache/-/decache-4.6.2.tgz"
+  "version" "4.6.2"
+  dependencies:
+    "callsite" "^1.0.0"
 
 "decompress-response@^6.0.0":
   "integrity" "sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ=="
@@ -3479,7 +3496,16 @@
   dependencies:
     "duplexer" "^0.1.2"
 
-"handlebars@^4.7.8":
+"handlebars-a-la-json@^1.5.8":
+  "integrity" "sha512-J/jLy36QBeU1eSXq5j2lKr/fFZCztuyW1/txkSNPfKm/5CiTTN4Oxavx2PXGxQa02gzVRVkpj0cvI/dPqOCEog=="
+  "resolved" "https://registry.npmjs.org/handlebars-a-la-json/-/handlebars-a-la-json-1.5.8.tgz"
+  "version" "1.5.8"
+  dependencies:
+    "better-error-message-for-json-parse" "^0.1.6"
+    "decache" "^4.5.1"
+    "handlebars" "^4.7.2"
+
+"handlebars@^4.7.2", "handlebars@^4.7.8":
   "integrity" "sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ=="
   "resolved" "https://registry.npmjs.org/handlebars/-/handlebars-4.7.8.tgz"
   "version" "4.7.8"
