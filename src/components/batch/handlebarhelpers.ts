@@ -7,6 +7,7 @@ const placeHolderVcTemplate = `{
       "https://www.w3.org/2018/credentials/examples/v1"
     ],
     "type": ["VerifiableCredential", "AlumniCredential"],
+    "issuer": { "id": "{{ schoolId }}" },
     "name": "{{ name }}",
     "description": "{{ description }}",
     "issuanceDate": "{{ now }}",
@@ -14,8 +15,8 @@ const placeHolderVcTemplate = `{
     "id": "{{ credentialId }}"
   }`;
 
-
 const templateValuesDummy = {
+    "schoolId": 'Clemson University',
     "name": "Jimbo Wales",
     "description": "test description",
     "issuanceDate": "08/18/2023",
