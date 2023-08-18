@@ -52,15 +52,6 @@ const CredentialsTemplatesCollection: CollectionConfig = {
       maxLength: 1000,
     },
     {
-      name: "credentialTemplatesJson", // required
-      type: "code", // required
-      admin: {
-        language: "handlebars",
-      },
-      defaultValue: placeHolderVc,
-      required: true,
-    },
-    {
       name: "credentialTemplateJson", // required
       type: "json", // required
       required: true,
