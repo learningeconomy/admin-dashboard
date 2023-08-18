@@ -2,6 +2,7 @@ import { CollectionConfig } from "payload/types";
 import CreateTemplate from "../components/template/CreateTemplate";
 import TemplatePageDescription from "../components/template/TemplatePageDescription";
 
+
 const placeHolderVc = `{
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
@@ -17,7 +18,7 @@ const placeHolderVc = `{
 }`;
 
 const CredentialsTemplatesCollection: CollectionConfig = {
-  slug: "credential-templates",
+  slug: "credential-template",
   admin: {
     defaultColumns: ["title", "id", "status"],
     useAsTitle: "title",
@@ -54,6 +55,7 @@ const CredentialsTemplatesCollection: CollectionConfig = {
     {
       name: "credentialTemplateJson", // required
       type: "json", // required
+    //  defaultValue: JSON.stringify(placeHolderVc),
       required: true,
     },
   ],

@@ -13,7 +13,7 @@ const BatchPageDescription: React.FC = () => {
       <Link
         className="header_button"
         activeClassName="active"
-        to={`${adminRoute}/collections/credential-batches/create`}
+        to={`${adminRoute}/collections/credential-batch/create`}
       >
         Create New Batch
       </Link>

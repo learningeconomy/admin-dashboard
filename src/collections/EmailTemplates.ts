@@ -673,7 +673,7 @@ const placeholderEmailData = `
 </html>`;
 
 const EmailTemplatesCollection: CollectionConfig = {
-  slug: "email-templates",
+  slug: "email-template",
   admin: {
     defaultColumns: ["title", "id", "status"],
     useAsTitle: "title",

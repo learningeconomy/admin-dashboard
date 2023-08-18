@@ -11,9 +11,6 @@ import AfterNavLinks from './components/AfterNavLinks';
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
 
-// custom component for flows
-import CreateBatch from './components/batch/CreateBatch';
-import CreateTemplate from './components/template/CreateTemplate';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
@@ -26,7 +23,7 @@ export default buildConfig({
     },
     components: {
       graphics: {
-        Logo,
+        Logo, 
         Icon,
       },
     }
