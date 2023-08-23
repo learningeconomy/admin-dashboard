@@ -16,6 +16,7 @@ import {
   getSiblingData,
 } from "payload/components/forms";
 import SidebarMenu from "../Form/SidebarMenu";
+import { insertValuesIntoHandlebarsJsonTemplate } from "../../helpers/handlebarhelpers";
 
 const MAP_FIELDS_TO_STEPS = {
   1: ["title", "description", "internalNotes"],
@@ -80,6 +81,11 @@ const CreateBatch: React.FC = (props: Props) => {
     },
     [id, onSaveFromProps, auth, user, refreshCookieAsync]
   );
+
+  useEffect(()=>{
+    const jsonTemplateValue = insertValuesIntoHandlebarsJsonTemplate();
+    console.log('//jsonTemplateValue', jsonTemplateValue)
+  },[])
 
   return (
     <OperationContext.Provider value={operation}>

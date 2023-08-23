@@ -44,7 +44,7 @@ const CredentialsCollection: CollectionConfig = {
       name: "batch",
       type: "relationship",
       required: true,
-      relationTo: "credential-batches",
+      relationTo: "credential-batch",
       hasMany: false,
     },
   ],

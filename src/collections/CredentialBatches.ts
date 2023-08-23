@@ -3,7 +3,7 @@ import BatchPageDescription from "../components/batch/BatchPageDescription";
 import CreateBatch from "../components/batch/CreateBatch";
 
 const CredentialsBatchesCollection: CollectionConfig = {
-  slug: "credential-batches",
+  slug: "credential-batch",
   admin: {
     defaultColumns: ["title", "id", "status"],
     useAsTitle: "title",
@@ -48,14 +48,14 @@ const CredentialsBatchesCollection: CollectionConfig = {
       name: "template",
       type: "relationship",
       required: true,
-      relationTo: "credential-templates",
+      relationTo: "credential-template",
       hasMany: false,
     },
     {
       name: "emailTemplate",
       type: "relationship",
       required: true,
-      relationTo: "email-templates",
+      relationTo: "email-template",
       hasMany: false,
     },
   ],

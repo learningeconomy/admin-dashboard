@@ -12,7 +12,7 @@ const TemplatePageDescription: React.FC = () => {
       <Link
         className="header_button"
         activeClassName="active"
-        to={`${adminRoute}/collections/credential-templates/create`}
+        to={`${adminRoute}/collections/credential-template/create`}
       >
         Create New Template
       </Link>
