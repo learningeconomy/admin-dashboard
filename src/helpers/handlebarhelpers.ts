@@ -1,4 +1,4 @@
-import { createJsonHandlebars } from "handlebars-a-la-json";
+import { createJsonHandlebars } from "./handlebarsJson";
 
 
 const placeHolderVcTemplate = `{

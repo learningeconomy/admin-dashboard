@@ -16,7 +16,7 @@ import {
   getSiblingData,
 } from "payload/components/forms";
 import SidebarMenu from "../Form/SidebarMenu";
-import { insertValuesIntoHandlebarsJsonTemplate } from "./handlebarhelpers";
+import { insertValuesIntoHandlebarsJsonTemplate } from "../../helpers/handlebarhelpers";
 
 const MAP_FIELDS_TO_STEPS = {
   1: ["title", "description", "internalNotes"],
