@@ -27,6 +27,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/swiper.scss";
+import UploadCSV from "./UploadCSV";
 // hardcoded for now, but could be perhaps be defined in the database
 const MAP_FIELDS_TO_STEPS = {
   1: ["title", "description", "internalNotes"],
@@ -213,7 +214,7 @@ const FormSteps = (props: Props) => {
           <RenderSlide formProps={props} step={2} />
         </SwiperSlide>
         <SwiperSlide>
-          <RenderSlide formProps={props} step={3} />
+         <UploadCSV />
         </SwiperSlide>
         <SwiperSlide>
           <RenderSlide formProps={props} step={4} />
