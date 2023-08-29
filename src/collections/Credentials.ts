@@ -6,11 +6,6 @@ const CredentialsCollection: CollectionConfig = {
   admin: {
     defaultColumns: ["credentialName", "id", "status"],
     useAsTitle: "credentialName",
-    components: {
-      views: {
-        Edit: CreateBatch,
-      },
-    }
   },
   versions: {
     drafts: true,
