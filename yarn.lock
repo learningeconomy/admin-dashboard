@@ -4691,6 +4691,11 @@
   "resolved" "https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz"
   "version" "2.2.0"
 
+"papaparse@^5.4.1":
+  "integrity" "sha512-HipMsgJkZu8br23pW15uvo6sib6wne/4woLZPlFf3rpDyMe9ywEXUsuD7+6K9PRkJlVT51j/sCOYDKGGS3ZJrw=="
+  "resolved" "https://registry.npmjs.org/papaparse/-/papaparse-5.4.1.tgz"
+  "version" "5.4.1"
+
 "param-case@^3.0.4":
   "integrity" "sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A=="
   "resolved" "https://registry.npmjs.org/param-case/-/param-case-3.0.4.tgz"
