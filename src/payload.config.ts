@@ -11,7 +11,9 @@ import AfterNavLinks from './components/AfterNavLinks';
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
 
-
+//endpoints
+import { readPayloadVersion } from './endpoints/readPayloadVersion';
+import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 export default buildConfig({
   serverURL: 'http://localhost:3000',
   admin: {
@@ -36,6 +38,18 @@ export default buildConfig({
     EmailTemplatesCollection,
     // Add Collections here
     // Examples,
+  ],
+  endpoints: [
+    {
+      method: 'get',
+      path: '/payload-version',
+      handler: readPayloadVersion
+    },
+    {
+      method: 'post',
+      path: '/create-batch-credentials',
+      handler: createBatchCredentials
+    }
   ],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
