@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Papa from "papaparse";
-
+import { createBatchCredentials } from "../../endpoints/createCredentialsForBatch";
 const UploadCSV: React.FC = () => {
   const [file, setFile] = useState();
-  const [data, setData] = useState();
 
-  const fileReader = new FileReader();
+  useEffect(() => {
+    const fetchVersion = async () => {
+      const res = await fetch("/api/payload-version");
+      if (res.status === 200) {
+        const { version } = await res.json();
+        console.log("///version endpoint test", version);
+      }
+    };
+
+    fetchVersion();
+  }, []);
 
   const handleOnChange = (e) => {
     setFile(e.target.files[0]);
@@ -17,8 +26,36 @@ const UploadCSV: React.FC = () => {
     Papa.parse(file, {
       header: true,
       skipEmptyLines: true,
-      complete: function (results) {
+      complete: async (results) => {
+        console.log("///parsed results", results);
+
         console.log(results.data);
+        // if no errors and there is data
+        if (results?.data?.length > 0 && results?.errors?.length === 0) {
+          // Send parsed csv object to endpoint to create credential records
+          const res = await fetch("/api/create-batch-credentials", {
+            // Adding method type
+            method: "POST",
+
+            // Adding body or contents to send
+            body: JSON.stringify({
+              credentialRecords: results?.data,
+            }),
+            // Adding headers to the request
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+          });
+          console.log("///res", res);
+
+          if (res.status === 200) {
+            const { data } = await res.json();
+            console.log(
+              "///create batch creds endpoint test",
+              data
+            );
+          }
+        }
       },
     });
   };
