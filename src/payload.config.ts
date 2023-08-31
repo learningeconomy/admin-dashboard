@@ -47,7 +47,7 @@ export default buildConfig({
       handler: readPayloadVersion
     },
     {
-      method: 'get',
+      method: 'post',
       path: '/get-batch-credentials',
       handler: getBatchCredentials
     },

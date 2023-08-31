@@ -4,10 +4,10 @@ import payload from "payload";
 
 export const getBatchCredentials: PayloadHandler = async (req, res, next) => {
   if (!req.user) throw new Forbidden();
-
+   console.log('////req?.body', req.body);
   const query = {
     batch: {
-      equals: '64ee3ec5a0c9315b8536cc1a'
+      equals: req?.body?.batchId
     }
   }
 
@@ -22,7 +22,8 @@ export const getBatchCredentials: PayloadHandler = async (req, res, next) => {
       sort: "-title",
       locale: "en",
     });
-    console.log("///get CRED BATCH ENDPOINT", res);
+   
+    console.log('///data found', data);
 
     res.status(200).json({ data });
   } catch (err) {

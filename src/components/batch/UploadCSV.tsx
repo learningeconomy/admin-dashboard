@@ -7,7 +7,13 @@ const UploadCSV: React.FC = () => {
   const { id } = useDocumentInfo();
   useEffect(() => {
     const fetchBatchCredentials= async () => {
-      const res = await fetch("/api/get-batch-credentials");
+      const res = await fetch("/api/get-batch-credentials", {
+        method: "POST",
+        body: JSON.stringify({batchId: id}),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+      });
       if (res.status === 200) {
         const { data } = await res.json();
         console.log("///get batch credentials", data);
