@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Papa from "papaparse";
+import { useDocumentInfo } from "payload/components/utilities";
 
 const UploadCSV: React.FC = () => {
   const [file, setFile] = useState();
-
+  const { id } = useDocumentInfo();
   useEffect(() => {
     const fetchBatchCredentials= async () => {
       const res = await fetch("/api/get-batch-credentials");
@@ -39,6 +40,7 @@ const UploadCSV: React.FC = () => {
 
             // Adding body or contents to send
             body: JSON.stringify({
+              batchId: id,
               credentialRecords: results?.data,
             }),
             // Adding headers to the request

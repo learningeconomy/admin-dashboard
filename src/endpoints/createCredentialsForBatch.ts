@@ -7,13 +7,14 @@ export const createBatchCredentials: PayloadHandler = async(req, res, next) => {
 
   try {
    console.log('//req body', req?.body);
+     const id = req?.body?.batchId;
     const created = await Promise.all(req?.body?.credentialRecords?.map ( async record => {
           const newCredentialRecord =  await payload.create({
                 collection: 'credential',
                 data: {
                     credentialName: record?.['Titulo'],
                     extraFields: record,
-                    batch: "64ee3ec5a0c9315b8536cc1a",
+                    batch: id,
                 },
                 locale: 'en',
 
@@ -32,3 +33,5 @@ export const createBatchCredentials: PayloadHandler = async(req, res, next) => {
     res.status(500).json({ version: undefined })
   }
 }
+
+
