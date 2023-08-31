@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Papa from "papaparse";
-import { createBatchCredentials } from "../../endpoints/createCredentialsForBatch";
+
 const UploadCSV: React.FC = () => {
   const [file, setFile] = useState();
 
   useEffect(() => {
-    const fetchVersion = async () => {
-      const res = await fetch("/api/payload-version");
+    const fetchBatchCredentials= async () => {
+      const res = await fetch("/api/get-batch-credentials");
       if (res.status === 200) {
-        const { version } = await res.json();
-        console.log("///version endpoint test", version);
+        const { data } = await res.json();
+        console.log("///get batch credentials", data);
       }
     };
 
-    fetchVersion();
+    fetchBatchCredentials();
   }, []);
 
   const handleOnChange = (e) => {
