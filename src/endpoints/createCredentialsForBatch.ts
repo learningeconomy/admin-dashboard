@@ -13,6 +13,8 @@ export const createBatchCredentials: PayloadHandler = async(req, res, next) => {
                 collection: 'credential',
                 data: {
                     credentialName: record?.['Titulo'],
+                    earnerName: record?.['Full Name'],
+                    emailAddress: record?.['Email Address'],
                     extraFields: record,
                     batch: id,
                 },
