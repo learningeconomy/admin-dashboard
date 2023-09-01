@@ -34,7 +34,11 @@ const emptyData = {
     totalDocs: null,
 }
 
-const BatchCredentialListPreview: React.FC= () => {
+type BatchCredentialListPreviewProps = {
+    batchId: string | number;
+}
+
+const BatchCredentialListPreview: React.FC<BatchCredentialListPreviewProps>= ({batchId}) => {
 
     const [ data, setData] = useState(emptyData);
     const { collections } = useConfig();
@@ -47,7 +51,7 @@ const BatchCredentialListPreview: React.FC= () => {
     const fetchBatchCredentials= async () => {
       const res = await fetch("/api/get-batch-credentials", {
         method: "POST",
-        body: JSON.stringify({batchId: '64f119591136bd8c4603b97e'}),
+        body: JSON.stringify({batchId}),
         headers: {
             "Content-type": "application/json; charset=UTF-8",
           },

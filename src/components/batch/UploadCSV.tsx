@@ -90,7 +90,7 @@ const UploadCSV: React.FC = () => {
 
       <section>
 
-        <BatchCredentialListPreview />
+        <BatchCredentialListPreview batchId={id} />
       </section>
     </div>
   );
