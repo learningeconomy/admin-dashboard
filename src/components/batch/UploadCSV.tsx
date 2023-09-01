@@ -5,6 +5,8 @@ import BatchCredentialListPreview from "../List/BatchCredentialListPreview";
 const UploadCSV: React.FC = () => {
   const [file, setFile] = useState();
   const { id } = useDocumentInfo();
+  const [ data, setData ] = useState();
+  const [ refetch, setRefetch ] = useState(false);
   useEffect(() => {
     const fetchBatchCredentials= async () => {
       const res = await fetch("/api/get-batch-credentials", {
@@ -16,12 +18,13 @@ const UploadCSV: React.FC = () => {
       });
       if (res.status === 200) {
         const { data } = await res.json();
+        setData(data);
         console.log("///get batch credentials", data);
       }
     };
 
     fetchBatchCredentials();
-  }, []);
+  }, [refetch]);
 
   const handleOnChange = (e) => {
     setFile(e.target.files[0]);
@@ -58,6 +61,7 @@ const UploadCSV: React.FC = () => {
 
           if (res.status === 200) {
             const { data } = await res.json();
+            setRefetch(true);
             console.log(
               "///create batch creds endpoint test",
               data
@@ -67,6 +71,8 @@ const UploadCSV: React.FC = () => {
       },
     });
   };
+
+  console.log('///data from state', data);
 
   return (
     <div>
@@ -89,8 +95,9 @@ const UploadCSV: React.FC = () => {
       </form>
 
       <section>
-
-        <BatchCredentialListPreview batchId={id} />
+          {id && data && (
+        <BatchCredentialListPreview batchId={id} data={data} />
+        )}
       </section>
     </div>
   );

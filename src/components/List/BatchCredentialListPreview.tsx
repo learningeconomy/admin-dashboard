@@ -36,35 +36,36 @@ const emptyData = {
 
 type BatchCredentialListPreviewProps = {
     batchId: string | number;
+    data: any[];
 }
 
-const BatchCredentialListPreview: React.FC<BatchCredentialListPreviewProps>= ({batchId}) => {
+const BatchCredentialListPreview: React.FC<BatchCredentialListPreviewProps>= ({batchId, data }) => {
 
-    const [ data, setData] = useState(emptyData);
+    // const [ data, setData] = useState(emptyData);
     const { collections } = useConfig();
     console.log('///colllections', collections);
     const collection = collections.find( collection => collection.slug === 'credential');
     const disableEyebrow = true;
-   
+    if(!data) return <></>;
 
-  useEffect(() => {
-    const fetchBatchCredentials= async () => {
-      const res = await fetch("/api/get-batch-credentials", {
-        method: "POST",
-        body: JSON.stringify({batchId}),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-      });
-      if (res.status === 200) {
-        const { data } = await res.json();
-        setData(data);
-        console.log("///get batch credentials", data);
-      }
-    };
+//   useEffect(() => {
+//     const fetchBatchCredentials= async () => {
+//       const res = await fetch("/api/get-batch-credentials", {
+//         method: "POST",
+//         body: JSON.stringify({batchId}),
+//         headers: {
+//             "Content-type": "application/json; charset=UTF-8",
+//           },
+//       });
+//       if (res.status === 200) {
+//         const { data } = await res.json();
+//         setData(data);
+//         console.log("///get batch credentials", data);
+//       }
+//     };
 
-    fetchBatchCredentials();
-  }, []);
+//     fetchBatchCredentials();
+//   }, []);
 
   const { breakpoints: { s: smallBreak } } = useWindowInfo();
   const { t, i18n } = useTranslation('general');
@@ -80,6 +81,8 @@ const BatchCredentialListPreview: React.FC<BatchCredentialListPreviewProps>= ({b
       };
     });
   }
+
+
 
   return (
     <TableColumnsProvider collection={collection}>
