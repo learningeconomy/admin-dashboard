@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Papa from "papaparse";
 import { useDocumentInfo } from "payload/components/utilities";
-
+import BatchCredentialListPreview from "../List/BatchCredentialListPreview";
 const UploadCSV: React.FC = () => {
   const [file, setFile] = useState();
   const { id } = useDocumentInfo();
@@ -87,6 +87,11 @@ const UploadCSV: React.FC = () => {
           IMPORT CSV
         </button>
       </form>
+
+      <section>
+
+        <BatchCredentialListPreview />
+      </section>
     </div>
   );
 };

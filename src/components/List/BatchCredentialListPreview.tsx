@@ -7,7 +7,7 @@ import ListControls from 'payload/dist/admin/components/elements/ListControls';
 import ListSelection from 'payload/dist/admin/components/elements/ListSelection';
 import Pill from 'payload/dist/admin/components/elements/Pill';
 import Button from 'payload/dist/admin/components/elements/Button';
-import { Table } from 'payload/dist/admin/components/elements/Table';
+// import { Table } from 'payload/dist/admin/components/elements/Table';
 import Meta from 'payload/dist/admin/components/utilities/Meta';
 import { ListCollectionProps as Props } from '../types';
 import ViewDescription from 'payload/dist/admin/components/elements/ViewDescription';
@@ -23,8 +23,10 @@ import PublishMany from 'payload/dist/admin/components/elements/PublishMany';
 import UnpublishMany from 'payload/dist/admin/components/elements/UnpublishMany';
 import formatFilesize from '../../helpers/formatFileSize';
 import CredentialsCollection from '../../collections/Credentials';
-
+import Table from '../Table/Table';
 import './index.scss';
+import { TableColumnsProvider } from 'payload/dist/admin/components/elements/TableColumns';
+import { useConfig } from 'payload/components/utilities';
 
 const baseClass = 'collection-list';
 const emptyData = {
@@ -35,8 +37,9 @@ const emptyData = {
 const BatchCredentialListPreview: React.FC= () => {
 
     const [ data, setData] = useState(emptyData);
- 
-    const collection = CredentialsCollection;
+    const { collections } = useConfig();
+    console.log('///colllections', collections);
+    const collection = collections.find( collection => collection.slug === 'credential');
     const disableEyebrow = true;
    
 
@@ -75,16 +78,17 @@ const BatchCredentialListPreview: React.FC= () => {
   }
 
   return (
+    <TableColumnsProvider collection={collection}>
     <div className={baseClass}>
      
-      {/* <SelectionProvider
+      <SelectionProvider
         docs={data.docs}
         totalDocs={data.totalDocs}
-      > */}
+      >
         {!disableEyebrow && (
           <Eyebrow />
         )}
-        <Gutter className={`${baseClass}__wrap`}>
+      
         
           {/* <ListControls
             collection={collection}
@@ -176,10 +180,11 @@ const BatchCredentialListPreview: React.FC= () => {
               </Fragment>
             )}
           </div> */}
-        </Gutter>
-      {/* </SelectionProvider> */}
-     
+ 
+      </SelectionProvider>
+   
     </div>
+    </TableColumnsProvider>
   );
 };
 
