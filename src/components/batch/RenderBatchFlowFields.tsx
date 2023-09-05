@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import RenderCustomComponent from "payload/dist/admin/components/utilities/RenderCustomComponent";
 import useIntersect from "payload/dist/admin/hooks/useIntersect";
@@ -7,13 +7,13 @@ import {
   fieldAffectsData,
   fieldIsPresentationalOnly,
 } from "payload/dist/fields/config/types";
+import { useConfig } from "payload/components/utilities";
+import { useLocale } from "payload/components/utilities";
+import { useDocumentInfo } from "payload/components/utilities";
 import { useOperation } from "payload/dist/admin/components/utilities/OperationProvider/index";
 import { getTranslation } from "payload/dist/utilities/getTranslation";
 import { Swiper as SwiperInterface } from "swiper";
-import {
-  useAllFormFields,
-  useForm,
-} from "payload/components/forms";
+import { useAllFormFields, useForm } from "payload/components/forms";
 import { Fields } from "payload/dist/admin/components/forms/Form/types";
 
 const baseClass = "render-fields";
@@ -27,6 +27,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/swiper.scss";
+import UploadCSV from "./UploadCSV";
 // hardcoded for now, but could be perhaps be defined in the database
 const MAP_FIELDS_TO_STEPS = {
   1: ["title", "description", "internalNotes"],
@@ -167,6 +168,32 @@ const FormSteps = (props: Props) => {
   // the `fields` const will be equal to all fields' state,
   // and the `dispatchFields` method is usable to send field state up to the form
   const [fields, dispatchFields] = useAllFormFields();
+  const { collection, global, id } = useDocumentInfo();
+  const {
+    serverURL,
+    routes: { api },
+  } = useConfig();
+  const locale = useLocale();
+
+  const saveDraft = useCallback(() => {
+    const search = `?locale=${locale}&depth=0&fallback-locale=null&draft=true`;
+    let action;
+    let method = 'POST';
+    if (collection) {
+      action = `${serverURL}${api}/${collection.slug}${id ? `/${id}` : ''}${search}`;
+      if (id) method = 'PATCH';
+    }
+    console.log('///action',action);
+
+    submit({
+      skipValidation: true,
+      method,
+      overrides: {
+        _status: "draft",
+      },
+      action
+    });
+  }, [submit, collection, global, serverURL, api, locale, id]);
 
   const handleNextStep = async (e) => {
     e.preventDefault();
@@ -179,6 +206,7 @@ const FormSteps = (props: Props) => {
       await submit();
     }
     if (formStepValid) {
+      // await saveDraft();
       setSubmit(false);
       slidesRef?.slideNext();
     }
@@ -213,7 +241,7 @@ const FormSteps = (props: Props) => {
           <RenderSlide formProps={props} step={2} />
         </SwiperSlide>
         <SwiperSlide>
-          <RenderSlide formProps={props} step={3} />
+          <UploadCSV />
         </SwiperSlide>
         <SwiperSlide>
           <RenderSlide formProps={props} step={4} />
