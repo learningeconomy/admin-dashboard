@@ -15,7 +15,7 @@ import { Icon } from './components/Icon';
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
-import { sendEmail } from './endpoints/sendEmail';
+import { sendEmail } from './endpoints/sendTestEmail';
 
 
 export default buildConfig({
