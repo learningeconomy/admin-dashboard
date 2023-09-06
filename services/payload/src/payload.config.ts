@@ -20,19 +20,20 @@ import { sendEmail } from './endpoints/sendEmail';
 
 export default buildConfig({
   email: {
-    transportOptions: {
-      host: process.env.SMTP_HOST,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-      port: 587,
-      secure: true, // use TLS
-      tls: {
-        // do not fail on invalid certs
-        rejectUnauthorized: false,
-      },
-    },
+    // transportOptions: {
+    //   host: process.env.SMTP_HOST,
+    //   auth: {
+    //     user: process.env.SMTP_USER,
+    //     pass: process.env.SMTP_PASS,
+    //   },
+    //   port: 587,
+    //   secure: true, // use TLS
+    //   tls: {
+    //     // do not fail on invalid certs
+    //     rejectUnauthorized: false,
+    //   },
+    // },
+    logMockCredentials: true,
     fromName: "donny",
     fromAddress: "donny@learningeconomy.com",
   },
@@ -63,7 +64,7 @@ export default buildConfig({
   endpoints: [
     {
       method: 'post',
-      path: 'send-email',
+      path: '/send-email',
       handler: sendEmail,
     },
     {
