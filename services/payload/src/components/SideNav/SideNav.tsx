@@ -57,6 +57,9 @@ const SideNav: React.FC = () => {
                 <button className={activeButton === 'credential-template' ? "navbar-buttons active" : "navbar-buttons"} onClick={handleClick}>
                     <img src="/assets/file-edit.svg" alt="credential-template"/>
                 </button>
+                <button className={activeButton === 'email-template' ? "navbar-buttons active" : "navbar-buttons"} onClick={handleClick}>
+                    <img src="/assets/mail-plus.svg" alt="email-template"/>
+                </button>
             </div>
             <div className='navbar-closed-user-wrapper'>
                 <Link
@@ -83,6 +86,9 @@ const SideNav: React.FC = () => {
                 <button className={activeButton === 'credential-template' ? "navbar-open-buttons active" : "navbar-open-buttons"} onClick={handleClick}>
                     <img src="/assets/file-edit.svg" alt="credential-template"/> Credential Templates
                 </button>
+                <button className={activeButton === 'email-template' ? "navbar-open-buttons active" : "navbar-open-buttons"} onClick={handleClick}>
+                    <img src="/assets/mail-plus.svg" alt="email-template"/> Email Templates
+                </button>
             </div>
             <div className='navbar-open-user-wrapper'>
                 <div className='navbar-open-user'>
@@ -92,12 +98,11 @@ const SideNav: React.FC = () => {
                     onClick={handleClick}
                     >
                     <Account /> 
-                    </Link>
                     <p>{user.email}</p>
+                    </Link>
                 </div>
                 <div className='navbar-open-logout-wrapper'>
-                    <Logout /> 
-                    <p>Logout</p>
+                    <Logout navbarOpen={navbarOpen} /> 
                 </div>
             </div>   
         </>

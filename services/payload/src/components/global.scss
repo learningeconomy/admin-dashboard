@@ -29,3 +29,14 @@
 .template-default__wrap {
   margin-left: 308px;
 }
+
+.nav__log-out {
+  display: flex;
+  align-self: center;
+  text-decoration: none;
+
+  & > p {
+      font-size: 18px;
+      margin-left: 10px;
+  }
+}
