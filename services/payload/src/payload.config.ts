@@ -16,6 +16,23 @@ import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
 export default buildConfig({
+  email: {
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+      port: 587,
+      secure: true, // use TLS
+      tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false,
+      },
+    },
+    fromName: "donny",
+    fromAddress: "donny@learningeconomy.com",
+  },
   serverURL: 'http://localhost:3000',
   admin: {
     user: Users.slug,
