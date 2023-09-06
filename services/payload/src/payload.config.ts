@@ -15,6 +15,8 @@ import { Icon } from './components/Icon';
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
+import SideNav from './components/SideNav/SideNav';
+
 export default buildConfig({
   serverURL: 'http://localhost:3000',
   admin: {
@@ -25,6 +27,7 @@ export default buildConfig({
       ogImage: '/assets/tdm-og.png',
     },
     components: {
+      Nav: SideNav,
       graphics: {
         Logo, 
         Icon,
