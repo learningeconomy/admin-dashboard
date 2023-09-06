@@ -1,0 +1,122 @@
+.navbar-chevron-button {
+    background-color: var(--slate-100, #F1F5F9);
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    margin-top: 20px;
+    padding: 5px 20px;
+}
+
+.chevron-right {
+    margin-left: 5px;
+	transform: rotate(180deg);
+}
+
+.navbar-open-chevron {
+    margin: 0px 5px 0px 0px;
+}
+
+.navbar-wrapper {
+    background-color: #FFFFFF;
+    box-shadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.10);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    // margin: 0;
+    position: fixed;
+}
+
+.closed {
+    width: 120px;
+}
+
+.open {
+    width: 302px;
+}
+
+.navbar-icon-wrapper,
+.navbar-open-icon-wrapper {
+    margin-top: 60px 
+}
+
+.navbar-open-icon-wrapper {
+    & > img {
+        width: 210px;
+    }    
+}
+
+.navbar-buttons-wrap {
+    display: flex;
+    flex-direction: column;
+    height: 215px;
+    margin-top: 70px;
+}
+
+.navbar-buttons,
+.navbar-open-buttons {
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+
+    & > img {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+.navbar-open-buttons {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    line-height: 28px;
+
+    & > img {
+        margin-right: 10px;
+    }
+}
+
+.active {
+    background-color: var(--green-100, #DCFCE7);
+    border-radius: 100px;
+}
+
+.navbar-open-user-wrapper,
+.navbar-closed-user-wrapper {
+    border-top: 1px solid var(--slate-200, #E2E8F0);
+    margin-top: 170px;
+    text-align: center;
+    width: 100%;
+}
+
+.navbar-open-user {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+
+    & > p {
+        font-size: 18px;
+        margin-left: 10px
+    }
+}
+
+.navbar-closed-user-wrapper {
+    display: flex;
+    flex-direction: column;
+    
+    & > a {
+        margin: 10px;
+    }
+}
+
+.navbar-open-logout-wrapper {
+    display: flex;
+    justify-content: center;
+
+    & > p {
+        font-size: 18px;
+    }
+}
