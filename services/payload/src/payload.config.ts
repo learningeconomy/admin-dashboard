@@ -15,6 +15,9 @@ import { Icon } from './components/Icon';
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
+import { sendEmail } from './endpoints/sendEmail';
+
+
 export default buildConfig({
   email: {
     transportOptions: {
@@ -58,6 +61,11 @@ export default buildConfig({
     // Examples,
   ],
   endpoints: [
+    {
+      method: 'post',
+      path: 'send-email',
+      handler: sendEmail,
+    },
     {
       method: 'get',
       path: '/payload-version',
