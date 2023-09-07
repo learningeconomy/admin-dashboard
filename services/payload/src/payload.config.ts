@@ -15,52 +15,59 @@ import { Icon } from './components/Icon';
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
+import { getCredential } from './endpoints/getCredential';
 export default buildConfig({
-  serverURL: 'http://localhost:3000',
-  admin: {
-    user: Users.slug,
-    meta: {
-      titleSuffix: '- Tecnológico de Monterrey',
-      favicon: '/assets/tdm-logo.png',
-      ogImage: '/assets/tdm-og.png',
+    serverURL: 'http://localhost:3000',
+    admin: {
+        user: Users.slug,
+        meta: {
+            titleSuffix: '- Tecnológico de Monterrey',
+            favicon: '/assets/tdm-logo.png',
+            ogImage: '/assets/tdm-og.png',
+        },
+        components: {
+            graphics: {
+                Logo,
+                Icon,
+            },
+        },
     },
-    components: {
-      graphics: {
-        Logo, 
-        Icon,
-      },
-    }
-  },
-  collections: [
-    Users,
-    CredentialsTemplatesCollection,
-    CredentialsBatchesCollection,
-    CredentialsCollection,
-    EmailTemplatesCollection,
-    // Add Collections here
-    // Examples,
-  ],
-  endpoints: [
-    {
-      method: 'get',
-      path: '/payload-version',
-      handler: readPayloadVersion
+    cors: '*',
+    collections: [
+        Users,
+        CredentialsTemplatesCollection,
+        CredentialsBatchesCollection,
+        CredentialsCollection,
+        EmailTemplatesCollection,
+        // Add Collections here
+        // Examples,
+    ],
+    endpoints: [
+        {
+            method: 'get',
+            path: '/payload-version',
+            handler: readPayloadVersion,
+        },
+        {
+            method: 'post',
+            path: '/get-batch-credentials',
+            handler: getBatchCredentials,
+        },
+        {
+            method: 'post',
+            path: '/create-batch-credentials',
+            handler: createBatchCredentials,
+        },
+        {
+            method: 'get',
+            path: '/get-credential',
+            handler: getCredential,
+        },
+    ],
+    typescript: {
+        outputFile: path.resolve(__dirname, 'payload-types.ts'),
     },
-    {
-      method: 'post',
-      path: '/get-batch-credentials',
-      handler: getBatchCredentials
+    graphQL: {
+        schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
     },
-    {
-      method: 'post',
-      path: '/create-batch-credentials',
-      handler: createBatchCredentials
-    }
-  ],
-  typescript: {
-    outputFile: path.resolve(__dirname, 'payload-types.ts'),
-  },
-  graphQL: {
-    schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
-  },
-})
+});

@@ -1,6 +1,6 @@
-import { CollectionConfig } from "payload/types";
-import CreateTemplate from "../components/template/CreateTemplate";
-import TemplatePageDescription from "../components/template/TemplatePageDescription";
+import { CollectionConfig } from 'payload/types';
+import CreateTemplate from '../components/template/CreateTemplate';
+import TemplatePageDescription from '../components/template/TemplatePageDescription';
 
 const placeHolderVc = `{
   "@context": [
@@ -17,47 +17,47 @@ const placeHolderVc = `{
 }`;
 
 const CredentialsTemplatesCollection: CollectionConfig = {
-  slug: "credential-template",
-  admin: {
-    defaultColumns: ["title", "id", "status"],
-    useAsTitle: "title",
-    description: TemplatePageDescription,
-    components: {
-      views: {
-        Edit: CreateTemplate,
-      },
+    slug: 'credential-template',
+    admin: {
+        defaultColumns: ['title', 'id', 'status'],
+        useAsTitle: 'title',
+        description: TemplatePageDescription,
+        components: {
+            views: {
+                Edit: CreateTemplate,
+            },
+        },
     },
-  },
-  versions: {
-    drafts: true,
-  },
-  fields: [
-    {
-      name: "title",
-      type: "text",
-      required: true,
-      minLength: 3,
-      maxLength: 100,
+    versions: {
+        drafts: true,
     },
-    {
-      name: "description",
-      type: "textarea",
-      required: false,
-      maxLength: 1000,
-    },
-    {
-      name: "internalNotes",
-      type: "textarea",
-      required: false,
-      maxLength: 1000,
-    },
-    {
-      name: "credentialTemplateJson", // required
-      type: "json", // required
-    //  defaultValue: JSON.stringify(placeHolderVc),
-      required: true,
-    },
-  ],
+    fields: [
+        {
+            name: 'title',
+            type: 'text',
+            required: true,
+            minLength: 3,
+            maxLength: 100,
+        },
+        {
+            name: 'description',
+            type: 'textarea',
+            required: false,
+            maxLength: 1000,
+        },
+        {
+            name: 'internalNotes',
+            type: 'textarea',
+            required: false,
+            maxLength: 1000,
+        },
+        {
+            name: 'credentialTemplateJson', // required
+            type: 'json', // required
+            //  defaultValue: JSON.stringify(placeHolderVc),
+            required: true,
+        },
+    ],
 };
 
 export default CredentialsTemplatesCollection;

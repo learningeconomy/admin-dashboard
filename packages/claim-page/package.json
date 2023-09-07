@@ -1,0 +1,24 @@
+{
+  "name": "@admin-dashboard/claim-page",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^5.0.0",
+    "@learncard/init": "^1.0.22",
+    "@learncard/types": "^5.3.2",
+    "astro": "^3.0.8",
+    "date-fns": "^2.30.0",
+    "qrcode": "^1.5.3",
+    "tailwindcss": "^3.0.24"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.2"
+  }
+}
