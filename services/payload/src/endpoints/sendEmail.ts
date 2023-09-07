@@ -2,7 +2,7 @@ import { PayloadHandler } from "payload/config";
 import { Forbidden } from "payload/errors";
 import payload from "payload";
 
-export const sendTestEmail: PayloadHandler = async (req, res, next) => {
+export const sendEmail: PayloadHandler = async (req, res, next) => {
   if (!req.user) throw new Forbidden();
    console.log('////req?.body', req.body);
   const query = {
@@ -11,13 +11,20 @@ export const sendTestEmail: PayloadHandler = async (req, res, next) => {
     }
   }
 
+  // test email
+
   try {
     console.log("//req body", req?.body);
     const data = await payload.sendEmail({
         to: 'withallmyhrt@gmail.com',
         subject: 'test email payload',
         email: 'test email',
+        html: '<p>hello world'
     })
+
+    //actual email
+    // get credential details and interpolate into email template
+    // send email
    
     console.log('///data found', data);
 

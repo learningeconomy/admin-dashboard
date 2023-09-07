@@ -15,27 +15,28 @@ import { Icon } from './components/Icon';
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
-import { sendEmail } from './endpoints/sendTestEmail';
+import { sendEmail } from './endpoints/sendEmail';
 
 
 export default buildConfig({
   email: {
-    // transportOptions: {
-    //   host: process.env.SMTP_HOST,
-    //   auth: {
-    //     user: process.env.SMTP_USER,
-    //     pass: process.env.SMTP_PASS,
-    //   },
-    //   port: 587,
-    //   secure: true, // use TLS
-    //   tls: {
-    //     // do not fail on invalid certs
-    //     rejectUnauthorized: false,
-    //   },
-    // },
-    logMockCredentials: true,
-    fromName: "donny",
-    fromAddress: "donny@learningeconomy.com",
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      transportMethod: 'SMTP',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+      port: 587,
+      secure: false, // use TLS
+      tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false,
+      },
+    },
+    //logMockCredentials: true,
+    fromName: "Patsy Hessel",
+    fromAddress: "patsy.hessel95@ethereal.email",
   },
   serverURL: 'http://localhost:3000',
   admin: {
