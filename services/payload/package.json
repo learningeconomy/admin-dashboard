@@ -17,6 +17,7 @@
   "dependencies": {
     "@faceless-ui/window-info": "^2.1.1",
     "better-error-message-for-json-parse": "^0.1.6",
+    "bullmq": "^4.9.0",
     "cross-env": "^7.0.3",
     "deep-equal": "^2.2.2",
     "dotenv": "^8.2.0",
