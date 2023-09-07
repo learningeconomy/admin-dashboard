@@ -56,6 +56,14 @@ export function registerQueue<T>(
   queue.events = registeredQueues[name].queueEvents
   return queue
 }
+
+// This will run in the same thread as the main app
+// if this is more processor intensive then we should offload this to a background process
+/*
+If we pass a path to a javascript file instead of a function to 
+the registerQueue function, BullMQ will spawn a new process to run the file. 
+These are called sandboxed processors.
+*/
 export const emailQueue = registerQueue(
   "email",
   async (job: any) => {
