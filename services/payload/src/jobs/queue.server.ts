@@ -3,6 +3,13 @@ import { QueueEvents } from "bullmq";
 import { Queue, Worker } from "bullmq";
 import payload from "payload";
 
+
+// redis settings...
+const connection = {
+  host: 'localhost',
+  port: 6379
+}
+
 type AugmentedQueue<T> = Queue<T> & {
   events: QueueEvents
 }
