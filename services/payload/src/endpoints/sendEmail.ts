@@ -1,6 +1,7 @@
 import { PayloadHandler } from "payload/config";
 import { Forbidden } from "payload/errors";
 import payload from "payload";
+import { emailQueue } from "../jobs/queue.server";
 
 export const sendEmail: PayloadHandler = async (req, res, next) => {
   if (!req.user) throw new Forbidden();
@@ -15,12 +16,16 @@ export const sendEmail: PayloadHandler = async (req, res, next) => {
 
   try {
     console.log("//req body", req?.body);
-    const data = await payload.sendEmail({
-        to: 'withallmyhrt@gmail.com',
-        subject: 'test email payload',
-        email: 'test email',
-        html: '<p>hello world'
-    })
+
+    const data = {
+      to: 'withallmyhrt@gmail.com',
+      subject: 'test email payload',
+      email: 'test email',
+      html: '<p>hello world'
+    };
+
+
+    await emailQueue.add("send-test-email", data)
 
     //actual email
     // get credential details and interpolate into email template
