@@ -1,7 +1,7 @@
 import { PayloadHandler } from "payload/config";
 import { Forbidden } from "payload/errors";
 import payload from "payload";
-import { emailQueue } from "../jobs/queue.server";
+import { emailQueue } from "../jobs/queue.server.ts";
 
 export const sendEmail: PayloadHandler = async (req, res, next) => {
   if (!req.user) throw new Forbidden();
@@ -21,7 +21,7 @@ export const sendEmail: PayloadHandler = async (req, res, next) => {
       to: 'withallmyhrt@gmail.com',
       subject: 'test email payload',
       email: 'test email',
-      html: '<p>hello world'
+      html: '<p>hello world</p>'
     };
 
 

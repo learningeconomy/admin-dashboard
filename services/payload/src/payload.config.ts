@@ -10,13 +10,16 @@ import AfterNavLinks from './components/AfterNavLinks';
 //components
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
-
+import empyObject from './mocks/empyObject';
 //endpoints
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
 import { sendEmail } from './endpoints/sendEmail';
 
+//paths
+const queuePath = path.resolve(__dirname, 'jobs/queue.server.ts');
+const mockModulePath = path.resolve(__dirname, 'mocks/empyObject.js');
 
 export default buildConfig({
   email: {
@@ -51,7 +54,17 @@ export default buildConfig({
         Logo, 
         Icon,
       },
-    }
+    },
+    webpack: (config) => ({
+			...config,
+			resolve: {
+				...config.resolve,
+				alias: {
+					...config.resolve.alias,
+					[queuePath]: mockModulePath,
+				}
+			}
+		})
   },
   collections: [
     Users,
