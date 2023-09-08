@@ -23,17 +23,12 @@ const SideNav: React.FC = () => {
       } = useConfig();
 
     const handleClick = (e) => {
+        history.push('')
         if ((history?.location?.pathname.includes(`admin/account`))) {
             setActiveButton('');
         }
         setActiveButton(e.currentTarget.firstChild.alt);
-        if (history?.location?.pathname.includes(`admin/collections`)) {
-            history.push(`${e.currentTarget.firstChild.alt}?limit=10`);
-        } else if (history?.location?.pathname.includes(`admin/`)) {
-            history.push(`collections/${e.currentTarget.firstChild.alt}?limit=10`)
-        } else {
-            history.push(`admin/collections/${e.currentTarget.firstChild.alt}?limit=10`);
-        }
+        history.push(`admin/collections/${e.currentTarget.firstChild.alt}?limit=10`);
     };
 
   return (
