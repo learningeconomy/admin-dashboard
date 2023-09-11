@@ -10,12 +10,13 @@ import AfterNavLinks from './components/AfterNavLinks';
 //components
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
+import SideNav from './components/SideNav/SideNav';
 
 //endpoints
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
-import SideNav from './components/SideNav/SideNav';
+
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
