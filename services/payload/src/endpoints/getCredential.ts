@@ -9,11 +9,9 @@ const secret =
 const expires = process.env.TOKEN_EXPIRATION_TIME_IN_SECONDS;
 
 export const getCredential: PayloadHandler = async (req, res) => {
-    // TODO: Auth
-    const authHeader = req.headers.authorization;
-    const { id } = req.query;
+    let id: string;
 
-    if (!id || typeof id !== 'string') return res.sendStatus(400);
+    const authHeader = req.headers.authorization;
 
     try {
         if (!authHeader.startsWith('Bearer ')) return res.sendStatus(401);
@@ -22,7 +20,9 @@ export const getCredential: PayloadHandler = async (req, res) => {
 
         const decoded = jwt.verify(token, secret);
 
-        if (typeof decoded === 'string' || decoded.id !== id) return res.sendStatus(401);
+        if (typeof decoded === 'string' || !decoded.id) return res.sendStatus(401);
+
+        id = decoded.id;
     } catch (error) {
         return res.sendStatus(401);
     }
