@@ -15,7 +15,7 @@ import { getTranslation } from "payload/dist/utilities/getTranslation";
 import { Swiper as SwiperInterface } from "swiper";
 import { useAllFormFields, useForm } from "payload/components/forms";
 import { Fields } from "payload/dist/admin/components/forms/Form/types";
-
+import BatchPreviewSubmit from "./BatchPreviewSubmit";
 const baseClass = "render-fields";
 
 const intersectionObserverOptions = {
@@ -246,7 +246,9 @@ const FormSteps = (props: Props) => {
         <SwiperSlide>
           <RenderSlide formProps={props} step={4} />
         </SwiperSlide>
-        ...
+        <SwiperSlide>
+          <BatchPreviewSubmit />
+        </SwiperSlide>
       </Swiper>
       <div>
         <button onClick={handlePrevStep}>Prev Step</button>

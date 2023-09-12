@@ -13,6 +13,7 @@ export const sendEmail: PayloadHandler = async (req, res, next) => {
   }
 
   // test email
+  await payload.find()
 
   try {
     console.log("//req body", req?.body);

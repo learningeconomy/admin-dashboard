@@ -51,8 +51,7 @@ export function registerQueue<T>(
       worker,
     }
   }
-  const queue = registeredQueues[name]
-    .queue as AugmentedQueue<T>
+  const queue = registeredQueues[name].queue as AugmentedQueue<T>
   queue.events = registeredQueues[name].queueEvents
   return queue
 }
@@ -68,7 +67,7 @@ export const emailQueue = registerQueue(
   "email",
   async (job: any) => {
     console.log('///emailQueue job', job);
-    const { to, subject, text } = job.data
+    const { to, subject, text, html } = job.data
     await payload.sendEmail({to, subject, text})
   },
 )
