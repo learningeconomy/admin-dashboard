@@ -3,8 +3,6 @@ import { Forbidden } from 'payload/errors';
 import payload from "payload";
 
 
-
-
 export const createBatchCredentials: PayloadHandler = async(req, res, next) => {
   if (!req.user) throw new Forbidden
 
@@ -40,5 +38,3 @@ export const createBatchCredentials: PayloadHandler = async(req, res, next) => {
     res.status(500).json({ version: undefined })
   }
 }
-
-

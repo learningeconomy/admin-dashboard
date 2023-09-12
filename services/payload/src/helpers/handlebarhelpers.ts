@@ -1,5 +1,4 @@
-import { createJsonHandlebars } from "./handlebarsJson";
-
+import { createJsonHandlebars } from './handlebarsJson';
 
 const placeHolderVcTemplate = `{
     "@context": [
@@ -16,26 +15,25 @@ const placeHolderVcTemplate = `{
   }`;
 
 const templateValuesDummy = {
-    "schoolId": 'Clemson University',
-    "name": "Jimbo Wales",
-    "description": "test description",
-    "issuanceDate": "08/18/2023",
-    "studentId": "1231231231323",
-    "credentialId": "234234234234",
-}
-
+    'schoolId': 'Clemson University',
+    'name': 'Jimbo Wales',
+    'description': 'test description',
+    'issuanceDate': '08/18/2023',
+    'studentId': '1231231231323',
+    'credentialId': '234234234234',
+};
 
 const insertValuesIntoHandlebarsJsonTemplate = (template?: string, fieldValues?: any) => {
-  const handlebars = createJsonHandlebars();
-  // compile the template
-  const _template = placeHolderVcTemplate; //dummy template
-  const compiledTemplate = handlebars.compile(_template);
+    const handlebars = createJsonHandlebars();
+    // compile the template
+    const _template = template || placeHolderVcTemplate; //dummy template
+    const compiledTemplate = handlebars.compile(_template);
 
-  // execute the template
-  const data = templateValuesDummy // dummy data
-  const obj = compiledTemplate(data);
+    // execute the template
+    const data = fieldValues || templateValuesDummy; // dummy data
+    const obj = compiledTemplate(data);
 
-  return obj; // return template with inserted values
+    return obj; // return template with inserted values
 };
 
 export { insertValuesIntoHandlebarsJsonTemplate };

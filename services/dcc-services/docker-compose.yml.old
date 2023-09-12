@@ -1,0 +1,8 @@
+version: '3.5'
+services:
+  coordinator:
+    image: digitalcredentials/issuer-coordinator
+    ports:
+      - "4005:4005"
+  signer:
+    image: digitalcredentials/signing-service

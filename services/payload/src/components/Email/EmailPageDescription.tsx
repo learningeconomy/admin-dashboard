@@ -37,7 +37,7 @@ const EmailPageDescription: React.FC = () => {
       >
         Create New Template
       </Link>
-
+       <h2>TEST2</h2>
       <button onClick={handleSendTestEmail}>Send Test Email</button>
     </div>
   );

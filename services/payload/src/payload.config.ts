@@ -6,101 +6,116 @@ import CredentialsTemplatesCollection from './collections/CredentialTemplates';
 import CredentialsBatchesCollection from './collections/CredentialBatches';
 import CredentialsCollection from './collections/Credentials';
 import EmailTemplatesCollection from './collections/EmailTemplates';
-import AfterNavLinks from './components/AfterNavLinks';
+
 //components
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
-import empyObject from './mocks/empyObject';
+
 //endpoints
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
 import { sendEmail } from './endpoints/sendEmail';
+import { getCredential, getCredentialJwt } from './endpoints/getCredential';
 
 //paths
 const queuePath = path.resolve(__dirname, 'jobs/queue.server.ts');
-const mockModulePath = path.resolve(__dirname, 'mocks/empyObject.js');
+const getCredentialPath = path.resolve(__dirname, 'endpoints/getCredential.ts');
+const mockModulePath = path.resolve(__dirname, 'mocks/mockGetCredential.js');
+const mockQueueModulePath = path.resolve(__dirname, 'mocks/mockQueueModule.js');
 
 export default buildConfig({
-  email: {
-    transportOptions: {
-      host: process.env.SMTP_HOST,
-      transportMethod: 'SMTP',
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-      port: 587,
-      secure: false, // use TLS
-      tls: {
-        // do not fail on invalid certs
-        rejectUnauthorized: false,
-      },
+    email: {
+        transportOptions: {
+            host: process.env.SMTP_HOST,
+            transportMethod: 'SMTP',
+            auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS,
+            },
+            port: 587,
+            secure: false, // use TLS
+            tls: {
+                // do not fail on invalid certs
+                rejectUnauthorized: false,
+            },
+        },
+        //logMockCredentials: true,
+        fromName: 'Patsy Hessel',
+        fromAddress: 'patsy.hessel95@ethereal.email',
     },
-    //logMockCredentials: true,
-    fromName: "Patsy Hessel",
-    fromAddress: "patsy.hessel95@ethereal.email",
-  },
-  serverURL: 'http://localhost:3000',
-  admin: {
-    user: Users.slug,
-    meta: {
-      titleSuffix: '- Tecnológico de Monterrey',
-      favicon: '/assets/tdm-logo.png',
-      ogImage: '/assets/tdm-og.png',
+    serverURL: 'http://localhost:3000',
+    admin: {
+        user: Users.slug,
+        meta: {
+            titleSuffix: '- Tecnológico de Monterrey',
+            favicon: '/assets/tdm-logo.png',
+            ogImage: '/assets/tdm-og.png',
+        },
+        components: {
+            graphics: {
+                Logo,
+                Icon,
+            },
+        },
+        webpack: config => ({
+            ...config,
+            resolve: {
+                ...config.resolve,
+                alias: {
+                    ...config.resolve.alias,
+                    [queuePath]: mockQueueModulePath,
+                    [getCredentialPath]: mockModulePath,
+                },
+            },
+        }),
     },
-    components: {
-      graphics: {
-        Logo, 
-        Icon,
-      },
+    collections: [
+        Users,
+        CredentialsTemplatesCollection,
+        CredentialsBatchesCollection,
+        CredentialsCollection,
+        EmailTemplatesCollection,
+        // Add Collections here
+        // Examples,
+    ],
+    endpoints: [
+        {
+            method: 'post',
+            path: '/send-email',
+            handler: sendEmail,
+        },
+        {
+            method: 'get',
+            path: '/payload-version',
+            handler: readPayloadVersion,
+        },
+        {
+            method: 'post',
+            path: '/get-batch-credentials',
+            handler: getBatchCredentials,
+        },
+        {
+            method: 'post',
+            path: '/create-batch-credentials',
+            handler: createBatchCredentials,
+        },
+        // TODO: This is a security hole that needs to go away when we're done testing!!!
+        {
+            method: 'get',
+            path: '/get-credential-jwt',
+            handler: getCredentialJwt,
+        },
+        {
+            method: 'get',
+            path: '/get-credential',
+            handler: getCredential,
+        },
+    ],
+    typescript: {
+        outputFile: path.resolve(__dirname, 'payload-types.ts'),
     },
-    webpack: (config) => ({
-			...config,
-			resolve: {
-				...config.resolve,
-				alias: {
-					...config.resolve.alias,
-					[queuePath]: mockModulePath,
-				}
-			}
-		})
-  },
-  collections: [
-    Users,
-    CredentialsTemplatesCollection,
-    CredentialsBatchesCollection,
-    CredentialsCollection,
-    EmailTemplatesCollection,
-    // Add Collections here
-    // Examples,
-  ],
-  endpoints: [
-    {
-      method: 'post',
-      path: '/send-email',
-      handler: sendEmail,
+    graphQL: {
+        schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
     },
-    {
-      method: 'get',
-      path: '/payload-version',
-      handler: readPayloadVersion
-    },
-    {
-      method: 'post',
-      path: '/get-batch-credentials',
-      handler: getBatchCredentials
-    },
-    {
-      method: 'post',
-      path: '/create-batch-credentials',
-      handler: createBatchCredentials
-    }
-  ],
-  typescript: {
-    outputFile: path.resolve(__dirname, 'payload-types.ts'),
-  },
-  graphQL: {
-    schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
-  },
-})
+});
