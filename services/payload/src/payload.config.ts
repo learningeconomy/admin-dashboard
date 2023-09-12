@@ -15,7 +15,7 @@ import { Icon } from './components/Icon';
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
-import { getCredential } from './endpoints/getCredential';
+import { getCredential, getCredentialJwt } from './endpoints/getCredential';
 export default buildConfig({
     serverURL: 'http://localhost:3000',
     admin: {
@@ -57,6 +57,12 @@ export default buildConfig({
             method: 'post',
             path: '/create-batch-credentials',
             handler: createBatchCredentials,
+        },
+        // TODO: This is a security hole that needs to go away when we're done testing!!!
+        {
+            method: 'get',
+            path: '/get-credential-jwt',
+            handler: getCredentialJwt,
         },
         {
             method: 'get',

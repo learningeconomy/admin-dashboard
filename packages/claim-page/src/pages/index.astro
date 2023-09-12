@@ -43,9 +43,9 @@ import Button from '../components/Button.astro';
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
 
-    const id = params.id;
+    const { id, token } = params;
 
-    if (!id) window.location.href = '/error';
+    if (!id || !token) window.location.href = '/error';
 
     const modal = document.getElementById('main-modal') as HTMLDialogElement;
     const title = document.getElementById('title') as HTMLHeadingElement;
@@ -60,7 +60,9 @@ import Button from '../components/Button.astro';
     title.innerText = 'Getting Credential...';
 
     try {
-        const res = await fetch(`http://localhost:3000/api/get-credential?id=${id}`);
+        const res = await fetch(`http://localhost:3000/api/get-credential?id=${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
 
         if (res.status !== 200) window.location.href = '/error';
         else {
