@@ -16,6 +16,10 @@ import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
 import { getCredential, getCredentialJwt } from './endpoints/getCredential';
+
+const getCredentialPath = path.resolve(__dirname, 'endpoints/getCredential.ts');
+const mockModulePath = path.resolve(__dirname, 'mocks/emptyObject.js');
+
 export default buildConfig({
     serverURL: 'http://localhost:3000',
     admin: {
@@ -31,6 +35,16 @@ export default buildConfig({
                 Icon,
             },
         },
+        webpack: (config) => ({
+			...config,
+			resolve: {
+				...config.resolve,
+				alias: {
+					...config.resolve.alias,
+					[getCredentialPath]: mockModulePath,
+				}
+			}
+		})
     },
     cors: '*',
     collections: [
