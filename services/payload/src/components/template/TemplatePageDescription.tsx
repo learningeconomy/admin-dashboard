@@ -9,9 +9,10 @@ const TemplatePageDescription: React.FC = () => {
   } = useConfig();
 
   return (
-    <div>
+    <div className="header_wrapper">
+      <p className="header_paragraph"><span className="header_number">3</span> Published Templates</p>
       <Link
-        className="header_button"
+        className="header_template_button"
         activeClassName="active"
         to={`${adminRoute}/collections/credential-template/create`}
       >
