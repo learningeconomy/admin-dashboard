@@ -5,7 +5,9 @@
 // }
 
 #app,
-.template-default {
+.template-default,
+.account__document-actions::after,
+.auth-fields {
   background-color: var(--slate-50, #F8FAFC);
 }
 
