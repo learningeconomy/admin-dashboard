@@ -75,17 +75,18 @@ const UploadCSV: React.FC = () => {
   console.log('///data from state', data);
 
   return (
-    <div>
-      <p>Upload CSV File with earner information</p>
+    <div className="upload-csv-wrapper">
+      <p className="upload-csv-text">Upload CSV files to import credential and earner information. Once successfully uploaded, add or remove earners individually or through CSV files.</p>
       <form>
         <input
           type={"file"}
           id={"csvFileInput"}
           accept={".csv"}
           onChange={handleOnChange}
+          className="upload-csv-input"
         />
-
         <button
+          className="upload-csv-button"
           onClick={(e) => {
             handleOnSubmit(e);
           }}
