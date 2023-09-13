@@ -4,6 +4,11 @@
 //   }
 // }
 
+#app,
+.template-default {
+  background-color: var(--slate-50, #F8FAFC);
+}
+
 .view-description {
   a {
     display: flex !important;
@@ -24,4 +29,102 @@
 
 .collection-edit__sidebar-wrap {
   background-color: white !important;
+}
+
+.nav__log-out {
+  display: flex;
+  align-self: center;
+  text-decoration: none;
+
+  & > p {
+      font-size: 18px;
+      margin-left: 3px;
+  }
+}
+
+.list-controls__wrap,
+.search-filter__input {
+  background-color: #FFFFFF;
+  border-radius: 20px;
+}
+
+.list-controls__buttons-wrap .btn,
+.list-controls__buttons-wrap .pill {
+  background-color: #FFFFFF;
+  border: 2px solid var(--slate-500, #64748B);
+  border-radius: 8px;
+  color: var(--slate-500, #64748B);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 5px 16px;
+}
+
+.table tbody tr:nth-child(odd),
+.table tbody tr:nth-child(even),
+thead {
+  background-color: #FFFFFF;
+}
+
+.table {
+  border-radius: 20px;
+}
+
+td, th {
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+
+.collection-list__list-selection,
+.eyebrow {
+  display: none;
+}
+
+.collection-list__wrap,
+.dashboard__wrap {
+  margin-top: 30px;
+}
+
+.field-label {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.btn--style-primary,
+.btn--style-secondary {
+  background-color: var(--green-500, #22C55E) !important;
+  border-radius: 12px;
+  border: none;
+  box-shadow: none !important;
+  color: #FFFFFF !important;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 10px;
+  padding: 5px 30px;
+
+  &:hover {
+    background-color: var(--green-500, #22C55E) !important;
+  }
+}
+
+#field-email,
+#field-password,
+#field-title,
+.textarea-outer {
+  border-radius: 16px !important;
+}
+
+.relationship-add-new__add-button.doc-drawer__toggler {
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.rs__control.css-13cymwt-control {
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+.code-editor {
+  display: block;
+  border-radius: 16px !important;
+  padding: 0.1px 11px !important;
 }
