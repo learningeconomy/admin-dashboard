@@ -1,6 +1,7 @@
 import React from "react";
 import { useConfig } from "payload/dist/admin/components/utilities/Config";
 import { Link } from "react-router-dom";
+import './template.scss';
 
 const TemplatePageDescription: React.FC = () => {
   const {
@@ -14,7 +15,7 @@ const TemplatePageDescription: React.FC = () => {
         activeClassName="active"
         to={`${adminRoute}/collections/credential-template/create`}
       >
-        Create New Template
+        <img className="plus_icon" src="/assets/plus-icon.svg" alt="plus icon"/>Create New Template
       </Link>
     </div>
   );
