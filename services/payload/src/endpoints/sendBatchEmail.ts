@@ -3,7 +3,7 @@ import { Forbidden } from "payload/errors";
 import payload from "payload";
 import { emailQueue } from "../jobs/queue.server";
 
-export const sendEmail: PayloadHandler = async (req, res, next) => {
+export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
   if (!req.user) throw new Forbidden();
    console.log('////req?.body', req.body);
   const query = {

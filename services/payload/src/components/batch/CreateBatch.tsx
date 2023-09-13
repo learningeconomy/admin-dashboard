@@ -76,6 +76,11 @@ const CreateBatch: React.FC = (props: Props) => {
         [id, onSaveFromProps, auth, user, refreshCookieAsync]
     );
 
+    const handleOnSubmit = () => {
+        console.log('///handle on save');
+        // trigger send email
+    }
+
     useEffect(() => {
         const jsonTemplateValue = insertValuesIntoHandlebarsJsonTemplate();
         console.log('//jsonTemplateValue', jsonTemplateValue);
@@ -87,6 +92,7 @@ const CreateBatch: React.FC = (props: Props) => {
                 className={`${baseClass}__form`}
                 method={id ? 'patch' : 'post'}
                 action={action}
+                onSubmit={handleOnSubmit}
                 onSuccess={onSave}
                 disabled={!hasSavePermission}
                 initialState={internalState}

@@ -17,7 +17,7 @@ import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
 import { sendEmail } from './endpoints/sendEmail';
 import { getCredential, getCredentialJwt } from './endpoints/getCredential';
-
+import { sendBatchEmail } from './endpoints/sendBatchEmail';
 //paths
 const queuePath = path.resolve(__dirname, 'jobs/queue.server.ts');
 const getCredentialPath = path.resolve(__dirname, 'endpoints/getCredential.ts');
@@ -84,6 +84,11 @@ export default buildConfig({
             method: 'post',
             path: '/send-email',
             handler: sendEmail,
+        },
+        {
+            method: 'post',
+            path: '/send-batch-email',
+            handler: sendBatchEmail,
         },
         {
             method: 'get',
