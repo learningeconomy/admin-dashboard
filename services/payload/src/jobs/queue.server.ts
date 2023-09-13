@@ -68,6 +68,6 @@ export const emailQueue = registerQueue(
   async (job: any) => {
     console.log('///emailQueue job', job);
     const { to, subject, text, html } = job.data
-    await payload.sendEmail({to, subject, text})
+    await payload.sendEmail({to, subject, text, html})
   },
 )
