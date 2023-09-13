@@ -19,10 +19,12 @@ import { sendEmail } from './endpoints/sendEmail';
 import { getCredential, getCredentialJwt } from './endpoints/getCredential';
 import { sendBatchEmail } from './endpoints/sendBatchEmail';
 //paths
+const jwtHelperPath = path.resolve(__dirname, 'helpers/jwtHelpers.ts');
 const queuePath = path.resolve(__dirname, 'jobs/queue.server.ts');
 const getCredentialPath = path.resolve(__dirname, 'endpoints/getCredential.ts');
 const mockModulePath = path.resolve(__dirname, 'mocks/mockGetCredential.js');
 const mockQueueModulePath = path.resolve(__dirname, 'mocks/mockQueueModule.js');
+const mockJwtHelpersPath = path.resolve(__dirname, 'mocks/mockJwtHelpers.js');
 
 export default buildConfig({
     email: {
@@ -64,6 +66,7 @@ export default buildConfig({
                 ...config.resolve,
                 alias: {
                     ...config.resolve.alias,
+                    [jwtHelperPath]: mockJwtHelpersPath,
                     [queuePath]: mockQueueModulePath,
                     [getCredentialPath]: mockModulePath,
                 },

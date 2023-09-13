@@ -2,6 +2,7 @@ import { PayloadHandler } from "payload/config";
 import { Forbidden } from "payload/errors";
 import payload from "payload";
 import { emailQueue } from "../jobs/queue.server";
+import { generateJwtFromId } from "../helpers/jwtHelpers";
 
 export const sendEmail: PayloadHandler = async (req, res, next) => {
   if (!req.user) throw new Forbidden();
@@ -13,16 +14,22 @@ export const sendEmail: PayloadHandler = async (req, res, next) => {
   }
 
   // test email
+  //generate email link
+  const _id = 'test';
 
+  const jwt = await generateJwtFromId(_id);
+  const link = `https://localhost:4321/${jwt}`;
+
+  console.log('///link', link);
 
   try {
     console.log("//req body", req?.body);
 
     const data = {
       to: 'withallmyhrt@gmail.com',
-      subject: 'test email payload',
+      subject: 'test email payload3',
       email: 'test email',
-      html: '<p>hello world</p>'
+      html: `<p>hello world <a href="${link}">${link}</a></p>`
     };
 
 
