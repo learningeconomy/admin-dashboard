@@ -124,6 +124,9 @@ importers:
         specifier: ^2.25.4
         version: 2.25.4
     devDependencies:
+      '@learncard/types':
+        specifier: ^5.3.2
+        version: 5.3.2
       '@types/express':
         specifier: ^4.17.9
         version: 4.17.9
@@ -5267,7 +5270,6 @@ packages:
     resolution: {integrity: sha512-hX9ta7SbxGzcJY1/X3q65KfJLwOqQh9QA3eV9Gh+qYKil0cmQf9lhIV8eFpH7nSMZAGvk9cwSrR1IyRWaWKPGA==}
     dependencies:
       zod: 3.21.1
-    dev: false
 
   /@learncard/vc-api-plugin@1.0.3(expo@49.0.9)(react-native@0.72.4):
     resolution: {integrity: sha512-bJjdLuDa88+GITj4RhhTX3o7ISmY/SGWqndQ9wrfk/NolaFfooGMMMOWOufUrKAp6VLcV6aYG2RQGi+MK4QagQ==}
@@ -21817,7 +21819,6 @@ packages:
 
   /zod@3.21.1:
     resolution: {integrity: sha512-+dTu2m6gmCbO9Ahm4ZBDapx2O6ZY9QSPXst2WXjcznPMwf2YNpn3RevLx4KkZp1OPW/ouFcoBtBzFz/LeY69oA==}
-    dev: false
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}

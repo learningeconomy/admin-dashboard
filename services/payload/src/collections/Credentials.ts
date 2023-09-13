@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload/types';
-import CreateBatch from '../components/batch/CreateBatch';
 
 const CredentialsCollection: CollectionConfig = {
     slug: 'credential',
@@ -33,6 +32,12 @@ const CredentialsCollection: CollectionConfig = {
             type: 'text',
             required: true,
             defaultValue: 'DRAFT',
+            admin: { hidden: true },
+        },
+        {
+            name: 'statusListId',
+            type: 'text',
+            required: false,
             admin: { hidden: true },
         },
         {

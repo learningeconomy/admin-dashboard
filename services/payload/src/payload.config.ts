@@ -1,12 +1,10 @@
 import { buildConfig } from 'payload/config';
 import path from 'path';
-// import Examples from './collections/Examples';
 import Users from './collections/Users';
 import CredentialsTemplatesCollection from './collections/CredentialTemplates';
 import CredentialsBatchesCollection from './collections/CredentialBatches';
 import CredentialsCollection from './collections/Credentials';
 import EmailTemplatesCollection from './collections/EmailTemplates';
-import AfterNavLinks from './components/AfterNavLinks';
 //components
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
@@ -16,9 +14,8 @@ import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
 import { getCredential, getCredentialJwt } from './endpoints/getCredential';
-
-const getCredentialPath = path.resolve(__dirname, 'endpoints/getCredential.ts');
-const mockModulePath = path.resolve(__dirname, 'mocks/emptyObject.js');
+import { getCredentialLinks } from './endpoints/getCredentialLinks';
+import { forwardExchangeRequest } from './endpoints/exchange';
 
 export default buildConfig({
     serverURL: 'http://localhost:3000',
@@ -35,16 +32,21 @@ export default buildConfig({
                 Icon,
             },
         },
-        webpack: (config) => ({
-			...config,
-			resolve: {
-				...config.resolve,
-				alias: {
-					...config.resolve.alias,
-					[getCredentialPath]: mockModulePath,
-				}
-			}
-		})
+        webpack: config => ({
+            ...config,
+            resolve: {
+                ...config.resolve,
+                alias: {
+                    ...config.resolve.alias,
+                    [require.resolve('./endpoints/getCredential')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./endpoints/getCredentialLinks')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./endpoints/exchange')]:
+                        require.resolve('./mocks/emptyObject'),
+                },
+            },
+        }),
     },
     cors: '*',
     collections: [
@@ -53,8 +55,6 @@ export default buildConfig({
         CredentialsBatchesCollection,
         CredentialsCollection,
         EmailTemplatesCollection,
-        // Add Collections here
-        // Examples,
     ],
     endpoints: [
         {
@@ -82,6 +82,16 @@ export default buildConfig({
             method: 'get',
             path: '/get-credential',
             handler: getCredential,
+        },
+        {
+            method: 'get',
+            path: '/get-credential-links',
+            handler: getCredentialLinks,
+        },
+        {
+            method: 'post',
+            path: '/exchange/:a/:b/:token',
+            handler: forwardExchangeRequest,
         },
     ],
     typescript: {

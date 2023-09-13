@@ -34,6 +34,7 @@
     "webpack-hot-middleware": "^2.25.4"
   },
   "devDependencies": {
+    "@learncard/types": "^5.3.2",
     "@types/express": "^4.17.9",
     "@types/jsonwebtoken": "^9.0.2",
     "copyfiles": "^2.4.1",

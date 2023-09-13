@@ -38,7 +38,6 @@ import Button from '../components/Button.astro';
 <script>
     import QRCode from 'qrcode';
     import { format } from 'date-fns';
-    import { UnsignedVCValidator } from '@learncard/types';
 
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
@@ -60,36 +59,39 @@ import Button from '../components/Button.astro';
     title.innerText = 'Getting Credential...';
 
     try {
-        const res = await fetch(`http://localhost:3000/api/get-credential`, {
+        const res = await fetch(`http://localhost:3000/api/get-credential-links`, {
             headers: { Authorization: `Bearer ${token}` },
         });
 
         if (res.status !== 200) window.location.href = '/error';
         else {
-            const _vc = await res.json();
-            const vc = await UnsignedVCValidator.parseAsync(_vc);
-
-            // Get display info
-            const achievementName = (vc.credentialSubject as any).achievement.name;
-            const earnerName = (vc.credentialSubject as any).name ?? '';
-            const awardedDate = format(new Date(vc.issuanceDate), 'MMMM do, y');
-            const issuedDate = format(new Date(), 'MMMM do, y');
+            const {
+                links,
+                metadata: {
+                    credentialName,
+                    earnerName,
+                    awardedDate: _awardedDate,
+                    issuedDate: _issuedDate,
+                },
+            } = (await res.json()) as {
+                links: { type: string; url: string }[];
+                metadata: {
+                    credentialName: string;
+                    earnerName: string;
+                    awardedDate: string;
+                    issuedDate: string;
+                };
+            };
+            const awardedDate = format(new Date(_awardedDate), 'MMMM do, y');
+            const issuedDate = format(new Date(_issuedDate), 'MMMM do, y');
 
             // Show display info
-            document.title = achievementName;
-            title.innerHTML = achievementName;
+            document.title = credentialName;
+            title.innerHTML = credentialName;
             info1.innerHTML = `Awarded to ${earnerName} on ${awardedDate}`;
             info2.innerHTML = `Issed on ${issuedDate}`;
 
-            const issuanceRes = await fetch('http://localhost:4005/exchange/setup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ vc, tenantName: 'test' }),
-            });
-
-            const results = (await issuanceRes.json()) as { type: string; url: string }[];
-
-            const url = results.find(result => result.type === 'directDeepLink')?.url;
+            const url = links.find(result => result.type === 'directDeepLink')?.url;
 
             if (url) {
                 const dataUrl = await QRCode.toDataURL(url);
