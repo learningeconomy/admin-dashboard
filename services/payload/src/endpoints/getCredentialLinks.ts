@@ -30,12 +30,18 @@ export const getCredentialLinks: PayloadHandler = async (req, res) => {
     try {
         const credential = await payload.findByID({ id, collection: 'credential', depth: 3 });
 
-        if (!credential?.batch?.template?.credentialTemplateJson) return res.sendStatus(404);
+        if (
+            typeof credential?.batch === 'string' ||
+            typeof credential.batch.template === 'string' ||
+            !credential.batch.template.credentialTemplateJson
+        ) {
+            return res.sendStatus(404);
+        }
 
         const builtCredential = insertValuesIntoHandlebarsJsonTemplate(
             JSON.stringify(credential.batch.template.credentialTemplateJson),
             {
-                ...credential.extraFields,
+                ...(credential.extraFields as any),
                 credentialName: credential.credentialName,
                 earnerName: credential.earnerName,
                 emailAddress: credential.emailAddress,

@@ -1,3 +1,4 @@
+import type { UnsignedVC } from '@learncard/types';
 import { PayloadHandler } from 'payload/config';
 import payload from 'payload';
 import jwt from 'jsonwebtoken';
@@ -34,21 +35,25 @@ export const getCredential: PayloadHandler = async (req, res) => {
             depth: 3,
         });
 
-        console.log({ credential });
-
-        if (!credential?.batch?.template?.credentialTemplateJson) return res.sendStatus(404);
+        if (
+            typeof credential?.batch === 'string' ||
+            typeof credential.batch.template === 'string' ||
+            !credential.batch.template.credentialTemplateJson
+        ) {
+            return res.sendStatus(404);
+        }
 
         const builtCredential = insertValuesIntoHandlebarsJsonTemplate(
             JSON.stringify(credential.batch.template.credentialTemplateJson),
             {
-                ...credential.extraFields,
+                ...(credential.extraFields as any),
                 credentialName: credential.credentialName,
                 earnerName: credential.earnerName,
                 emailAddress: credential.emailAddress,
                 now: new Date().toISOString(),
                 issuanceDate: credential.updatedAt,
             }
-        );
+        ) as any as UnsignedVC;
 
         if (typeof builtCredential?.issuer === 'string') builtCredential.issuer = {};
         if ('id' in (builtCredential?.issuer ?? {})) delete builtCredential.issuer.id;
