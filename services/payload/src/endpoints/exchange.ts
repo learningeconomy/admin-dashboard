@@ -34,7 +34,7 @@ export const forwardExchangeRequest: PayloadHandler = async (req, res) => {
         await payload.update({
             collection: 'credential',
             id,
-            data: { statusListId: credential.credentialStatus.id },
+            data: { status: 'CLAIMED' },
         });
     }
 

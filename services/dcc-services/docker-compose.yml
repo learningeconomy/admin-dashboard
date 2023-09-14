@@ -9,8 +9,10 @@ services:
   signing:
     image: digitalcredentials/signing-service:test
   status:
-    image: digitalcredentials/status-service:test
+    image: status-service:latest
     env_file:
       - ./.status-service.env
+    ports:
+      - "4008:4008"
   transactions:
     image: digitalcredentials/transaction-service:test

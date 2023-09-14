@@ -83,7 +83,6 @@ export interface Credential {
     | boolean
     | null;
   status: string;
-  statusListId?: string;
   batch: string | CredentialBatch;
   updatedAt: string;
   createdAt: string;

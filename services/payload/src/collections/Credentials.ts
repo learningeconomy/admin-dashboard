@@ -35,12 +35,6 @@ const CredentialsCollection: CollectionConfig = {
             admin: { hidden: true },
         },
         {
-            name: 'statusListId',
-            type: 'text',
-            required: false,
-            admin: { hidden: true },
-        },
-        {
             name: 'batch',
             type: 'relationship',
             required: true,

@@ -1500,7 +1500,6 @@ type Credential {
   emailAddress: EmailAddress
   extraFields: JSON
   status: String
-  statusListId: String
   batch: CredentialBatch
   updatedAt: DateTime
   createdAt: DateTime
@@ -1532,7 +1531,6 @@ input Credential_where {
   emailAddress: Credential_emailAddress_operator
   extraFields: Credential_extraFields_operator
   status: Credential_status_operator
-  statusListId: Credential_statusListId_operator
   batch: Credential_batch_operator
   updatedAt: Credential_updatedAt_operator
   createdAt: Credential_createdAt_operator
@@ -1591,17 +1589,6 @@ input Credential_status_operator {
   in: [String]
   not_in: [String]
   all: [String]
-}
-
-input Credential_statusListId_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
 }
 
 input Credential_batch_operator {
@@ -1665,7 +1652,6 @@ input Credential_where_or {
   emailAddress: Credential_emailAddress_operator
   extraFields: Credential_extraFields_operator
   status: Credential_status_operator
-  statusListId: Credential_statusListId_operator
   batch: Credential_batch_operator
   updatedAt: Credential_updatedAt_operator
   createdAt: Credential_createdAt_operator
@@ -1679,7 +1665,6 @@ input Credential_where_and {
   emailAddress: Credential_emailAddress_operator
   extraFields: Credential_extraFields_operator
   status: Credential_status_operator
-  statusListId: Credential_statusListId_operator
   batch: Credential_batch_operator
   updatedAt: Credential_updatedAt_operator
   createdAt: Credential_createdAt_operator
@@ -1702,7 +1687,6 @@ type CredentialDocAccessFields {
   emailAddress: CredentialDocAccessFields_emailAddress
   extraFields: CredentialDocAccessFields_extraFields
   status: CredentialDocAccessFields_status
-  statusListId: CredentialDocAccessFields_statusListId
   batch: CredentialDocAccessFields_batch
   updatedAt: CredentialDocAccessFields_updatedAt
   createdAt: CredentialDocAccessFields_createdAt
@@ -1821,29 +1805,6 @@ type CredentialDocAccessFields_status_Update {
 }
 
 type CredentialDocAccessFields_status_Delete {
-  permission: Boolean!
-}
-
-type CredentialDocAccessFields_statusListId {
-  create: CredentialDocAccessFields_statusListId_Create
-  read: CredentialDocAccessFields_statusListId_Read
-  update: CredentialDocAccessFields_statusListId_Update
-  delete: CredentialDocAccessFields_statusListId_Delete
-}
-
-type CredentialDocAccessFields_statusListId_Create {
-  permission: Boolean!
-}
-
-type CredentialDocAccessFields_statusListId_Read {
-  permission: Boolean!
-}
-
-type CredentialDocAccessFields_statusListId_Update {
-  permission: Boolean!
-}
-
-type CredentialDocAccessFields_statusListId_Delete {
   permission: Boolean!
 }
 
@@ -1978,7 +1939,6 @@ type CredentialVersion_Version {
   emailAddress: EmailAddress
   extraFields: JSON
   status: String
-  statusListId: String
   batch: CredentialBatch
   updatedAt: DateTime
   createdAt: DateTime
@@ -2011,7 +1971,6 @@ input versionsCredential_where {
   version__emailAddress: versionsCredential_version__emailAddress_operator
   version__extraFields: versionsCredential_version__extraFields_operator
   version__status: versionsCredential_version__status_operator
-  version__statusListId: versionsCredential_version__statusListId_operator
   version__batch: versionsCredential_version__batch_operator
   version__updatedAt: versionsCredential_version__updatedAt_operator
   version__createdAt: versionsCredential_version__createdAt_operator
@@ -2081,17 +2040,6 @@ input versionsCredential_version__status_operator {
   in: [String]
   not_in: [String]
   all: [String]
-}
-
-input versionsCredential_version__statusListId_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
 }
 
 input versionsCredential_version__batch_operator {
@@ -2178,7 +2126,6 @@ input versionsCredential_where_or {
   version__emailAddress: versionsCredential_version__emailAddress_operator
   version__extraFields: versionsCredential_version__extraFields_operator
   version__status: versionsCredential_version__status_operator
-  version__statusListId: versionsCredential_version__statusListId_operator
   version__batch: versionsCredential_version__batch_operator
   version__updatedAt: versionsCredential_version__updatedAt_operator
   version__createdAt: versionsCredential_version__createdAt_operator
@@ -2195,7 +2142,6 @@ input versionsCredential_where_and {
   version__emailAddress: versionsCredential_version__emailAddress_operator
   version__extraFields: versionsCredential_version__extraFields_operator
   version__status: versionsCredential_version__status_operator
-  version__statusListId: versionsCredential_version__statusListId_operator
   version__batch: versionsCredential_version__batch_operator
   version__updatedAt: versionsCredential_version__updatedAt_operator
   version__createdAt: versionsCredential_version__createdAt_operator
@@ -3306,7 +3252,6 @@ type CredentialFields {
   emailAddress: CredentialFields_emailAddress
   extraFields: CredentialFields_extraFields
   status: CredentialFields_status
-  statusListId: CredentialFields_statusListId
   batch: CredentialFields_batch
   updatedAt: CredentialFields_updatedAt
   createdAt: CredentialFields_createdAt
@@ -3425,29 +3370,6 @@ type CredentialFields_status_Update {
 }
 
 type CredentialFields_status_Delete {
-  permission: Boolean!
-}
-
-type CredentialFields_statusListId {
-  create: CredentialFields_statusListId_Create
-  read: CredentialFields_statusListId_Read
-  update: CredentialFields_statusListId_Update
-  delete: CredentialFields_statusListId_Delete
-}
-
-type CredentialFields_statusListId_Create {
-  permission: Boolean!
-}
-
-type CredentialFields_statusListId_Read {
-  permission: Boolean!
-}
-
-type CredentialFields_statusListId_Update {
-  permission: Boolean!
-}
-
-type CredentialFields_statusListId_Delete {
   permission: Boolean!
 }
 
@@ -3898,7 +3820,6 @@ input mutationCredentialInput {
   emailAddress: String
   extraFields: JSON
   status: String!
-  statusListId: String
   batch: String
   updatedAt: String
   createdAt: String
@@ -3916,7 +3837,6 @@ input mutationCredentialUpdateInput {
   emailAddress: String
   extraFields: JSON
   status: String
-  statusListId: String
   batch: String
   updatedAt: String
   createdAt: String

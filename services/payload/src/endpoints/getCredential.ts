@@ -35,6 +35,10 @@ export const getCredential: PayloadHandler = async (req, res) => {
             depth: 3,
         });
 
+        if (credential.status === 'REVOKED') {
+            return res.status(410).json({ reason: 'Credential has been revoked' });
+        }
+
         if (
             typeof credential?.batch === 'string' ||
             typeof credential.batch.template === 'string' ||
