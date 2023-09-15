@@ -67,6 +67,23 @@ thead {
   background-color: #FFFFFF;
 }
 
+html[data-theme=dark] {
+  #app,
+  .template-default,
+  .account__document-actions::after,
+  .auth-fields,
+  .table tbody tr:nth-child(odd),
+  .table tbody tr:nth-child(even),
+  thead,
+  .list-controls__wrap,
+  .search-filter__input,
+  .list-controls__buttons-wrap .btn,
+  .list-controls__buttons-wrap .pill {
+    background-color: #000000;
+    color: #FFFFFF
+  }
+}
+
 .table {
   border-radius: 20px;
 }
