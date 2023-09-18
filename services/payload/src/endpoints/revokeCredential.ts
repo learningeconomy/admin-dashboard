@@ -3,6 +3,7 @@ import payload from 'payload';
 
 export const revokeCredential: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
+
     const { id } = req.params;
 
     try {
@@ -15,11 +16,13 @@ export const revokeCredential: PayloadHandler = async (req, res) => {
             }),
         });
 
+        if (fetchResponse.status === 200) {
+            await payload.update({ collection: 'credential', id, data: { status: 'REVOKED' } });
+        }
+
         const result = await fetchResponse.json();
 
-        await payload.update({ collection: 'credential', id, data: { status: 'REVOKED' } });
-
-        res.status(200).json(result);
+        res.status(fetchResponse.status).json(result);
     } catch (error) {
         console.error(error);
         res.sendStatus(500);
