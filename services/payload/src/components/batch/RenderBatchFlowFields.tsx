@@ -249,8 +249,8 @@ const FormSteps = (props: Props) => {
         ...
       </Swiper>
       <div>
-        <button onClick={handlePrevStep}>Prev Step</button>
-        <button onClick={handleNextStep}>Next Step</button>
+        <button className="form-steps-button" onClick={handlePrevStep}>Prev Step</button>
+        <button className="form-steps-button" onClick={handleNextStep}>Next Step</button>
       </div>
     </>
   );
