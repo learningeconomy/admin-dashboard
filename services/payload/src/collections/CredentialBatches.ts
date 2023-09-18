@@ -4,6 +4,9 @@ import CreateBatch from '../components/batch/CreateBatch';
 
 const CredentialsBatchesCollection: CollectionConfig = {
     slug: 'credential-batch',
+    labels: {
+        plural: 'Issuance Overview',
+    },
     admin: {
         defaultColumns: ['title', 'id', 'status'],
         useAsTitle: 'title',

@@ -1,10 +1,11 @@
 import { CollectionConfig } from 'payload/types';
-import CreateBatch from '../components/batch/CreateBatch';
+
+import ActionsButton from '../components/ActionsButton';
 
 const CredentialsCollection: CollectionConfig = {
     slug: 'credential',
     admin: {
-        defaultColumns: ['credentialName', 'id', 'status'],
+        defaultColumns: ['credentialName', 'id', 'status', 'actionButton'],
         useAsTitle: 'credentialName',
     },
     versions: {
@@ -41,6 +42,17 @@ const CredentialsCollection: CollectionConfig = {
             required: true,
             relationTo: 'credential-batch',
             hasMany: false,
+        },
+        {
+            name: 'actionButton',
+            label: ' ',
+            type: 'ui',
+            admin: {
+                components: {
+                    Field: () => null,
+                    Cell: ActionsButton,
+                },
+            },
         },
     ],
 };
