@@ -83,9 +83,18 @@ html[data-theme='dark'] {
     .list-controls__wrap,
     .search-filter__input,
     .list-controls__buttons-wrap .btn,
-    .list-controls__buttons-wrap .pill {
+    .list-controls__buttons-wrap .pill,
+    .actions {
         background-color: #000000;
         color: #ffffff;
+    }
+
+    .actions > button {
+        color: #fff;
+
+        &.action-button:hover {
+            background-color: var(--slate-500, #64748b);
+        }
     }
 }
 
