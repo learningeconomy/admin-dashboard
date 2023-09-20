@@ -51,17 +51,16 @@ button {
   background-color: var(--green-500, #22C55E);
   width: 16px;
   height: 16px;
-  transform: scale(1.04);
-}
-
-.radio-input__styled-radio:before {
-  background-color: var(--green-500, #22C55E);
-  border-color: var(--green-500, #22C55E);
+  transform: translate(-1px, -1px);
 }
 
 .icon--check .stroke,
 .icon--line .stroke{
   opacity: 0;
+}
+
+.field-type.radio-group.radio-group--layout-horizontal {
+  display: none;
 }
 
 .nav__log-out {
@@ -99,59 +98,6 @@ button {
 thead {
     background-color: #ffffff;
 }
-
-// html[data-theme='dark'] {
-//     #app,
-//     .template-default,
-//     .account__document-actions::after,
-//     .auth-fields,
-//     .table tbody tr:nth-child(odd),
-//     .table tbody tr:nth-child(even),
-//     thead,
-//     .actions,
-//     .collection-edit__sidebar-sticky-wrap {
-//         background-color: var(--slate-900, #0F172A);
-//     }
-
-//     .select-row__input,
-//     .select-all__input {
-//       background-color: var(--slate-400, #94A3B8);
-//     }
-
-//     #app,
-//     #app > a {
-//       color: var(--slate-50, #F8FAFC);
-//     }
-
-//     thead,
-//     .table tbody tr:nth-child(odd),
-//     .table tbody tr:nth-child(even) {
-//       color: var(--slate-200, #E2E8F0);
-//     }
-
-//     .list-controls__buttons-wrap .btn,
-//     .list-controls__buttons-wrap .pill,
-//     .list-controls__wrap,
-//     .search-filter__input,
-//     #field-email,
-//     #field-password,
-//     .radio-input__styled-radio,
-//     .edit-many__toggle,
-//     .rs__control.css-13cymwt-control,
-//     .react-select .rs__control:not(:disabled):focus-within,
-//     .rs__menu {
-//       background-color: var(--slate-600, #475569) !important;
-//       color: var(--slate-200, #E2E8F0);
-//     }
-
-//     .actions > button {
-//         color: #fff;
-
-//         &.action-button:hover {
-//             background-color: var(--slate-500, #64748b);
-//         }
-//     }
-// }
 
 .table {
     border-radius: 20px;
@@ -195,6 +141,10 @@ th {
     }
 }
 
+.auth-fields .btn {
+  width: 190px;
+}
+
 #field-email,
 #field-password,
 #field-title,
@@ -208,6 +158,10 @@ th {
 .relationship-add-new__add-button.doc-drawer__toggler {
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
+}
+
+.logout__wrap {
+  text-align: center;
 }
 
 .code-editor {
