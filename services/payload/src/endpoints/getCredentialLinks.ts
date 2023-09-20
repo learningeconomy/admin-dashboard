@@ -7,18 +7,17 @@ import { insertValuesIntoHandlebarsJsonTemplate } from '../helpers/handlebarhelp
 const secret =
     process.env.PAYLOAD_SECRET ??
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa';
-const expires = process.env.TOKEN_EXPIRATION_TIME_IN_SECONDS;
 
-export const getCredential: PayloadHandler = async (req, res) => {
+export const getCredentialLinks: PayloadHandler = async (req, res) => {
     let id: string;
 
     const authHeader = req.headers.authorization;
 
+    if (!authHeader.startsWith('Bearer ')) return res.sendStatus(401);
+
+    const token = authHeader.split('Bearer ')[1];
+
     try {
-        if (!authHeader.startsWith('Bearer ')) return res.sendStatus(401);
-
-        const token = authHeader.split('Bearer ')[1];
-
         const decoded = jwt.verify(token, secret);
 
         if (typeof decoded === 'string' || !decoded.id) return res.sendStatus(401);
@@ -29,15 +28,7 @@ export const getCredential: PayloadHandler = async (req, res) => {
     }
 
     try {
-        const credential = await payload.findByID({
-            id,
-            collection: 'credential',
-            depth: 3,
-        });
-
-        if (credential.status === 'REVOKED') {
-            return res.status(410).json({ reason: 'Credential has been revoked' });
-        }
+        const credential = await payload.findByID({ id, collection: 'credential', depth: 3 });
 
         if (
             typeof credential?.batch === 'string' ||
@@ -59,26 +50,39 @@ export const getCredential: PayloadHandler = async (req, res) => {
             }
         ) as any as UnsignedVC;
 
+        // Prep for sending to signing service
+        builtCredential.id = id;
         if (typeof builtCredential?.issuer === 'string') builtCredential.issuer = {};
         if ('id' in (builtCredential?.issuer ?? {})) delete builtCredential.issuer.id;
 
-        res.status(200).json(builtCredential);
-    } catch (error) {
-        console.error(error);
-        res.sendStatus(500);
-    }
-};
+        const fetchResponse = await fetch('http://localhost:4005/exchange/setup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ vc: builtCredential, tenantName: 'test' }),
+        });
 
-export const getCredentialJwt: PayloadHandler = async (req, res) => {
-    // TODO: Auth
-    const { id } = req.query;
+        const results = (await fetchResponse.json()) as { type: string; url: string }[];
 
-    if (!id || typeof id !== 'string') return res.sendStatus(400);
+        const updatedResults = results.map(result => {
+            const url = new URL(result.url);
 
-    try {
-        const token = jwt.sign({ id }, secret, { ...(expires && { expiresIn: expires }) });
+            const requestUrl = url.searchParams.get('vc_request_url');
 
-        res.status(200).json({ token });
+            url.searchParams.set('vc_request_url', `${requestUrl}/${token}`);
+            url.search = decodeURIComponent(url.search);
+
+            return { ...result, url: url.toString() };
+        });
+
+        res.status(200).json({
+            links: updatedResults,
+            metadata: {
+                credentialName: credential.credentialName,
+                earnerName: credential.earnerName,
+                awardedDate: credential.updatedAt,
+                issuedDate: new Date().toISOString(),
+            },
+        });
     } catch (error) {
         console.error(error);
         res.sendStatus(500);

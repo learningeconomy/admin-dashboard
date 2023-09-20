@@ -1,12 +1,10 @@
 import { buildConfig } from 'payload/config';
 import path from 'path';
-// import Examples from './collections/Examples';
 import Users from './collections/Users';
 import CredentialsTemplatesCollection from './collections/CredentialTemplates';
 import CredentialsBatchesCollection from './collections/CredentialBatches';
 import CredentialsCollection from './collections/Credentials';
 import EmailTemplatesCollection from './collections/EmailTemplates';
-
 //components
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
@@ -22,9 +20,10 @@ import { sendBatchEmail } from './endpoints/sendBatchEmail';
 const jwtHelperPath = path.resolve(__dirname, 'helpers/jwtHelpers.ts');
 const queuePath = path.resolve(__dirname, 'jobs/queue.server.ts');
 const getCredentialPath = path.resolve(__dirname, 'endpoints/getCredential.ts');
-const mockModulePath = path.resolve(__dirname, 'mocks/mockGetCredential.js');
-const mockQueueModulePath = path.resolve(__dirname, 'mocks/mockQueueModule.js');
-const mockJwtHelpersPath = path.resolve(__dirname, 'mocks/mockJwtHelpers.js');
+
+import { getCredentialLinks } from './endpoints/getCredentialLinks';
+import { forwardExchangeRequest } from './endpoints/exchange';
+import { revokeCredential } from './endpoints/revokeCredential';
 
 export default buildConfig({
     email: {
@@ -66,9 +65,16 @@ export default buildConfig({
                 ...config.resolve,
                 alias: {
                     ...config.resolve.alias,
-                    [jwtHelperPath]: mockJwtHelpersPath,
-                    [queuePath]: mockQueueModulePath,
-                    [getCredentialPath]: mockModulePath,
+                    [require.resolve('./helpers/jwtHelpers.ts')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./jobs/queue.server.ts')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./endpoints/getCredential')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./endpoints/getCredentialLinks')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./endpoints/exchange')]:
+                        require.resolve('./mocks/emptyObject'),
                 },
             },
         }),
@@ -79,8 +85,6 @@ export default buildConfig({
         CredentialsBatchesCollection,
         CredentialsCollection,
         EmailTemplatesCollection,
-        // Add Collections here
-        // Examples,
     ],
     endpoints: [
         {
@@ -93,32 +97,15 @@ export default buildConfig({
             path: '/send-batch-email',
             handler: sendBatchEmail,
         },
-        {
-            method: 'get',
-            path: '/payload-version',
-            handler: readPayloadVersion,
-        },
-        {
-            method: 'post',
-            path: '/get-batch-credentials',
-            handler: getBatchCredentials,
-        },
-        {
-            method: 'post',
-            path: '/create-batch-credentials',
-            handler: createBatchCredentials,
-        },
+        { method: 'get', path: '/payload-version', handler: readPayloadVersion },
+        { method: 'post', path: '/get-batch-credentials', handler: getBatchCredentials },
+        { method: 'post', path: '/create-batch-credentials', handler: createBatchCredentials },
         // TODO: This is a security hole that needs to go away when we're done testing!!!
-        {
-            method: 'get',
-            path: '/get-credential-jwt',
-            handler: getCredentialJwt,
-        },
-        {
-            method: 'get',
-            path: '/get-credential',
-            handler: getCredential,
-        },
+        { method: 'get', path: '/get-credential-jwt', handler: getCredentialJwt },
+        { method: 'get', path: '/get-credential', handler: getCredential },
+        { method: 'get', path: '/get-credential-links', handler: getCredentialLinks },
+        { method: 'post', path: '/exchange/:a/:b/:token', handler: forwardExchangeRequest },
+        { method: 'get', path: '/revoke-credential/:id', handler: revokeCredential },
     ],
     typescript: {
         outputFile: path.resolve(__dirname, 'payload-types.ts'),

@@ -2,11 +2,17 @@ version: '3.5'
 services:
   coordinator:
     image: digitalcredentials/workflow-coordinator:test
-    environment:
-      - PUBLIC_EXCHANGE_HOST=http://192.168.68.60:4005 # Run `ip a` in a terminal and find your local ip (should be 192.168.something), then swap with this so that you can scan QR from your phone!
+    env_file:
+      - ./.coordinator.env
     ports:
       - "4005:4005"
   signing:
     image: digitalcredentials/signing-service:test
+  status:
+    image: status-service:latest
+    env_file:
+      - ./.status-service.env
+    ports:
+      - "4008:4008"
   transactions:
     image: digitalcredentials/transaction-service:test

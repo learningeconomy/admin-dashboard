@@ -1,0 +1,3877 @@
+type Query {
+  User(id: String!, draft: Boolean): User
+  Users(where: User_where, draft: Boolean, page: Int, limit: Int, sort: String): Users
+  docAccessUser(id: String!): usersDocAccess
+  meUser: usersMe
+  initializedUser: Boolean
+  CredentialTemplate(id: String!, draft: Boolean): CredentialTemplate
+  CredentialTemplates(where: CredentialTemplate_where, draft: Boolean, page: Int, limit: Int, sort: String): CredentialTemplates
+  docAccessCredentialTemplate(id: String!): credential_templateDocAccess
+  versionCredentialTemplate(id: String): CredentialTemplateVersion
+  versionsCredentialTemplates(where: versionsCredentialTemplate_where, page: Int, limit: Int, sort: String): versionsCredentialTemplates
+  CredentialBatch(id: String!, draft: Boolean): CredentialBatch
+  CredentialBatches(where: CredentialBatch_where, draft: Boolean, page: Int, limit: Int, sort: String): CredentialBatches
+  docAccessCredentialBatch(id: String!): credential_batchDocAccess
+  versionCredentialBatch(id: String): CredentialBatchVersion
+  versionsCredentialBatches(where: versionsCredentialBatch_where, page: Int, limit: Int, sort: String): versionsCredentialBatches
+  Credential(id: String!, draft: Boolean): Credential
+  Credentials(where: Credential_where, draft: Boolean, page: Int, limit: Int, sort: String): Credentials
+  docAccessCredential(id: String!): credentialDocAccess
+  versionCredential(id: String): CredentialVersion
+  versionsCredentials(where: versionsCredential_where, page: Int, limit: Int, sort: String): versionsCredentials
+  EmailTemplate(id: String!, draft: Boolean): EmailTemplate
+  EmailTemplates(where: EmailTemplate_where, draft: Boolean, page: Int, limit: Int, sort: String): EmailTemplates
+  docAccessEmailTemplate(id: String!): email_templateDocAccess
+  versionEmailTemplate(id: String): EmailTemplateVersion
+  versionsEmailTemplates(where: versionsEmailTemplate_where, page: Int, limit: Int, sort: String): versionsEmailTemplates
+  Preference(key: String): Preference
+  Access: Access
+}
+
+type User {
+  id: String
+  updatedAt: DateTime
+  createdAt: DateTime
+  email: EmailAddress!
+  resetPasswordToken: String
+  resetPasswordExpiration: DateTime
+  salt: String
+  hash: String
+  loginAttempts: Float
+  lockUntil: DateTime
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+"""
+A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
+"""
+scalar EmailAddress @specifiedBy(url: "https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address")
+
+type Users {
+  docs: [User]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input User_where {
+  updatedAt: User_updatedAt_operator
+  createdAt: User_createdAt_operator
+  email: User_email_operator
+  id: User_id_operator
+  OR: [User_where_or]
+  AND: [User_where_and]
+}
+
+input User_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input User_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input User_email_operator {
+  equals: EmailAddress
+  not_equals: EmailAddress
+  like: EmailAddress
+  contains: EmailAddress
+  in: [EmailAddress]
+  not_in: [EmailAddress]
+  all: [EmailAddress]
+}
+
+input User_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input User_where_or {
+  updatedAt: User_updatedAt_operator
+  createdAt: User_createdAt_operator
+  email: User_email_operator
+  id: User_id_operator
+}
+
+input User_where_and {
+  updatedAt: User_updatedAt_operator
+  createdAt: User_createdAt_operator
+  email: User_email_operator
+  id: User_id_operator
+}
+
+type usersDocAccess {
+  fields: UsersDocAccessFields
+  create: UsersCreateDocAccess
+  read: UsersReadDocAccess
+  update: UsersUpdateDocAccess
+  delete: UsersDeleteDocAccess
+  unlock: UsersUnlockDocAccess
+}
+
+type UsersDocAccessFields {
+  updatedAt: UsersDocAccessFields_updatedAt
+  createdAt: UsersDocAccessFields_createdAt
+  email: UsersDocAccessFields_email
+  password: UsersDocAccessFields_password
+}
+
+type UsersDocAccessFields_updatedAt {
+  create: UsersDocAccessFields_updatedAt_Create
+  read: UsersDocAccessFields_updatedAt_Read
+  update: UsersDocAccessFields_updatedAt_Update
+  delete: UsersDocAccessFields_updatedAt_Delete
+}
+
+type UsersDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt {
+  create: UsersDocAccessFields_createdAt_Create
+  read: UsersDocAccessFields_createdAt_Read
+  update: UsersDocAccessFields_createdAt_Update
+  delete: UsersDocAccessFields_createdAt_Delete
+}
+
+type UsersDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email {
+  create: UsersDocAccessFields_email_Create
+  read: UsersDocAccessFields_email_Read
+  update: UsersDocAccessFields_email_Update
+  delete: UsersDocAccessFields_email_Delete
+}
+
+type UsersDocAccessFields_email_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_email_Delete {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password {
+  create: UsersDocAccessFields_password_Create
+  read: UsersDocAccessFields_password_Read
+  update: UsersDocAccessFields_password_Update
+  delete: UsersDocAccessFields_password_Delete
+}
+
+type UsersDocAccessFields_password_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_password_Delete {
+  permission: Boolean!
+}
+
+type UsersCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+type UsersReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUnlockDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type usersMe {
+  token: String
+  user: User
+  exp: Int
+  collection: String
+}
+
+type CredentialTemplate {
+  id: String
+  title: String
+  description: String
+  internalNotes: String
+  credentialTemplateJson: JSON
+  updatedAt: DateTime
+  createdAt: DateTime
+  _status: CredentialTemplate__status
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+enum CredentialTemplate__status {
+  draft
+  published
+}
+
+type CredentialTemplates {
+  docs: [CredentialTemplate]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input CredentialTemplate_where {
+  title: CredentialTemplate_title_operator
+  description: CredentialTemplate_description_operator
+  internalNotes: CredentialTemplate_internalNotes_operator
+  credentialTemplateJson: CredentialTemplate_credentialTemplateJson_operator
+  updatedAt: CredentialTemplate_updatedAt_operator
+  createdAt: CredentialTemplate_createdAt_operator
+  _status: CredentialTemplate__status_operator
+  id: CredentialTemplate_id_operator
+  OR: [CredentialTemplate_where_or]
+  AND: [CredentialTemplate_where_and]
+}
+
+input CredentialTemplate_title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input CredentialTemplate_description_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input CredentialTemplate_internalNotes_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input CredentialTemplate_credentialTemplateJson_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+}
+
+input CredentialTemplate_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input CredentialTemplate_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input CredentialTemplate__status_operator {
+  equals: CredentialTemplate__status_Input
+  not_equals: CredentialTemplate__status_Input
+  in: [CredentialTemplate__status_Input]
+  not_in: [CredentialTemplate__status_Input]
+  all: [CredentialTemplate__status_Input]
+  exists: Boolean
+}
+
+enum CredentialTemplate__status_Input {
+  draft
+  published
+}
+
+input CredentialTemplate_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input CredentialTemplate_where_or {
+  title: CredentialTemplate_title_operator
+  description: CredentialTemplate_description_operator
+  internalNotes: CredentialTemplate_internalNotes_operator
+  credentialTemplateJson: CredentialTemplate_credentialTemplateJson_operator
+  updatedAt: CredentialTemplate_updatedAt_operator
+  createdAt: CredentialTemplate_createdAt_operator
+  _status: CredentialTemplate__status_operator
+  id: CredentialTemplate_id_operator
+}
+
+input CredentialTemplate_where_and {
+  title: CredentialTemplate_title_operator
+  description: CredentialTemplate_description_operator
+  internalNotes: CredentialTemplate_internalNotes_operator
+  credentialTemplateJson: CredentialTemplate_credentialTemplateJson_operator
+  updatedAt: CredentialTemplate_updatedAt_operator
+  createdAt: CredentialTemplate_createdAt_operator
+  _status: CredentialTemplate__status_operator
+  id: CredentialTemplate_id_operator
+}
+
+type credential_templateDocAccess {
+  fields: CredentialTemplateDocAccessFields
+  create: CredentialTemplateCreateDocAccess
+  read: CredentialTemplateReadDocAccess
+  update: CredentialTemplateUpdateDocAccess
+  delete: CredentialTemplateDeleteDocAccess
+  readVersions: CredentialTemplateReadVersionsDocAccess
+}
+
+type CredentialTemplateDocAccessFields {
+  title: CredentialTemplateDocAccessFields_title
+  description: CredentialTemplateDocAccessFields_description
+  internalNotes: CredentialTemplateDocAccessFields_internalNotes
+  credentialTemplateJson: CredentialTemplateDocAccessFields_credentialTemplateJson
+  updatedAt: CredentialTemplateDocAccessFields_updatedAt
+  createdAt: CredentialTemplateDocAccessFields_createdAt
+  _status: CredentialTemplateDocAccessFields__status
+}
+
+type CredentialTemplateDocAccessFields_title {
+  create: CredentialTemplateDocAccessFields_title_Create
+  read: CredentialTemplateDocAccessFields_title_Read
+  update: CredentialTemplateDocAccessFields_title_Update
+  delete: CredentialTemplateDocAccessFields_title_Delete
+}
+
+type CredentialTemplateDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_description {
+  create: CredentialTemplateDocAccessFields_description_Create
+  read: CredentialTemplateDocAccessFields_description_Read
+  update: CredentialTemplateDocAccessFields_description_Update
+  delete: CredentialTemplateDocAccessFields_description_Delete
+}
+
+type CredentialTemplateDocAccessFields_description_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_description_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_description_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_description_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_internalNotes {
+  create: CredentialTemplateDocAccessFields_internalNotes_Create
+  read: CredentialTemplateDocAccessFields_internalNotes_Read
+  update: CredentialTemplateDocAccessFields_internalNotes_Update
+  delete: CredentialTemplateDocAccessFields_internalNotes_Delete
+}
+
+type CredentialTemplateDocAccessFields_internalNotes_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_internalNotes_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_internalNotes_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_internalNotes_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_credentialTemplateJson {
+  create: CredentialTemplateDocAccessFields_credentialTemplateJson_Create
+  read: CredentialTemplateDocAccessFields_credentialTemplateJson_Read
+  update: CredentialTemplateDocAccessFields_credentialTemplateJson_Update
+  delete: CredentialTemplateDocAccessFields_credentialTemplateJson_Delete
+}
+
+type CredentialTemplateDocAccessFields_credentialTemplateJson_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_credentialTemplateJson_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_credentialTemplateJson_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_credentialTemplateJson_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_updatedAt {
+  create: CredentialTemplateDocAccessFields_updatedAt_Create
+  read: CredentialTemplateDocAccessFields_updatedAt_Read
+  update: CredentialTemplateDocAccessFields_updatedAt_Update
+  delete: CredentialTemplateDocAccessFields_updatedAt_Delete
+}
+
+type CredentialTemplateDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_createdAt {
+  create: CredentialTemplateDocAccessFields_createdAt_Create
+  read: CredentialTemplateDocAccessFields_createdAt_Read
+  update: CredentialTemplateDocAccessFields_createdAt_Update
+  delete: CredentialTemplateDocAccessFields_createdAt_Delete
+}
+
+type CredentialTemplateDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields__status {
+  create: CredentialTemplateDocAccessFields__status_Create
+  read: CredentialTemplateDocAccessFields__status_Read
+  update: CredentialTemplateDocAccessFields__status_Update
+  delete: CredentialTemplateDocAccessFields__status_Delete
+}
+
+type CredentialTemplateDocAccessFields__status_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields__status_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields__status_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateDocAccessFields__status_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialTemplateReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialTemplateUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialTemplateDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialTemplateReadVersionsDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialTemplateVersion {
+  parent: CredentialTemplate
+  version: CredentialTemplateVersion_Version
+  createdAt: DateTime
+  updatedAt: DateTime
+  id: String
+}
+
+type CredentialTemplateVersion_Version {
+  title: String
+  description: String
+  internalNotes: String
+  credentialTemplateJson: JSON
+  updatedAt: DateTime
+  createdAt: DateTime
+  _status: CredentialTemplateVersion_Version__status
+}
+
+enum CredentialTemplateVersion_Version__status {
+  draft
+  published
+}
+
+type versionsCredentialTemplates {
+  docs: [CredentialTemplateVersion]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input versionsCredentialTemplate_where {
+  parent: versionsCredentialTemplate_parent_operator
+  version__title: versionsCredentialTemplate_version__title_operator
+  version__description: versionsCredentialTemplate_version__description_operator
+  version__internalNotes: versionsCredentialTemplate_version__internalNotes_operator
+  version__credentialTemplateJson: versionsCredentialTemplate_version__credentialTemplateJson_operator
+  version__updatedAt: versionsCredentialTemplate_version__updatedAt_operator
+  version__createdAt: versionsCredentialTemplate_version__createdAt_operator
+  version___status: versionsCredentialTemplate_version___status_operator
+  createdAt: versionsCredentialTemplate_createdAt_operator
+  updatedAt: versionsCredentialTemplate_updatedAt_operator
+  id: versionsCredentialTemplate_id_operator
+  OR: [versionsCredentialTemplate_where_or]
+  AND: [versionsCredentialTemplate_where_and]
+}
+
+input versionsCredentialTemplate_parent_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input versionsCredentialTemplate_version__title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input versionsCredentialTemplate_version__description_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input versionsCredentialTemplate_version__internalNotes_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input versionsCredentialTemplate_version__credentialTemplateJson_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+}
+
+input versionsCredentialTemplate_version__updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredentialTemplate_version__createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredentialTemplate_version___status_operator {
+  equals: versionsCredentialTemplate_version___status_Input
+  not_equals: versionsCredentialTemplate_version___status_Input
+  in: [versionsCredentialTemplate_version___status_Input]
+  not_in: [versionsCredentialTemplate_version___status_Input]
+  all: [versionsCredentialTemplate_version___status_Input]
+  exists: Boolean
+}
+
+enum versionsCredentialTemplate_version___status_Input {
+  draft
+  published
+}
+
+input versionsCredentialTemplate_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredentialTemplate_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredentialTemplate_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input versionsCredentialTemplate_where_or {
+  parent: versionsCredentialTemplate_parent_operator
+  version__title: versionsCredentialTemplate_version__title_operator
+  version__description: versionsCredentialTemplate_version__description_operator
+  version__internalNotes: versionsCredentialTemplate_version__internalNotes_operator
+  version__credentialTemplateJson: versionsCredentialTemplate_version__credentialTemplateJson_operator
+  version__updatedAt: versionsCredentialTemplate_version__updatedAt_operator
+  version__createdAt: versionsCredentialTemplate_version__createdAt_operator
+  version___status: versionsCredentialTemplate_version___status_operator
+  createdAt: versionsCredentialTemplate_createdAt_operator
+  updatedAt: versionsCredentialTemplate_updatedAt_operator
+  id: versionsCredentialTemplate_id_operator
+}
+
+input versionsCredentialTemplate_where_and {
+  parent: versionsCredentialTemplate_parent_operator
+  version__title: versionsCredentialTemplate_version__title_operator
+  version__description: versionsCredentialTemplate_version__description_operator
+  version__internalNotes: versionsCredentialTemplate_version__internalNotes_operator
+  version__credentialTemplateJson: versionsCredentialTemplate_version__credentialTemplateJson_operator
+  version__updatedAt: versionsCredentialTemplate_version__updatedAt_operator
+  version__createdAt: versionsCredentialTemplate_version__createdAt_operator
+  version___status: versionsCredentialTemplate_version___status_operator
+  createdAt: versionsCredentialTemplate_createdAt_operator
+  updatedAt: versionsCredentialTemplate_updatedAt_operator
+  id: versionsCredentialTemplate_id_operator
+}
+
+type CredentialBatch {
+  id: String
+  title: String
+  description: String
+  internalNotes: String
+  status: String
+  template: CredentialTemplate
+  emailTemplate: EmailTemplate
+  updatedAt: DateTime
+  createdAt: DateTime
+  _status: CredentialBatch__status
+}
+
+type EmailTemplate {
+  id: String
+  title: String
+  internalNotes: String
+  emailTemplatesHandlebarsCode: String
+  updatedAt: DateTime
+  createdAt: DateTime
+  _status: EmailTemplate__status
+}
+
+enum EmailTemplate__status {
+  draft
+  published
+}
+
+enum CredentialBatch__status {
+  draft
+  published
+}
+
+type CredentialBatches {
+  docs: [CredentialBatch]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input CredentialBatch_where {
+  title: CredentialBatch_title_operator
+  description: CredentialBatch_description_operator
+  internalNotes: CredentialBatch_internalNotes_operator
+  status: CredentialBatch_status_operator
+  template: CredentialBatch_template_operator
+  emailTemplate: CredentialBatch_emailTemplate_operator
+  updatedAt: CredentialBatch_updatedAt_operator
+  createdAt: CredentialBatch_createdAt_operator
+  _status: CredentialBatch__status_operator
+  id: CredentialBatch_id_operator
+  OR: [CredentialBatch_where_or]
+  AND: [CredentialBatch_where_and]
+}
+
+input CredentialBatch_title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input CredentialBatch_description_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input CredentialBatch_internalNotes_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input CredentialBatch_status_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input CredentialBatch_template_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input CredentialBatch_emailTemplate_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input CredentialBatch_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input CredentialBatch_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input CredentialBatch__status_operator {
+  equals: CredentialBatch__status_Input
+  not_equals: CredentialBatch__status_Input
+  in: [CredentialBatch__status_Input]
+  not_in: [CredentialBatch__status_Input]
+  all: [CredentialBatch__status_Input]
+  exists: Boolean
+}
+
+enum CredentialBatch__status_Input {
+  draft
+  published
+}
+
+input CredentialBatch_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input CredentialBatch_where_or {
+  title: CredentialBatch_title_operator
+  description: CredentialBatch_description_operator
+  internalNotes: CredentialBatch_internalNotes_operator
+  status: CredentialBatch_status_operator
+  template: CredentialBatch_template_operator
+  emailTemplate: CredentialBatch_emailTemplate_operator
+  updatedAt: CredentialBatch_updatedAt_operator
+  createdAt: CredentialBatch_createdAt_operator
+  _status: CredentialBatch__status_operator
+  id: CredentialBatch_id_operator
+}
+
+input CredentialBatch_where_and {
+  title: CredentialBatch_title_operator
+  description: CredentialBatch_description_operator
+  internalNotes: CredentialBatch_internalNotes_operator
+  status: CredentialBatch_status_operator
+  template: CredentialBatch_template_operator
+  emailTemplate: CredentialBatch_emailTemplate_operator
+  updatedAt: CredentialBatch_updatedAt_operator
+  createdAt: CredentialBatch_createdAt_operator
+  _status: CredentialBatch__status_operator
+  id: CredentialBatch_id_operator
+}
+
+type credential_batchDocAccess {
+  fields: CredentialBatchDocAccessFields
+  create: CredentialBatchCreateDocAccess
+  read: CredentialBatchReadDocAccess
+  update: CredentialBatchUpdateDocAccess
+  delete: CredentialBatchDeleteDocAccess
+  readVersions: CredentialBatchReadVersionsDocAccess
+}
+
+type CredentialBatchDocAccessFields {
+  title: CredentialBatchDocAccessFields_title
+  description: CredentialBatchDocAccessFields_description
+  internalNotes: CredentialBatchDocAccessFields_internalNotes
+  status: CredentialBatchDocAccessFields_status
+  template: CredentialBatchDocAccessFields_template
+  emailTemplate: CredentialBatchDocAccessFields_emailTemplate
+  updatedAt: CredentialBatchDocAccessFields_updatedAt
+  createdAt: CredentialBatchDocAccessFields_createdAt
+  _status: CredentialBatchDocAccessFields__status
+}
+
+type CredentialBatchDocAccessFields_title {
+  create: CredentialBatchDocAccessFields_title_Create
+  read: CredentialBatchDocAccessFields_title_Read
+  update: CredentialBatchDocAccessFields_title_Update
+  delete: CredentialBatchDocAccessFields_title_Delete
+}
+
+type CredentialBatchDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_description {
+  create: CredentialBatchDocAccessFields_description_Create
+  read: CredentialBatchDocAccessFields_description_Read
+  update: CredentialBatchDocAccessFields_description_Update
+  delete: CredentialBatchDocAccessFields_description_Delete
+}
+
+type CredentialBatchDocAccessFields_description_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_description_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_description_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_description_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_internalNotes {
+  create: CredentialBatchDocAccessFields_internalNotes_Create
+  read: CredentialBatchDocAccessFields_internalNotes_Read
+  update: CredentialBatchDocAccessFields_internalNotes_Update
+  delete: CredentialBatchDocAccessFields_internalNotes_Delete
+}
+
+type CredentialBatchDocAccessFields_internalNotes_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_internalNotes_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_internalNotes_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_internalNotes_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_status {
+  create: CredentialBatchDocAccessFields_status_Create
+  read: CredentialBatchDocAccessFields_status_Read
+  update: CredentialBatchDocAccessFields_status_Update
+  delete: CredentialBatchDocAccessFields_status_Delete
+}
+
+type CredentialBatchDocAccessFields_status_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_status_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_status_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_status_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_template {
+  create: CredentialBatchDocAccessFields_template_Create
+  read: CredentialBatchDocAccessFields_template_Read
+  update: CredentialBatchDocAccessFields_template_Update
+  delete: CredentialBatchDocAccessFields_template_Delete
+}
+
+type CredentialBatchDocAccessFields_template_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_template_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_template_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_template_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_emailTemplate {
+  create: CredentialBatchDocAccessFields_emailTemplate_Create
+  read: CredentialBatchDocAccessFields_emailTemplate_Read
+  update: CredentialBatchDocAccessFields_emailTemplate_Update
+  delete: CredentialBatchDocAccessFields_emailTemplate_Delete
+}
+
+type CredentialBatchDocAccessFields_emailTemplate_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_emailTemplate_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_emailTemplate_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_emailTemplate_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_updatedAt {
+  create: CredentialBatchDocAccessFields_updatedAt_Create
+  read: CredentialBatchDocAccessFields_updatedAt_Read
+  update: CredentialBatchDocAccessFields_updatedAt_Update
+  delete: CredentialBatchDocAccessFields_updatedAt_Delete
+}
+
+type CredentialBatchDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_createdAt {
+  create: CredentialBatchDocAccessFields_createdAt_Create
+  read: CredentialBatchDocAccessFields_createdAt_Read
+  update: CredentialBatchDocAccessFields_createdAt_Update
+  delete: CredentialBatchDocAccessFields_createdAt_Delete
+}
+
+type CredentialBatchDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields__status {
+  create: CredentialBatchDocAccessFields__status_Create
+  read: CredentialBatchDocAccessFields__status_Read
+  update: CredentialBatchDocAccessFields__status_Update
+  delete: CredentialBatchDocAccessFields__status_Delete
+}
+
+type CredentialBatchDocAccessFields__status_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields__status_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields__status_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields__status_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialBatchReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialBatchUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialBatchDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialBatchReadVersionsDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialBatchVersion {
+  parent: CredentialBatch
+  version: CredentialBatchVersion_Version
+  createdAt: DateTime
+  updatedAt: DateTime
+  autosave: Boolean
+  id: String
+}
+
+type CredentialBatchVersion_Version {
+  title: String
+  description: String
+  internalNotes: String
+  status: String
+  template: CredentialTemplate
+  emailTemplate: EmailTemplate
+  updatedAt: DateTime
+  createdAt: DateTime
+  _status: CredentialBatchVersion_Version__status
+}
+
+enum CredentialBatchVersion_Version__status {
+  draft
+  published
+}
+
+type versionsCredentialBatches {
+  docs: [CredentialBatchVersion]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input versionsCredentialBatch_where {
+  parent: versionsCredentialBatch_parent_operator
+  version__title: versionsCredentialBatch_version__title_operator
+  version__description: versionsCredentialBatch_version__description_operator
+  version__internalNotes: versionsCredentialBatch_version__internalNotes_operator
+  version__status: versionsCredentialBatch_version__status_operator
+  version__template: versionsCredentialBatch_version__template_operator
+  version__emailTemplate: versionsCredentialBatch_version__emailTemplate_operator
+  version__updatedAt: versionsCredentialBatch_version__updatedAt_operator
+  version__createdAt: versionsCredentialBatch_version__createdAt_operator
+  version___status: versionsCredentialBatch_version___status_operator
+  createdAt: versionsCredentialBatch_createdAt_operator
+  updatedAt: versionsCredentialBatch_updatedAt_operator
+  autosave: versionsCredentialBatch_autosave_operator
+  id: versionsCredentialBatch_id_operator
+  OR: [versionsCredentialBatch_where_or]
+  AND: [versionsCredentialBatch_where_and]
+}
+
+input versionsCredentialBatch_parent_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input versionsCredentialBatch_version__title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input versionsCredentialBatch_version__description_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input versionsCredentialBatch_version__internalNotes_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input versionsCredentialBatch_version__status_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input versionsCredentialBatch_version__template_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input versionsCredentialBatch_version__emailTemplate_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input versionsCredentialBatch_version__updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredentialBatch_version__createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredentialBatch_version___status_operator {
+  equals: versionsCredentialBatch_version___status_Input
+  not_equals: versionsCredentialBatch_version___status_Input
+  in: [versionsCredentialBatch_version___status_Input]
+  not_in: [versionsCredentialBatch_version___status_Input]
+  all: [versionsCredentialBatch_version___status_Input]
+  exists: Boolean
+}
+
+enum versionsCredentialBatch_version___status_Input {
+  draft
+  published
+}
+
+input versionsCredentialBatch_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredentialBatch_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredentialBatch_autosave_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input versionsCredentialBatch_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input versionsCredentialBatch_where_or {
+  parent: versionsCredentialBatch_parent_operator
+  version__title: versionsCredentialBatch_version__title_operator
+  version__description: versionsCredentialBatch_version__description_operator
+  version__internalNotes: versionsCredentialBatch_version__internalNotes_operator
+  version__status: versionsCredentialBatch_version__status_operator
+  version__template: versionsCredentialBatch_version__template_operator
+  version__emailTemplate: versionsCredentialBatch_version__emailTemplate_operator
+  version__updatedAt: versionsCredentialBatch_version__updatedAt_operator
+  version__createdAt: versionsCredentialBatch_version__createdAt_operator
+  version___status: versionsCredentialBatch_version___status_operator
+  createdAt: versionsCredentialBatch_createdAt_operator
+  updatedAt: versionsCredentialBatch_updatedAt_operator
+  autosave: versionsCredentialBatch_autosave_operator
+  id: versionsCredentialBatch_id_operator
+}
+
+input versionsCredentialBatch_where_and {
+  parent: versionsCredentialBatch_parent_operator
+  version__title: versionsCredentialBatch_version__title_operator
+  version__description: versionsCredentialBatch_version__description_operator
+  version__internalNotes: versionsCredentialBatch_version__internalNotes_operator
+  version__status: versionsCredentialBatch_version__status_operator
+  version__template: versionsCredentialBatch_version__template_operator
+  version__emailTemplate: versionsCredentialBatch_version__emailTemplate_operator
+  version__updatedAt: versionsCredentialBatch_version__updatedAt_operator
+  version__createdAt: versionsCredentialBatch_version__createdAt_operator
+  version___status: versionsCredentialBatch_version___status_operator
+  createdAt: versionsCredentialBatch_createdAt_operator
+  updatedAt: versionsCredentialBatch_updatedAt_operator
+  autosave: versionsCredentialBatch_autosave_operator
+  id: versionsCredentialBatch_id_operator
+}
+
+type Credential {
+  id: String
+  credentialName: String
+  earnerName: String
+  emailAddress: EmailAddress
+  extraFields: JSON
+  status: String
+  batch: CredentialBatch
+  updatedAt: DateTime
+  createdAt: DateTime
+  _status: Credential__status
+}
+
+enum Credential__status {
+  draft
+  published
+}
+
+type Credentials {
+  docs: [Credential]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input Credential_where {
+  credentialName: Credential_credentialName_operator
+  earnerName: Credential_earnerName_operator
+  emailAddress: Credential_emailAddress_operator
+  extraFields: Credential_extraFields_operator
+  status: Credential_status_operator
+  batch: Credential_batch_operator
+  updatedAt: Credential_updatedAt_operator
+  createdAt: Credential_createdAt_operator
+  _status: Credential__status_operator
+  id: Credential_id_operator
+  OR: [Credential_where_or]
+  AND: [Credential_where_and]
+}
+
+input Credential_credentialName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Credential_earnerName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Credential_emailAddress_operator {
+  equals: EmailAddress
+  not_equals: EmailAddress
+  like: EmailAddress
+  contains: EmailAddress
+  in: [EmailAddress]
+  not_in: [EmailAddress]
+  all: [EmailAddress]
+  exists: Boolean
+}
+
+input Credential_extraFields_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  exists: Boolean
+}
+
+input Credential_status_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Credential_batch_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Credential_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Credential_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Credential__status_operator {
+  equals: Credential__status_Input
+  not_equals: Credential__status_Input
+  in: [Credential__status_Input]
+  not_in: [Credential__status_Input]
+  all: [Credential__status_Input]
+  exists: Boolean
+}
+
+enum Credential__status_Input {
+  draft
+  published
+}
+
+input Credential_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Credential_where_or {
+  credentialName: Credential_credentialName_operator
+  earnerName: Credential_earnerName_operator
+  emailAddress: Credential_emailAddress_operator
+  extraFields: Credential_extraFields_operator
+  status: Credential_status_operator
+  batch: Credential_batch_operator
+  updatedAt: Credential_updatedAt_operator
+  createdAt: Credential_createdAt_operator
+  _status: Credential__status_operator
+  id: Credential_id_operator
+}
+
+input Credential_where_and {
+  credentialName: Credential_credentialName_operator
+  earnerName: Credential_earnerName_operator
+  emailAddress: Credential_emailAddress_operator
+  extraFields: Credential_extraFields_operator
+  status: Credential_status_operator
+  batch: Credential_batch_operator
+  updatedAt: Credential_updatedAt_operator
+  createdAt: Credential_createdAt_operator
+  _status: Credential__status_operator
+  id: Credential_id_operator
+}
+
+type credentialDocAccess {
+  fields: CredentialDocAccessFields
+  create: CredentialCreateDocAccess
+  read: CredentialReadDocAccess
+  update: CredentialUpdateDocAccess
+  delete: CredentialDeleteDocAccess
+  readVersions: CredentialReadVersionsDocAccess
+}
+
+type CredentialDocAccessFields {
+  credentialName: CredentialDocAccessFields_credentialName
+  earnerName: CredentialDocAccessFields_earnerName
+  emailAddress: CredentialDocAccessFields_emailAddress
+  extraFields: CredentialDocAccessFields_extraFields
+  status: CredentialDocAccessFields_status
+  batch: CredentialDocAccessFields_batch
+  updatedAt: CredentialDocAccessFields_updatedAt
+  createdAt: CredentialDocAccessFields_createdAt
+  _status: CredentialDocAccessFields__status
+}
+
+type CredentialDocAccessFields_credentialName {
+  create: CredentialDocAccessFields_credentialName_Create
+  read: CredentialDocAccessFields_credentialName_Read
+  update: CredentialDocAccessFields_credentialName_Update
+  delete: CredentialDocAccessFields_credentialName_Delete
+}
+
+type CredentialDocAccessFields_credentialName_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_credentialName_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_credentialName_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_credentialName_Delete {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_earnerName {
+  create: CredentialDocAccessFields_earnerName_Create
+  read: CredentialDocAccessFields_earnerName_Read
+  update: CredentialDocAccessFields_earnerName_Update
+  delete: CredentialDocAccessFields_earnerName_Delete
+}
+
+type CredentialDocAccessFields_earnerName_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_earnerName_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_earnerName_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_earnerName_Delete {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_emailAddress {
+  create: CredentialDocAccessFields_emailAddress_Create
+  read: CredentialDocAccessFields_emailAddress_Read
+  update: CredentialDocAccessFields_emailAddress_Update
+  delete: CredentialDocAccessFields_emailAddress_Delete
+}
+
+type CredentialDocAccessFields_emailAddress_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_emailAddress_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_emailAddress_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_emailAddress_Delete {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_extraFields {
+  create: CredentialDocAccessFields_extraFields_Create
+  read: CredentialDocAccessFields_extraFields_Read
+  update: CredentialDocAccessFields_extraFields_Update
+  delete: CredentialDocAccessFields_extraFields_Delete
+}
+
+type CredentialDocAccessFields_extraFields_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_extraFields_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_extraFields_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_extraFields_Delete {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_status {
+  create: CredentialDocAccessFields_status_Create
+  read: CredentialDocAccessFields_status_Read
+  update: CredentialDocAccessFields_status_Update
+  delete: CredentialDocAccessFields_status_Delete
+}
+
+type CredentialDocAccessFields_status_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_status_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_status_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_status_Delete {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_batch {
+  create: CredentialDocAccessFields_batch_Create
+  read: CredentialDocAccessFields_batch_Read
+  update: CredentialDocAccessFields_batch_Update
+  delete: CredentialDocAccessFields_batch_Delete
+}
+
+type CredentialDocAccessFields_batch_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_batch_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_batch_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_batch_Delete {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_updatedAt {
+  create: CredentialDocAccessFields_updatedAt_Create
+  read: CredentialDocAccessFields_updatedAt_Read
+  update: CredentialDocAccessFields_updatedAt_Update
+  delete: CredentialDocAccessFields_updatedAt_Delete
+}
+
+type CredentialDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_createdAt {
+  create: CredentialDocAccessFields_createdAt_Create
+  read: CredentialDocAccessFields_createdAt_Read
+  update: CredentialDocAccessFields_createdAt_Update
+  delete: CredentialDocAccessFields_createdAt_Delete
+}
+
+type CredentialDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields__status {
+  create: CredentialDocAccessFields__status_Create
+  read: CredentialDocAccessFields__status_Read
+  update: CredentialDocAccessFields__status_Update
+  delete: CredentialDocAccessFields__status_Delete
+}
+
+type CredentialDocAccessFields__status_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields__status_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields__status_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields__status_Delete {
+  permission: Boolean!
+}
+
+type CredentialCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialReadVersionsDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialVersion {
+  parent: Credential
+  version: CredentialVersion_Version
+  createdAt: DateTime
+  updatedAt: DateTime
+  id: String
+}
+
+type CredentialVersion_Version {
+  credentialName: String
+  earnerName: String
+  emailAddress: EmailAddress
+  extraFields: JSON
+  status: String
+  batch: CredentialBatch
+  updatedAt: DateTime
+  createdAt: DateTime
+  _status: CredentialVersion_Version__status
+}
+
+enum CredentialVersion_Version__status {
+  draft
+  published
+}
+
+type versionsCredentials {
+  docs: [CredentialVersion]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input versionsCredential_where {
+  parent: versionsCredential_parent_operator
+  version__credentialName: versionsCredential_version__credentialName_operator
+  version__earnerName: versionsCredential_version__earnerName_operator
+  version__emailAddress: versionsCredential_version__emailAddress_operator
+  version__extraFields: versionsCredential_version__extraFields_operator
+  version__status: versionsCredential_version__status_operator
+  version__batch: versionsCredential_version__batch_operator
+  version__updatedAt: versionsCredential_version__updatedAt_operator
+  version__createdAt: versionsCredential_version__createdAt_operator
+  version___status: versionsCredential_version___status_operator
+  createdAt: versionsCredential_createdAt_operator
+  updatedAt: versionsCredential_updatedAt_operator
+  id: versionsCredential_id_operator
+  OR: [versionsCredential_where_or]
+  AND: [versionsCredential_where_and]
+}
+
+input versionsCredential_parent_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input versionsCredential_version__credentialName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input versionsCredential_version__earnerName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input versionsCredential_version__emailAddress_operator {
+  equals: EmailAddress
+  not_equals: EmailAddress
+  like: EmailAddress
+  contains: EmailAddress
+  in: [EmailAddress]
+  not_in: [EmailAddress]
+  all: [EmailAddress]
+  exists: Boolean
+}
+
+input versionsCredential_version__extraFields_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  exists: Boolean
+}
+
+input versionsCredential_version__status_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input versionsCredential_version__batch_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input versionsCredential_version__updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredential_version__createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredential_version___status_operator {
+  equals: versionsCredential_version___status_Input
+  not_equals: versionsCredential_version___status_Input
+  in: [versionsCredential_version___status_Input]
+  not_in: [versionsCredential_version___status_Input]
+  all: [versionsCredential_version___status_Input]
+  exists: Boolean
+}
+
+enum versionsCredential_version___status_Input {
+  draft
+  published
+}
+
+input versionsCredential_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredential_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredential_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input versionsCredential_where_or {
+  parent: versionsCredential_parent_operator
+  version__credentialName: versionsCredential_version__credentialName_operator
+  version__earnerName: versionsCredential_version__earnerName_operator
+  version__emailAddress: versionsCredential_version__emailAddress_operator
+  version__extraFields: versionsCredential_version__extraFields_operator
+  version__status: versionsCredential_version__status_operator
+  version__batch: versionsCredential_version__batch_operator
+  version__updatedAt: versionsCredential_version__updatedAt_operator
+  version__createdAt: versionsCredential_version__createdAt_operator
+  version___status: versionsCredential_version___status_operator
+  createdAt: versionsCredential_createdAt_operator
+  updatedAt: versionsCredential_updatedAt_operator
+  id: versionsCredential_id_operator
+}
+
+input versionsCredential_where_and {
+  parent: versionsCredential_parent_operator
+  version__credentialName: versionsCredential_version__credentialName_operator
+  version__earnerName: versionsCredential_version__earnerName_operator
+  version__emailAddress: versionsCredential_version__emailAddress_operator
+  version__extraFields: versionsCredential_version__extraFields_operator
+  version__status: versionsCredential_version__status_operator
+  version__batch: versionsCredential_version__batch_operator
+  version__updatedAt: versionsCredential_version__updatedAt_operator
+  version__createdAt: versionsCredential_version__createdAt_operator
+  version___status: versionsCredential_version___status_operator
+  createdAt: versionsCredential_createdAt_operator
+  updatedAt: versionsCredential_updatedAt_operator
+  id: versionsCredential_id_operator
+}
+
+type EmailTemplates {
+  docs: [EmailTemplate]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input EmailTemplate_where {
+  title: EmailTemplate_title_operator
+  internalNotes: EmailTemplate_internalNotes_operator
+  emailTemplatesHandlebarsCode: EmailTemplate_emailTemplatesHandlebarsCode_operator
+  updatedAt: EmailTemplate_updatedAt_operator
+  createdAt: EmailTemplate_createdAt_operator
+  _status: EmailTemplate__status_operator
+  id: EmailTemplate_id_operator
+  OR: [EmailTemplate_where_or]
+  AND: [EmailTemplate_where_and]
+}
+
+input EmailTemplate_title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input EmailTemplate_internalNotes_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input EmailTemplate_emailTemplatesHandlebarsCode_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input EmailTemplate_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input EmailTemplate_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input EmailTemplate__status_operator {
+  equals: EmailTemplate__status_Input
+  not_equals: EmailTemplate__status_Input
+  in: [EmailTemplate__status_Input]
+  not_in: [EmailTemplate__status_Input]
+  all: [EmailTemplate__status_Input]
+  exists: Boolean
+}
+
+enum EmailTemplate__status_Input {
+  draft
+  published
+}
+
+input EmailTemplate_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input EmailTemplate_where_or {
+  title: EmailTemplate_title_operator
+  internalNotes: EmailTemplate_internalNotes_operator
+  emailTemplatesHandlebarsCode: EmailTemplate_emailTemplatesHandlebarsCode_operator
+  updatedAt: EmailTemplate_updatedAt_operator
+  createdAt: EmailTemplate_createdAt_operator
+  _status: EmailTemplate__status_operator
+  id: EmailTemplate_id_operator
+}
+
+input EmailTemplate_where_and {
+  title: EmailTemplate_title_operator
+  internalNotes: EmailTemplate_internalNotes_operator
+  emailTemplatesHandlebarsCode: EmailTemplate_emailTemplatesHandlebarsCode_operator
+  updatedAt: EmailTemplate_updatedAt_operator
+  createdAt: EmailTemplate_createdAt_operator
+  _status: EmailTemplate__status_operator
+  id: EmailTemplate_id_operator
+}
+
+type email_templateDocAccess {
+  fields: EmailTemplateDocAccessFields
+  create: EmailTemplateCreateDocAccess
+  read: EmailTemplateReadDocAccess
+  update: EmailTemplateUpdateDocAccess
+  delete: EmailTemplateDeleteDocAccess
+  readVersions: EmailTemplateReadVersionsDocAccess
+}
+
+type EmailTemplateDocAccessFields {
+  title: EmailTemplateDocAccessFields_title
+  internalNotes: EmailTemplateDocAccessFields_internalNotes
+  emailTemplatesHandlebarsCode: EmailTemplateDocAccessFields_emailTemplatesHandlebarsCode
+  updatedAt: EmailTemplateDocAccessFields_updatedAt
+  createdAt: EmailTemplateDocAccessFields_createdAt
+  _status: EmailTemplateDocAccessFields__status
+}
+
+type EmailTemplateDocAccessFields_title {
+  create: EmailTemplateDocAccessFields_title_Create
+  read: EmailTemplateDocAccessFields_title_Read
+  update: EmailTemplateDocAccessFields_title_Update
+  delete: EmailTemplateDocAccessFields_title_Delete
+}
+
+type EmailTemplateDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_internalNotes {
+  create: EmailTemplateDocAccessFields_internalNotes_Create
+  read: EmailTemplateDocAccessFields_internalNotes_Read
+  update: EmailTemplateDocAccessFields_internalNotes_Update
+  delete: EmailTemplateDocAccessFields_internalNotes_Delete
+}
+
+type EmailTemplateDocAccessFields_internalNotes_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_internalNotes_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_internalNotes_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_internalNotes_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_emailTemplatesHandlebarsCode {
+  create: EmailTemplateDocAccessFields_emailTemplatesHandlebarsCode_Create
+  read: EmailTemplateDocAccessFields_emailTemplatesHandlebarsCode_Read
+  update: EmailTemplateDocAccessFields_emailTemplatesHandlebarsCode_Update
+  delete: EmailTemplateDocAccessFields_emailTemplatesHandlebarsCode_Delete
+}
+
+type EmailTemplateDocAccessFields_emailTemplatesHandlebarsCode_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_emailTemplatesHandlebarsCode_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_emailTemplatesHandlebarsCode_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_emailTemplatesHandlebarsCode_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_updatedAt {
+  create: EmailTemplateDocAccessFields_updatedAt_Create
+  read: EmailTemplateDocAccessFields_updatedAt_Read
+  update: EmailTemplateDocAccessFields_updatedAt_Update
+  delete: EmailTemplateDocAccessFields_updatedAt_Delete
+}
+
+type EmailTemplateDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_createdAt {
+  create: EmailTemplateDocAccessFields_createdAt_Create
+  read: EmailTemplateDocAccessFields_createdAt_Read
+  update: EmailTemplateDocAccessFields_createdAt_Update
+  delete: EmailTemplateDocAccessFields_createdAt_Delete
+}
+
+type EmailTemplateDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields__status {
+  create: EmailTemplateDocAccessFields__status_Create
+  read: EmailTemplateDocAccessFields__status_Read
+  update: EmailTemplateDocAccessFields__status_Update
+  delete: EmailTemplateDocAccessFields__status_Delete
+}
+
+type EmailTemplateDocAccessFields__status_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields__status_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields__status_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields__status_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplateReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplateUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplateDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplateReadVersionsDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplateVersion {
+  parent: EmailTemplate
+  version: EmailTemplateVersion_Version
+  createdAt: DateTime
+  updatedAt: DateTime
+  id: String
+}
+
+type EmailTemplateVersion_Version {
+  title: String
+  internalNotes: String
+  emailTemplatesHandlebarsCode: String
+  updatedAt: DateTime
+  createdAt: DateTime
+  _status: EmailTemplateVersion_Version__status
+}
+
+enum EmailTemplateVersion_Version__status {
+  draft
+  published
+}
+
+type versionsEmailTemplates {
+  docs: [EmailTemplateVersion]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Int
+  nextPage: Int
+}
+
+input versionsEmailTemplate_where {
+  parent: versionsEmailTemplate_parent_operator
+  version__title: versionsEmailTemplate_version__title_operator
+  version__internalNotes: versionsEmailTemplate_version__internalNotes_operator
+  version__emailTemplatesHandlebarsCode: versionsEmailTemplate_version__emailTemplatesHandlebarsCode_operator
+  version__updatedAt: versionsEmailTemplate_version__updatedAt_operator
+  version__createdAt: versionsEmailTemplate_version__createdAt_operator
+  version___status: versionsEmailTemplate_version___status_operator
+  createdAt: versionsEmailTemplate_createdAt_operator
+  updatedAt: versionsEmailTemplate_updatedAt_operator
+  id: versionsEmailTemplate_id_operator
+  OR: [versionsEmailTemplate_where_or]
+  AND: [versionsEmailTemplate_where_and]
+}
+
+input versionsEmailTemplate_parent_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input versionsEmailTemplate_version__title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input versionsEmailTemplate_version__internalNotes_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input versionsEmailTemplate_version__emailTemplatesHandlebarsCode_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input versionsEmailTemplate_version__updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsEmailTemplate_version__createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsEmailTemplate_version___status_operator {
+  equals: versionsEmailTemplate_version___status_Input
+  not_equals: versionsEmailTemplate_version___status_Input
+  in: [versionsEmailTemplate_version___status_Input]
+  not_in: [versionsEmailTemplate_version___status_Input]
+  all: [versionsEmailTemplate_version___status_Input]
+  exists: Boolean
+}
+
+enum versionsEmailTemplate_version___status_Input {
+  draft
+  published
+}
+
+input versionsEmailTemplate_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsEmailTemplate_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsEmailTemplate_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input versionsEmailTemplate_where_or {
+  parent: versionsEmailTemplate_parent_operator
+  version__title: versionsEmailTemplate_version__title_operator
+  version__internalNotes: versionsEmailTemplate_version__internalNotes_operator
+  version__emailTemplatesHandlebarsCode: versionsEmailTemplate_version__emailTemplatesHandlebarsCode_operator
+  version__updatedAt: versionsEmailTemplate_version__updatedAt_operator
+  version__createdAt: versionsEmailTemplate_version__createdAt_operator
+  version___status: versionsEmailTemplate_version___status_operator
+  createdAt: versionsEmailTemplate_createdAt_operator
+  updatedAt: versionsEmailTemplate_updatedAt_operator
+  id: versionsEmailTemplate_id_operator
+}
+
+input versionsEmailTemplate_where_and {
+  parent: versionsEmailTemplate_parent_operator
+  version__title: versionsEmailTemplate_version__title_operator
+  version__internalNotes: versionsEmailTemplate_version__internalNotes_operator
+  version__emailTemplatesHandlebarsCode: versionsEmailTemplate_version__emailTemplatesHandlebarsCode_operator
+  version__updatedAt: versionsEmailTemplate_version__updatedAt_operator
+  version__createdAt: versionsEmailTemplate_version__createdAt_operator
+  version___status: versionsEmailTemplate_version___status_operator
+  createdAt: versionsEmailTemplate_createdAt_operator
+  updatedAt: versionsEmailTemplate_updatedAt_operator
+  id: versionsEmailTemplate_id_operator
+}
+
+type Preference {
+  key: String!
+  value: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Access {
+  canAccessAdmin: Boolean!
+  users: usersAccess
+  credential_template: credential_templateAccess
+  credential_batch: credential_batchAccess
+  credential: credentialAccess
+  email_template: email_templateAccess
+}
+
+type usersAccess {
+  fields: UsersFields
+  create: UsersCreateAccess
+  read: UsersReadAccess
+  update: UsersUpdateAccess
+  delete: UsersDeleteAccess
+  unlock: UsersUnlockAccess
+}
+
+type UsersFields {
+  updatedAt: UsersFields_updatedAt
+  createdAt: UsersFields_createdAt
+  email: UsersFields_email
+  password: UsersFields_password
+}
+
+type UsersFields_updatedAt {
+  create: UsersFields_updatedAt_Create
+  read: UsersFields_updatedAt_Read
+  update: UsersFields_updatedAt_Update
+  delete: UsersFields_updatedAt_Delete
+}
+
+type UsersFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type UsersFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type UsersFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type UsersFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt {
+  create: UsersFields_createdAt_Create
+  read: UsersFields_createdAt_Read
+  update: UsersFields_createdAt_Update
+  delete: UsersFields_createdAt_Delete
+}
+
+type UsersFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type UsersFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_email {
+  create: UsersFields_email_Create
+  read: UsersFields_email_Read
+  update: UsersFields_email_Update
+  delete: UsersFields_email_Delete
+}
+
+type UsersFields_email_Create {
+  permission: Boolean!
+}
+
+type UsersFields_email_Read {
+  permission: Boolean!
+}
+
+type UsersFields_email_Update {
+  permission: Boolean!
+}
+
+type UsersFields_email_Delete {
+  permission: Boolean!
+}
+
+type UsersFields_password {
+  create: UsersFields_password_Create
+  read: UsersFields_password_Read
+  update: UsersFields_password_Update
+  delete: UsersFields_password_Delete
+}
+
+type UsersFields_password_Create {
+  permission: Boolean!
+}
+
+type UsersFields_password_Read {
+  permission: Boolean!
+}
+
+type UsersFields_password_Update {
+  permission: Boolean!
+}
+
+type UsersFields_password_Delete {
+  permission: Boolean!
+}
+
+type UsersCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UsersUnlockAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type credential_templateAccess {
+  fields: CredentialTemplateFields
+  create: CredentialTemplateCreateAccess
+  read: CredentialTemplateReadAccess
+  update: CredentialTemplateUpdateAccess
+  delete: CredentialTemplateDeleteAccess
+  readVersions: CredentialTemplateReadVersionsAccess
+}
+
+type CredentialTemplateFields {
+  title: CredentialTemplateFields_title
+  description: CredentialTemplateFields_description
+  internalNotes: CredentialTemplateFields_internalNotes
+  credentialTemplateJson: CredentialTemplateFields_credentialTemplateJson
+  updatedAt: CredentialTemplateFields_updatedAt
+  createdAt: CredentialTemplateFields_createdAt
+  _status: CredentialTemplateFields__status
+}
+
+type CredentialTemplateFields_title {
+  create: CredentialTemplateFields_title_Create
+  read: CredentialTemplateFields_title_Read
+  update: CredentialTemplateFields_title_Update
+  delete: CredentialTemplateFields_title_Delete
+}
+
+type CredentialTemplateFields_title_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_title_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_title_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_title_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_description {
+  create: CredentialTemplateFields_description_Create
+  read: CredentialTemplateFields_description_Read
+  update: CredentialTemplateFields_description_Update
+  delete: CredentialTemplateFields_description_Delete
+}
+
+type CredentialTemplateFields_description_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_description_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_description_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_description_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_internalNotes {
+  create: CredentialTemplateFields_internalNotes_Create
+  read: CredentialTemplateFields_internalNotes_Read
+  update: CredentialTemplateFields_internalNotes_Update
+  delete: CredentialTemplateFields_internalNotes_Delete
+}
+
+type CredentialTemplateFields_internalNotes_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_internalNotes_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_internalNotes_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_internalNotes_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_credentialTemplateJson {
+  create: CredentialTemplateFields_credentialTemplateJson_Create
+  read: CredentialTemplateFields_credentialTemplateJson_Read
+  update: CredentialTemplateFields_credentialTemplateJson_Update
+  delete: CredentialTemplateFields_credentialTemplateJson_Delete
+}
+
+type CredentialTemplateFields_credentialTemplateJson_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_credentialTemplateJson_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_credentialTemplateJson_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_credentialTemplateJson_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_updatedAt {
+  create: CredentialTemplateFields_updatedAt_Create
+  read: CredentialTemplateFields_updatedAt_Read
+  update: CredentialTemplateFields_updatedAt_Update
+  delete: CredentialTemplateFields_updatedAt_Delete
+}
+
+type CredentialTemplateFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_createdAt {
+  create: CredentialTemplateFields_createdAt_Create
+  read: CredentialTemplateFields_createdAt_Read
+  update: CredentialTemplateFields_createdAt_Update
+  delete: CredentialTemplateFields_createdAt_Delete
+}
+
+type CredentialTemplateFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields__status {
+  create: CredentialTemplateFields__status_Create
+  read: CredentialTemplateFields__status_Read
+  update: CredentialTemplateFields__status_Update
+  delete: CredentialTemplateFields__status_Delete
+}
+
+type CredentialTemplateFields__status_Create {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields__status_Read {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields__status_Update {
+  permission: Boolean!
+}
+
+type CredentialTemplateFields__status_Delete {
+  permission: Boolean!
+}
+
+type CredentialTemplateCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialTemplateReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialTemplateUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialTemplateDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialTemplateReadVersionsAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type credential_batchAccess {
+  fields: CredentialBatchFields
+  create: CredentialBatchCreateAccess
+  read: CredentialBatchReadAccess
+  update: CredentialBatchUpdateAccess
+  delete: CredentialBatchDeleteAccess
+  readVersions: CredentialBatchReadVersionsAccess
+}
+
+type CredentialBatchFields {
+  title: CredentialBatchFields_title
+  description: CredentialBatchFields_description
+  internalNotes: CredentialBatchFields_internalNotes
+  status: CredentialBatchFields_status
+  template: CredentialBatchFields_template
+  emailTemplate: CredentialBatchFields_emailTemplate
+  updatedAt: CredentialBatchFields_updatedAt
+  createdAt: CredentialBatchFields_createdAt
+  _status: CredentialBatchFields__status
+}
+
+type CredentialBatchFields_title {
+  create: CredentialBatchFields_title_Create
+  read: CredentialBatchFields_title_Read
+  update: CredentialBatchFields_title_Update
+  delete: CredentialBatchFields_title_Delete
+}
+
+type CredentialBatchFields_title_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_title_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_title_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_title_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_description {
+  create: CredentialBatchFields_description_Create
+  read: CredentialBatchFields_description_Read
+  update: CredentialBatchFields_description_Update
+  delete: CredentialBatchFields_description_Delete
+}
+
+type CredentialBatchFields_description_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_description_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_description_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_description_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_internalNotes {
+  create: CredentialBatchFields_internalNotes_Create
+  read: CredentialBatchFields_internalNotes_Read
+  update: CredentialBatchFields_internalNotes_Update
+  delete: CredentialBatchFields_internalNotes_Delete
+}
+
+type CredentialBatchFields_internalNotes_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_internalNotes_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_internalNotes_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_internalNotes_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_status {
+  create: CredentialBatchFields_status_Create
+  read: CredentialBatchFields_status_Read
+  update: CredentialBatchFields_status_Update
+  delete: CredentialBatchFields_status_Delete
+}
+
+type CredentialBatchFields_status_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_status_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_status_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_status_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_template {
+  create: CredentialBatchFields_template_Create
+  read: CredentialBatchFields_template_Read
+  update: CredentialBatchFields_template_Update
+  delete: CredentialBatchFields_template_Delete
+}
+
+type CredentialBatchFields_template_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_template_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_template_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_template_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_emailTemplate {
+  create: CredentialBatchFields_emailTemplate_Create
+  read: CredentialBatchFields_emailTemplate_Read
+  update: CredentialBatchFields_emailTemplate_Update
+  delete: CredentialBatchFields_emailTemplate_Delete
+}
+
+type CredentialBatchFields_emailTemplate_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_emailTemplate_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_emailTemplate_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_emailTemplate_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_updatedAt {
+  create: CredentialBatchFields_updatedAt_Create
+  read: CredentialBatchFields_updatedAt_Read
+  update: CredentialBatchFields_updatedAt_Update
+  delete: CredentialBatchFields_updatedAt_Delete
+}
+
+type CredentialBatchFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_createdAt {
+  create: CredentialBatchFields_createdAt_Create
+  read: CredentialBatchFields_createdAt_Read
+  update: CredentialBatchFields_createdAt_Update
+  delete: CredentialBatchFields_createdAt_Delete
+}
+
+type CredentialBatchFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchFields__status {
+  create: CredentialBatchFields__status_Create
+  read: CredentialBatchFields__status_Read
+  update: CredentialBatchFields__status_Update
+  delete: CredentialBatchFields__status_Delete
+}
+
+type CredentialBatchFields__status_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchFields__status_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchFields__status_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchFields__status_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialBatchReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialBatchUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialBatchDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialBatchReadVersionsAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type credentialAccess {
+  fields: CredentialFields
+  create: CredentialCreateAccess
+  read: CredentialReadAccess
+  update: CredentialUpdateAccess
+  delete: CredentialDeleteAccess
+  readVersions: CredentialReadVersionsAccess
+}
+
+type CredentialFields {
+  credentialName: CredentialFields_credentialName
+  earnerName: CredentialFields_earnerName
+  emailAddress: CredentialFields_emailAddress
+  extraFields: CredentialFields_extraFields
+  status: CredentialFields_status
+  batch: CredentialFields_batch
+  updatedAt: CredentialFields_updatedAt
+  createdAt: CredentialFields_createdAt
+  _status: CredentialFields__status
+}
+
+type CredentialFields_credentialName {
+  create: CredentialFields_credentialName_Create
+  read: CredentialFields_credentialName_Read
+  update: CredentialFields_credentialName_Update
+  delete: CredentialFields_credentialName_Delete
+}
+
+type CredentialFields_credentialName_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_credentialName_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_credentialName_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_credentialName_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields_earnerName {
+  create: CredentialFields_earnerName_Create
+  read: CredentialFields_earnerName_Read
+  update: CredentialFields_earnerName_Update
+  delete: CredentialFields_earnerName_Delete
+}
+
+type CredentialFields_earnerName_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_earnerName_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_earnerName_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_earnerName_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields_emailAddress {
+  create: CredentialFields_emailAddress_Create
+  read: CredentialFields_emailAddress_Read
+  update: CredentialFields_emailAddress_Update
+  delete: CredentialFields_emailAddress_Delete
+}
+
+type CredentialFields_emailAddress_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_emailAddress_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_emailAddress_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_emailAddress_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields_extraFields {
+  create: CredentialFields_extraFields_Create
+  read: CredentialFields_extraFields_Read
+  update: CredentialFields_extraFields_Update
+  delete: CredentialFields_extraFields_Delete
+}
+
+type CredentialFields_extraFields_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_extraFields_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_extraFields_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_extraFields_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields_status {
+  create: CredentialFields_status_Create
+  read: CredentialFields_status_Read
+  update: CredentialFields_status_Update
+  delete: CredentialFields_status_Delete
+}
+
+type CredentialFields_status_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_status_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_status_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_status_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields_batch {
+  create: CredentialFields_batch_Create
+  read: CredentialFields_batch_Read
+  update: CredentialFields_batch_Update
+  delete: CredentialFields_batch_Delete
+}
+
+type CredentialFields_batch_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_batch_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_batch_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_batch_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields_updatedAt {
+  create: CredentialFields_updatedAt_Create
+  read: CredentialFields_updatedAt_Read
+  update: CredentialFields_updatedAt_Update
+  delete: CredentialFields_updatedAt_Delete
+}
+
+type CredentialFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields_createdAt {
+  create: CredentialFields_createdAt_Create
+  read: CredentialFields_createdAt_Read
+  update: CredentialFields_createdAt_Update
+  delete: CredentialFields_createdAt_Delete
+}
+
+type CredentialFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields__status {
+  create: CredentialFields__status_Create
+  read: CredentialFields__status_Read
+  update: CredentialFields__status_Update
+  delete: CredentialFields__status_Delete
+}
+
+type CredentialFields__status_Create {
+  permission: Boolean!
+}
+
+type CredentialFields__status_Read {
+  permission: Boolean!
+}
+
+type CredentialFields__status_Update {
+  permission: Boolean!
+}
+
+type CredentialFields__status_Delete {
+  permission: Boolean!
+}
+
+type CredentialCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type CredentialReadVersionsAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type email_templateAccess {
+  fields: EmailTemplateFields
+  create: EmailTemplateCreateAccess
+  read: EmailTemplateReadAccess
+  update: EmailTemplateUpdateAccess
+  delete: EmailTemplateDeleteAccess
+  readVersions: EmailTemplateReadVersionsAccess
+}
+
+type EmailTemplateFields {
+  title: EmailTemplateFields_title
+  internalNotes: EmailTemplateFields_internalNotes
+  emailTemplatesHandlebarsCode: EmailTemplateFields_emailTemplatesHandlebarsCode
+  updatedAt: EmailTemplateFields_updatedAt
+  createdAt: EmailTemplateFields_createdAt
+  _status: EmailTemplateFields__status
+}
+
+type EmailTemplateFields_title {
+  create: EmailTemplateFields_title_Create
+  read: EmailTemplateFields_title_Read
+  update: EmailTemplateFields_title_Update
+  delete: EmailTemplateFields_title_Delete
+}
+
+type EmailTemplateFields_title_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_title_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_title_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_title_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_internalNotes {
+  create: EmailTemplateFields_internalNotes_Create
+  read: EmailTemplateFields_internalNotes_Read
+  update: EmailTemplateFields_internalNotes_Update
+  delete: EmailTemplateFields_internalNotes_Delete
+}
+
+type EmailTemplateFields_internalNotes_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_internalNotes_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_internalNotes_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_internalNotes_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_emailTemplatesHandlebarsCode {
+  create: EmailTemplateFields_emailTemplatesHandlebarsCode_Create
+  read: EmailTemplateFields_emailTemplatesHandlebarsCode_Read
+  update: EmailTemplateFields_emailTemplatesHandlebarsCode_Update
+  delete: EmailTemplateFields_emailTemplatesHandlebarsCode_Delete
+}
+
+type EmailTemplateFields_emailTemplatesHandlebarsCode_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_emailTemplatesHandlebarsCode_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_emailTemplatesHandlebarsCode_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_emailTemplatesHandlebarsCode_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_updatedAt {
+  create: EmailTemplateFields_updatedAt_Create
+  read: EmailTemplateFields_updatedAt_Read
+  update: EmailTemplateFields_updatedAt_Update
+  delete: EmailTemplateFields_updatedAt_Delete
+}
+
+type EmailTemplateFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_createdAt {
+  create: EmailTemplateFields_createdAt_Create
+  read: EmailTemplateFields_createdAt_Read
+  update: EmailTemplateFields_createdAt_Update
+  delete: EmailTemplateFields_createdAt_Delete
+}
+
+type EmailTemplateFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateFields__status {
+  create: EmailTemplateFields__status_Create
+  read: EmailTemplateFields__status_Read
+  update: EmailTemplateFields__status_Update
+  delete: EmailTemplateFields__status_Delete
+}
+
+type EmailTemplateFields__status_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateFields__status_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateFields__status_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateFields__status_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplateReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplateUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplateDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplateReadVersionsAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Mutation {
+  createUser(data: mutationUserInput!, draft: Boolean): User
+  updateUser(id: String!, data: mutationUserUpdateInput!, draft: Boolean, autosave: Boolean): User
+  deleteUser(id: String!): User
+  refreshTokenUser(token: String): usersRefreshedUser
+  logoutUser: String
+  unlockUser(email: String!): Boolean!
+  loginUser(email: String, password: String): usersLoginResult
+  forgotPasswordUser(email: String!, disableEmail: Boolean, expiration: Int): Boolean!
+  resetPasswordUser(token: String, password: String): usersResetPassword
+  verifyEmailUser(token: String): Boolean
+  createCredentialTemplate(data: mutationCredentialTemplateInput!, draft: Boolean): CredentialTemplate
+  updateCredentialTemplate(id: String!, data: mutationCredentialTemplateUpdateInput!, draft: Boolean, autosave: Boolean): CredentialTemplate
+  deleteCredentialTemplate(id: String!): CredentialTemplate
+  restoreVersionCredentialTemplate(id: String): CredentialTemplate
+  createCredentialBatch(data: mutationCredentialBatchInput!, draft: Boolean): CredentialBatch
+  updateCredentialBatch(id: String!, data: mutationCredentialBatchUpdateInput!, draft: Boolean, autosave: Boolean): CredentialBatch
+  deleteCredentialBatch(id: String!): CredentialBatch
+  restoreVersionCredentialBatch(id: String): CredentialBatch
+  createCredential(data: mutationCredentialInput!, draft: Boolean): Credential
+  updateCredential(id: String!, data: mutationCredentialUpdateInput!, draft: Boolean, autosave: Boolean): Credential
+  deleteCredential(id: String!): Credential
+  restoreVersionCredential(id: String): Credential
+  createEmailTemplate(data: mutationEmailTemplateInput!, draft: Boolean): EmailTemplate
+  updateEmailTemplate(id: String!, data: mutationEmailTemplateUpdateInput!, draft: Boolean, autosave: Boolean): EmailTemplate
+  deleteEmailTemplate(id: String!): EmailTemplate
+  restoreVersionEmailTemplate(id: String): EmailTemplate
+  updatePreference(key: String!, value: JSON): Preference
+  deletePreference(key: String!): Preference
+}
+
+input mutationUserInput {
+  updatedAt: String
+  createdAt: String
+  email: String!
+  resetPasswordToken: String
+  resetPasswordExpiration: String
+  salt: String
+  hash: String
+  loginAttempts: Float
+  lockUntil: String
+  password: String!
+}
+
+input mutationUserUpdateInput {
+  updatedAt: String
+  createdAt: String
+  email: String
+  resetPasswordToken: String
+  resetPasswordExpiration: String
+  salt: String
+  hash: String
+  loginAttempts: Float
+  lockUntil: String
+  password: String
+}
+
+type usersRefreshedUser {
+  user: usersJWT
+  refreshedToken: String
+  exp: Int
+}
+
+type usersJWT {
+  email: EmailAddress!
+  collection: String!
+}
+
+type usersLoginResult {
+  token: String
+  user: User
+  exp: Int
+}
+
+type usersResetPassword {
+  token: String
+  user: User
+}
+
+input mutationCredentialTemplateInput {
+  title: String!
+  description: String
+  internalNotes: String
+  credentialTemplateJson: JSON!
+  updatedAt: String
+  createdAt: String
+  _status: CredentialTemplate__status_MutationInput
+}
+
+enum CredentialTemplate__status_MutationInput {
+  draft
+  published
+}
+
+input mutationCredentialTemplateUpdateInput {
+  title: String
+  description: String
+  internalNotes: String
+  credentialTemplateJson: JSON
+  updatedAt: String
+  createdAt: String
+  _status: CredentialTemplateUpdate__status_MutationInput
+}
+
+enum CredentialTemplateUpdate__status_MutationInput {
+  draft
+  published
+}
+
+input mutationCredentialBatchInput {
+  title: String!
+  description: String
+  internalNotes: String
+  status: String!
+  template: String
+  emailTemplate: String
+  updatedAt: String
+  createdAt: String
+  _status: CredentialBatch__status_MutationInput
+}
+
+enum CredentialBatch__status_MutationInput {
+  draft
+  published
+}
+
+input mutationCredentialBatchUpdateInput {
+  title: String
+  description: String
+  internalNotes: String
+  status: String
+  template: String
+  emailTemplate: String
+  updatedAt: String
+  createdAt: String
+  _status: CredentialBatchUpdate__status_MutationInput
+}
+
+enum CredentialBatchUpdate__status_MutationInput {
+  draft
+  published
+}
+
+input mutationCredentialInput {
+  credentialName: String
+  earnerName: String
+  emailAddress: String
+  extraFields: JSON
+  status: String!
+  batch: String
+  updatedAt: String
+  createdAt: String
+  _status: Credential__status_MutationInput
+}
+
+enum Credential__status_MutationInput {
+  draft
+  published
+}
+
+input mutationCredentialUpdateInput {
+  credentialName: String
+  earnerName: String
+  emailAddress: String
+  extraFields: JSON
+  status: String
+  batch: String
+  updatedAt: String
+  createdAt: String
+  _status: CredentialUpdate__status_MutationInput
+}
+
+enum CredentialUpdate__status_MutationInput {
+  draft
+  published
+}
+
+input mutationEmailTemplateInput {
+  title: String!
+  internalNotes: String
+  emailTemplatesHandlebarsCode: String!
+  updatedAt: String
+  createdAt: String
+  _status: EmailTemplate__status_MutationInput
+}
+
+enum EmailTemplate__status_MutationInput {
+  draft
+  published
+}
+
+input mutationEmailTemplateUpdateInput {
+  title: String
+  internalNotes: String
+  emailTemplatesHandlebarsCode: String
+  updatedAt: String
+  createdAt: String
+  _status: EmailTemplateUpdate__status_MutationInput
+}
+
+enum EmailTemplateUpdate__status_MutationInput {
+  draft
+  published
+}
