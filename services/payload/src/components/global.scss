@@ -100,11 +100,19 @@ html[data-theme='dark'] {
 
 .table {
     border-radius: 20px;
+
+    & > table {
+        border-collapse: collapse;
+    }
 }
 
-td,
-th {
+tr,
+thead {
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+
+    &:last-child {
+        border-bottom: none;
+    }
 }
 
 .collection-list__list-selection,
@@ -179,7 +187,7 @@ th {
 
 .actions {
     position: absolute;
-    margin-top: -25%;
+    margin-top: -15px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -193,6 +201,7 @@ th {
     transition: all 200ms ease;
 
     &.open {
+        margin-top: -35px;
         z-index: 10;
         padding: 0px 0px 0.625rem 0px;
         border-color: var(--green-500, #22c55e);
@@ -206,7 +215,7 @@ th {
             }
         }
 
-        & > button.action-button {
+        & > .action-button {
             opacity: 1;
             font-size: 0.875rem;
             line-height: normal;
@@ -221,7 +230,8 @@ th {
         }
     }
 
-    & > button {
+    & > button,
+    & > a {
         position: relative;
         z-index: 0;
         display: flex;
