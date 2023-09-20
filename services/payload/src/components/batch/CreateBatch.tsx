@@ -14,6 +14,7 @@ import { useAllFormFields, reduceFieldsToValues, getSiblingData } from 'payload/
 import SidebarMenu from '../Form/SidebarMenu';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../../helpers/handlebarhelpers';
 
+
 const MAP_FIELDS_TO_STEPS = {
     1: ['title', 'description', 'internalNotes'],
     2: ['template'],
@@ -76,9 +77,29 @@ const CreateBatch: React.FC = (props: Props) => {
         [id, onSaveFromProps, auth, user, refreshCookieAsync]
     );
 
-    const handleOnSubmit = () => {
+    console.log('///batchid', id);
+
+    const sendOutBatchEmails= async () => {
+        const res = await fetch("/api/send-batch-email", {
+          method: "POST",
+          body: JSON.stringify({batchId: id}),
+          headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+        });
+        if (res.status === 200) {
+          const { data } = await res.json();
+          console.log("///sent batch for processing", data);
+        }
+    };
+    
+
+    // Submit batch id to endpoint for sending out emails
+    const handleOnSubmit = async() => {
         console.log('///handle on save');
         // trigger send email
+        const data = await sendOutBatchEmails();
+      
     }
 
     useEffect(() => {
