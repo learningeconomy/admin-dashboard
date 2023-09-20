@@ -46,7 +46,8 @@ button {
   height: 16px;
 }
 
-.select-row--checked button .select-row__input svg {
+.select-row--checked button .select-row__input svg,
+.icon--check {
   border-radius: 100px;
   background-color: var(--green-500, #22C55E);
   width: 16px;
@@ -56,14 +57,6 @@ button {
 
 .icon--line .stroke {
     transform: translate(-5px, -5px)
-}
-
-.icon--check {
-  border-radius: 100px;
-  background-color: var(--green-500, #22C55E);
-  width: 16px;
-  height: 16px;
-  transform: translate(-1px, -1px);
 }
 
 .icon--check .stroke {
