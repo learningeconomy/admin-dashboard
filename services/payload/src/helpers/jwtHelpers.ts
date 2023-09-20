@@ -4,7 +4,7 @@ const secret =
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa';
 const expires = process.env.TOKEN_EXPIRATION_TIME_IN_SECONDS;
 
-export const generateJwtFromId = async (id: string) => {
+export const generateJwtFromId = (id: string) => {
     try {
         const token = jwt.sign({ id }, secret, { ...(expires && { expiresIn: expires }) });
         return token;
