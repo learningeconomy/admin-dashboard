@@ -1,5 +1,6 @@
 import { PayloadHandler } from 'payload/config';
 import payload from 'payload';
+import { CREDENTIAL_STATUS } from '../constants/credentials';
 
 export const revokeCredential: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
@@ -17,7 +18,11 @@ export const revokeCredential: PayloadHandler = async (req, res) => {
         });
 
         if (fetchResponse.status === 200) {
-            await payload.update({ collection: 'credential', id, data: { status: 'REVOKED' } });
+            await payload.update({
+                collection: 'credential',
+                id,
+                data: { status: CREDENTIAL_STATUS.REVOKED },
+            });
         }
 
         const result = await fetchResponse.json();

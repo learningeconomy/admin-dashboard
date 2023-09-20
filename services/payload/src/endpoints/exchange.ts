@@ -2,6 +2,7 @@ import { VC } from '@learncard/types';
 import { PayloadHandler } from 'payload/config';
 import payload from 'payload';
 import jwt from 'jsonwebtoken';
+import { CREDENTIAL_STATUS } from '../constants/credentials';
 
 const secret =
     process.env.PAYLOAD_SECRET ??
@@ -34,7 +35,7 @@ export const forwardExchangeRequest: PayloadHandler = async (req, res) => {
         await payload.update({
             collection: 'credential',
             id,
-            data: { status: 'CLAIMED' },
+            data: { status: CREDENTIAL_STATUS.CLAIMED },
         });
     }
 

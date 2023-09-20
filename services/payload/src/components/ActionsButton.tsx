@@ -12,7 +12,7 @@ type ActionButton =
     | { type: 'button'; label: string; icon: React.ReactNode; onClick: () => void | Promise<void> }
     | { type: 'link'; label: string; icon: React.ReactNode; url: string };
 
-const ActionsButton: React.FC<Props> = props => {
+const ActionsButton: React.FC<Props> = ({ rowData }) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleButton = useRef<HTMLButtonElement>();
 
@@ -34,7 +34,7 @@ const ActionsButton: React.FC<Props> = props => {
             type: 'link',
             label: 'View Details',
             icon: <Eye />,
-            url: `credential/${props.rowData.id}`,
+            url: `credential/${rowData.id}`,
         },
         { type: 'button', label: 'Resend', icon: <Send />, onClick: () => { } },
         {
@@ -43,14 +43,14 @@ const ActionsButton: React.FC<Props> = props => {
             icon: <ArrowArcLeft />,
             onClick: async () => {
                 // TODO: Show modal, handle error/success
-                const res = await fetch(`/api/revoke-credential/${props.rowData.id}`);
+                const res = await fetch(`/api/revoke-credential/${rowData.id}`);
             },
         },
         {
             type: 'link',
             label: 'View Batch',
             icon: <BarGraph />,
-            url: `credential-batch/${props.rowData.batch}`,
+            url: `credential-batch/${rowData.batch}`,
         },
     ];
 

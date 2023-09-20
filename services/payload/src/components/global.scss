@@ -278,3 +278,46 @@ thead {
         }
     }
 }
+
+.credential-status {
+    display: flex;
+    color: var(--white, #fff);
+
+    /* subtle-medium */
+    font-family: Inter;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.25rem; /* 142.857% */
+
+    & > span {
+        display: flex;
+        padding: 0.3125rem 0.625rem;
+        align-items: flex-start;
+        gap: 0.625rem;
+
+        border-radius: 1.25rem;
+
+        background: var(--gray-500, #6b7280);
+
+        &.claimed {
+            background: var(--green-500, #22c55e);
+        }
+
+        &.revoked {
+            background: var(--red-500, #ef4444);
+        }
+
+        &.sent {
+            background: var(--yellow-500, #eab308);
+        }
+
+        &.draft {
+            background: var(--blue-500, #3b82f6);
+        }
+
+        &.cancelled {
+            background: var(--gray-500, #6b7280);
+        }
+    }
+}
