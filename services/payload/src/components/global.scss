@@ -38,6 +38,32 @@ button {
     background-color: white !important;
 }
 
+.select-row__input,
+.select-all__input {
+  border: 1px solid var(--slate-400, #94A3B8);
+  border-radius: 100px;
+  width: 16px;
+  height: 16px;
+}
+
+.select-row--checked button .select-row__input svg{
+  border-radius: 100px;
+  background-color: var(--green-500, #22C55E);
+  width: 16px;
+  height: 16px;
+  transform: scale(1.04);
+}
+
+.radio-input__styled-radio:before {
+  background-color: var(--green-500, #22C55E);
+  border-color: var(--green-500, #22C55E);
+}
+
+.icon--check .stroke,
+.icon--line .stroke{
+  opacity: 0;
+}
+
 .nav__log-out {
     display: flex;
     align-self: center;
@@ -56,13 +82,15 @@ button {
 }
 
 .list-controls__buttons-wrap .btn,
-.list-controls__buttons-wrap .pill {
+.list-controls__buttons-wrap .pill,
+.edit-many__toggle {
     background-color: #ffffff;
     border: 2px solid var(--slate-500, #64748b);
     border-radius: 8px;
     color: var(--slate-500, #64748b);
     font-size: 14px;
     font-weight: 500;
+    margin: 0 0 0 10px !important;
     padding: 5px 16px;
 }
 
@@ -72,31 +100,58 @@ thead {
     background-color: #ffffff;
 }
 
-html[data-theme='dark'] {
-    #app,
-    .template-default,
-    .account__document-actions::after,
-    .auth-fields,
-    .table tbody tr:nth-child(odd),
-    .table tbody tr:nth-child(even),
-    thead,
-    .list-controls__wrap,
-    .search-filter__input,
-    .list-controls__buttons-wrap .btn,
-    .list-controls__buttons-wrap .pill,
-    .actions {
-        background-color: #000000;
-        color: #ffffff;
-    }
+// html[data-theme='dark'] {
+//     #app,
+//     .template-default,
+//     .account__document-actions::after,
+//     .auth-fields,
+//     .table tbody tr:nth-child(odd),
+//     .table tbody tr:nth-child(even),
+//     thead,
+//     .actions,
+//     .collection-edit__sidebar-sticky-wrap {
+//         background-color: var(--slate-900, #0F172A);
+//     }
 
-    .actions > button {
-        color: #fff;
+//     .select-row__input,
+//     .select-all__input {
+//       background-color: var(--slate-400, #94A3B8);
+//     }
 
-        &.action-button:hover {
-            background-color: var(--slate-500, #64748b);
-        }
-    }
-}
+//     #app,
+//     #app > a {
+//       color: var(--slate-50, #F8FAFC);
+//     }
+
+//     thead,
+//     .table tbody tr:nth-child(odd),
+//     .table tbody tr:nth-child(even) {
+//       color: var(--slate-200, #E2E8F0);
+//     }
+
+//     .list-controls__buttons-wrap .btn,
+//     .list-controls__buttons-wrap .pill,
+//     .list-controls__wrap,
+//     .search-filter__input,
+//     #field-email,
+//     #field-password,
+//     .radio-input__styled-radio,
+//     .edit-many__toggle,
+//     .rs__control.css-13cymwt-control,
+//     .react-select .rs__control:not(:disabled):focus-within,
+//     .rs__menu {
+//       background-color: var(--slate-600, #475569) !important;
+//       color: var(--slate-200, #E2E8F0);
+//     }
+
+//     .actions > button {
+//         color: #fff;
+
+//         &.action-button:hover {
+//             background-color: var(--slate-500, #64748b);
+//         }
+//     }
+// }
 
 .table {
     border-radius: 20px;
@@ -143,18 +198,16 @@ th {
 #field-email,
 #field-password,
 #field-title,
-.textarea-outer {
+.textarea-outer,
+.rs__control.css-13cymwt-control,
+.react-select .rs__control:not(:disabled):focus-within,
+.rs__menu {
     border-radius: 16px !important;
 }
 
 .relationship-add-new__add-button.doc-drawer__toggler {
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
-}
-
-.rs__control.css-13cymwt-control {
-    border-top-left-radius: 16px;
-    border-bottom-left-radius: 16px;
 }
 
 .code-editor {
