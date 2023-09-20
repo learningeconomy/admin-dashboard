@@ -4,7 +4,7 @@ import './logo.scss';
 export const Logo: React.FC = () => (
   <div className="logo">
     <img
-      src="/assets/tdm-og.png"
+      src="/assets/tdm-transparent-logo.png"
       alt="Tech D Monterrey"
     />
   </div>
