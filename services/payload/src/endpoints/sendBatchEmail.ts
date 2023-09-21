@@ -61,7 +61,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
         return {
             to: record?.emailAddress,
-            subject: emailTemplate?.emailSubjectTitle || 'Claim Credential',
+            subject:  emailTemplateRecord?.emailSubjectTitle || 'Claim Credential',
             email: 'test email2',
             html: `${parsedHtml}`,
         };
