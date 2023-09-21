@@ -25,7 +25,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     // store email template from batch query
     const emailTemplate = batchInfo?.emailTemplate?.emailTemplatesHandlebarsCode;
-
+    if (!emailTemplate) throw new Error('No email template found. Email template is required.');
     // get all credentials records associated with batchId
     const query = {
         batch: {
@@ -37,8 +37,6 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     const data = await payload.find({
         collection: 'credential', // required
         depth: 2,
-        page: 1,
-        limit: 10,
         where: { ...query }, // pass a `where` query here
         sort: '-title',
         locale: 'en',
@@ -57,7 +55,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
         return {
             to: record?.emailAddress,
-            subject: 'test email payload2',
+            subject: emailTemplate?.emailSubjectTitle || 'test email payload2',
             email: 'test email2',
             html: `${parsedHtml}`,
         };
@@ -68,24 +66,11 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     // get email template for batch and insert data into template
 
     try {
-        console.log('//req body', req?.body);
-
-        // const data = {
-        //   to: 'withallmyhrt@gmail.com',
-        //   subject: 'test email payload',
-        //   email: 'test email',
-        //   html: '<p>hello world</p>'
-        // };
+        // send emails to email queue
         emails?.forEach(email => {
             console.log('///emailsData', email);
             emailQueue.add('send-test-email', email);
         });
-
-        // await emailQueue.add("send-test-email", data)
-
-        //actual email
-        // get credential details and interpolate into email template
-        // queue up email jobs
 
         console.log('///all emails', emails);
 

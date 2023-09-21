@@ -38,6 +38,13 @@ const EmailTemplatesCollection: CollectionConfig = {
             maxLength: 1000,
         },
         {
+            name: 'emailSubjectTitle',
+            type: 'text',
+            required: false,
+            minLength: 3,
+            maxLength: 100,
+        },
+        {
             name: 'emailTemplatesHandlebarsCode', // required
             type: 'code', // required
             admin: {
