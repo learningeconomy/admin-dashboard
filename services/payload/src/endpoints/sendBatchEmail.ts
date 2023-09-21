@@ -52,9 +52,11 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     //for each record, generate email link and queue up email to be sent
 
+    const claimPageBaseUrl =  process.env.CLAIM_PAGE_URL || "https://localhost:4321";
+
     const emails = data?.docs?.map(record => {
         const jwt = generateJwtFromId(record?.id);
-        const link = `https://localhost:4321/?token=${jwt}`;
+        const link = `${claimPageBaseUrl}/?token=${jwt}`;
         // replace handlebar variables in email template with record data
         const mergedRecordWithLink = { ...record, link };
         const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
