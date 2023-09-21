@@ -11,6 +11,14 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     const batchId = req?.body?.batchId;
 
     if (!batchId) throw new Error('No batchId provided. Batch id is required.');
+    //get batch so we can get email template associated with it
+    const batchInfo = await payload.findByID(({
+      collection: "credential-batch",
+      id: batchId,
+      locale: "en",
+    }))
+
+    console.log('///batchInfo', batchInfo);
 
     // get all credentials records associated with batchId
     const query = {
@@ -36,7 +44,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     const emails = data?.docs?.map(record => {
         const jwt = generateJwtFromId(record?.id);
-        const link = `https://localhost:4321/${jwt}`;
+        const link = `https://localhost:4321/?token=${jwt}`;
         return {
             to: record?.emailAddress,
             subject: 'test email payload',
