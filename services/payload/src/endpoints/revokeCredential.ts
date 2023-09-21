@@ -6,6 +6,7 @@ export const revokeCredential: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
 
     const { id } = req.params;
+    const { reason } = req.body;
 
     try {
         const fetchResponse = await fetch('http://localhost:4008/credentials/status', {
@@ -21,7 +22,7 @@ export const revokeCredential: PayloadHandler = async (req, res) => {
             await payload.update({
                 collection: 'credential',
                 id,
-                data: { status: CREDENTIAL_STATUS.REVOKED },
+                data: { status: CREDENTIAL_STATUS.REVOKED, revocationReason: reason },
             });
         }
 

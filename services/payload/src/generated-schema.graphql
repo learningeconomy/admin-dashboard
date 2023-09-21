@@ -1501,6 +1501,7 @@ type Credential {
   extraFields: JSON
   status: String
   batch: CredentialBatch
+  revocationReason: String
   updatedAt: DateTime
   createdAt: DateTime
   _status: Credential__status
@@ -1532,6 +1533,7 @@ input Credential_where {
   extraFields: Credential_extraFields_operator
   status: Credential_status_operator
   batch: Credential_batch_operator
+  revocationReason: Credential_revocationReason_operator
   updatedAt: Credential_updatedAt_operator
   createdAt: Credential_createdAt_operator
   _status: Credential__status_operator
@@ -1599,6 +1601,17 @@ input Credential_batch_operator {
   all: [String]
 }
 
+input Credential_revocationReason_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
 input Credential_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
@@ -1653,6 +1666,7 @@ input Credential_where_or {
   extraFields: Credential_extraFields_operator
   status: Credential_status_operator
   batch: Credential_batch_operator
+  revocationReason: Credential_revocationReason_operator
   updatedAt: Credential_updatedAt_operator
   createdAt: Credential_createdAt_operator
   _status: Credential__status_operator
@@ -1666,6 +1680,7 @@ input Credential_where_and {
   extraFields: Credential_extraFields_operator
   status: Credential_status_operator
   batch: Credential_batch_operator
+  revocationReason: Credential_revocationReason_operator
   updatedAt: Credential_updatedAt_operator
   createdAt: Credential_createdAt_operator
   _status: Credential__status_operator
@@ -1688,6 +1703,8 @@ type CredentialDocAccessFields {
   extraFields: CredentialDocAccessFields_extraFields
   status: CredentialDocAccessFields_status
   batch: CredentialDocAccessFields_batch
+  revocationReason: CredentialDocAccessFields_revocationReason
+  actionButton: CredentialDocAccessFields_actionButton
   updatedAt: CredentialDocAccessFields_updatedAt
   createdAt: CredentialDocAccessFields_createdAt
   _status: CredentialDocAccessFields__status
@@ -1831,6 +1848,52 @@ type CredentialDocAccessFields_batch_Delete {
   permission: Boolean!
 }
 
+type CredentialDocAccessFields_revocationReason {
+  create: CredentialDocAccessFields_revocationReason_Create
+  read: CredentialDocAccessFields_revocationReason_Read
+  update: CredentialDocAccessFields_revocationReason_Update
+  delete: CredentialDocAccessFields_revocationReason_Delete
+}
+
+type CredentialDocAccessFields_revocationReason_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_revocationReason_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_revocationReason_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_revocationReason_Delete {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_actionButton {
+  create: CredentialDocAccessFields_actionButton_Create
+  read: CredentialDocAccessFields_actionButton_Read
+  update: CredentialDocAccessFields_actionButton_Update
+  delete: CredentialDocAccessFields_actionButton_Delete
+}
+
+type CredentialDocAccessFields_actionButton_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_actionButton_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_actionButton_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_actionButton_Delete {
+  permission: Boolean!
+}
+
 type CredentialDocAccessFields_updatedAt {
   create: CredentialDocAccessFields_updatedAt_Create
   read: CredentialDocAccessFields_updatedAt_Read
@@ -1940,6 +2003,7 @@ type CredentialVersion_Version {
   extraFields: JSON
   status: String
   batch: CredentialBatch
+  revocationReason: String
   updatedAt: DateTime
   createdAt: DateTime
   _status: CredentialVersion_Version__status
@@ -1972,6 +2036,7 @@ input versionsCredential_where {
   version__extraFields: versionsCredential_version__extraFields_operator
   version__status: versionsCredential_version__status_operator
   version__batch: versionsCredential_version__batch_operator
+  version__revocationReason: versionsCredential_version__revocationReason_operator
   version__updatedAt: versionsCredential_version__updatedAt_operator
   version__createdAt: versionsCredential_version__createdAt_operator
   version___status: versionsCredential_version___status_operator
@@ -2048,6 +2113,17 @@ input versionsCredential_version__batch_operator {
   in: [String]
   not_in: [String]
   all: [String]
+}
+
+input versionsCredential_version__revocationReason_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
 }
 
 input versionsCredential_version__updatedAt_operator {
@@ -2127,6 +2203,7 @@ input versionsCredential_where_or {
   version__extraFields: versionsCredential_version__extraFields_operator
   version__status: versionsCredential_version__status_operator
   version__batch: versionsCredential_version__batch_operator
+  version__revocationReason: versionsCredential_version__revocationReason_operator
   version__updatedAt: versionsCredential_version__updatedAt_operator
   version__createdAt: versionsCredential_version__createdAt_operator
   version___status: versionsCredential_version___status_operator
@@ -2143,6 +2220,7 @@ input versionsCredential_where_and {
   version__extraFields: versionsCredential_version__extraFields_operator
   version__status: versionsCredential_version__status_operator
   version__batch: versionsCredential_version__batch_operator
+  version__revocationReason: versionsCredential_version__revocationReason_operator
   version__updatedAt: versionsCredential_version__updatedAt_operator
   version__createdAt: versionsCredential_version__createdAt_operator
   version___status: versionsCredential_version___status_operator
@@ -3253,6 +3331,8 @@ type CredentialFields {
   extraFields: CredentialFields_extraFields
   status: CredentialFields_status
   batch: CredentialFields_batch
+  revocationReason: CredentialFields_revocationReason
+  actionButton: CredentialFields_actionButton
   updatedAt: CredentialFields_updatedAt
   createdAt: CredentialFields_createdAt
   _status: CredentialFields__status
@@ -3393,6 +3473,52 @@ type CredentialFields_batch_Update {
 }
 
 type CredentialFields_batch_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields_revocationReason {
+  create: CredentialFields_revocationReason_Create
+  read: CredentialFields_revocationReason_Read
+  update: CredentialFields_revocationReason_Update
+  delete: CredentialFields_revocationReason_Delete
+}
+
+type CredentialFields_revocationReason_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_revocationReason_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_revocationReason_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_revocationReason_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields_actionButton {
+  create: CredentialFields_actionButton_Create
+  read: CredentialFields_actionButton_Read
+  update: CredentialFields_actionButton_Update
+  delete: CredentialFields_actionButton_Delete
+}
+
+type CredentialFields_actionButton_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_actionButton_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_actionButton_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_actionButton_Delete {
   permission: Boolean!
 }
 
@@ -3821,6 +3947,7 @@ input mutationCredentialInput {
   extraFields: JSON
   status: String!
   batch: String
+  revocationReason: String
   updatedAt: String
   createdAt: String
   _status: Credential__status_MutationInput
@@ -3838,6 +3965,7 @@ input mutationCredentialUpdateInput {
   extraFields: JSON
   status: String
   batch: String
+  revocationReason: String
   updatedAt: String
   createdAt: String
   _status: CredentialUpdate__status_MutationInput

@@ -84,6 +84,7 @@ export interface Credential {
     | null;
   status: string;
   batch: string | CredentialBatch;
+  revocationReason?: string;
   updatedAt: string;
   createdAt: string;
   _status?: 'draft' | 'published';

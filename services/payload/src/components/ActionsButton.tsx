@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useModal } from '@faceless-ui/modal';
 import { Props } from 'payload/components/views/Cell';
 
 import Caret from './svgs/Caret';
@@ -7,6 +8,8 @@ import Eye from './svgs/Eye';
 import Send from './svgs/Send';
 import ArrowArcLeft from './svgs/ArrowArcLeft';
 import BarGraph from './svgs/BarGraph';
+import RevocationWarning from './credential/RevocationWarning';
+import { Credential } from 'payload/generated-types';
 
 type ActionButton =
     | { type: 'button'; label: string; icon: React.ReactNode; onClick: () => void | Promise<void> }
@@ -14,11 +17,14 @@ type ActionButton =
 
 const ActionsButton: React.FC<Props> = ({ rowData }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const toggleButton = useRef<HTMLButtonElement>();
+    const container = useRef<HTMLElement>();
+    const { openModal } = useModal();
+
+    const revocationSlug = `revocation-warning-${rowData.id}`;
 
     useEffect(() => {
         function close(event: MouseEvent) {
-            if (toggleButton.current && !toggleButton.current.contains(event.target as Node)) {
+            if (container.current && !container.current.contains(event.target as Node)) {
                 setIsOpen(false);
             }
         }
@@ -41,9 +47,9 @@ const ActionsButton: React.FC<Props> = ({ rowData }) => {
             type: 'button',
             label: 'Revoke',
             icon: <ArrowArcLeft />,
-            onClick: async () => {
-                // TODO: Show modal, handle error/success
-                const res = await fetch(`/api/revoke-credential/${rowData.id}`);
+            onClick: () => {
+                console.log('Fook');
+                openModal(revocationSlug);
             },
         },
         {
@@ -81,20 +87,17 @@ const ActionsButton: React.FC<Props> = ({ rowData }) => {
     });
 
     return (
-        <section className="actions-container">
+        <section ref={container} className="actions-container">
             <section className={`actions ${isOpen ? 'open' : ''}`}>
-                <button
-                    ref={toggleButton}
-                    className="header-button"
-                    type="button"
-                    onClick={() => setIsOpen(!isOpen)}
-                >
+                <button className="header-button" type="button" onClick={() => setIsOpen(!isOpen)}>
                     <span>Actions</span>
                     <Caret />
                 </button>
 
                 {actionButtons}
             </section>
+
+            <RevocationWarning credential={rowData as any as Credential} slug={revocationSlug} />
         </section>
     );
 };

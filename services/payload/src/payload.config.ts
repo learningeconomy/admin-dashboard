@@ -66,7 +66,7 @@ export default buildConfig({
         { method: 'get', path: '/get-credential', handler: getCredential },
         { method: 'get', path: '/get-credential-links', handler: getCredentialLinks },
         { method: 'post', path: '/exchange/:a/:b/:token', handler: forwardExchangeRequest },
-        { method: 'get', path: '/revoke-credential/:id', handler: revokeCredential },
+        { method: 'post', path: '/revoke-credential/:id', handler: revokeCredential },
     ],
     typescript: {
         outputFile: path.resolve(__dirname, 'payload-types.ts'),

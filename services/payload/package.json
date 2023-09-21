@@ -15,6 +15,7 @@
     "generate:graphQLSchema": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema"
   },
   "dependencies": {
+    "@faceless-ui/modal": "^2.0.1",
     "@faceless-ui/window-info": "^2.1.1",
     "better-error-message-for-json-parse": "^0.1.6",
     "cross-env": "^7.0.3",

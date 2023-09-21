@@ -321,3 +321,14 @@ thead {
         }
     }
 }
+
+.drawer__content {
+    &:before {
+        background-color: #18224e;
+        opacity: 0.3;
+    }
+
+    &:after {
+        backdrop-filter: blur(22.5px);
+    }
+}
