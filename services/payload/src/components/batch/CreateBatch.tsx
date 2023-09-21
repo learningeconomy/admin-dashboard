@@ -66,7 +66,7 @@ const CreateBatch: React.FC = (props: Props) => {
         console.log('//formData', formData);
         const res = await fetch('/api/send-batch-email', {
             method: 'POST',
-            body: JSON.stringify({ batchId: id, emailTemplateId: formData?.emailTemplate.value }),
+            body: JSON.stringify({ batchId: id, emailTemplateId: formData?.emailTemplate?.value }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
@@ -82,6 +82,7 @@ const CreateBatch: React.FC = (props: Props) => {
         console.log('///handle on save');
         // trigger send email
         const data = await sendOutBatchEmails();
+        // if success show success modal....
     };
 
     useEffect(() => {

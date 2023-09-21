@@ -10,22 +10,28 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     console.log('////req?.body', req.body);
     //get batch id
     const batchId = req?.body?.batchId;
+    const emailTemplateId = req?.body?.emailTemplateId;
+
+    console.log('//emailTemplateId', emailTemplateId);
 
     if (!batchId) return res.sendStatus(400);
-    //get batch so we can get email template associated with it
-    const batchInfo = await payload.findByID({
-        collection: 'credential-batch',
-        id: batchId,
+    //get email template for batch
+    const emailTemplateRecord = await payload.findByID({
+        collection: 'email-template',
+        id: emailTemplateId,
         depth: 2,
         showHiddenFields: true,
         locale: 'en',
     });
 
-    console.log('///batchInfo', batchInfo);
+    console.log('///emailTemplateRecord', emailTemplateRecord);
 
-    // store email template from batch query
-    const emailTemplate = batchInfo?.emailTemplate?.emailTemplatesHandlebarsCode;
+    // email template code
+    const emailTemplate = emailTemplateRecord?.emailTemplatesHandlebarsCode;
     if (!emailTemplate) return res.sendStatus(500);
+
+    console.log('///emailTemplate', emailTemplate);
+
     // get all credentials records associated with batchId
     const query = {
         batch: {
@@ -42,7 +48,6 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         locale: 'en',
     });
 
-    // replace handlebar variables with data from credential
 
     const handlebarsTemplate = Handlebars.compile(emailTemplate);
 
@@ -51,11 +56,12 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     const emails = data?.docs?.map(record => {
         const jwt = generateJwtFromId(record?.id);
         const link = `https://localhost:4321/?token=${jwt}`;
+        // replace handlebar variables in email template with record data
         const mergedRecordWithLink = { ...record, link };
         const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
         return {
             to: record?.emailAddress,
-            subject: batchInfo?.emailTemplate?.emailSubjectTitle || 'test email payload2',
+            subject: emailTemplate?.emailSubjectTitle || 'Claim Credential',
             email: 'test email2',
             html: `${parsedHtml}`,
         };
