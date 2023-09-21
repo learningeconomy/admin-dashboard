@@ -33,6 +33,8 @@ const CreateBatch: React.FC = (props: Props) => {
         updatedAt,
     } = props;
 
+    console.log('///internalState', internalState);
+
     const {
         slug,
         fields,
@@ -46,11 +48,12 @@ const CreateBatch: React.FC = (props: Props) => {
     const operation = isEditing ? 'update' : 'create';
 
     const onSave = useCallback(
+        
         async json => {
             if (auth && id === user.id) {
                 await refreshCookieAsync();
             }
-
+            console.log('///onSAVE', internalState);
             if (typeof onSaveFromProps === 'function') {
                 onSaveFromProps({
                     ...json,
@@ -61,12 +64,11 @@ const CreateBatch: React.FC = (props: Props) => {
         [id, onSaveFromProps, auth, user, refreshCookieAsync]
     );
 
-    const sendOutBatchEmails = async () => {
-        const formData = internalState;
+    const sendOutBatchEmails = async (formData) => {
         console.log('//formData', formData);
         const res = await fetch('/api/send-batch-email', {
             method: 'POST',
-            body: JSON.stringify({ batchId: id, emailTemplateId: formData?.emailTemplate?.value }),
+            body: JSON.stringify({ batchId: id, emailTemplateId: formData?.emailTemplate }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
@@ -78,10 +80,11 @@ const CreateBatch: React.FC = (props: Props) => {
     };
 
     // Submit batch id to endpoint for sending out emails
-    const handleOnSubmit = async () => {
-        console.log('///handle on save');
+    const handleOnSubmit = async (fields, formData) => {
+        
+        console.log('///handleonSave', 'fields', fields, 'formData', formData);
         // trigger send email
-        const data = await sendOutBatchEmails();
+        const data = await sendOutBatchEmails(formData);
         // if success show success modal....
     };
 
@@ -124,3 +127,4 @@ const CreateBatch: React.FC = (props: Props) => {
 };
 
 export default CreateBatch;
+

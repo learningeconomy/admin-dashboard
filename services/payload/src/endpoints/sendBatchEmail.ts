@@ -14,7 +14,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     console.log('//emailTemplateId', emailTemplateId);
 
-    if (!batchId) return res.sendStatus(400);
+    if (!batchId || !emailTemplateId) return res.sendStatus(400);
     //get email template for batch
     const emailTemplateRecord = await payload.findByID({
         collection: 'email-template',
