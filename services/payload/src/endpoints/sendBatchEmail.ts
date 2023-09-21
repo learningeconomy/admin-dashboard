@@ -48,7 +48,6 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         locale: 'en',
     });
 
-
     const handlebarsTemplate = Handlebars.compile(emailTemplate);
 
     //for each record, generate email link and queue up email to be sent
@@ -61,7 +60,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
         return {
             to: record?.emailAddress,
-            subject:  emailTemplateRecord?.emailSubjectTitle || 'Claim Credential',
+            subject: emailTemplateRecord?.emailSubjectTitle || 'Claim Credential',
             email: 'test email2',
             html: `${parsedHtml}`,
         };
