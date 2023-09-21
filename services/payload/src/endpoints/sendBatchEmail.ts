@@ -11,7 +11,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     //get batch id
     const batchId = req?.body?.batchId;
 
-    if (!batchId) throw new Error('No batchId provided. Batch id is required.');
+    if (!batchId) return res.sendStatus(400);
     //get batch so we can get email template associated with it
     const batchInfo = await payload.findByID({
         collection: 'credential-batch',
@@ -25,7 +25,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     // store email template from batch query
     const emailTemplate = batchInfo?.emailTemplate?.emailTemplatesHandlebarsCode;
-    if (!emailTemplate) throw new Error('No email template found. Email template is required.');
+    if (!emailTemplate) return res.sendStatus(500);
     // get all credentials records associated with batchId
     const query = {
         batch: {
@@ -55,7 +55,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
         return {
             to: record?.emailAddress,
-            subject: emailTemplate?.emailSubjectTitle || 'test email payload2',
+            subject: batchInfo?.emailTemplate?.emailSubjectTitle || 'test email payload2',
             email: 'test email2',
             html: `${parsedHtml}`,
         };
