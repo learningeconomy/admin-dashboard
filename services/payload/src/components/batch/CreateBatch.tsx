@@ -7,25 +7,9 @@ import fieldTypes from 'payload/dist/admin/components/forms/field-types';
 import Form from '../Form/Form';
 import './batch.scss';
 import '../global.scss';
-import { RenderFieldProps } from '../types';
 const baseClass = 'collection-edit';
-import RenderFields from 'payload/dist/admin/components/forms/RenderFields';
-import { useAllFormFields, reduceFieldsToValues, getSiblingData } from 'payload/components/forms';
 import SidebarMenu from '../Form/SidebarMenu';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../../helpers/handlebarhelpers';
-
-
-const MAP_FIELDS_TO_STEPS = {
-    1: ['title', 'description', 'internalNotes'],
-    2: ['template'],
-    3: ['emailTemplate'],
-};
-
-const getFieldsForStep = (step: number = 1, fieldSchema) => {
-    const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
-    const stepFields = fieldSchema.filter(field => fieldsForStep.includes(field.name));
-    return stepFields;
-};
 
 const CreateBatch: React.FC = (props: Props) => {
     const { user, refreshCookieAsync } = useAuth();
@@ -77,30 +61,28 @@ const CreateBatch: React.FC = (props: Props) => {
         [id, onSaveFromProps, auth, user, refreshCookieAsync]
     );
 
-    console.log('///batchid', id);
-
-    const sendOutBatchEmails= async () => {
-        const res = await fetch("/api/send-batch-email", {
-          method: "POST",
-          body: JSON.stringify({batchId: id}),
-          headers: {
-              "Content-type": "application/json; charset=UTF-8",
+    const sendOutBatchEmails = async () => {
+        const formData = internalState;
+        console.log('//formData', formData);
+        const res = await fetch('/api/send-batch-email', {
+            method: 'POST',
+            body: JSON.stringify({ batchId: id, emailTemplateId: formData?.emailTemplate.value }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
             },
         });
         if (res.status === 200) {
-          const { data } = await res.json();
-          console.log("///sent batch for processing", data);
+            const { data } = await res.json();
+            console.log('///sent batch for processing', data);
         }
     };
-    
 
     // Submit batch id to endpoint for sending out emails
-    const handleOnSubmit = async() => {
+    const handleOnSubmit = async () => {
         console.log('///handle on save');
         // trigger send email
         const data = await sendOutBatchEmails();
-      
-    }
+    };
 
     useEffect(() => {
         const jsonTemplateValue = insertValuesIntoHandlebarsJsonTemplate();
