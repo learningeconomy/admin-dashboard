@@ -3,6 +3,7 @@ import { Forbidden } from 'payload/errors';
 import payload from 'payload';
 import { emailQueue } from '../jobs/queue.server';
 import { generateJwtFromId } from '../helpers/jwtHelpers';
+import Handlebars from 'handlebars';
 
 export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     if (!req.user) throw new Forbidden();
@@ -12,13 +13,18 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     if (!batchId) throw new Error('No batchId provided. Batch id is required.');
     //get batch so we can get email template associated with it
-    const batchInfo = await payload.findByID(({
-      collection: "credential-batch",
-      id: batchId,
-      locale: "en",
-    }))
+    const batchInfo = await payload.findByID({
+        collection: 'credential-batch',
+        id: batchId,
+        depth: 2,
+        showHiddenFields: true,
+        locale: 'en',
+    });
 
     console.log('///batchInfo', batchInfo);
+
+    // store email template from batch query
+    const emailTemplate = batchInfo?.emailTemplate;
 
     // get all credentials records associated with batchId
     const query = {
@@ -38,6 +44,10 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         locale: 'en',
     });
 
+    // replace handlebar variables with data from credential
+
+    const handlebarsTemplate = Handlebars.compile(emailTemplate);
+
     console.log('///credential data found query', data);
 
     //for each record, generate email link and queue up email to be sent
@@ -45,6 +55,8 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     const emails = data?.docs?.map(record => {
         const jwt = generateJwtFromId(record?.id);
         const link = `https://localhost:4321/?token=${jwt}`;
+        const mergedRecordWithLink = { ...record, link };
+        const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
         return {
             to: record?.emailAddress,
             subject: 'test email payload',
@@ -67,7 +79,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         //   html: '<p>hello world</p>'
         // };
         emails?.forEach(email => {
-          console.log('///emailsData', email);
+            console.log('///emailsData', email);
             emailQueue.add('send-test-email', email);
         });
 
