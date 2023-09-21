@@ -8,6 +8,27 @@ const EmailPageDescription: React.FC = () => {
     routes: { admin: adminRoute },
   } = useConfig();
 
+  const sendTestEmail=async()=>{
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        body: JSON.stringify({message:'test message'}),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+      });
+      if (res.status === 200) {
+        const { data } = await res.json();
+  
+        console.log("///send test email", data);
+      }
+  
+  }
+
+
+  const handleSendTestEmail=()=> {
+    sendTestEmail();
+  }
+
   return (
     <div className="header_wrapper">
       <p className="header_paragraph"><span className="header_number">2</span> Published Templates</p>
@@ -18,6 +39,8 @@ const EmailPageDescription: React.FC = () => {
       >
         <img className="plus_icon" src="/assets/plus-icon.svg" alt="plus icon"/>Create New Template
       </Link>
+       <h2>TEST2</h2>
+      <button onClick={handleSendTestEmail}>Send Test Email</button>
     </div>
   );
 };

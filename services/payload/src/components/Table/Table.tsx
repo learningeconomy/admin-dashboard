@@ -9,14 +9,12 @@ const baseClass = "table";
 export const Table: React.FC<Props> = ({ data, columns: columnsFromProps }) => {
   const { columns: columnsFromContext } = useTableColumns();
 
-  console.log("///data", data);
-
   const columns = columnsFromProps || columnsFromContext;
 
   const activeColumns = columns?.filter((col) => {
     if (col.active && col.name !== "batch" && col.name !== 'status') return col;
   });
-  console.log("///activeColumns", activeColumns);
+
   if (!activeColumns || activeColumns.length === 0) {
     return <div>No columns selected</div>;
   }

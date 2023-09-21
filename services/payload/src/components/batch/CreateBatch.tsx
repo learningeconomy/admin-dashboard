@@ -7,24 +7,9 @@ import fieldTypes from 'payload/dist/admin/components/forms/field-types';
 import Form from '../Form/Form';
 import './batch.scss';
 import '../global.scss';
-import { RenderFieldProps } from '../types';
 const baseClass = 'collection-edit';
-import RenderFields from 'payload/dist/admin/components/forms/RenderFields';
-import { useAllFormFields, reduceFieldsToValues, getSiblingData } from 'payload/components/forms';
 import SidebarMenu from '../Form/SidebarMenu';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../../helpers/handlebarhelpers';
-
-const MAP_FIELDS_TO_STEPS = {
-    1: ['title', 'description', 'internalNotes'],
-    2: ['template'],
-    3: ['emailTemplate'],
-};
-
-const getFieldsForStep = (step: number = 1, fieldSchema) => {
-    const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
-    const stepFields = fieldSchema.filter(field => fieldsForStep.includes(field.name));
-    return stepFields;
-};
 
 const CreateBatch: React.FC = (props: Props) => {
     const { user, refreshCookieAsync } = useAuth();
@@ -48,6 +33,8 @@ const CreateBatch: React.FC = (props: Props) => {
         updatedAt,
     } = props;
 
+    console.log('///internalState', internalState);
+
     const {
         slug,
         fields,
@@ -61,11 +48,12 @@ const CreateBatch: React.FC = (props: Props) => {
     const operation = isEditing ? 'update' : 'create';
 
     const onSave = useCallback(
+        
         async json => {
             if (auth && id === user.id) {
                 await refreshCookieAsync();
             }
-
+            console.log('///onSAVE', internalState);
             if (typeof onSaveFromProps === 'function') {
                 onSaveFromProps({
                     ...json,
@@ -75,6 +63,30 @@ const CreateBatch: React.FC = (props: Props) => {
         },
         [id, onSaveFromProps, auth, user, refreshCookieAsync]
     );
+
+    const sendOutBatchEmails = async (formData) => {
+        console.log('//formData', formData);
+        const res = await fetch('/api/send-batch-email', {
+            method: 'POST',
+            body: JSON.stringify({ batchId: id, emailTemplateId: formData?.emailTemplate }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        });
+        if (res.status === 200) {
+            const { data } = await res.json();
+            console.log('///sent batch for processing', data);
+        }
+    };
+
+    // Submit batch id to endpoint for sending out emails
+    const handleOnSubmit = async (fields, formData) => {
+        
+        console.log('///handleonSave', 'fields', fields, 'formData', formData);
+        // trigger send email
+        const data = await sendOutBatchEmails(formData);
+        // if success show success modal....
+    };
 
     useEffect(() => {
         const jsonTemplateValue = insertValuesIntoHandlebarsJsonTemplate();
@@ -87,6 +99,7 @@ const CreateBatch: React.FC = (props: Props) => {
                 className={`${baseClass}__form`}
                 method={id ? 'patch' : 'post'}
                 action={action}
+                onSubmit={handleOnSubmit}
                 onSuccess={onSave}
                 disabled={!hasSavePermission}
                 initialState={internalState}
@@ -114,3 +127,4 @@ const CreateBatch: React.FC = (props: Props) => {
 };
 
 export default CreateBatch;
+

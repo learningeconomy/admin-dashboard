@@ -7,6 +7,9 @@ const UploadCSV: React.FC = () => {
   const { id } = useDocumentInfo();
   const [ data, setData ] = useState();
   const [ refetch, setRefetch ] = useState(false);
+
+
+  // replace this with react-query package...todo
   useEffect(() => {
     const fetchBatchCredentials= async () => {
       const res = await fetch("/api/get-batch-credentials", {
