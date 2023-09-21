@@ -24,7 +24,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     console.log('///batchInfo', batchInfo);
 
     // store email template from batch query
-    const emailTemplate = batchInfo?.emailTemplate;
+    const emailTemplate = batchInfo?.emailTemplate?.emailTemplatesHandlebarsCode;
 
     // get all credentials records associated with batchId
     const query = {
@@ -48,8 +48,6 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     const handlebarsTemplate = Handlebars.compile(emailTemplate);
 
-    console.log('///credential data found query', data);
-
     //for each record, generate email link and queue up email to be sent
 
     const emails = data?.docs?.map(record => {
@@ -59,9 +57,9 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
         return {
             to: record?.emailAddress,
-            subject: 'test email payload',
-            email: 'test email',
-            html: `<p>hello world <a href="${link}">${link}</a></p>`,
+            subject: 'test email payload2',
+            email: 'test email2',
+            html: `${parsedHtml}`,
         };
     });
 
