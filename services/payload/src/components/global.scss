@@ -40,23 +40,23 @@ button {
 
 .select-row__input,
 .select-all__input {
-  border: 1px solid var(--slate-400, #94A3B8);
-  border-radius: 100px;
-  width: 16px;
-  height: 16px;
+    border: 1px solid var(--slate-400, #94a3b8);
+    border-radius: 100px;
+    width: 16px;
+    height: 16px;
 }
 
 .select-row--checked button .select-row__input svg,
 .icon--check {
-  border-radius: 100px;
-  background-color: var(--green-500, #22C55E);
-  width: 16px;
-  height: 16px;
-  transform: translate(-1px, -1px);
+    border-radius: 100px;
+    background-color: var(--green-500, #22c55e);
+    width: 16px;
+    height: 16px;
+    transform: translate(-1px, -1px);
 }
 
 .icon--line .stroke {
-    transform: translate(-5px, -5px)
+    transform: translate(-5px, -5px);
 }
 
 .icon--check .stroke {
@@ -64,7 +64,7 @@ button {
 }
 
 .field-type.radio-group.radio-group--layout-horizontal {
-  display: none;
+    // display: none;
 }
 
 .nav__log-out {
@@ -101,6 +101,32 @@ button {
 .table tbody tr:nth-child(even),
 thead {
     background-color: #ffffff;
+}
+
+html[data-theme='dark'] {
+    #app,
+    .template-default,
+    .account__document-actions::after,
+    .auth-fields,
+    .table tbody tr:nth-child(odd),
+    .table tbody tr:nth-child(even),
+    thead,
+    .list-controls__wrap,
+    .search-filter__input,
+    .list-controls__buttons-wrap .btn,
+    .list-controls__buttons-wrap .pill,
+    .actions {
+        background-color: var(--theme-bg, rgb(20, 20, 20));
+        color: var(--theme-text, #fff);
+    }
+
+    .actions > button {
+        color: var(--theme-text, #fff);
+
+        &.action-button:hover {
+            background-color: var(--slate-500, #64748b);
+        }
+    }
 }
 
 .table {
@@ -154,7 +180,7 @@ thead {
 }
 
 .auth-fields .btn {
-  width: 190px;
+    width: 190px;
 }
 
 #field-email,
@@ -173,7 +199,7 @@ thead {
 }
 
 .logout__wrap {
-  text-align: center;
+    text-align: center;
 }
 
 .code-editor {
