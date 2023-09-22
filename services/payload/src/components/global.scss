@@ -38,6 +38,35 @@ button {
     background-color: white !important;
 }
 
+.select-row__input,
+.select-all__input {
+  border: 1px solid var(--slate-400, #94A3B8);
+  border-radius: 100px;
+  width: 16px;
+  height: 16px;
+}
+
+.select-row--checked button .select-row__input svg,
+.icon--check {
+  border-radius: 100px;
+  background-color: var(--green-500, #22C55E);
+  width: 16px;
+  height: 16px;
+  transform: translate(-1px, -1px);
+}
+
+.icon--line .stroke {
+    transform: translate(-5px, -5px)
+}
+
+.icon--check .stroke {
+    opacity: 0;
+}
+
+.field-type.radio-group.radio-group--layout-horizontal {
+  display: none;
+}
+
 .nav__log-out {
     display: flex;
     align-self: center;
@@ -56,13 +85,15 @@ button {
 }
 
 .list-controls__buttons-wrap .btn,
-.list-controls__buttons-wrap .pill {
+.list-controls__buttons-wrap .pill,
+.edit-many__toggle {
     background-color: #ffffff;
     border: 2px solid var(--slate-500, #64748b);
     border-radius: 8px;
     color: var(--slate-500, #64748b);
     font-size: 14px;
     font-weight: 500;
+    margin: 0 0 0 10px !important;
     padding: 5px 16px;
 }
 
@@ -70,32 +101,6 @@ button {
 .table tbody tr:nth-child(even),
 thead {
     background-color: #ffffff;
-}
-
-html[data-theme='dark'] {
-    #app,
-    .template-default,
-    .account__document-actions::after,
-    .auth-fields,
-    .table tbody tr:nth-child(odd),
-    .table tbody tr:nth-child(even),
-    thead,
-    .list-controls__wrap,
-    .search-filter__input,
-    .list-controls__buttons-wrap .btn,
-    .list-controls__buttons-wrap .pill,
-    .actions {
-        background-color: #000000;
-        color: #ffffff;
-    }
-
-    .actions > button {
-        color: #fff;
-
-        &.action-button:hover {
-            background-color: var(--slate-500, #64748b);
-        }
-    }
 }
 
 .table {
@@ -148,10 +153,17 @@ thead {
     }
 }
 
+.auth-fields .btn {
+  width: 190px;
+}
+
 #field-email,
 #field-password,
 #field-title,
-.textarea-outer {
+.textarea-outer,
+.rs__control.css-13cymwt-control,
+.react-select .rs__control:not(:disabled):focus-within,
+.rs__menu {
     border-radius: 16px !important;
 }
 
@@ -160,9 +172,8 @@ thead {
     border-bottom-right-radius: 16px;
 }
 
-.rs__control.css-13cymwt-control {
-    border-top-left-radius: 16px;
-    border-bottom-left-radius: 16px;
+.logout__wrap {
+  text-align: center;
 }
 
 .code-editor {
