@@ -4,6 +4,7 @@ import Handlebars from 'handlebars';
 
 import { emailQueue } from '../jobs/queue.server';
 import { generateJwtFromId } from '../helpers/jwtHelpers';
+import { CREDENTIAL_STATUS } from '../constants/credentials';
 
 export const sendEmail: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(400);
@@ -66,6 +67,13 @@ export const sendEmail: PayloadHandler = async (req, res) => {
     };
 
     try {
+        if (credential.status === CREDENTIAL_STATUS.DRAFT) {
+            await payload.update({
+                collection: 'credential',
+                id: credential.id,
+                data: { status: CREDENTIAL_STATUS.SENT },
+            });
+        }
         console.log('///emailsData', email);
         emailQueue.add('send-test-email', email);
 
