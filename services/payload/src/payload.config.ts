@@ -93,8 +93,10 @@ export default buildConfig({
         { method: 'get', path: '/payload-version', handler: readPayloadVersion },
         { method: 'post', path: '/get-batch-credentials', handler: getBatchCredentials },
         { method: 'post', path: '/create-batch-credentials', handler: createBatchCredentials },
-        // TODO: This is a security hole that needs to go away when we're done testing!!!
-        { method: 'get', path: '/get-credential-jwt', handler: getCredentialJwt },
+        // This is a security hole that needs to go away when we're done testing!!!
+        // Commented out to close hole. If you need to generate a link for a cred, just hit the
+        // Resend button and check browser logs!
+        // { method: 'get', path: '/get-credential-jwt', handler: getCredentialJwt },
         { method: 'get', path: '/get-credential', handler: getCredential },
         { method: 'get', path: '/get-credential-links', handler: getCredentialLinks },
         { method: 'post', path: '/exchange/:a/:b/:token', handler: forwardExchangeRequest },
