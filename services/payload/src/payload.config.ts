@@ -46,6 +46,7 @@ export default buildConfig({
         fromAddress: 'patsy.hessel95@ethereal.email',
     },
     serverURL: 'http://localhost:3000',
+    cors: '*',
     admin: {
         user: Users.slug,
         meta: {
