@@ -1,0 +1,38 @@
+include:
+  - services/dcc-services/compose.yaml
+
+services:
+  payload:
+    build: 
+      context: ./services/payload
+      dockerfile: Dockerfile.local
+    container_name: "ad-payload"
+    depends_on: 
+      - coordinator
+    env_file:
+      - ./services/payload/.env
+    environment:
+      COORDINATOR_URL: ${COORDINATOR_URL:-http://coordinator:4005}
+      STATUS_URL: ${STATUS_URL:-http://status:4008}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./services/payload/src:/home/node/app/src
+    networks: 
+      - dashboard
+
+  claim-page:
+    build: ./packages/claim-page
+    container_name: "ad-claim-page"
+    depends_on: 
+      - payload
+    env_file:
+      - ./packages/claim-page/.env
+    ports:
+      - "8080:8080"
+    networks: 
+      - dashboard
+
+networks:
+  dashboard:
+    driver: bridge

@@ -4,6 +4,7 @@ import payload from 'payload';
 import jwt from 'jsonwebtoken';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
 
+const coordinatorUrl = process.env.COORDINATOR_URL ?? 'http://localhost:4005';
 const secret =
     process.env.PAYLOAD_SECRET ??
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa';
@@ -22,7 +23,7 @@ export const forwardExchangeRequest: PayloadHandler = async (req, res) => {
         return res.sendStatus(401);
     }
 
-    const response = await fetch(`http://localhost:4005/exchange/${a}/${b}`, {
+    const response = await fetch(`${coordinatorUrl}/exchange/${a}/${b}`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(req.body),

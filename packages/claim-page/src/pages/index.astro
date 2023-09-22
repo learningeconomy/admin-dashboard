@@ -39,6 +39,8 @@ import Button from '../components/Button.astro';
     import QRCode from 'qrcode';
     import { format } from 'date-fns';
 
+    const payloadUrl = import.meta.env.PUBLIC_PAYLOAD_URL;
+
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
 
@@ -59,7 +61,7 @@ import Button from '../components/Button.astro';
     title.innerText = 'Getting Credential...';
 
     try {
-        const res = await fetch(`http://localhost:3000/api/get-credential-links`, {
+        const res = await fetch(`${payloadUrl}/get-credential-links`, {
             headers: { Authorization: `Bearer ${token}` },
         });
 

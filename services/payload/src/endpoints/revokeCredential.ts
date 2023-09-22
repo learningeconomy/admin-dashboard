@@ -2,6 +2,8 @@ import { PayloadHandler } from 'payload/config';
 import payload from 'payload';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
 
+const statusUrl = process.env.STATUS_URL ?? 'http://localhost:4008';
+
 export const revokeCredential: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
 
@@ -9,7 +11,7 @@ export const revokeCredential: PayloadHandler = async (req, res) => {
     const { reason } = req.body;
 
     try {
-        const fetchResponse = await fetch('http://localhost:4008/credentials/status', {
+        const fetchResponse = await fetch(`${statusUrl}/credentials/status`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

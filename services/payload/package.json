@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts nodemon",
     "build:payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload build",
-    "build:server": "tsc",
-    "build": "pnpm copyfiles && pnpm build:payload && pnpm build:server",
+    "typecheck": "tsc",
+    "build": "pnpm copyfiles && pnpm build:payload",
     "serve": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js NODE_ENV=production node dist/server.js",
     "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png}\" dist/",
     "generate:types": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:types",
@@ -47,6 +47,7 @@
     "@types/uuid": "^9.0.4",
     "copyfiles": "^2.4.1",
     "nodemon": "^2.0.6",
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "typescript": "^5.2.2"
   }
 }

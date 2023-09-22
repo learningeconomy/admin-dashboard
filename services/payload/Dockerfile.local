@@ -1,0 +1,12 @@
+FROM node:18.8-alpine
+
+WORKDIR /home/node/app
+
+COPY . .
+
+RUN npm i -g pnpm
+RUN pnpm i
+
+EXPOSE 3000
+
+CMD ["pnpm", "dev"]

@@ -4,11 +4,13 @@ import payload from 'payload';
 import jwt from 'jsonwebtoken';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../helpers/handlebarhelpers';
 
+const coordinatorUrl = process.env.COORDINATOR_URL ?? 'http://localhost:4005';
 const secret =
     process.env.PAYLOAD_SECRET ??
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa';
 
 export const getCredentialLinks: PayloadHandler = async (req, res) => {
+    console.log({ coordinatorUrl });
     let id: string;
 
     const authHeader = req.headers.authorization;
@@ -55,7 +57,7 @@ export const getCredentialLinks: PayloadHandler = async (req, res) => {
         if (typeof builtCredential?.issuer === 'string') builtCredential.issuer = {};
         if ('id' in (builtCredential?.issuer ?? {})) delete builtCredential.issuer.id;
 
-        const fetchResponse = await fetch('http://localhost:4005/exchange/setup', {
+        const fetchResponse = await fetch(`${coordinatorUrl}/exchange/setup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ vc: builtCredential, tenantName: 'test' }),
