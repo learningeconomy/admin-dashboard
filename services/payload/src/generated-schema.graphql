@@ -841,6 +841,7 @@ type EmailTemplate {
   id: String
   title: String
   internalNotes: String
+  emailSubjectTitle: String
   emailTemplatesHandlebarsCode: String
   updatedAt: DateTime
   createdAt: DateTime
@@ -2246,6 +2247,7 @@ type EmailTemplates {
 input EmailTemplate_where {
   title: EmailTemplate_title_operator
   internalNotes: EmailTemplate_internalNotes_operator
+  emailSubjectTitle: EmailTemplate_emailSubjectTitle_operator
   emailTemplatesHandlebarsCode: EmailTemplate_emailTemplatesHandlebarsCode_operator
   updatedAt: EmailTemplate_updatedAt_operator
   createdAt: EmailTemplate_createdAt_operator
@@ -2270,6 +2272,17 @@ input EmailTemplate_internalNotes_operator {
   not_equals: String
   like: String
   contains: String
+  exists: Boolean
+}
+
+input EmailTemplate_emailSubjectTitle_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
@@ -2330,6 +2343,7 @@ input EmailTemplate_id_operator {
 input EmailTemplate_where_or {
   title: EmailTemplate_title_operator
   internalNotes: EmailTemplate_internalNotes_operator
+  emailSubjectTitle: EmailTemplate_emailSubjectTitle_operator
   emailTemplatesHandlebarsCode: EmailTemplate_emailTemplatesHandlebarsCode_operator
   updatedAt: EmailTemplate_updatedAt_operator
   createdAt: EmailTemplate_createdAt_operator
@@ -2340,6 +2354,7 @@ input EmailTemplate_where_or {
 input EmailTemplate_where_and {
   title: EmailTemplate_title_operator
   internalNotes: EmailTemplate_internalNotes_operator
+  emailSubjectTitle: EmailTemplate_emailSubjectTitle_operator
   emailTemplatesHandlebarsCode: EmailTemplate_emailTemplatesHandlebarsCode_operator
   updatedAt: EmailTemplate_updatedAt_operator
   createdAt: EmailTemplate_createdAt_operator
@@ -2359,6 +2374,7 @@ type email_templateDocAccess {
 type EmailTemplateDocAccessFields {
   title: EmailTemplateDocAccessFields_title
   internalNotes: EmailTemplateDocAccessFields_internalNotes
+  emailSubjectTitle: EmailTemplateDocAccessFields_emailSubjectTitle
   emailTemplatesHandlebarsCode: EmailTemplateDocAccessFields_emailTemplatesHandlebarsCode
   updatedAt: EmailTemplateDocAccessFields_updatedAt
   createdAt: EmailTemplateDocAccessFields_createdAt
@@ -2408,6 +2424,29 @@ type EmailTemplateDocAccessFields_internalNotes_Update {
 }
 
 type EmailTemplateDocAccessFields_internalNotes_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_emailSubjectTitle {
+  create: EmailTemplateDocAccessFields_emailSubjectTitle_Create
+  read: EmailTemplateDocAccessFields_emailSubjectTitle_Read
+  update: EmailTemplateDocAccessFields_emailSubjectTitle_Update
+  delete: EmailTemplateDocAccessFields_emailSubjectTitle_Delete
+}
+
+type EmailTemplateDocAccessFields_emailSubjectTitle_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_emailSubjectTitle_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_emailSubjectTitle_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateDocAccessFields_emailSubjectTitle_Delete {
   permission: Boolean!
 }
 
@@ -2539,6 +2578,7 @@ type EmailTemplateVersion {
 type EmailTemplateVersion_Version {
   title: String
   internalNotes: String
+  emailSubjectTitle: String
   emailTemplatesHandlebarsCode: String
   updatedAt: DateTime
   createdAt: DateTime
@@ -2568,6 +2608,7 @@ input versionsEmailTemplate_where {
   parent: versionsEmailTemplate_parent_operator
   version__title: versionsEmailTemplate_version__title_operator
   version__internalNotes: versionsEmailTemplate_version__internalNotes_operator
+  version__emailSubjectTitle: versionsEmailTemplate_version__emailSubjectTitle_operator
   version__emailTemplatesHandlebarsCode: versionsEmailTemplate_version__emailTemplatesHandlebarsCode_operator
   version__updatedAt: versionsEmailTemplate_version__updatedAt_operator
   version__createdAt: versionsEmailTemplate_version__createdAt_operator
@@ -2603,6 +2644,17 @@ input versionsEmailTemplate_version__internalNotes_operator {
   not_equals: String
   like: String
   contains: String
+  exists: Boolean
+}
+
+input versionsEmailTemplate_version__emailSubjectTitle_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
@@ -2686,6 +2738,7 @@ input versionsEmailTemplate_where_or {
   parent: versionsEmailTemplate_parent_operator
   version__title: versionsEmailTemplate_version__title_operator
   version__internalNotes: versionsEmailTemplate_version__internalNotes_operator
+  version__emailSubjectTitle: versionsEmailTemplate_version__emailSubjectTitle_operator
   version__emailTemplatesHandlebarsCode: versionsEmailTemplate_version__emailTemplatesHandlebarsCode_operator
   version__updatedAt: versionsEmailTemplate_version__updatedAt_operator
   version__createdAt: versionsEmailTemplate_version__createdAt_operator
@@ -2699,6 +2752,7 @@ input versionsEmailTemplate_where_and {
   parent: versionsEmailTemplate_parent_operator
   version__title: versionsEmailTemplate_version__title_operator
   version__internalNotes: versionsEmailTemplate_version__internalNotes_operator
+  version__emailSubjectTitle: versionsEmailTemplate_version__emailSubjectTitle_operator
   version__emailTemplatesHandlebarsCode: versionsEmailTemplate_version__emailTemplatesHandlebarsCode_operator
   version__updatedAt: versionsEmailTemplate_version__updatedAt_operator
   version__createdAt: versionsEmailTemplate_version__createdAt_operator
@@ -3628,6 +3682,7 @@ type email_templateAccess {
 type EmailTemplateFields {
   title: EmailTemplateFields_title
   internalNotes: EmailTemplateFields_internalNotes
+  emailSubjectTitle: EmailTemplateFields_emailSubjectTitle
   emailTemplatesHandlebarsCode: EmailTemplateFields_emailTemplatesHandlebarsCode
   updatedAt: EmailTemplateFields_updatedAt
   createdAt: EmailTemplateFields_createdAt
@@ -3677,6 +3732,29 @@ type EmailTemplateFields_internalNotes_Update {
 }
 
 type EmailTemplateFields_internalNotes_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_emailSubjectTitle {
+  create: EmailTemplateFields_emailSubjectTitle_Create
+  read: EmailTemplateFields_emailSubjectTitle_Read
+  update: EmailTemplateFields_emailSubjectTitle_Update
+  delete: EmailTemplateFields_emailSubjectTitle_Delete
+}
+
+type EmailTemplateFields_emailSubjectTitle_Create {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_emailSubjectTitle_Read {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_emailSubjectTitle_Update {
+  permission: Boolean!
+}
+
+type EmailTemplateFields_emailSubjectTitle_Delete {
   permission: Boolean!
 }
 
@@ -3979,6 +4057,7 @@ enum CredentialUpdate__status_MutationInput {
 input mutationEmailTemplateInput {
   title: String!
   internalNotes: String
+  emailSubjectTitle: String
   emailTemplatesHandlebarsCode: String!
   updatedAt: String
   createdAt: String
@@ -3993,6 +4072,7 @@ enum EmailTemplate__status_MutationInput {
 input mutationEmailTemplateUpdateInput {
   title: String
   internalNotes: String
+  emailSubjectTitle: String
   emailTemplatesHandlebarsCode: String
   updatedAt: String
   createdAt: String

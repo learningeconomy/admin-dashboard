@@ -42,15 +42,25 @@ const ActionsButton: React.FC<Props> = ({ rowData }) => {
             icon: <Eye />,
             url: `credential/${rowData.id}`,
         },
-        { type: 'button', label: 'Resend', icon: <Send />, onClick: () => { } },
+        {
+            type: 'button',
+            label: 'Resend',
+            icon: <Send />,
+            onClick: async () => {
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body: JSON.stringify({ credentialId: rowData.id }),
+                });
+
+                console.log(await response.json());
+            },
+        },
         {
             type: 'button',
             label: 'Revoke',
             icon: <ArrowArcLeft />,
-            onClick: () => {
-                console.log('Fook');
-                openModal(revocationSlug);
-            },
+            onClick: () => openModal(revocationSlug),
         },
         {
             type: 'link',

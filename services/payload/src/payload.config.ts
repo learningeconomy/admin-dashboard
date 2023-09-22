@@ -88,16 +88,8 @@ export default buildConfig({
         EmailTemplatesCollection,
     ],
     endpoints: [
-        {
-            method: 'post',
-            path: '/send-email',
-            handler: sendEmail,
-        },
-        {
-            method: 'post',
-            path: '/send-batch-email',
-            handler: sendBatchEmail,
-        },
+        { method: 'post', path: '/send-email', handler: sendEmail },
+        { method: 'post', path: '/send-batch-email', handler: sendBatchEmail },
         { method: 'get', path: '/payload-version', handler: readPayloadVersion },
         { method: 'post', path: '/get-batch-credentials', handler: getBatchCredentials },
         { method: 'post', path: '/create-batch-credentials', handler: createBatchCredentials },

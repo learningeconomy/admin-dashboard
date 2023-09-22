@@ -1,49 +1,77 @@
-import { PayloadHandler } from "payload/config";
-import { Forbidden } from "payload/errors";
-import payload from "payload";
-import { emailQueue } from "../jobs/queue.server";
-import { generateJwtFromId } from "../helpers/jwtHelpers";
+import payload from 'payload';
+import { PayloadHandler } from 'payload/config';
+import Handlebars from 'handlebars';
 
-export const sendEmail: PayloadHandler = async (req, res, next) => {
-  if (!req.user) throw new Forbidden();
-   console.log('////req?.body', req.body);
-  const query = {
-    batch: {
-      equals: req?.body?.message
+import { emailQueue } from '../jobs/queue.server';
+import { generateJwtFromId } from '../helpers/jwtHelpers';
+
+export const sendEmail: PayloadHandler = async (req, res) => {
+    if (!req.user) return res.sendStatus(400);
+
+    const { credentialId } = req.body;
+
+    if (!credentialId) return res.sendStatus(400);
+
+    const credential = await payload.findByID({
+        collection: 'credential',
+        depth: 3,
+        id: credentialId,
+        locale: 'en',
+    });
+
+    console.log({ credential });
+
+    if (
+        !credential ||
+        !credential.batch ||
+        typeof credential.batch === 'string' ||
+        !credential.batch.emailTemplate
+    ) {
+        return res.sendStatus(404);
     }
-  }
 
-  // test email
-  //generate email link
-  const _id = 'test';
+    const emailTemplateField = credential.batch.emailTemplate;
 
-  const jwt = await generateJwtFromId(_id);
-  const link = `https://localhost:4321/${jwt}`;
+    const emailTemplateRecord =
+        typeof emailTemplateField === 'string'
+            ? await payload.findByID({
+                collection: 'email-template',
+                id: emailTemplateField,
+                depth: 2,
+                showHiddenFields: true,
+                locale: 'en',
+            })
+            : emailTemplateField;
 
-  console.log('///link', link);
+    // email template code
+    const emailTemplate = emailTemplateRecord?.emailTemplatesHandlebarsCode;
 
-  try {
-    console.log("//req body", req?.body);
+    if (!emailTemplate) return res.sendStatus(404);
 
-    const data = {
-      to: 'withallmyhrt@gmail.com',
-      subject: 'test email payload3',
-      email: 'test email',
-      html: `<p>hello world <a href="${link}">${link}</a></p>`
+    const handlebarsTemplate = Handlebars.compile(emailTemplate);
+
+    const claimPageBaseUrl = process.env.CLAIM_PAGE_URL || 'https://localhost:4321';
+
+    const jwt = generateJwtFromId(credential.id);
+    const link = `${claimPageBaseUrl}/?token=${jwt}`;
+    // replace handlebar variables in email template with record data
+    const mergedRecordWithLink = { ...credential, link };
+    const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
+
+    const email = {
+        to: credential.emailAddress,
+        subject: emailTemplateRecord?.emailSubjectTitle || 'Claim Credential',
+        email: 'test email2',
+        html: `${parsedHtml}`,
     };
 
+    try {
+        console.log('///emailsData', email);
+        emailQueue.add('send-test-email', email);
 
-    await emailQueue.add("send-test-email", data)
-
-    //actual email
-    // get credential details and interpolate into email template
-    // send email
-   
-    console.log('///data found', data);
-
-    res.status(200).json({ data });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-  }
+        res.status(200).json({ email, link });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
 };

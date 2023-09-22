@@ -63,6 +63,7 @@ export interface EmailTemplate {
   id: string;
   title: string;
   internalNotes?: string;
+  emailSubjectTitle?: string;
   emailTemplatesHandlebarsCode: string;
   updatedAt: string;
   createdAt: string;
