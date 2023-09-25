@@ -1,12 +1,7 @@
-import payload from 'payload';
-
 import { PayloadHandler } from 'payload/config';
-import { Forbidden } from 'payload/errors';
 
-export const readPayloadVersion: PayloadHandler = (req, res, next) => {
-    payload.logger.error('nice');
-    console.log('One');
-    if (!req.user) throw new Forbidden();
+export const readPayloadVersion: PayloadHandler = (req, res) => {
+    if (!req.user) return res.sendStatus(401);
 
     try {
         let version = '1.00';

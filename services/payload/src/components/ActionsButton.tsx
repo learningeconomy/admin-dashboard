@@ -10,6 +10,8 @@ import ArrowArcLeft from './svgs/ArrowArcLeft';
 import BarGraph from './svgs/BarGraph';
 import RevocationWarning from './credential/RevocationWarning';
 import { Credential } from 'payload/generated-types';
+import { CREDENTIAL_STATUS } from '../constants/credentials';
+import RevocationDetails from './credential/RevocationDetails';
 
 type ActionButton =
     | { type: 'button'; label: string; icon: React.ReactNode; onClick: () => void | Promise<void> }
@@ -20,7 +22,8 @@ const ActionsButton: React.FC<Props> = ({ rowData }) => {
     const container = useRef<HTMLElement>();
     const { openModal } = useModal();
 
-    const revocationSlug = `revocation-warning-${rowData.id}`;
+    const isRevoked = rowData.status === CREDENTIAL_STATUS.REVOKED;
+    const revocationSlug = `revocation-${isRevoked ? 'details' : 'warning'}-${rowData.id}`;
 
     useEffect(() => {
         function close(event: MouseEvent) {
@@ -58,7 +61,7 @@ const ActionsButton: React.FC<Props> = ({ rowData }) => {
         },
         {
             type: 'button',
-            label: 'Revoke',
+            label: isRevoked ? 'View Revocation Details' : 'Revoke',
             icon: <ArrowArcLeft />,
             onClick: () => openModal(revocationSlug),
         },
@@ -107,7 +110,17 @@ const ActionsButton: React.FC<Props> = ({ rowData }) => {
                 {actionButtons}
             </section>
 
-            <RevocationWarning credential={rowData as any as Credential} slug={revocationSlug} />
+            {isRevoked ? (
+                <RevocationDetails
+                    credential={rowData as any as Credential}
+                    slug={revocationSlug}
+                />
+            ) : (
+                <RevocationWarning
+                    credential={rowData as any as Credential}
+                    slug={revocationSlug}
+                />
+            )}
         </section>
     );
 };

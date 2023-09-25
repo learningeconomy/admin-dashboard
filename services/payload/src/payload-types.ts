@@ -18,6 +18,7 @@ export interface Config {
 }
 export interface User {
   id: string;
+  name?: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -86,6 +87,8 @@ export interface Credential {
   status: string;
   batch: string | CredentialBatch;
   revocationReason?: string;
+  revocationDate?: string;
+  revokedBy?: string | User;
   updatedAt: string;
   createdAt: string;
   _status?: 'draft' | 'published';

@@ -20,8 +20,6 @@ export const sendEmail: PayloadHandler = async (req, res) => {
         locale: 'en',
     });
 
-    console.log({ credential });
-
     if (
         !credential ||
         !credential.batch ||

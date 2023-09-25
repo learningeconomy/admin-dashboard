@@ -30,6 +30,7 @@ type Query {
 
 type User {
   id: String
+  name: String
   updatedAt: DateTime
   createdAt: DateTime
   email: EmailAddress!
@@ -67,12 +68,24 @@ type Users {
 }
 
 input User_where {
+  name: User_name_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
   id: User_id_operator
   OR: [User_where_or]
   AND: [User_where_and]
+}
+
+input User_name_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
 }
 
 input User_updatedAt_operator {
@@ -119,6 +132,7 @@ input User_id_operator {
 }
 
 input User_where_or {
+  name: User_name_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
@@ -126,6 +140,7 @@ input User_where_or {
 }
 
 input User_where_and {
+  name: User_name_operator
   updatedAt: User_updatedAt_operator
   createdAt: User_createdAt_operator
   email: User_email_operator
@@ -142,10 +157,34 @@ type usersDocAccess {
 }
 
 type UsersDocAccessFields {
+  name: UsersDocAccessFields_name
   updatedAt: UsersDocAccessFields_updatedAt
   createdAt: UsersDocAccessFields_createdAt
   email: UsersDocAccessFields_email
   password: UsersDocAccessFields_password
+}
+
+type UsersDocAccessFields_name {
+  create: UsersDocAccessFields_name_Create
+  read: UsersDocAccessFields_name_Read
+  update: UsersDocAccessFields_name_Update
+  delete: UsersDocAccessFields_name_Delete
+}
+
+type UsersDocAccessFields_name_Create {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_name_Read {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_name_Update {
+  permission: Boolean!
+}
+
+type UsersDocAccessFields_name_Delete {
+  permission: Boolean!
 }
 
 type UsersDocAccessFields_updatedAt {
@@ -1503,6 +1542,8 @@ type Credential {
   status: String
   batch: CredentialBatch
   revocationReason: String
+  revocationDate: DateTime
+  revokedBy: User
   updatedAt: DateTime
   createdAt: DateTime
   _status: Credential__status
@@ -1535,6 +1576,8 @@ input Credential_where {
   status: Credential_status_operator
   batch: Credential_batch_operator
   revocationReason: Credential_revocationReason_operator
+  revocationDate: Credential_revocationDate_operator
+  revokedBy: Credential_revokedBy_operator
   updatedAt: Credential_updatedAt_operator
   createdAt: Credential_createdAt_operator
   _status: Credential__status_operator
@@ -1613,6 +1656,26 @@ input Credential_revocationReason_operator {
   exists: Boolean
 }
 
+input Credential_revocationDate_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Credential_revokedBy_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
 input Credential_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
@@ -1668,6 +1731,8 @@ input Credential_where_or {
   status: Credential_status_operator
   batch: Credential_batch_operator
   revocationReason: Credential_revocationReason_operator
+  revocationDate: Credential_revocationDate_operator
+  revokedBy: Credential_revokedBy_operator
   updatedAt: Credential_updatedAt_operator
   createdAt: Credential_createdAt_operator
   _status: Credential__status_operator
@@ -1682,6 +1747,8 @@ input Credential_where_and {
   status: Credential_status_operator
   batch: Credential_batch_operator
   revocationReason: Credential_revocationReason_operator
+  revocationDate: Credential_revocationDate_operator
+  revokedBy: Credential_revokedBy_operator
   updatedAt: Credential_updatedAt_operator
   createdAt: Credential_createdAt_operator
   _status: Credential__status_operator
@@ -1705,6 +1772,8 @@ type CredentialDocAccessFields {
   status: CredentialDocAccessFields_status
   batch: CredentialDocAccessFields_batch
   revocationReason: CredentialDocAccessFields_revocationReason
+  revocationDate: CredentialDocAccessFields_revocationDate
+  revokedBy: CredentialDocAccessFields_revokedBy
   actionButton: CredentialDocAccessFields_actionButton
   updatedAt: CredentialDocAccessFields_updatedAt
   createdAt: CredentialDocAccessFields_createdAt
@@ -1872,6 +1941,52 @@ type CredentialDocAccessFields_revocationReason_Delete {
   permission: Boolean!
 }
 
+type CredentialDocAccessFields_revocationDate {
+  create: CredentialDocAccessFields_revocationDate_Create
+  read: CredentialDocAccessFields_revocationDate_Read
+  update: CredentialDocAccessFields_revocationDate_Update
+  delete: CredentialDocAccessFields_revocationDate_Delete
+}
+
+type CredentialDocAccessFields_revocationDate_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_revocationDate_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_revocationDate_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_revocationDate_Delete {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_revokedBy {
+  create: CredentialDocAccessFields_revokedBy_Create
+  read: CredentialDocAccessFields_revokedBy_Read
+  update: CredentialDocAccessFields_revokedBy_Update
+  delete: CredentialDocAccessFields_revokedBy_Delete
+}
+
+type CredentialDocAccessFields_revokedBy_Create {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_revokedBy_Read {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_revokedBy_Update {
+  permission: Boolean!
+}
+
+type CredentialDocAccessFields_revokedBy_Delete {
+  permission: Boolean!
+}
+
 type CredentialDocAccessFields_actionButton {
   create: CredentialDocAccessFields_actionButton_Create
   read: CredentialDocAccessFields_actionButton_Read
@@ -2005,6 +2120,8 @@ type CredentialVersion_Version {
   status: String
   batch: CredentialBatch
   revocationReason: String
+  revocationDate: DateTime
+  revokedBy: User
   updatedAt: DateTime
   createdAt: DateTime
   _status: CredentialVersion_Version__status
@@ -2038,6 +2155,8 @@ input versionsCredential_where {
   version__status: versionsCredential_version__status_operator
   version__batch: versionsCredential_version__batch_operator
   version__revocationReason: versionsCredential_version__revocationReason_operator
+  version__revocationDate: versionsCredential_version__revocationDate_operator
+  version__revokedBy: versionsCredential_version__revokedBy_operator
   version__updatedAt: versionsCredential_version__updatedAt_operator
   version__createdAt: versionsCredential_version__createdAt_operator
   version___status: versionsCredential_version___status_operator
@@ -2127,6 +2246,26 @@ input versionsCredential_version__revocationReason_operator {
   exists: Boolean
 }
 
+input versionsCredential_version__revocationDate_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input versionsCredential_version__revokedBy_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
 input versionsCredential_version__updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
@@ -2205,6 +2344,8 @@ input versionsCredential_where_or {
   version__status: versionsCredential_version__status_operator
   version__batch: versionsCredential_version__batch_operator
   version__revocationReason: versionsCredential_version__revocationReason_operator
+  version__revocationDate: versionsCredential_version__revocationDate_operator
+  version__revokedBy: versionsCredential_version__revokedBy_operator
   version__updatedAt: versionsCredential_version__updatedAt_operator
   version__createdAt: versionsCredential_version__createdAt_operator
   version___status: versionsCredential_version___status_operator
@@ -2222,6 +2363,8 @@ input versionsCredential_where_and {
   version__status: versionsCredential_version__status_operator
   version__batch: versionsCredential_version__batch_operator
   version__revocationReason: versionsCredential_version__revocationReason_operator
+  version__revocationDate: versionsCredential_version__revocationDate_operator
+  version__revokedBy: versionsCredential_version__revokedBy_operator
   version__updatedAt: versionsCredential_version__updatedAt_operator
   version__createdAt: versionsCredential_version__createdAt_operator
   version___status: versionsCredential_version___status_operator
@@ -2788,10 +2931,34 @@ type usersAccess {
 }
 
 type UsersFields {
+  name: UsersFields_name
   updatedAt: UsersFields_updatedAt
   createdAt: UsersFields_createdAt
   email: UsersFields_email
   password: UsersFields_password
+}
+
+type UsersFields_name {
+  create: UsersFields_name_Create
+  read: UsersFields_name_Read
+  update: UsersFields_name_Update
+  delete: UsersFields_name_Delete
+}
+
+type UsersFields_name_Create {
+  permission: Boolean!
+}
+
+type UsersFields_name_Read {
+  permission: Boolean!
+}
+
+type UsersFields_name_Update {
+  permission: Boolean!
+}
+
+type UsersFields_name_Delete {
+  permission: Boolean!
 }
 
 type UsersFields_updatedAt {
@@ -3386,6 +3553,8 @@ type CredentialFields {
   status: CredentialFields_status
   batch: CredentialFields_batch
   revocationReason: CredentialFields_revocationReason
+  revocationDate: CredentialFields_revocationDate
+  revokedBy: CredentialFields_revokedBy
   actionButton: CredentialFields_actionButton
   updatedAt: CredentialFields_updatedAt
   createdAt: CredentialFields_createdAt
@@ -3550,6 +3719,52 @@ type CredentialFields_revocationReason_Update {
 }
 
 type CredentialFields_revocationReason_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields_revocationDate {
+  create: CredentialFields_revocationDate_Create
+  read: CredentialFields_revocationDate_Read
+  update: CredentialFields_revocationDate_Update
+  delete: CredentialFields_revocationDate_Delete
+}
+
+type CredentialFields_revocationDate_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_revocationDate_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_revocationDate_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_revocationDate_Delete {
+  permission: Boolean!
+}
+
+type CredentialFields_revokedBy {
+  create: CredentialFields_revokedBy_Create
+  read: CredentialFields_revokedBy_Read
+  update: CredentialFields_revokedBy_Update
+  delete: CredentialFields_revokedBy_Delete
+}
+
+type CredentialFields_revokedBy_Create {
+  permission: Boolean!
+}
+
+type CredentialFields_revokedBy_Read {
+  permission: Boolean!
+}
+
+type CredentialFields_revokedBy_Update {
+  permission: Boolean!
+}
+
+type CredentialFields_revokedBy_Delete {
   permission: Boolean!
 }
 
@@ -3907,6 +4122,7 @@ type Mutation {
 }
 
 input mutationUserInput {
+  name: String
   updatedAt: String
   createdAt: String
   email: String!
@@ -3920,6 +4136,7 @@ input mutationUserInput {
 }
 
 input mutationUserUpdateInput {
+  name: String
   updatedAt: String
   createdAt: String
   email: String
@@ -4026,6 +4243,8 @@ input mutationCredentialInput {
   status: String!
   batch: String
   revocationReason: String
+  revocationDate: String
+  revokedBy: String
   updatedAt: String
   createdAt: String
   _status: Credential__status_MutationInput
@@ -4044,6 +4263,8 @@ input mutationCredentialUpdateInput {
   status: String
   batch: String
   revocationReason: String
+  revocationDate: String
+  revokedBy: String
   updatedAt: String
   createdAt: String
   _status: CredentialUpdate__status_MutationInput

@@ -24,7 +24,12 @@ export const revokeCredential: PayloadHandler = async (req, res) => {
             await payload.update({
                 collection: 'credential',
                 id,
-                data: { status: CREDENTIAL_STATUS.REVOKED, revocationReason: reason },
+                data: {
+                    status: CREDENTIAL_STATUS.REVOKED,
+                    revocationReason: reason,
+                    revocationDate: new Date().toISOString(),
+                    revokedBy: req.user.id,
+                },
             });
         }
 

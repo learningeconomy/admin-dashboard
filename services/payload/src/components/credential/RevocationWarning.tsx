@@ -4,8 +4,9 @@ import { Drawer } from 'payload/dist/admin/components/elements/Drawer';
 
 import ArrowArcLeft from '../svgs/ArrowArcLeft';
 
-import './RevocationWarning.scss';
+import './Revocation.scss';
 import { Credential } from 'payload/generated-types';
+import { CREDENTIAL_STATUS } from '../../constants/credentials';
 
 export type RevocationWarningProps = {
     credential: Credential;
@@ -18,9 +19,12 @@ const RevocationWarning: React.FC<RevocationWarningProps> = ({ slug, credential 
     const [batchName, setBatchName] = useState('');
     const { modalState, closeModal } = useModal();
 
+    const isNotSentYet = credential.status === CREDENTIAL_STATUS.DRAFT;
+
     const revokeCredential = async () => {
         await fetch(`/api/revoke-credential/${credential.id}`, {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ reason }),
         });
 
@@ -51,37 +55,35 @@ const RevocationWarning: React.FC<RevocationWarningProps> = ({ slug, credential 
                     <header role="presentation">
                         <ArrowArcLeft />
                     </header>
-
-                    <h2>Revoke Credential?</h2>
+                    <h2>{isNotSentYet ? 'Cancel' : 'Revoke'} Credential?</h2>
                     <p>
-                        By revoking this credential, you acknowledge the immediate invalidation and
-                        withdrawal of the issued credential.
+                        By {isNotSentYet ? 'cancelling' : 'revoking'} this credential, you
+                        acknowledge the immediate invalidation and withdrawal of the issued
+                        credential.
                     </p>
-
                     <section>
                         <span>Credential Name: {credential.credentialName}</span>
                         <span>Template Name: {batchName}</span>
                         <span>Earner Name: {credential.earnerName}</span>
                     </section>
-
                     <label>
-                        Add a comment explaining why you're revoking this credential.
+                        Add a comment explaining why you're{' '}
+                        {isNotSentYet ? 'cancelling' : 'revoking'} this credential.
                         <textarea
                             onChange={e => setReason(e.target.value)}
                             value={reason}
                             autoFocus
                         />
                     </label>
-
                     <label>
-                        Type the name of the credential you're revoking.
+                        Type the name of the credential you're{' '}
+                        {isNotSentYet ? 'cancelling' : 'revoking'}.
                         <input
                             type="text"
                             onChange={e => setConfirmation(e.target.value)}
                             value={confirmation}
                         />
                     </label>
-
                     <button disabled={confirmation !== credential.credentialName}>Revoke</button>
                 </form>
             </section>

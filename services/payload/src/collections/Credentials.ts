@@ -37,6 +37,14 @@ const CredentialsCollection: CollectionConfig = {
             hasMany: false,
         },
         { name: 'revocationReason', type: 'text', admin: { hidden: true } },
+        { name: 'revocationDate', type: 'date', admin: { hidden: true } },
+        {
+            name: 'revokedBy',
+            type: 'relationship',
+            relationTo: 'users',
+            hasMany: false,
+            admin: { hidden: true },
+        },
         {
             name: 'actionButton',
             label: ' ',

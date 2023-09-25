@@ -10,7 +10,6 @@ const secret =
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa';
 
 export const getCredentialLinks: PayloadHandler = async (req, res) => {
-    console.log({ coordinatorUrl });
     let id: string;
 
     const authHeader = req.headers.authorization;
