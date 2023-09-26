@@ -47,7 +47,7 @@ const CredentialsCollection: CollectionConfig = {
         },
         {
             name: 'actionButton',
-            label: ' ',
+            label: 'Actions Button',
             type: 'ui',
             admin: { components: { Field: () => null, Cell: ActionsButton } },
         },

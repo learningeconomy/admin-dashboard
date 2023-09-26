@@ -25,6 +25,7 @@ const CredentialsBatchesCollection: CollectionConfig = {
     fields: [
         {
             name: 'title',
+            label: 'Batch Title',
             type: 'text',
             required: true,
             minLength: 3,

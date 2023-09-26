@@ -16,7 +16,6 @@ import { SaveDraft } from 'payload/dist/admin/components/elements/SaveDraft';
 import { Save } from 'payload/dist/admin/components/elements/Save';
 import { useDocumentInfo } from 'payload/dist/admin/components/utilities/DocumentInfo';
 import { formatDate } from 'payload/dist/admin/utilities/formatDate';
-import { useAuth } from 'payload/components/utilities';
 import { Props } from '../types';
 
 const baseClass = 'collection-edit';
@@ -28,23 +27,15 @@ const SidebarMenu: React.FC<Props> = props => {
     } = useConfig();
     const { publishedDoc } = useDocumentInfo();
     const { t, i18n } = useTranslation('general');
-    const { user, refreshCookieAsync } = useAuth();
 
     const {
         collection,
         isEditing,
         data,
-        onSave: onSaveFromProps,
         permissions,
-        isLoading,
-        internalState,
         apiURL,
-        action,
         hasSavePermission,
-        disableEyebrow,
         disableActions,
-        disableLeaveWithoutSaving,
-        customHeader,
         id,
         updatedAt,
     } = props;
@@ -52,32 +43,11 @@ const SidebarMenu: React.FC<Props> = props => {
     const {
         slug,
         fields,
-        admin: { useAsTitle, disableDuplicate, preview, hideAPIURL },
+        admin: { disableDuplicate, preview, hideAPIURL },
         versions,
         timestamps,
         auth,
-        upload,
     } = collection;
-
-    const classes = [baseClass, isEditing && `${baseClass}--is-editing`].filter(Boolean).join(' ');
-
-    const onSave = useCallback(
-        async json => {
-            if (auth && id === user.id) {
-                await refreshCookieAsync();
-            }
-
-            if (typeof onSaveFromProps === 'function') {
-                onSaveFromProps({
-                    ...json,
-                    operation: id ? 'update' : 'create',
-                });
-            }
-        },
-        [id, onSaveFromProps, auth, user, refreshCookieAsync]
-    );
-
-    const operation = isEditing ? 'update' : 'create';
 
     return (
         <div className={`${baseClass}__sidebar-wrap`}>

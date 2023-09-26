@@ -13,10 +13,12 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "jsx": "react",
+    "baseUrl": ".",
     "paths": {
       "payload/generated-types": [
-        "./src/payload-types.ts",
+        "./src/payload-types.ts"
       ],
+      "@/*": ["./*"]
     }
   },
   "include": [
@@ -25,10 +27,10 @@
   "exclude": [
     "node_modules",
     "dist",
-    "build",
+    "build"
   ],
   "ts-node": {
     "transpileOnly": true,
-    "swc": true,
+    "swc": true
   }
 }

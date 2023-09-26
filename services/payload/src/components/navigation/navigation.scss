@@ -1,0 +1,33 @@
+.horizontal-nav-header {
+    @apply min-h-[30px] w-full flex justify-center items-center;
+
+    & > nav {
+        @apply flex;
+
+        & > div {
+            @apply h-4 w-4 rounded-full mr-2 bg-slate-400;
+
+            &.active {
+                @apply w-15 bg-green-500;
+            }
+        }
+    }
+
+    & > button {
+        background-color: transparent;
+        color: black;
+    }
+
+    & > span {
+        color: var(--color-grayscale-placeholder);
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 30px;
+        letter-spacing: 0.75px;
+    }
+}
+
+.horizontal-nav-footer {
+    border-top: 1px solid var(--lc-grayscale-200-line, #e2e3e9);
+    box-shadow: 0px -2px 2px 0px rgba(0, 0, 0, 0.1);
+}
