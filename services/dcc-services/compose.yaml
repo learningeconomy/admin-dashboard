@@ -1,0 +1,33 @@
+version: '3.5'
+services:
+  coordinator:
+    image: digitalcredentials/workflow-coordinator:test
+    env_file:
+      - ./.coordinator.env
+    ports:
+      - "4005:4005"
+    depends_on: 
+      - signing
+      - status
+      - transactions
+    networks: 
+      - dashboard
+
+  signing:
+    image: digitalcredentials/signing-service:test
+    networks: 
+      - dashboard
+
+  status:
+    image: taylorbeeston/status-service:latest
+    env_file:
+      - ./.status-service.env
+    ports:
+      - "4008:4008"
+    networks: 
+      - dashboard
+
+  transactions:
+    image: digitalcredentials/transaction-service:test
+    networks: 
+      - dashboard

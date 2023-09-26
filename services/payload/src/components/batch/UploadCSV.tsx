@@ -7,6 +7,9 @@ const UploadCSV: React.FC = () => {
   const { id } = useDocumentInfo();
   const [ data, setData ] = useState();
   const [ refetch, setRefetch ] = useState(false);
+
+
+  // replace this with react-query package...todo
   useEffect(() => {
     const fetchBatchCredentials= async () => {
       const res = await fetch("/api/get-batch-credentials", {
@@ -75,17 +78,18 @@ const UploadCSV: React.FC = () => {
   console.log('///data from state', data);
 
   return (
-    <div>
-      <p>Upload CSV File with earner information</p>
+    <div className="upload-csv-wrapper">
+      <p className="upload-csv-text">Upload CSV files to import credential and earner information. Once successfully uploaded, add or remove earners individually or through CSV files.</p>
       <form>
         <input
           type={"file"}
           id={"csvFileInput"}
           accept={".csv"}
           onChange={handleOnChange}
+          className="upload-csv-input"
         />
-
         <button
+          className="upload-csv-button"
           onClick={(e) => {
             handleOnSubmit(e);
           }}

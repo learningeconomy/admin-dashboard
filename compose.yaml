@@ -1,0 +1,50 @@
+include:
+  - services/dcc-services/compose.yaml
+
+services:
+  payload:
+    build: 
+      context: ./services/payload
+      dockerfile: Dockerfile.local
+    container_name: "ad-payload"
+    depends_on: 
+      - coordinator
+      - redis
+    env_file:
+      - ./services/payload/.env
+    environment:
+      COORDINATOR_URL: ${COORDINATOR_URL:-http://coordinator:4005}
+      STATUS_URL: ${STATUS_URL:-http://status:4008}
+      REDIS_URL: ${REDIS_URL:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./services/payload/src:/home/node/app/src
+    networks: 
+      - dashboard
+
+  claim-page:
+    build: ./packages/claim-page
+    container_name: "ad-claim-page"
+    depends_on: 
+      - payload
+    env_file:
+      - ./packages/claim-page/.env
+    ports:
+      - "8080:8080"
+    networks: 
+      - dashboard
+  redis:
+    image: redis:alpine
+    container_name: ad-redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=${ALLOW_EMPTY_PASSWORD:-yes}
+    ports:
+      - "6379:${REDIS_PORT:-6379}"
+    networks:
+      - dashboard
+
+networks:
+  dashboard:
+    driver: bridge

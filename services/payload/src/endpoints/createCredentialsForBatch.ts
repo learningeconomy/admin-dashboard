@@ -2,6 +2,7 @@ import { PayloadHandler } from 'payload/config';
 import { Forbidden } from 'payload/errors';
 import payload from "payload";
 
+
 export const createBatchCredentials: PayloadHandler = async(req, res, next) => {
   if (!req.user) throw new Forbidden
 
@@ -27,13 +28,13 @@ export const createBatchCredentials: PayloadHandler = async(req, res, next) => {
    );
 
     console.log('///CREATE CRED BATCH ENDPOINT', created);
-    
+
+    // Queue up email jobs for the batch
+
 
     res.status(200).json({data: created});
   } catch (err) {
     console.error(err)
-    res.status(500).json({ version: undefined })
+    res.status(500).json({ error: err})
   }
 }
-
-

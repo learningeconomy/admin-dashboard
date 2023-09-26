@@ -9,14 +9,16 @@ const BatchPageDescription: React.FC = () => {
 
   return (
     <div>
-      <p>25 Issued Batches</p>
-      <Link
-        className="header_button"
-        activeClassName="active"
-        to={`${adminRoute}/collections/credential-batch/create`}
-      >
-        Create New Batch
-      </Link>
+      <div className="header_wrapper">
+        <p className="header_paragraph"><span className="header_number">25</span> Issued Batches</p>
+        <Link
+          className="header_button"
+          activeClassName="active"
+          to={`${adminRoute}/collections/credential-batch/create`}
+        >
+          <img className="header_plus_icon" src="/assets/plus-icon.svg" alt="plus icon"/>Upload and Prepare Batch
+        </Link>
+      </div>
     </div>
   );
 };

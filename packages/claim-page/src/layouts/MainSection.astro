@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+
+import Button from '../components/Button.astro';
+
+import Placeholder from '../assets/images/placeholder.png';
+import Download from '../assets/images/download.svg';
+import QR from '../assets/images/qr.svg';
+---
+
+<section
+    class="flex items-center xl:justify-between gap-14 flex-col xl:flex-row"
+    transition:persist
+>
+    <article class="flex flex-col gap-16">
+        <output>
+            <h2
+                id="title"
+                class="text-xl xl:font-extrabold tracking-tight leading-10 xl:text-5xl text-slate-900 mb-10"
+            >
+            </h2>
+
+            <p id="info-1" class="mb-5 text-sm xl:text-xl font-semibold text-slate-900"></p>
+
+            <p id="info-2" class="text-sm xl:text-xl font-semibold text-slate-900"></p>
+        </output>
+
+        <footer class="flex gap-5">
+            <Button id="download">
+                <Image class="h-4 w-4 xl:h-auto xl:w-auto" src={Download} alt="download-icon" />
+                <span class="text-sm font-medium xl:text-lg">Download to Wallet</span>
+            </Button>
+
+            <Button id="scan-qr-code" style="secondary">
+                <Image class="h-4 w-4 xl:h-auto xl:w-auto" src={QR} alt="download-icon" />
+                <span class="text-sm font-medium xl:text-lg">Scan QR Code</span>
+            </Button>
+        </footer>
+    </article>
+
+    <figure class="bg-white rounded-3xl p-5">
+        <Image
+            src={Placeholder}
+            class="max-h-96 max-w-96 h-auto w-auto"
+            id="qr-code"
+            alt="qr-code"
+        />
+    </figure>
+</section>

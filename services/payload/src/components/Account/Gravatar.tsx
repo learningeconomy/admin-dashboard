@@ -1,12 +1,12 @@
 import React from 'react';
-import md5 from 'md5';
+// import md5 from 'md5';
 import qs from 'qs';
 import { useAuth } from 'payload/dist/admin/components/utilities/Auth';
 
 const Gravatar: React.FC = () => {
   const { user } = useAuth();
 
-  const hash = md5(user.email.trim().toLowerCase());
+  // const hash = md5(user.email.trim().toLowerCase());
 
   const query = qs.stringify({
     s: 50,
@@ -18,7 +18,7 @@ const Gravatar: React.FC = () => {
     <img
       className="gravatar-account"
       style={{ borderRadius: '50%' }}
-      src={`https://www.gravatar.com/avatar/${hash}?${query}`}
+      src={`https://www.gravatar.com/avatar/${query}`}
       alt="yas"
       width={25}
       height={25}
