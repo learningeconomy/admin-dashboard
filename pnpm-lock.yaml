@@ -123,15 +123,12 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
-<<<<<<< HEAD
-      md5:
-        specifier: ^2.3.0
-        version: 2.3.0
-=======
       lucide-react:
         specifier: ^0.279.0
         version: 0.279.0(react@18.2.0)
->>>>>>> main
+      md5:
+        specifier: ^2.3.0
+        version: 2.3.0
       object-to-formdata:
         specifier: ^4.5.1
         version: 4.5.1
