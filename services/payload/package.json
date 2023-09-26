@@ -26,6 +26,7 @@
     "express": "^4.17.1",
     "handlebars": "^4.7.8",
     "jsonwebtoken": "^9.0.2",
+    "md5": "^2.3.0",
     "object-to-formdata": "^4.5.1",
     "papaparse": "^5.4.1",
     "payload": "1.13.4",
