@@ -14,12 +14,8 @@ import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
 import { sendEmail } from './endpoints/sendEmail';
-import { getCredential, getCredentialJwt } from './endpoints/getCredential';
+import { getCredential } from './endpoints/getCredential';
 import { sendBatchEmail } from './endpoints/sendBatchEmail';
-//paths
-const jwtHelperPath = path.resolve(__dirname, 'helpers/jwtHelpers.ts');
-const queuePath = path.resolve(__dirname, 'jobs/queue.server.ts');
-const getCredentialPath = path.resolve(__dirname, 'endpoints/getCredential.ts');
 
 import { getCredentialLinks } from './endpoints/getCredentialLinks';
 import { forwardExchangeRequest } from './endpoints/exchange';
@@ -48,6 +44,7 @@ export default buildConfig({
     serverURL: 'http://localhost:3000',
     cors: '*',
     admin: {
+        css: require.resolve('./components/global.scss'),
         user: Users.slug,
         meta: {
             titleSuffix: '- Tecnológico de Monterrey',
