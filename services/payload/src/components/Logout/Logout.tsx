@@ -5,10 +5,7 @@ import LogOut from 'payload/dist/admin/components/icons/LogOut';
 
 const baseClass = 'nav';
 
-const Logout = (props) => {
-  const {
-      navbarOpen
-  } = props;  
+const Logout = () => {
   const config = useConfig();
   const {
     routes: { admin },
@@ -20,7 +17,7 @@ const Logout = (props) => {
   return (
     <Link to={`${admin}${logoutRoute}`} className={`${baseClass}__log-out`}>
       <LogOut />
-      {navbarOpen && <p>Logout</p>}
+      <p>Logout</p>
     </Link>
   );
 };

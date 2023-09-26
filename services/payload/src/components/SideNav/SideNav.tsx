@@ -11,7 +11,7 @@ import { Icon } from '../Icon';
 
 const SideNav: React.FC = () => {
     const [activeButton, setActiveButton] = useState('');
-    const [navbarOpen, setNavbarOpen] = useState(false);
+    // const [navbarOpen, setNavbarOpen] = useState(false);
     const history = useHistory();
     const baseClass = 'nav';
     const { user } = useAuth();
@@ -32,12 +32,12 @@ const SideNav: React.FC = () => {
     };
 
   return (
-    <div className={!navbarOpen ? "navbar-wrapper closed" : "navbar-wrapper open"}>
-        <button className="navbar-chevron-button" onClick={() => {setNavbarOpen(!navbarOpen)}}>
+    <div className="navbar-wrapper">
+        {/* <button className="navbar-chevron-button" onClick={() => {setNavbarOpen(!navbarOpen)}}>
             {!navbarOpen ? <><img src="/assets/chevron-left.svg" alt="chevron left"/><img className="chevron-right" src="/assets/chevron-left.svg" alt="chevron right"/></> :
             <><img className="chevron-right navbar-open-chevron" src="/assets/chevron-left.svg" alt="chevron right"/><img src="/assets/chevron-left.svg" alt="chevron left"/></> }
-        </button>
-        {!navbarOpen ?
+        </button> */}
+        {/* {!navbarOpen ?
         <> 
             <div className="navbar-icon-wrapper">
                 <Icon />
@@ -66,27 +66,30 @@ const SideNav: React.FC = () => {
                 </Link>
                 <Logout />
             </div> 
-        </> :
+        </> : */}
         <> 
             <div className="navbar-open-icon-wrapper">
                 <img src="/assets/tdm-alt-logo.png" alt="Tec de Monterray logo"/>
             </div>
             <div className="navbar-buttons-wrap">
-                <button className={activeButton === 'credential-batch' ? "navbar-open-buttons active" : "navbar-open-buttons"} onClick={handleClick}>
+                <button className={activeButton === "credential-batch" ? "navbar-open-buttons active" : "navbar-open-buttons"} onClick={handleClick}>
                     <img src="/assets/list-checks.svg" alt="credential-batch"/> Issuance Overview
                 </button>
-                <button className={activeButton === 'credential' ? "navbar-open-buttons active" : "navbar-open-buttons"} onClick={handleClick}>
+                <button className={activeButton === "credential" ? "navbar-open-buttons active" : "navbar-open-buttons"} onClick={handleClick}>
                     <img src="/assets/file-check.svg" alt="credential"/> Credentials
                 </button>
-                <button className={activeButton === 'credential-template' ? "navbar-open-buttons active" : "navbar-open-buttons"} onClick={handleClick}>
+                <button className={activeButton === "credential-template" ? "navbar-open-buttons active" : "navbar-open-buttons"} onClick={handleClick}>
                     <img src="/assets/file-edit.svg" alt="credential-template"/> Credential Templates
                 </button>
-                <button className={activeButton === 'email-template' ? "navbar-open-buttons active" : "navbar-open-buttons"} onClick={handleClick}>
+                <button className={activeButton === "email-template" ? "navbar-open-buttons active" : "navbar-open-buttons"} onClick={handleClick}>
                     <img src="/assets/mail-plus.svg" alt="email-template"/> Email Templates
                 </button>
+                <button className={activeButton === "users" ? "navbar-open-buttons active" : "navbar-open-buttons"} onClick={handleClick}>
+                    <img src="/assets/users.svg" alt="users"/> Users
+                </button>
             </div>
-            <div className='navbar-open-user-wrapper'>
-                <div className='navbar-open-user'>
+            <div className="navbar-open-user-wrapper">
+                <div className="navbar-open-user">
                     <Link
                     to={`${admin}/account`}
                     className={`${baseClass}__account`}
@@ -96,12 +99,12 @@ const SideNav: React.FC = () => {
                     <p>{user.email}</p>
                     </Link>
                 </div>
-                <div className='navbar-open-logout-wrapper'>
-                    <Logout navbarOpen={navbarOpen} /> 
+                <div className="navbar-open-logout-wrapper">
+                    <Logout /> 
                 </div>
             </div>   
         </>
-        }
+        {/* } */}
     </div>
   );
 };

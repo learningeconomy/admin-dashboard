@@ -32,6 +32,7 @@ button {
 .flow-container {
     padding: 40px;
     max-width: 750px;
+    margin-left: 50px;
 }
 
 .collection-edit__sidebar-wrap {
@@ -179,18 +180,27 @@ thead {
     }
 }
 
-.auth-fields .btn {
+.auth-fields {
+    padding: 0px;
+
+    & > .btn {
     width: 190px;
+    }
 }
 
 #field-email,
 #field-password,
 #field-title,
+#field-name,
 .textarea-outer,
 .rs__control.css-13cymwt-control,
 .react-select .rs__control:not(:disabled):focus-within,
 .rs__menu {
     border-radius: 16px !important;
+}
+
+.react-select {
+    border-top-right-radius: 0px !important;
 }
 
 .relationship-add-new__add-button.doc-drawer__toggler {
@@ -375,7 +385,7 @@ thead {
   }
   
   .template-default__wrap {
-    margin-left: 220px;
+    margin-left: 240px;
   }
   
   .nav__log-out {
