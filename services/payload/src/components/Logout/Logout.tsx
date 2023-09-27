@@ -6,20 +6,18 @@ import LogOut from 'payload/dist/admin/components/icons/LogOut';
 const baseClass = 'nav';
 
 const Logout = () => {
-  const config = useConfig();
-  const {
-    routes: { admin },
-    admin: {
-      logoutRoute,
-      components: { logout }
-    }
-  } = config;
-  return (
-    <Link to={`${admin}${logoutRoute}`} className={`${baseClass}__log-out`}>
-      <LogOut />
-      <p>Logout</p>
-    </Link>
-  );
+    const config = useConfig();
+    const {
+        routes: { admin },
+        admin: { logoutRoute },
+    } = config;
+
+    return (
+        <Link to={`${admin}${logoutRoute}`} className={`${baseClass}__log-out`}>
+            <LogOut />
+            <p>Logout</p>
+        </Link>
+    );
 };
 
 export default Logout;
