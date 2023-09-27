@@ -14,6 +14,11 @@
 .template-default {
     min-height: unset;
     height: 100%;
+
+    & > .template-default__wrap {
+        height: 100%;
+        overflow-y: auto;
+    }
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
