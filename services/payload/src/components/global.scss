@@ -29,6 +29,12 @@ button {
     }
 }
 
+.flow-container {
+    padding: 40px;
+    max-width: 750px;
+    margin-left: 50px;
+}
+
 .collection-edit__sidebar-wrap {
     background-color: white !important;
     position: static;
@@ -175,8 +181,12 @@ thead {
     }
 }
 
-.auth-fields .btn {
+.auth-fields {
+    padding: 0px;
+
+    & > .btn {
     width: 190px;
+    }
 }
 
 #field-email,
@@ -409,3 +419,22 @@ thead {
         backdrop-filter: blur(22.5px);
     }
 }
+
+.collection-edit__sidebar-wrap {
+    background-color: white !important;
+  }
+  
+  .template-default__wrap {
+    margin-left: 240px;
+  }
+  
+  .nav__log-out {
+    display: flex;
+    align-self: center;
+    text-decoration: none;
+  
+    & > p {
+        font-size: 18px;
+        margin-left: 3px;
+    }
+  }

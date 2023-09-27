@@ -8,6 +8,7 @@ import EmailTemplatesCollection from './collections/EmailTemplates';
 //components
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
+import SideNav from './components/SideNav/SideNav';
 
 //endpoints
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
@@ -52,6 +53,7 @@ export default buildConfig({
             ogImage: '/assets/tdm-og.png',
         },
         components: {
+            Nav: SideNav,
             graphics: {
                 Logo,
                 Icon,
