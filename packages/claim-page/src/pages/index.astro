@@ -93,7 +93,7 @@ import Button from '../components/Button.astro';
             info1.innerHTML = `Awarded to ${earnerName} on ${awardedDate}`;
             info2.innerHTML = `Issued on ${issuedDate}`;
 
-            const url = links.find(result => result.type === 'directDeepLink')?.url;
+            const url = links[0]?.directDeepLink;
 
             if (url) {
                 const dataUrl = await QRCode.toDataURL(url);

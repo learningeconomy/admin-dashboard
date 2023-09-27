@@ -59,20 +59,35 @@ export const getCredentialLinks: PayloadHandler = async (req, res) => {
         const fetchResponse = await fetch(`${coordinatorUrl}/exchange/setup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ vc: builtCredential, tenantName: 'test' }),
+            body: JSON.stringify({
+                data: [{ vc: builtCredential, retrievalId: id }],
+                tenantName: 'test',
+            }),
         });
 
-        const results = (await fetchResponse.json()) as { type: string; url: string }[];
+        const results = (await fetchResponse.json()) as {
+            retrievalId: string;
+            directDeepLink: string;
+            vprDeepLink: string;
+            chapiVPR: {
+                challenge: string;
+                domain: string;
+                interact: {
+                    service: [{ serviceEndpoint: string; type: string }, { type: string }];
+                };
+                query: { type: string };
+            };
+        }[];
 
         const updatedResults = results.map(result => {
-            const url = new URL(result.url);
+            const url = new URL(result.directDeepLink);
 
             const requestUrl = url.searchParams.get('vc_request_url');
 
             url.searchParams.set('vc_request_url', `${requestUrl}/${token}`);
             url.search = decodeURIComponent(url.search);
 
-            return { ...result, url: url.toString() };
+            return { ...result, directDeepLink: url.toString() };
         });
 
         res.status(200).json({
