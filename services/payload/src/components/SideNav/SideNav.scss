@@ -5,9 +5,8 @@
     flex-direction: column;
     height: 100%;
     align-items: center;
-    position: fixed;
     z-index: 100;
-    width: 240px;
+    flex-shrink: 0;
     gap: 90px;
     padding: 2.5rem 1.25rem;
 
@@ -49,7 +48,7 @@
     font-size: 16px;
     text-decoration: none;
 
-    .active {
+    &.active {
         background-color: var(--green-100, #dcfce7);
         border-radius: 100px;
     }
