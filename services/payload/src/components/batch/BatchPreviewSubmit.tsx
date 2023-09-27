@@ -19,7 +19,7 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
     }, [fields?.template?.value]);
 
     return (
-        <section className="w-full h-full flex-shrink-0 p-10" ref={ref}>
+        <section className="w-full h-full flex-shrink-0 p-10 overflow-y-auto" ref={ref}>
             <h2 className="mt-5 text-slate-900 text-3xl font-semibold mb-5 font-inter">
                 Confirmation
             </h2>

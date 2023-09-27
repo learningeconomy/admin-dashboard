@@ -11,6 +11,11 @@
     background-color: var(--slate-50, #f8fafc);
 }
 
+.template-default {
+    min-height: unset;
+    height: 100%;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 button {
@@ -185,7 +190,7 @@ thead {
     padding: 0px;
 
     & > .btn {
-    width: 190px;
+        width: 190px;
     }
 }
 
@@ -422,19 +427,19 @@ thead {
 
 .collection-edit__sidebar-wrap {
     background-color: white !important;
-  }
-  
-  .template-default__wrap {
+}
+
+.template-default__wrap {
     margin-left: 240px;
-  }
-  
-  .nav__log-out {
+}
+
+.nav__log-out {
     display: flex;
     align-self: center;
     text-decoration: none;
-  
+
     & > p {
         font-size: 18px;
         margin-left: 3px;
     }
-  }
+}

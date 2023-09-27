@@ -194,7 +194,7 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
     };
 
     return (
-        <section ref={ref} className="w-full h-full flex-shrink-0 p-10">
+        <section ref={ref} className="w-full h-full flex-shrink-0 p-10 overflow-y-auto">
             {getTitle()}
             {renderFields}
         </section>
@@ -232,7 +232,7 @@ const FormSteps = (props: Props) => {
 
     return (
         <>
-            <section className="h-full w-full overflow-x-hidden flex">
+            <section className="h-full w-full overflow-x-hidden flex-shrink flex">
                 <RenderSlide ref={refs[0]} formProps={props} step={1} />
                 <RenderSlide ref={refs[1]} formProps={props} step={2} />
                 <UploadCSV ref={refs[2]} />

@@ -75,7 +75,10 @@ const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) 
     console.log('///data from state', data);
 
     return (
-        <section ref={ref} className="w-full h-full flex-shrink-0 p-10 upload-csv-wrapper">
+        <section
+            ref={ref}
+            className="w-full h-full flex-shrink-0 p-10 overflow-y-auto upload-csv-wrapper"
+        >
             <h2 className="mt-5 text-slate-900 text-3xl font-semibold mb-5 font-inter">
                 Upload & Manage Earner Information
             </h2>

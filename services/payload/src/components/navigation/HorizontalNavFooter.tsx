@@ -60,7 +60,7 @@ const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
             {quit && (
                 <Flipped flipId="quit-button">
                     <button
-                        className="w-full bg-transparent font-inter text-xl outline-none"
+                        className="w-full bg-transparent font-inter text-xl font-semibold outline-none"
                         type="button"
                         onClick={quit}
                         disabled={!canDoMainAction}
