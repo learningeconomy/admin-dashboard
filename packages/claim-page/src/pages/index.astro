@@ -38,6 +38,9 @@ import Button from '../components/Button.astro';
 <script>
     import QRCode from 'qrcode';
     import { format } from 'date-fns';
+    import * as CredentialHandlerPolyfill from 'credential-handler-polyfill';
+
+    await CredentialHandlerPolyfill.loadOnce();
 
     const payloadUrl = import.meta.env.PUBLIC_PAYLOAD_URL;
 
@@ -54,6 +57,7 @@ import Button from '../components/Button.astro';
     const info2 = document.getElementById('info-2') as HTMLParagraphElement;
     const qrcode = document.getElementById('qr-code') as HTMLImageElement;
     const modalQrcode = document.getElementById('modal-qr-code') as HTMLImageElement;
+    const downloadButton = document.getElementById('download') as HTMLButtonElement;
     const qrcodeButton = document.getElementById('scan-qr-code') as HTMLButtonElement;
 
     qrcodeButton.addEventListener('click', () => modal.showModal());
@@ -76,7 +80,19 @@ import Button from '../components/Button.astro';
                     issuedDate: _issuedDate,
                 },
             } = (await res.json()) as {
-                links: { type: string; url: string }[];
+                links: {
+                    retrievalId: string;
+                    directDeepLink: string;
+                    vprDeepLink: string;
+                    chapiVPR: {
+                        challenge: string;
+                        domain: string;
+                        interact: {
+                            service: [{ serviceEndpoint: string; type: string }, { type: string }];
+                        };
+                        query: { type: string };
+                    };
+                }[];
                 metadata: {
                     credentialName: string;
                     earnerName: string;
@@ -100,6 +116,20 @@ import Button from '../components/Button.astro';
                 qrcode.src = dataUrl;
                 modalQrcode.src = dataUrl;
             } else window.location.href = '/error';
+
+            const chapiVpr = links[0]?.chapiVPR;
+
+            if (chapiVpr) {
+                downloadButton.addEventListener('click', async () => {
+                    const result = await navigator.credentials.store(
+                        new WebCredential('VerifiablePresentation', chapiVpr, {
+                            recommendedHandlerOrigins: ['https://learncard.app'],
+                        })
+                    );
+
+                    console.log({ result });
+                });
+            }
         }
     } catch (error) {
         console.error(error);
