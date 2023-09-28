@@ -168,12 +168,10 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
             return (
                 <>
                     <h2 className="mt-5 text-slate-900 text-3xl font-semibold mb-5 font-inter">
-                        Select Template
+                        Select Credential Template
                     </h2>
                     <p className="text-slate-900 text-xl font-medium font-inter mb-15">
-                        Select from the published templates in the list or create a new template. If
-                        you choose to create a new template for this batch, it will also be stored
-                        in the Templates section for easy retrieval and reuse.
+                        Select from the published templates in the list.
                     </p>
                 </>
             );
@@ -183,10 +181,10 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
             return (
                 <>
                     <h2 className="mt-5 text-slate-900 text-3xl font-semibold mb-5 font-inter">
-                        Customize Email
+                        Select Email Template
                     </h2>
                     <p className="text-slate-900 text-xl font-medium font-inter mb-15">
-                        Select an email template.
+                        Select an email template to be sent to the earners.
                     </p>
                 </>
             );
@@ -194,7 +192,10 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
     };
 
     return (
-        <section ref={ref} className="w-full h-full flex-shrink-0 p-10 overflow-y-auto">
+        <section
+            ref={ref}
+            className="batch-flow-slide w-full h-full flex-shrink-0 px-20 pb-10 pt-15 overflow-y-auto"
+        >
             {getTitle()}
             {renderFields}
         </section>

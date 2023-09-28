@@ -235,11 +235,48 @@ thead {
 }
 
 #field-email,
-#field-password,
-.rs__control.css-13cymwt-control,
-.react-select .rs__control:not(:disabled):focus-within,
-.rs__menu {
-    border-radius: 16px !important;
+#field-password {
+    border-radius: 16px;
+}
+
+.react-select {
+    .rs__control {
+        outline: none !important;
+        border: 1px solid var(--slate-200, #e2e8f0) !important;
+        box-shadow: none !important;
+        border-radius: 0.75rem;
+
+        color: var(--slate-900, #0f172a);
+        font-family: Inter;
+        font-size: 1.125rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.75rem; /* 155.556% */
+
+        &.rs__control--menu-is-open {
+            border-radius: 0.75rem 0.75rem 0 0;
+        }
+    }
+
+    .rs__menu {
+        margin-top: 0;
+        border-radius: 0rem 0rem 0.5rem 0.5rem;
+        border-right: 1px solid var(--slate-200, #e2e8f0);
+        border-bottom: 1px solid var(--slate-200, #e2e8f0);
+        border-left: 1px solid var(--slate-200, #e2e8f0);
+        box-shadow: none;
+
+        color: var(--slate-700, #334155);
+
+        .rs__option {
+            /* subtle */
+            font-family: Inter;
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1.25rem; /* 142.857% */
+        }
+    }
 }
 
 #field-title {

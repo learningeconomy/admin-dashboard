@@ -83,8 +83,7 @@ const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) 
                 Upload & Manage Earner Information
             </h2>
             <p className="text-slate-900 text-xl font-medium font-inter mb-15">
-                Upload CSV files to import credential and earner information. Once successfully
-                uploaded, add or remove earners individually or through CSV files.
+                Upload a CSV file to import credential and earner information.
             </p>
             <form>
                 <input

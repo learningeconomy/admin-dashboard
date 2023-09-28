@@ -91,9 +91,12 @@
     margin-right: 4px;
 }
 
-.batch-flow-step {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+.batch-flow-slide .relationship__wrap {
+    .relationship-add-new {
+        display: none;
+    }
+
+    .react-select .rs__menu .rs__group-heading {
+        display: none;
+    }
 }
