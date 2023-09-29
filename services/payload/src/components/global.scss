@@ -531,3 +531,7 @@ thead {
         margin-left: 3px;
     }
 }
+
+.radio-input__styled-radio::before {
+    box-sizing: content-box;
+}
