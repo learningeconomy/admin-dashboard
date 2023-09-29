@@ -30,7 +30,7 @@ const SideNav: React.FC = () => {
         <nav className={`navbar-wrapper relative ${isOpen ? 'open' : ''}`}>
             <header>
                 <button
-                    className="flex px-5 py-1 bg-slate-100 rounded-3xl shadow-[0_4px_4px_0_rgba(0,0,0,.25)] relative"
+                    className="flex px-5 py-1 bg-slate-100 rounded-3xl shadow-[0_4px_4px_0_rgba(0,0,0,.25)] relative dark:bg-slate-800"
                     onClick={() => setIsOpen(!isOpen)}
                     type="button"
                 >
