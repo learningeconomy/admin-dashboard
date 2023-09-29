@@ -22,6 +22,12 @@ module.exports = {
             fontFamily: {
                 inter: ['Inter'],
             },
+            fontSize: {
+                zero: '0',
+            },
+            boxShadow: {
+                fours: '0 4px 4px 0 rgba(0, 0, 0, 0.25)',
+            },
             colors: {
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',

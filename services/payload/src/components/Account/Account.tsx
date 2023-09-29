@@ -5,9 +5,9 @@ import Gravatar from './Gravatar';
 
 import './account.scss';
 
-const Default: React.FC = () => (
+const Default: React.FC<{ className?: string }> = ({ className = '' }) => (
     <svg
-        className="graphic-account"
+        className={`graphic-account ${className}`}
         width="25"
         height="25"
         xmlns="http://www.w3.org/2000/svg"
@@ -19,17 +19,21 @@ const Default: React.FC = () => (
     </svg>
 );
 
-const Account = () => {
+export type AccountProps = {
+    className?: string;
+};
+
+const Account: React.FC<{ className?: string }> = ({ className = '' }) => {
     const {
         admin: { avatar: Avatar },
     } = useConfig();
     const { user } = useAuth();
 
-    if (!user.email || Avatar === 'default') return <Default />;
-    if (Avatar === 'gravatar') return <Gravatar />;
-    if (Avatar) return <Avatar />;
+    if (!user.email || Avatar === 'default') return <Default className={className} />;
+    if (Avatar === 'gravatar') return <Gravatar className={className} />;
+    if (Avatar) return <Avatar className={className} />;
 
-    return <Default />;
+    return <Default className={className} />;
 };
 
 export default Account;

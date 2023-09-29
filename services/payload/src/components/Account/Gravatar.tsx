@@ -3,7 +3,7 @@ import md5 from 'md5';
 import qs from 'qs';
 import { useAuth } from 'payload/dist/admin/components/utilities/Auth';
 
-const Gravatar: React.FC = () => {
+const Gravatar: React.FC<{ className?: string }> = ({ className = '' }) => {
     const { user } = useAuth();
 
     const hash = md5(user.email.trim().toLowerCase());
@@ -12,7 +12,7 @@ const Gravatar: React.FC = () => {
 
     return (
         <img
-            className="gravatar-account rounded-full"
+            className={`gravatar-account rounded-full ${className}`}
             src={`https://www.gravatar.com/avatar/${hash}?${query}`}
             alt="yas"
             width={25}

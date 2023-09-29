@@ -11,7 +11,12 @@
     padding: 2.5rem 1.25rem;
 
     & > header {
-        padding: 2.5rem 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+        padding-bottom: 2.5rem;
     }
 
     & > section {
@@ -25,13 +30,26 @@
         text-align: center;
         width: 100%;
         padding-top: 2.5rem;
+    }
 
-        & > section {
-            display: flex;
-            justify-content: center;
+    @media (max-width: 1024px) {
+        width: 0;
+        transition:
+            transform 200ms ease,
+            width 200ms ease;
+        transform: translateX(-400px);
 
-            & > p {
-                font-size: 16px;
+        & > header > button {
+            transition: position 200ms ease;
+            right: calc(-386px);
+        }
+
+        &.open {
+            width: 100%;
+            transform: translateX(0);
+
+            & > header > button {
+                right: unset;
             }
         }
     }
@@ -44,9 +62,12 @@
     margin-bottom: 10px;
     padding: 10px;
     display: flex;
+    gap: 0px;
     align-items: center;
     font-size: 16px;
     text-decoration: none;
+
+    transition: gap;
 
     &.active {
         background-color: var(--green-100, #dcfce7);
@@ -56,17 +77,9 @@
     & > img {
         width: 22px;
         height: 22px;
-        margin-right: 10px;
     }
-}
 
-.nav__account {
-    display: flex;
-    align-self: center;
-    text-decoration: none;
-
-    & > p {
-        font-size: 16px;
-        margin-left: 10px;
+    &.open {
+        gap: 10px;
     }
 }

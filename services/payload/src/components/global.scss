@@ -75,21 +75,6 @@ button {
     opacity: 0;
 }
 
-.field-type.radio-group.radio-group--layout-horizontal {
-    // display: none;
-}
-
-.nav__log-out {
-    display: flex;
-    align-self: center;
-    text-decoration: none;
-
-    & > p {
-        font-size: 18px;
-        margin-left: 3px;
-    }
-}
-
 .list-controls__wrap,
 .search-filter__input {
     background-color: #ffffff;
@@ -521,17 +506,16 @@ thead {
     background-color: white !important;
 }
 
-.nav__log-out {
-    display: flex;
-    align-self: center;
-    text-decoration: none;
-
-    & > p {
-        font-size: 18px;
-        margin-left: 3px;
-    }
-}
-
 .radio-input__styled-radio::before {
     box-sizing: content-box;
+}
+
+#app > .template-default {
+    display: flex;
+    width: auto;
+    padding: 0;
+
+    .account__edit {
+        padding: 1.9230769231rem 0 3.8461538462rem;
+    }
 }
