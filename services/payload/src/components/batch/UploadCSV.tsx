@@ -79,10 +79,10 @@ const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) 
             ref={ref}
             className="w-full h-full flex-shrink-0 p-10 overflow-y-auto upload-csv-wrapper"
         >
-            <h2 className="mt-5 text-slate-900 text-3xl font-semibold mb-5 font-inter">
+            <h2 className="mt-5 text-[--theme-text] text-3xl font-semibold mb-5 font-inter">
                 Upload & Manage Earner Information
             </h2>
-            <p className="text-slate-900 text-xl font-medium font-inter mb-15">
+            <p className="text-[--theme-text] text-xl font-medium font-inter mb-15">
                 Upload a CSV file to import credential and earner information.
             </p>
             <form>

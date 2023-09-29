@@ -20,10 +20,10 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
 
     return (
         <section className="w-full h-full flex-shrink-0 p-10 overflow-y-auto" ref={ref}>
-            <h2 className="mt-5 text-slate-900 text-3xl font-semibold mb-5 font-inter">
+            <h2 className="mt-5 text-[--theme-text] text-3xl font-semibold mb-5 font-inter">
                 Confirmation
             </h2>
-            <p className="text-slate-900 text-xl font-medium font-inter mb-15">
+            <p className="text-[--theme-text] text-xl font-medium font-inter mb-15">
                 Review and confirm the batch details before sending credentials to earners.
             </p>
 
@@ -31,16 +31,20 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
                 <AccordionItem value="batch">
                     <AccordionTrigger>Batch: {fields.title.value}</AccordionTrigger>
                     <AccordionContent>
-                        <section className="p-5 rounded-lg bg-white flex flex-col items-start gap-2 mb-5">
-                            <h5 className="text-slate-600 font-inter text-lg">Description</h5>
-                            <p className="m-0 text-slate-900 font-inter font-normal text-base">
+                        <section className="p-5 rounded-lg bg-white flex flex-col items-start gap-2 mb-5 dark:bg-slate-900">
+                            <h5 className="text-slate-600 font-inter text-lg dark:text-slate-400">
+                                Description
+                            </h5>
+                            <p className="m-0 text-slate-900 font-inter font-normal text-base dark:text-slate-100">
                                 {fields.description.value}
                             </p>
                         </section>
 
-                        <section className="p-5 rounded-lg bg-white flex flex-col items-start gap-2">
-                            <h5 className="text-slate-600 font-inter text-lg">Internal Notes</h5>
-                            <p className="m-0 text-slate-900 font-inter font-normal text-base">
+                        <section className="p-5 rounded-lg bg-white flex flex-col items-start gap-2 dark:bg-slate-900">
+                            <h5 className="text-slate-600 font-inter text-lg dark:text-slate-400">
+                                Internal Notes
+                            </h5>
+                            <p className="m-0 text-slate-900 font-inter font-normal text-base dark:text-slate-100">
                                 {fields.internalNotes.value}
                             </p>
                         </section>
@@ -52,16 +56,20 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
                 <AccordionItem value="template">
                     <AccordionTrigger>Template: {template?.title}</AccordionTrigger>
                     <AccordionContent>
-                        <section className="p-5 rounded-lg bg-white flex flex-col items-start gap-2 mb-5">
-                            <h5 className="text-slate-600 font-inter text-lg">Details</h5>
-                            <p className="m-0 text-slate-900 font-inter font-normal text-base">
+                        <section className="p-5 rounded-lg bg-white flex flex-col items-start gap-2 dark:bg-slate-900">
+                            <h5 className="text-slate-600 font-inter text-lg dark:text-slate-400">
+                                Details
+                            </h5>
+                            <p className="m-0 text-slate-900 font-inter font-normal text-base dark:text-slate-100">
                                 {template?.description}
                             </p>
                         </section>
 
-                        <section className="p-5 rounded-lg bg-white flex flex-col items-start gap-2">
-                            <h5 className="text-slate-600 font-inter text-lg">Internal Notes</h5>
-                            <p className="m-0 text-slate-900 font-inter font-normal text-base">
+                        <section className="p-5 rounded-lg bg-white flex flex-col items-start gap-2 dark:bg-slate-900">
+                            <h5 className="text-slate-600 font-inter text-lg dark:text-slate-400">
+                                Internal Notes
+                            </h5>
+                            <p className="m-0 text-slate-900 font-inter font-normal text-base dark:text-slate-100">
                                 {template?.internalNotes}
                             </p>
                         </section>

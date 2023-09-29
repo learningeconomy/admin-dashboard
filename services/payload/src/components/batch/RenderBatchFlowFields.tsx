@@ -153,10 +153,10 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
         if (step === 1) {
             return (
                 <>
-                    <h2 className="mt-5 text-slate-900 text-3xl font-semibold mb-5 font-inter">
+                    <h2 className="mt-5 text-[--theme-text] text-3xl font-semibold mb-5 font-inter">
                         Add Batch Details
                     </h2>
-                    <p className="text-slate-900 text-xl font-medium font-inter mb-15">
+                    <p className="text-[--theme-text] text-xl font-medium font-inter mb-15">
                         Provide information about the credentials you’re uploading to this batch to
                         streamline the issuance process.
                     </p>
@@ -167,10 +167,10 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
         if (step === 2) {
             return (
                 <>
-                    <h2 className="mt-5 text-slate-900 text-3xl font-semibold mb-5 font-inter">
+                    <h2 className="mt-5 text-[--theme-text] text-3xl font-semibold mb-5 font-inter">
                         Select Credential Template
                     </h2>
-                    <p className="text-slate-900 text-xl font-medium font-inter mb-15">
+                    <p className="text-[--theme-text] text-xl font-medium font-inter mb-15">
                         Select from the published templates in the list.
                     </p>
                 </>
@@ -180,10 +180,10 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
         if (step === 4) {
             return (
                 <>
-                    <h2 className="mt-5 text-slate-900 text-3xl font-semibold mb-5 font-inter">
+                    <h2 className="mt-5 text-[--theme-text] text-3xl font-semibold mb-5 font-inter">
                         Select Email Template
                     </h2>
-                    <p className="text-slate-900 text-xl font-medium font-inter mb-15">
+                    <p className="text-[--theme-text] text-xl font-medium font-inter mb-15">
                         Select an email template to be sent to the earners.
                     </p>
                 </>

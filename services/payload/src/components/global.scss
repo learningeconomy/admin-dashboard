@@ -150,7 +150,7 @@ thead {
     background-color: #ffffff;
 }
 
-html[data-theme='dark'] {
+[data-theme='dark'] {
     #app,
     .template-default,
     .account__document-actions::after,
@@ -162,6 +162,11 @@ html[data-theme='dark'] {
     .search-filter__input,
     .list-controls__buttons-wrap .btn,
     .list-controls__buttons-wrap .pill,
+    .navbar-wrapper,
+    .navbar-buttons,
+    .edit-many__toggle,
+    #field-title,
+    .field-type.textarea > .textarea-outer,
     .actions {
         background-color: var(--theme-bg, rgb(20, 20, 20));
         color: var(--theme-text, #fff);
@@ -173,6 +178,14 @@ html[data-theme='dark'] {
         &.action-button:hover {
             background-color: var(--slate-500, #64748b);
         }
+    }
+
+    .navbar-buttons img {
+        filter: invert(1);
+    }
+
+    .react-select .rs__control {
+        color: var(--theme-text, #fff);
     }
 }
 
@@ -303,6 +316,8 @@ thead {
 
 .field-type.textarea > .textarea-outer {
     box-shadow: none;
+
+    cursor: text;
 
     display: flex;
     height: 9.375rem;

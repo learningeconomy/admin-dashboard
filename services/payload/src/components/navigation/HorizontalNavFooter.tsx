@@ -30,14 +30,14 @@ const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
         <Flipper
             element={tag}
             flipKey={`${Boolean(goBack)}-${canDoMainAction}`}
-            className={`horizontal-nav-footer w-full flex flex-col items-center p-5 bg-white border-t gap-5 ${className}`}
+            className={`horizontal-nav-footer w-full flex flex-col items-center p-5 bg-[--theme-bg] border-t gap-5 ${className}`}
         >
             <section className="w-full flex gap-5">
                 {goBack && (
                     <Flipped flipId="back-button">
                         <button
                             type="button"
-                            className="w-11 h-11 shadow rounded-full bg-white flex items-center justify-center outline-none"
+                            className="w-11 h-11 shadow rounded-full bg-[--theme-bg] flex items-center justify-center outline-none"
                             onClick={goBack}
                         >
                             <Arrow className="text-green-500 w-6 h-6" />
