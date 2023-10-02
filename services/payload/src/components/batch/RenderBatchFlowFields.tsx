@@ -205,7 +205,7 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
 const FormSteps = (props: Props) => {
     const history = useHistory();
 
-    const { submit, setSubmit } = useForm();
+    const { submit } = useForm();
 
     const refs = getUnnamedRefsFromArray([1, 2, 3, 4, 5]);
     const { on, scrollTo } = useHorizontalPages({ refs });
@@ -226,7 +226,6 @@ const FormSteps = (props: Props) => {
 
         if (formStepValid) {
             // await saveDraft();
-            setSubmit(false);
             goForward(false);
         }
     };

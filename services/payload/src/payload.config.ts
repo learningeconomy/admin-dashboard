@@ -21,6 +21,8 @@ import { sendBatchEmail } from './endpoints/sendBatchEmail';
 import { getCredentialLinks } from './endpoints/getCredentialLinks';
 import { forwardExchangeRequest } from './endpoints/exchange';
 import { revokeCredential } from './endpoints/revokeCredential';
+import DashboardRedirect from './components/DashboardRedirect';
+import AccountSettings from './components/AccountSettings';
 
 export default buildConfig({
     email: {
@@ -57,6 +59,10 @@ export default buildConfig({
             graphics: {
                 Logo,
                 Icon,
+            },
+            views: {
+                Dashboard: DashboardRedirect,
+                Account: AccountSettings,
             },
         },
         webpack: config => ({
