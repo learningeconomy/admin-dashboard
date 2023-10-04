@@ -56,7 +56,7 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
                 <AccordionItem value="template">
                     <AccordionTrigger>Template: {template?.title}</AccordionTrigger>
                     <AccordionContent>
-                        <section className="p-5 rounded-lg bg-white flex flex-col items-start gap-2 dark:bg-slate-900">
+                        <section className="p-5 rounded-lg bg-white flex flex-col items-start gap-2 mb-5 dark:bg-slate-900">
                             <h5 className="text-slate-600 font-inter text-lg dark:text-slate-400">
                                 Details
                             </h5>

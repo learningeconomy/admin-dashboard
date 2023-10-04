@@ -1,4 +1,5 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useModal } from '@faceless-ui/modal';
 import { Props } from 'payload/components/views/Edit';
 import { useAuth } from 'payload/components/utilities';
 import { OperationContext } from 'payload/dist/admin/components/utilities/OperationProvider';
@@ -7,14 +8,17 @@ import fieldTypes from 'payload/dist/admin/components/forms/field-types';
 import Form from '../Form/Form';
 import './batch.scss';
 import '../../global.scss';
-const baseClass = 'collection-edit';
-import SidebarMenu from '../Form/SidebarMenu';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../../helpers/handlebarhelpers';
+import BatchSent from './BatchSent';
+
+const baseClass = 'collection-edit';
 
 const CreateBatch: React.FC<Props> = props => {
     const { user, refreshCookieAsync } = useAuth();
+    const { openModal } = useModal();
 
     const {
+        data,
         collection,
         isEditing,
         onSave: onSaveFromProps,
@@ -25,6 +29,8 @@ const CreateBatch: React.FC<Props> = props => {
         hasSavePermission,
         id,
     } = props;
+
+    const batchSlug = 'batch-sent';
 
     const { fields, auth } = collection;
 
@@ -59,6 +65,8 @@ const CreateBatch: React.FC<Props> = props => {
         console.log('///handleonSave', 'fields', fields, 'formData', formData);
         // trigger send email
         const data = await sendOutBatchEmails(formData);
+
+        openModal(batchSlug);
         // if success show success modal....
     };
 
@@ -91,6 +99,7 @@ const CreateBatch: React.FC<Props> = props => {
                                 fieldSchema={fields}
                                 className="h-full w-full flex flex-col relative"
                             />
+                            <BatchSent slug={batchSlug} />
                         </>
                     )}
                 </section>

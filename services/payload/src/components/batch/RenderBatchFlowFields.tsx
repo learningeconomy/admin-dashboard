@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import RenderCustomComponent from 'payload/dist/admin/components/utilities/RenderCustomComponent';
@@ -32,23 +32,21 @@ const MAP_FIELDS_TO_STEPS = {
     2: ['template'],
     3: [],
     4: ['emailTemplate'],
+    5: [],
 };
 
 const getFieldsForStep = (step = 1, fieldSchema = []) => {
     const fieldsForStep = MAP_FIELDS_TO_STEPS[step] ?? [];
-    const stepFields = fieldSchema.filter(field => fieldsForStep.includes(field.name));
+    const stepFields = fieldSchema.filter(field => fieldsForStep.includes(field.name)) ?? [];
 
     return stepFields;
 };
 
 const getInvalidFormFieldsForStep = (step: number, formFields: Fields) => {
     const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
-    const failedValidationFields = fieldsForStep.filter(field => {
-        return !formFields[field].valid;
-    });
+    const failedValidationFields = fieldsForStep?.filter(field => !formFields[field].valid) ?? [];
 
-    if (failedValidationFields?.length > 0) return false;
-    return true;
+    return failedValidationFields.length === 0;
 };
 
 type RenderSlideProps = {
@@ -205,7 +203,7 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
 const FormSteps = (props: Props) => {
     const history = useHistory();
 
-    const { submit } = useForm();
+    const { submit, validateForm } = useForm();
 
     const refs = getUnnamedRefsFromArray([1, 2, 3, 4, 5]);
     const { on, scrollTo } = useHorizontalPages({ refs });
@@ -220,14 +218,13 @@ const FormSteps = (props: Props) => {
     const [fields, _dispatchFields] = useAllFormFields();
 
     const handleNextStep = async () => {
+        if (currentPage === 4) return submit();
+
         const formStepValid = getInvalidFormFieldsForStep(currentPage + 1, fields);
 
-        if (!formStepValid) await submit();
+        if (!formStepValid) return submit();
 
-        if (formStepValid) {
-            // await saveDraft();
-            goForward(false);
-        }
+        goForward(false);
     };
 
     return (

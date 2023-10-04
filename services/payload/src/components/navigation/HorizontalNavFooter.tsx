@@ -1,9 +1,12 @@
 import React from 'react';
 import { Flipper, Flipped } from 'react-flip-toolkit';
+import { useDocumentInfo } from 'payload/components/utilities';
+import { useField } from 'payload/components/forms';
 
 import Arrow from '../svgs/Arrow';
 
 import './navigation.scss';
+import Autosave from 'payload/dist/admin/components/elements/Autosave';
 
 type HorizontalNavFooterProps = {
     mainAction?: () => void;
@@ -14,6 +17,7 @@ type HorizontalNavFooterProps = {
     quitText?: string;
     className?: string;
     tag?: keyof JSX.IntrinsicElements;
+    showAutosave?: boolean;
 };
 
 const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
@@ -25,42 +29,45 @@ const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
     quitText = 'Quit',
     className = '',
     tag = 'footer',
+    showAutosave = true,
 }) => {
+    const { publishedDoc, collection, id } = useDocumentInfo();
+    const { value: createdAt } = useField<string>({ path: 'createdAt' });
+
     return (
         <Flipper
             element={tag}
             flipKey={`${Boolean(goBack)}-${canDoMainAction}`}
-            className={`horizontal-nav-footer w-full flex flex-col items-center p-5 bg-[--theme-bg] border-t gap-5 ${className}`}
+            className={`horizontal-nav-footer w-full flex flex-col md:flex-row items-center p-5 bg-[--theme-bg] border-t gap-5 ${className}`}
         >
-            <section className="w-full flex gap-5">
-                {goBack && (
-                    <Flipped flipId="back-button">
-                        <button
-                            type="button"
-                            className="w-11 h-11 shadow rounded-full bg-[--theme-bg] flex items-center justify-center outline-none"
-                            onClick={goBack}
-                        >
-                            <Arrow className="text-green-500 w-6 h-6" />
-                        </button>
-                    </Flipped>
-                )}
-
-                <Flipped flipId="main-action-button">
+            {goBack && (
+                <Flipped flipId="back-button">
                     <button
-                        className="w-full bg-green-500 rounded-xl px-4 py-2 text-white font-inter text-xl font-semibold outline-none"
                         type="button"
-                        onClick={mainAction}
-                        disabled={!canDoMainAction}
+                        className="w-11 h-11 shadow rounded-full bg-[--theme-bg] flex items-center justify-center outline-none"
+                        onClick={goBack}
                     >
-                        {mainText}
+                        <Arrow className="text-green-500 w-6 h-6" />
                     </button>
                 </Flipped>
-            </section>
+            )}
+
+            {showAutosave && (
+                <Flipped flipId="autosave">
+                    <span className="flex flex-grow font-inter text-slate-700 text-base dark:text-slate-300">
+                        <Autosave
+                            publishedDocUpdatedAt={publishedDoc?.updatedAt || createdAt}
+                            collection={collection}
+                            id={id}
+                        />
+                    </span>
+                </Flipped>
+            )}
 
             {quit && (
                 <Flipped flipId="quit-button">
                     <button
-                        className="w-full bg-transparent font-inter text-xl font-semibold outline-none"
+                        className="flex-grow max-w-xs bg-transparent rounded-xl px-4 py-2 border-2 border-slate-500 text-slate-500 font-inter text-xl font-semibold outline-none justify-self-end"
                         type="button"
                         onClick={quit}
                         disabled={!canDoMainAction}
@@ -69,6 +76,17 @@ const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
                     </button>
                 </Flipped>
             )}
+
+            <Flipped flipId="main-action-button">
+                <button
+                    className="flex-grow max-w-xs bg-green-500 rounded-xl px-4 py-2 text-white font-inter text-xl font-semibold outline-none justify-self-end"
+                    type="button"
+                    onClick={mainAction}
+                    disabled={!canDoMainAction}
+                >
+                    {mainText}
+                </button>
+            </Flipped>
         </Flipper>
     );
 };
