@@ -61,5 +61,11 @@ These are called sandboxed processors."
 export const emailQueue = registerQueue('email', async (job: any) => {
     console.log('///emailQueue job', job);
     const { to, subject, text, html } = job.data;
-    await payload.sendEmail({ to, subject, text, html });
+    await payload.sendEmail({
+        to,
+        subject,
+        text,
+        html,
+        from: process.env.EMAIL_FROM || 'Learning Economy <beestontaylor@learningeconomy.io>',
+    });
 });
