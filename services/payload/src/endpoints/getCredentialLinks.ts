@@ -8,6 +8,7 @@ const coordinatorUrl = process.env.COORDINATOR_URL ?? 'http://localhost:4005';
 const secret =
     process.env.PAYLOAD_SECRET ??
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa';
+const tenantName = process.env.TENANT_NAME ?? 'test';
 
 export const getCredentialLinks: PayloadHandler = async (req, res) => {
     let id: string;
@@ -61,7 +62,7 @@ export const getCredentialLinks: PayloadHandler = async (req, res) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 data: [{ vc: builtCredential, retrievalId: id }],
-                tenantName: 'test',
+                tenantName,
             }),
         });
 
