@@ -19,7 +19,7 @@ export const Table: React.FC<Props> = ({ data, columns: columnsFromProps }) => {
     }
 
     return (
-        <div className={`${baseClass} overflow-y-visible`}>
+        <div className={baseClass}>
             <table cellPadding="0" cellSpacing="0">
                 <thead>
                     <tr>

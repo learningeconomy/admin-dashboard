@@ -24,6 +24,7 @@ const ActionsButton: React.FC<Props & { simple?: boolean; onDelete?: () => Promi
     onDelete,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [position, setPosition] = useState<'absolute' | 'fixed'>('absolute');
     const container = useRef<HTMLElement>();
     const { openModal } = useModal();
 
@@ -42,6 +43,17 @@ const ActionsButton: React.FC<Props & { simple?: boolean; onDelete?: () => Promi
 
         return () => document.removeEventListener('mousedown', close);
     }, [isOpen]);
+
+    // Solving for a weird case here where we want it to break out of the scroll container if we can
+    useEffect(() => {
+        if (
+            isOpen &&
+            container.current?.parentElement?.parentElement?.parentElement?.parentElement
+                ?.parentElement?.scrollLeft === 0
+        ) {
+            setPosition('fixed');
+        } else setPosition('absolute');
+    }, [isOpen, container.current]);
 
     const items: ActionButton[] = simple
         ? [
@@ -128,7 +140,7 @@ const ActionsButton: React.FC<Props & { simple?: boolean; onDelete?: () => Promi
 
     return (
         <section ref={container} className="actions-container">
-            <section className={`actions ${isOpen ? 'open' : ''}`}>
+            <section className={`actions ${isOpen ? 'open' : ''} ${position}`}>
                 <button className="header-button" type="button" onClick={() => setIsOpen(!isOpen)}>
                     <span>Actions</span>
                     <Caret />

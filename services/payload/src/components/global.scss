@@ -359,7 +359,7 @@ thead {
 }
 
 .actions {
-    position: absolute;
+    // Position is handled by tailwind!
     margin-top: -15px;
     display: flex;
     flex-direction: column;
@@ -374,11 +374,6 @@ thead {
     background: var(--white, #fff);
 
     transition: all 200ms ease;
-
-    @media (min-width: 750px) {
-        position: fixed;
-        right: 1.25rem;
-    }
 
     &.open {
         margin-top: -35px;
