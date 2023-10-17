@@ -64,6 +64,11 @@ const CredentialsBatchesCollection: CollectionConfig = {
             relationTo: 'email-template',
             hasMany: false,
         },
+        {
+            name: 'csvFields',
+            type: 'json',
+            admin: { hidden: true },
+        },
     ],
 };
 

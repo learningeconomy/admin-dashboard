@@ -1,4 +1,7 @@
+import { AUTOMATIC_FIELDS } from './credential.helpers';
 import { createJsonHandlebars } from './handlebarsJson';
+
+export const HANDLEBAR_TAG_REGEX = /{{[{]?(.*?)[}]?}}/g;
 
 const placeHolderVcTemplate = `{
     "@context": [
@@ -23,7 +26,7 @@ const templateValuesDummy = {
     'credentialId': '234234234234',
 };
 
-const insertValuesIntoHandlebarsJsonTemplate = (template?: string, fieldValues?: any) => {
+export const insertValuesIntoHandlebarsJsonTemplate = (template?: string, fieldValues?: any) => {
     const handlebars = createJsonHandlebars();
     // compile the template
     const _template = template || placeHolderVcTemplate; //dummy template
@@ -36,4 +39,25 @@ const insertValuesIntoHandlebarsJsonTemplate = (template?: string, fieldValues?:
     return obj; // return template with inserted values
 };
 
-export { insertValuesIntoHandlebarsJsonTemplate };
+export const getFieldsFromHandlebarsJsonTemplate = (template?: string): string[] => {
+    return Array.from(template.matchAll(HANDLEBAR_TAG_REGEX)).map(match => match[1].trim());
+};
+
+export const getFieldsIntersectionFromHandlebarsJsonTemplate = (
+    csvFields: string[],
+    templateFields: string[]
+): {
+    missingInCSV: string[];
+    missingInTemplate: string[];
+} => {
+    return {
+        missingInCSV: templateFields.filter(field => !csvFields.includes(field)),
+        missingInTemplate: csvFields.filter(field => !templateFields.includes(field)),
+    };
+};
+
+export const validateBatchCSV = (batchFields: string[], template: string): boolean => {
+    const templateFields = [...getFieldsFromHandlebarsJsonTemplate(template), ...AUTOMATIC_FIELDS];
+
+    return templateFields.some(field => !batchFields.includes(field));
+};

@@ -55,6 +55,12 @@ const CredentialsTemplatesCollection: CollectionConfig = {
             name: 'credentialTemplateJson', // required
             type: 'json', // required
             //  defaultValue: JSON.stringify(placeHolderVc),
+            admin: {
+                description: `Please write a credential template using Handlebars syntax that will 
+be used to create credentials. The issuer.id field WILL be overwritten, as will the credential ID, 
+so please do not include them! Additionally, the fields credentialName, earnerName, emailAddress, 
+now, and issuanceDate are available in all credentials regardless of CSV contents.`,
+            },
             required: true,
         },
     ],

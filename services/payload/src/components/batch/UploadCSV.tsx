@@ -2,10 +2,28 @@ import React, { useEffect, useState } from 'react';
 import Papa from 'papaparse';
 import { useDocumentInfo } from 'payload/components/utilities';
 import BatchCredentialListPreview from '../List/BatchCredentialListPreview';
+import { useField } from 'payload/components/forms';
+import { CredentialTemplate } from 'payload/generated-types';
+import {
+    getFieldsFromHandlebarsJsonTemplate,
+    getFieldsIntersectionFromHandlebarsJsonTemplate,
+} from '../../helpers/handlebarhelpers';
+import { AUTOMATIC_FIELDS } from '../../helpers/credential.helpers';
 
 const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) {
     const { id } = useDocumentInfo();
+    const { value } = useField({ path: 'csvFields' });
+    const { value: templateId } = useField({ path: 'template' });
+
     const [data, setData] = useState();
+    const [fields, setFields] = useState<string[]>([...(value ?? []), ...AUTOMATIC_FIELDS]);
+    const [templateFields, setTemplateFields] = useState([]);
+    const [template, setTemplate] = useState<CredentialTemplate | undefined>();
+
+    const fieldsIntersection = getFieldsIntersectionFromHandlebarsJsonTemplate(
+        fields,
+        templateFields
+    );
 
     const fetchBatchCredentials = async () => {
         const res = await fetch('/api/get-batch-credentials', {
@@ -21,6 +39,23 @@ const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) 
             console.log('///get batch credentials', data);
         }
     };
+
+    useEffect(() => {
+        if (templateId) {
+            fetch(`/api/credential-template/${templateId}`)
+                .then(res => res.json())
+                .then(setTemplate);
+        }
+    }, [templateId]);
+
+    useEffect(() => {
+        if (template) {
+            setTemplateFields([
+                ...getFieldsFromHandlebarsJsonTemplate(JSON.stringify(template)),
+                ...AUTOMATIC_FIELDS,
+            ]);
+        }
+    }, [template]);
 
     // replace this with react-query package...todo
     useEffect(() => {
@@ -46,6 +81,7 @@ const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) 
                         body: JSON.stringify({
                             batchId: id,
                             credentialRecords: results?.data,
+                            fields: results?.meta?.fields ?? [],
                         }),
                         // Adding headers to the request
                         headers: {
@@ -55,7 +91,8 @@ const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) 
                     console.log('///res', res);
 
                     if (res.status === 200) {
-                        const { data } = await res.json();
+                        const { data, newBatch } = await res.json();
+                        setFields([...(newBatch?.csvFields ?? []), ...AUTOMATIC_FIELDS]);
                         await fetchBatchCredentials();
                         console.log('///create batch creds endpoint test', data);
                     }
@@ -84,6 +121,24 @@ const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) 
                     className="upload-csv-input"
                 />
             </form>
+
+            {fieldsIntersection.missingInCSV.length > 0 ? (
+                <output className="block rounded bg-red-500 text-white px-6 py-2 my-3">
+                    CSV is missing the following fields:{' '}
+                    {fieldsIntersection.missingInCSV.join(', ')}.
+                </output>
+            ) : (
+                <></>
+            )}
+
+            {fieldsIntersection.missingInTemplate.length > 0 ? (
+                <output className="block rounded bg-orange-500 text-white px-6 py-2 my-3">
+                    Template is missing the following fields that were in the CSV:{' '}
+                    {fieldsIntersection.missingInTemplate.join(', ')}.
+                </output>
+            ) : (
+                <></>
+            )}
 
             <section>
                 {id && data && (

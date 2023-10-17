@@ -1,7 +1,6 @@
-import { create as createDefaultHandlebars } from "handlebars"
+import { create as createDefaultHandlebars } from 'handlebars';
 
-
-import { safeJsonParse } from "better-error-message-for-json-parse"
+import { safeJsonParse } from 'better-error-message-for-json-parse';
 export interface ITemplateDelegate<T = any> {
     (context: T, options?: IRuntimeOptions): string;
 }
@@ -46,11 +45,11 @@ export interface ICompileOptions {
 export function escapeJson(str: any): string {
     str = str ? str.toString() : '';
     return str
-        .replace(/\\/g, "\\\\")
-        .replace(/\t/g, "\\t")
-        .replace(/\n/g, "\\n")
+        .replace(/\\/g, '\\\\')
+        .replace(/\t/g, '\\t')
+        .replace(/\n/g, '\\n')
         .replace(/"/g, '\\"')
-        .replace(/\r/g, "\\r");
+        .replace(/\r/g, '\\r');
 }
 
 export interface IOptions {
@@ -58,12 +57,12 @@ export interface IOptions {
 }
 
 export const defaultNumberOfDebugLines = Object.freeze({
-    numberOfDebugLinesInError: 3
-});;
+    numberOfDebugLinesInError: 3,
+});
 
 /**
  * Creates a JSON version of handlebars.
- * 
+ *
  * @export
  * @param {IOptions} [options=defaultNumberOfDebugLines] Option to inflence errors.
  * @returns {IHandlebars} The Handlebars object.
@@ -76,29 +75,29 @@ export function createJsonHandlebars(options: IOptions = defaultNumberOfDebugLin
     (<any>instance).compile = (input: any, options?: ICompileOptions) => {
         const compiled = (<any>instance).__def__compile(input, options);
         return (context: any, options: any): any => {
-
             let result = compiled(context, options);
             result = reformatJsonString(result);
 
             try {
                 return safeJsonParse(result);
-            }
-            catch (ex) {
+            } catch (ex) {
                 ex = changeError(ex, result, options);
                 throw ex;
             }
         };
-    }
+    };
     return instance;
 }
 
 function reformatJsonString(str) {
-
     // replace enters
     str = str.replace(/\r/g, '');
 
     // skip empty line
-    str = str.split('\n').filter(l => !/^\s*$/.test(l)).join('\n');
+    str = str
+        .split('\n')
+        .filter(l => !/^\s*$/.test(l))
+        .join('\n');
 
     // replace lines that only have a comma - they are hard to debug
     str = str.replace(/\n\s*,\s*\n/g, ',\n');
@@ -107,8 +106,11 @@ function reformatJsonString(str) {
 }
 
 function changeError(ex: Error, json: string, options: IOptions) {
-
-    const DIFF = options ? options.numberOfDebugLinesInError ? options.numberOfDebugLinesInError : 3 : 3;
+    const DIFF = options
+        ? options.numberOfDebugLinesInError
+            ? options.numberOfDebugLinesInError
+            : 3
+        : 3;
 
     let jsons = json.split('\n');
     let messages = ex.message.split('\n');

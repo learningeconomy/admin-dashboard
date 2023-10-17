@@ -56,6 +56,15 @@ export interface CredentialBatch {
   status: string;
   template: string | CredentialTemplate;
   emailTemplate: string | EmailTemplate;
+  csvFields?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: 'draft' | 'published';

@@ -871,6 +871,7 @@ type CredentialBatch {
   status: String
   template: CredentialTemplate
   emailTemplate: EmailTemplate
+  csvFields: JSON
   updatedAt: DateTime
   createdAt: DateTime
   _status: CredentialBatch__status
@@ -918,6 +919,7 @@ input CredentialBatch_where {
   status: CredentialBatch_status_operator
   template: CredentialBatch_template_operator
   emailTemplate: CredentialBatch_emailTemplate_operator
+  csvFields: CredentialBatch_csvFields_operator
   updatedAt: CredentialBatch_updatedAt_operator
   createdAt: CredentialBatch_createdAt_operator
   _status: CredentialBatch__status_operator
@@ -978,6 +980,14 @@ input CredentialBatch_emailTemplate_operator {
   all: [String]
 }
 
+input CredentialBatch_csvFields_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  exists: Boolean
+}
+
 input CredentialBatch_updatedAt_operator {
   equals: DateTime
   not_equals: DateTime
@@ -1032,6 +1042,7 @@ input CredentialBatch_where_or {
   status: CredentialBatch_status_operator
   template: CredentialBatch_template_operator
   emailTemplate: CredentialBatch_emailTemplate_operator
+  csvFields: CredentialBatch_csvFields_operator
   updatedAt: CredentialBatch_updatedAt_operator
   createdAt: CredentialBatch_createdAt_operator
   _status: CredentialBatch__status_operator
@@ -1045,6 +1056,7 @@ input CredentialBatch_where_and {
   status: CredentialBatch_status_operator
   template: CredentialBatch_template_operator
   emailTemplate: CredentialBatch_emailTemplate_operator
+  csvFields: CredentialBatch_csvFields_operator
   updatedAt: CredentialBatch_updatedAt_operator
   createdAt: CredentialBatch_createdAt_operator
   _status: CredentialBatch__status_operator
@@ -1067,6 +1079,7 @@ type CredentialBatchDocAccessFields {
   status: CredentialBatchDocAccessFields_status
   template: CredentialBatchDocAccessFields_template
   emailTemplate: CredentialBatchDocAccessFields_emailTemplate
+  csvFields: CredentialBatchDocAccessFields_csvFields
   updatedAt: CredentialBatchDocAccessFields_updatedAt
   createdAt: CredentialBatchDocAccessFields_createdAt
   _status: CredentialBatchDocAccessFields__status
@@ -1210,6 +1223,29 @@ type CredentialBatchDocAccessFields_emailTemplate_Delete {
   permission: Boolean!
 }
 
+type CredentialBatchDocAccessFields_csvFields {
+  create: CredentialBatchDocAccessFields_csvFields_Create
+  read: CredentialBatchDocAccessFields_csvFields_Read
+  update: CredentialBatchDocAccessFields_csvFields_Update
+  delete: CredentialBatchDocAccessFields_csvFields_Delete
+}
+
+type CredentialBatchDocAccessFields_csvFields_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_csvFields_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_csvFields_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchDocAccessFields_csvFields_Delete {
+  permission: Boolean!
+}
+
 type CredentialBatchDocAccessFields_updatedAt {
   create: CredentialBatchDocAccessFields_updatedAt_Create
   read: CredentialBatchDocAccessFields_updatedAt_Read
@@ -1320,6 +1356,7 @@ type CredentialBatchVersion_Version {
   status: String
   template: CredentialTemplate
   emailTemplate: EmailTemplate
+  csvFields: JSON
   updatedAt: DateTime
   createdAt: DateTime
   _status: CredentialBatchVersion_Version__status
@@ -1352,6 +1389,7 @@ input versionsCredentialBatch_where {
   version__status: versionsCredentialBatch_version__status_operator
   version__template: versionsCredentialBatch_version__template_operator
   version__emailTemplate: versionsCredentialBatch_version__emailTemplate_operator
+  version__csvFields: versionsCredentialBatch_version__csvFields_operator
   version__updatedAt: versionsCredentialBatch_version__updatedAt_operator
   version__createdAt: versionsCredentialBatch_version__createdAt_operator
   version___status: versionsCredentialBatch_version___status_operator
@@ -1422,6 +1460,14 @@ input versionsCredentialBatch_version__emailTemplate_operator {
   in: [String]
   not_in: [String]
   all: [String]
+}
+
+input versionsCredentialBatch_version__csvFields_operator {
+  equals: JSON
+  not_equals: JSON
+  like: JSON
+  contains: JSON
+  exists: Boolean
 }
 
 input versionsCredentialBatch_version__updatedAt_operator {
@@ -1507,6 +1553,7 @@ input versionsCredentialBatch_where_or {
   version__status: versionsCredentialBatch_version__status_operator
   version__template: versionsCredentialBatch_version__template_operator
   version__emailTemplate: versionsCredentialBatch_version__emailTemplate_operator
+  version__csvFields: versionsCredentialBatch_version__csvFields_operator
   version__updatedAt: versionsCredentialBatch_version__updatedAt_operator
   version__createdAt: versionsCredentialBatch_version__createdAt_operator
   version___status: versionsCredentialBatch_version___status_operator
@@ -1524,6 +1571,7 @@ input versionsCredentialBatch_where_and {
   version__status: versionsCredentialBatch_version__status_operator
   version__template: versionsCredentialBatch_version__template_operator
   version__emailTemplate: versionsCredentialBatch_version__emailTemplate_operator
+  version__csvFields: versionsCredentialBatch_version__csvFields_operator
   version__updatedAt: versionsCredentialBatch_version__updatedAt_operator
   version__createdAt: versionsCredentialBatch_version__createdAt_operator
   version___status: versionsCredentialBatch_version___status_operator
@@ -3299,6 +3347,7 @@ type CredentialBatchFields {
   status: CredentialBatchFields_status
   template: CredentialBatchFields_template
   emailTemplate: CredentialBatchFields_emailTemplate
+  csvFields: CredentialBatchFields_csvFields
   updatedAt: CredentialBatchFields_updatedAt
   createdAt: CredentialBatchFields_createdAt
   _status: CredentialBatchFields__status
@@ -3439,6 +3488,29 @@ type CredentialBatchFields_emailTemplate_Update {
 }
 
 type CredentialBatchFields_emailTemplate_Delete {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_csvFields {
+  create: CredentialBatchFields_csvFields_Create
+  read: CredentialBatchFields_csvFields_Read
+  update: CredentialBatchFields_csvFields_Update
+  delete: CredentialBatchFields_csvFields_Delete
+}
+
+type CredentialBatchFields_csvFields_Create {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_csvFields_Read {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_csvFields_Update {
+  permission: Boolean!
+}
+
+type CredentialBatchFields_csvFields_Delete {
   permission: Boolean!
 }
 
@@ -4208,6 +4280,7 @@ input mutationCredentialBatchInput {
   status: String!
   template: String
   emailTemplate: String
+  csvFields: JSON
   updatedAt: String
   createdAt: String
   _status: CredentialBatch__status_MutationInput
@@ -4225,6 +4298,7 @@ input mutationCredentialBatchUpdateInput {
   status: String
   template: String
   emailTemplate: String
+  csvFields: JSON
   updatedAt: String
   createdAt: String
   _status: CredentialBatchUpdate__status_MutationInput
