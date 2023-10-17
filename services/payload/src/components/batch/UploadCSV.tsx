@@ -4,39 +4,31 @@ import { useDocumentInfo } from 'payload/components/utilities';
 import BatchCredentialListPreview from '../List/BatchCredentialListPreview';
 
 const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) {
-    const [file, setFile] = useState();
     const { id } = useDocumentInfo();
     const [data, setData] = useState();
-    const [refetch, setRefetch] = useState(false);
+
+    const fetchBatchCredentials = async () => {
+        const res = await fetch('/api/get-batch-credentials', {
+            method: 'POST',
+            body: JSON.stringify({ batchId: id }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        });
+        if (res.status === 200) {
+            const { data } = await res.json();
+            setData(data);
+            console.log('///get batch credentials', data);
+        }
+    };
 
     // replace this with react-query package...todo
     useEffect(() => {
-        const fetchBatchCredentials = async () => {
-            const res = await fetch('/api/get-batch-credentials', {
-                method: 'POST',
-                body: JSON.stringify({ batchId: id }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-            });
-            if (res.status === 200) {
-                const { data } = await res.json();
-                setData(data);
-                console.log('///get batch credentials', data);
-            }
-        };
-
         fetchBatchCredentials();
-    }, [refetch]);
+    }, []);
 
     const handleOnChange = e => {
-        setFile(e.target.files[0]);
-    };
-
-    const handleOnSubmit = e => {
-        e.preventDefault();
-
-        Papa.parse(file, {
+        Papa.parse(e.target.files[0], {
             header: true,
             skipEmptyLines: true,
             complete: async results => {
@@ -64,15 +56,13 @@ const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) 
 
                     if (res.status === 200) {
                         const { data } = await res.json();
-                        setRefetch(true);
+                        await fetchBatchCredentials();
                         console.log('///create batch creds endpoint test', data);
                     }
                 }
             },
         });
     };
-
-    console.log('///data from state', data);
 
     return (
         <section
@@ -93,18 +83,12 @@ const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) 
                     onChange={handleOnChange}
                     className="upload-csv-input"
                 />
-                <button
-                    className="upload-csv-button"
-                    onClick={e => {
-                        handleOnSubmit(e);
-                    }}
-                >
-                    IMPORT CSV
-                </button>
             </form>
 
             <section>
-                {id && data && <BatchCredentialListPreview batchId={id} data={data} />}
+                {id && data && (
+                    <BatchCredentialListPreview data={data} refetch={fetchBatchCredentials} />
+                )}
             </section>
         </section>
     );

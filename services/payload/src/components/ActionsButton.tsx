@@ -12,12 +12,17 @@ import RevocationWarning from './credential/RevocationWarning';
 import { Credential } from 'payload/generated-types';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
 import RevocationDetails from './credential/RevocationDetails';
+import X from './svgs/X';
 
 type ActionButton =
     | { type: 'button'; label: string; icon: React.ReactNode; onClick: () => void | Promise<void> }
     | { type: 'link'; label: string; icon: React.ReactNode; url: string };
 
-const ActionsButton: React.FC<Props> = ({ rowData }) => {
+const ActionsButton: React.FC<Props & { simple?: boolean; onDelete?: () => Promise<void> }> = ({
+    rowData,
+    simple = false,
+    onDelete,
+}) => {
     const [isOpen, setIsOpen] = useState(false);
     const container = useRef<HTMLElement>();
     const { openModal } = useModal();
@@ -38,40 +43,62 @@ const ActionsButton: React.FC<Props> = ({ rowData }) => {
         return () => document.removeEventListener('mousedown', close);
     }, [isOpen]);
 
-    const items: ActionButton[] = [
-        {
-            type: 'link',
-            label: 'View Details',
-            icon: <Eye />,
-            url: `credential/${rowData.id}`,
-        },
-        {
-            type: 'button',
-            label: 'Resend',
-            icon: <Send />,
-            onClick: async () => {
-                const response = await fetch('/api/send-email', {
-                    method: 'POST',
-                    headers: { 'content-type': 'application/json' },
-                    body: JSON.stringify({ credentialId: rowData.id }),
-                });
-
-                console.log(await response.json());
+    const items: ActionButton[] = simple
+        ? [
+            {
+                type: 'link',
+                label: 'View Details',
+                icon: <Eye />,
+                url: `credential/${rowData.id}`,
             },
-        },
-        {
-            type: 'button',
-            label: isRevoked ? 'View Revocation Details' : 'Revoke',
-            icon: <ArrowArcLeft />,
-            onClick: () => openModal(revocationSlug),
-        },
-        {
-            type: 'link',
-            label: 'View Batch',
-            icon: <BarGraph />,
-            url: `credential-batch/${rowData.batch}`,
-        },
-    ];
+            {
+                type: 'button',
+                label: 'Remove Earner',
+                icon: <X />,
+                onClick: async () => {
+                    const res = await fetch(`/api/credential/${rowData.id}`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                    });
+
+                    if (res.status === 200) onDelete?.();
+                },
+            },
+        ]
+        : [
+            {
+                type: 'link',
+                label: 'View Details',
+                icon: <Eye />,
+                url: `credential/${rowData.id}`,
+            },
+            {
+                type: 'button',
+                label: 'Resend',
+                icon: <Send />,
+                onClick: async () => {
+                    const response = await fetch('/api/send-email', {
+                        method: 'POST',
+                        headers: { 'content-type': 'application/json' },
+                        body: JSON.stringify({ credentialId: rowData.id }),
+                    });
+
+                    console.log(await response.json());
+                },
+            },
+            {
+                type: 'button',
+                label: isRevoked ? 'View Revocation Details' : 'Revoke',
+                icon: <ArrowArcLeft />,
+                onClick: () => openModal(revocationSlug),
+            },
+            {
+                type: 'link',
+                label: 'View Batch',
+                icon: <BarGraph />,
+                url: `credential-batch/${rowData.batch}`,
+            },
+        ];
 
     const actionButtons = items.map(item => {
         if (item.type === 'button') {

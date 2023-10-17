@@ -116,7 +116,9 @@ const DefaultListView: React.FC<Props> = props => {
                     )}
                     {data.docs && data.docs.length > 0 && (
                         <RelationshipProvider>
-                            <Table data={formattedDocs} />
+                            <section className="scale-100 relative z-10">
+                                <Table data={formattedDocs} />
+                            </section>
                         </RelationshipProvider>
                     )}
                     {data.docs && data.docs.length === 0 && (

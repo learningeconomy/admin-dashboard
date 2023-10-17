@@ -26,7 +26,6 @@ const CustomListView: React.FC<ListIndexProps> = props => {
             labels: { plural },
             admin: {
                 pagination: { defaultLimit },
-                components: { views: { List: CustomList } = {} } = {},
             },
         },
     } = props;
@@ -164,7 +163,7 @@ const CustomListView: React.FC<ListIndexProps> = props => {
         <TableColumnsProvider collection={collection}>
             <RenderCustomComponent
                 DefaultComponent={DefaultList}
-                CustomComponent={CustomList}
+                CustomComponent={null}
                 componentProps={{
                     collection: { ...collection, fields },
                     newDocumentURL,

@@ -1,198 +1,132 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useWindowInfo } from '@faceless-ui/window-info';
-import Eyebrow from 'payload/dist/admin/components/elements/Eyebrow';
-import Paginator from 'payload/dist/admin/components/elements/Paginator';
-import ListControls from 'payload/dist/admin/components/elements/ListControls';
-import ListSelection from 'payload/dist/admin/components/elements/ListSelection';
-import Pill from 'payload/dist/admin/components/elements/Pill';
-import Button from 'payload/dist/admin/components/elements/Button';
-// import { Table } from 'payload/dist/admin/components/elements/Table';
-import Meta from 'payload/dist/admin/components/utilities/Meta';
-import { ListCollectionProps as Props } from '../types';
-import ViewDescription from 'payload/dist/admin/components/elements/ViewDescription';
-import PerPage from 'payload/dist/admin/components/elements/PerPage';
-import { Gutter } from 'payload/dist/admin/components/elements/Gutter';
 import { RelationshipProvider } from 'payload/dist/admin/components/views/collections/List/RelationshipProvider';
 import { getTranslation } from 'payload/dist/utilities/getTranslation';
 import { StaggeredShimmers } from 'payload/dist/admin/components/elements/ShimmerEffect';
+import SortColumn from 'payload/dist/admin/components/elements/SortColumn';
 import { SelectionProvider } from 'payload/dist/admin/components/views/collections/List/SelectionProvider';
-import EditMany from 'payload/dist/admin/components/elements/EditMany';
-import DeleteMany from 'payload/dist/admin/components/elements/DeleteMany';
-import PublishMany from 'payload/dist/admin/components/elements/PublishMany';
-import UnpublishMany from 'payload/dist/admin/components/elements/UnpublishMany';
 import formatFilesize from '../../helpers/formatFileSize';
-import CredentialsCollection from '../../collections/Credentials';
 import Table from '../Table/Table';
 import './index.scss';
 import { TableColumnsProvider } from 'payload/dist/admin/components/elements/TableColumns';
 import { useConfig } from 'payload/components/utilities';
+import { Credential } from 'payload/generated-types';
+import { Column } from 'payload/dist/admin/components/elements/Table/types';
+import { Cell } from 'payload/components/views/Cell';
+import ActionsButton from '../ActionsButton';
 
 const baseClass = 'collection-list';
-const emptyData = {
-    docs: [],
-    totalDocs: null,
-}
+
+const FIELDS_TO_DISPLAY = ['earnerName', 'credentialName', 'emailAddress', 'actionButton'];
 
 type BatchCredentialListPreviewProps = {
-    batchId: string | number;
-    data: any[];
-}
+    data: { docs: Credential[]; totalDocs: number | null };
+    refetch: () => Promise<void>;
+};
 
-const BatchCredentialListPreview: React.FC<BatchCredentialListPreviewProps>= ({batchId, data }) => {
-
-    // const [ data, setData] = useState(emptyData);
+const BatchCredentialListPreview: React.FC<BatchCredentialListPreviewProps> = ({
+    data,
+    refetch,
+}) => {
     const { collections } = useConfig();
-    console.log('///colllections', collections);
-    const collection = collections.find( collection => collection.slug === 'credential');
-    const disableEyebrow = true;
-    if(!data) return <></>;
+    const collection = collections.find(collection => collection.slug === 'credential');
 
-//   useEffect(() => {
-//     const fetchBatchCredentials= async () => {
-//       const res = await fetch("/api/get-batch-credentials", {
-//         method: "POST",
-//         body: JSON.stringify({batchId}),
-//         headers: {
-//             "Content-type": "application/json; charset=UTF-8",
-//           },
-//       });
-//       if (res.status === 200) {
-//         const { data } = await res.json();
-//         setData(data);
-//         console.log("///get batch credentials", data);
-//       }
-//     };
+    if (!data) return <></>;
 
-//     fetchBatchCredentials();
-//   }, []);
+    const {
+        breakpoints: { s: smallBreak },
+    } = useWindowInfo();
+    const { t, i18n } = useTranslation('general');
+    let formattedDocs = data.docs || [];
 
-  const { breakpoints: { s: smallBreak } } = useWindowInfo();
-  const { t, i18n } = useTranslation('general');
-  let formattedDocs = data.docs || [];
+    console.log('//formattedDocs', formattedDocs);
 
-  console.log('//formattedDocs', formattedDocs);
+    if (collection.upload) {
+        formattedDocs = formattedDocs?.map(doc => {
+            return { ...doc, filesize: formatFilesize(doc.filesize) };
+        });
+    }
 
-  if (collection.upload) {
-    formattedDocs = formattedDocs?.map((doc) => {
-      return {
-        ...doc,
-        filesize: formatFilesize(doc.filesize),
-      };
-    });
-  }
+    const columns: Column[] = collection.fields
+        .filter(field => FIELDS_TO_DISPLAY.includes((field as any).name ?? ''))
+        .map((field, index) => ({
+            accessor: (field as any).name,
+            active: true,
+            label: (field as any).label,
+            name: (field as any).name,
+            components: {
+                Heading: (
+                    <SortColumn
+                        label={(field as any).label || (field as any).name}
+                        name={(field as any).name}
+                        disable={
+                            ('disableSort' in field && Boolean(field.disableSort)) ||
+                            field.type === 'ui' ||
+                            undefined
+                        }
+                    />
+                ),
+                renderCell: (rowData, cellData) => (
+                    <Cell
+                        key={JSON.stringify(cellData)}
+                        field={
+                            (field as any).name === 'actionButton'
+                                ? {
+                                    ...field,
+                                    admin: {
+                                        ...field.admin,
+                                        components: {
+                                            ...field.admin?.components,
+                                            Cell: props => (
+                                                <ActionsButton
+                                                    simple
+                                                    onDelete={refetch}
+                                                    {...props}
+                                                />
+                                            ),
+                                        },
+                                    },
+                                }
+                                : field
+                        }
+                        colIndex={index}
+                        collection={collection}
+                        rowData={rowData}
+                        cellData={cellData}
+                        link={false}
+                    />
+                ),
+            },
+        }));
 
-
-
-  return (
-    <TableColumnsProvider collection={collection}>
-    <div className={baseClass}>
-     
-      <SelectionProvider
-        docs={data.docs}
-        totalDocs={data.totalDocs}
-      >
-        {!disableEyebrow && (
-          <Eyebrow />
-        )}
-      
-        
-          {/* <ListControls
-            collection={collection}
-            modifySearchQuery={modifySearchParams}
-            handleSortChange={handleSortChange}
-            handleWhereChange={handleWhereChange}
-            resetParams={resetParams}
-          />
-       */}
-          {!data.docs && (
-            <StaggeredShimmers
-              className={[`${baseClass}__shimmer`, `${baseClass}__shimmer--rows`].join(' ')}
-              count={6}
-            />
-          )}
-          {(data.docs && data.docs.length > 0) && (
-            <RelationshipProvider>
-              <Table data={formattedDocs} />
-            </RelationshipProvider>
-          )}
-          {data.docs && data.docs.length === 0 && (
-            <div className={`${baseClass}__no-results`}>
-              <p>
-                {t('noResults', { label: getTranslation('Credentials', i18n) })}
-              </p>
-            
+    return (
+        <TableColumnsProvider collection={collection}>
+            <div className={`${baseClass} scale-100`}>
+                <SelectionProvider docs={data.docs} totalDocs={data.totalDocs}>
+                    {!data.docs && (
+                        <StaggeredShimmers
+                            className={[
+                                `${baseClass}__shimmer`,
+                                `${baseClass}__shimmer--rows`,
+                            ].join(' ')}
+                            count={6}
+                        />
+                    )}
+                    {data.docs && data.docs.length > 0 && (
+                        <RelationshipProvider>
+                            <Table data={formattedDocs} columns={columns} />
+                        </RelationshipProvider>
+                    )}
+                    {data.docs && data.docs.length === 0 && (
+                        <div className={`${baseClass}__no-results`}>
+                            <p>{t('noResults', { label: getTranslation('Credentials', i18n) })}</p>
+                        </div>
+                    )}
+                </SelectionProvider>
             </div>
-          )}
-       
-
-          {/* <div className={`${baseClass}__page-controls`}>
-            <Paginator
-              limit={data.limit}
-              totalPages={data.totalPages}
-              page={data.page}
-              hasPrevPage={data.hasPrevPage}
-              hasNextPage={data.hasNextPage}
-              prevPage={data.prevPage}
-              nextPage={data.nextPage}
-              numberOfNeighbors={1}
-              disableHistoryChange={modifySearchParams === false}
-              onChange={handlePageChange}
-            />
-            {data?.totalDocs > 0 && (
-              <Fragment>
-                <div className={`${baseClass}__page-info`}>
-                  {(data.page * data.limit) - (data.limit - 1)}
-                  -
-                  {data.totalPages > 1 && data.totalPages !== data.page ? (data.limit * data.page) : data.totalDocs}
-                  {' '}
-                  {t('of')}
-                  {' '}
-                  {data.totalDocs}
-                </div>
-                <PerPage
-                  limits={collection?.admin?.pagination?.limits}
-                  limit={limit}
-                  modifySearchParams={modifySearchParams}
-                  handleChange={handlePerPageChange}
-                  resetPage={data.totalDocs <= data.pagingCounter}
-                />
-                <div className={`${baseClass}__list-selection`}>
-                  {smallBreak && (
-                    <Fragment>
-                      <ListSelection
-                        label={getTranslation(collection.labels.plural, i18n)}
-                      />
-                      <div className={`${baseClass}__list-selection-actions`}>
-                        <EditMany
-                          collection={collection}
-                          resetParams={resetParams}
-                        />
-                        <PublishMany
-                          collection={collection}
-                          resetParams={resetParams}
-                        />
-                        <UnpublishMany
-                          collection={collection}
-                          resetParams={resetParams}
-                        />
-                        <DeleteMany
-                          collection={collection}
-                          resetParams={resetParams}
-                        />
-                      </div>
-                    </Fragment>
-                  )}
-                </div>
-              </Fragment>
-            )}
-          </div> */}
- 
-      </SelectionProvider>
-   
-    </div>
-    </TableColumnsProvider>
-  );
+        </TableColumnsProvider>
+    );
 };
 
 export default BatchCredentialListPreview;

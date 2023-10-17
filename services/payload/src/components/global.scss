@@ -196,6 +196,10 @@ thead {
     display: none;
 }
 
+.collection-list__wrap {
+    transform: scale(1);
+}
+
 .collection-list__wrap,
 .dashboard__wrap {
     margin-top: 30px;
@@ -361,6 +365,8 @@ thead {
     flex-direction: column;
     align-items: center;
 
+    z-index: 5;
+
     padding: 0;
 
     border-radius: 0.5rem;
@@ -368,6 +374,11 @@ thead {
     background: var(--white, #fff);
 
     transition: all 200ms ease;
+
+    @media (min-width: 750px) {
+        position: fixed;
+        right: 1.25rem;
+    }
 
     &.open {
         margin-top: -35px;

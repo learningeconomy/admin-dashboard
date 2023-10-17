@@ -3,12 +3,18 @@ import { CollectionConfig } from 'payload/types';
 import ActionsButton from '../components/ActionsButton';
 import CredentialStatusCell from '../components/credential/CredentialStatusCell';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
+import DefaultListView from '../components/List/DefaultListView';
 
 const CredentialsCollection: CollectionConfig = {
     slug: 'credential',
     admin: {
         defaultColumns: ['credentialName', 'id', 'status', 'actionButton'],
         useAsTitle: 'credentialName',
+        components: {
+            views: {
+                List: DefaultListView,
+            },
+        },
     },
     versions: {
         drafts: true,
