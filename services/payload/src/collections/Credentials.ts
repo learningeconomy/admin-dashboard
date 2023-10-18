@@ -10,15 +10,10 @@ const CredentialsCollection: CollectionConfig = {
     admin: {
         defaultColumns: ['credentialName', 'id', 'status', 'actionButton'],
         useAsTitle: 'credentialName',
-        components: {
-            views: {
-                List: DefaultListView,
-            },
-        },
+        disableDuplicate: true,
+        components: { views: { List: DefaultListView } },
     },
-    versions: {
-        drafts: true,
-    },
+    access: { delete: () => false },
     fields: [
         { name: 'credentialName', type: 'text' },
         { name: 'earnerName', type: 'text' },

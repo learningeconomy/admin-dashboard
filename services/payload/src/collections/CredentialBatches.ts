@@ -1,11 +1,20 @@
 import { CollectionConfig } from 'payload/types';
 import BatchPageDescription from '../components/batch/BatchPageDescription';
 import CreateBatch from '../components/batch/CreateBatch';
+import payload from 'payload';
+import { CREDENTIAL_STATUS } from '../constants/credentials';
 
 const CredentialsBatchesCollection: CollectionConfig = {
     slug: 'credential-batch',
-    labels: {
-        plural: 'Issuance Overview',
+    labels: { plural: 'Issuance Overview' },
+    access: {
+        delete: async ({ id }) => {
+            const doc = await payload.findByID({ collection: 'credential-batch', id });
+
+            if (!doc) return false;
+
+            return doc.status === 'DRAFT';
+        },
     },
     admin: {
         defaultColumns: ['title', 'id', 'status'],
