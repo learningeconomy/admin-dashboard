@@ -1,9 +1,10 @@
 import { PayloadHandler } from 'payload/config';
 import { Forbidden } from 'payload/errors';
 import payload from 'payload';
-import { emailQueue } from '../jobs/queue.server';
+import { sendEmails } from '../jobs/queue.server';
 import { generateJwtFromId } from '../helpers/jwtHelpers';
 import Handlebars from 'handlebars';
+import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
 
 export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     if (!req.user) throw new Forbidden();
@@ -52,7 +53,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     //for each record, generate email link and queue up email to be sent
 
-    const claimPageBaseUrl =  process.env.CLAIM_PAGE_URL || "https://localhost:4321";
+    const claimPageBaseUrl = process.env.CLAIM_PAGE_URL || 'https://localhost:4321';
 
     const emails = data?.docs?.map(record => {
         const jwt = generateJwtFromId(record?.id);
@@ -61,11 +62,18 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         const mergedRecordWithLink = { ...record, link };
         const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
         return {
+            credentialId: record.id,
             to: record?.emailAddress,
             subject: emailTemplateRecord?.emailSubjectTitle || 'Claim Credential',
             email: 'test email2',
             html: `${parsedHtml}`,
         };
+    });
+
+    await payload.update({
+        collection: 'credential-batch',
+        id: batchId,
+        data: { status: CREDENTIAL_BATCH_STATUS.SENDING },
     });
 
     console.log('///email map', emails);
@@ -74,12 +82,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     try {
         // send emails to email queue
-        emails?.forEach(email => {
-            console.log('///emailsData', email);
-            emailQueue.add('send-test-email', email);
-        });
-
-        console.log('///all emails', emails);
+        sendEmails(batchId, emails);
 
         res.status(200).json({ emails });
     } catch (err) {

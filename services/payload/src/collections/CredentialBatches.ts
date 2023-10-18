@@ -2,6 +2,7 @@ import { CollectionConfig } from 'payload/types';
 import BatchPageDescription from '../components/batch/BatchPageDescription';
 import CreateBatch from '../components/batch/CreateBatch';
 import payload from 'payload';
+import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
 
 const CredentialsBatchesCollection: CollectionConfig = {
     slug: 'credential-batch',
@@ -15,7 +16,7 @@ const CredentialsBatchesCollection: CollectionConfig = {
 
                 if (!doc) return false;
 
-                return doc.status === 'DRAFT';
+                return doc.status === CREDENTIAL_BATCH_STATUS.DRAFT;
             } catch (error) {
                 console.error('Error getting delete permission for credential batch!', {
                     error,
@@ -66,8 +67,8 @@ const CredentialsBatchesCollection: CollectionConfig = {
             name: 'status',
             type: 'text',
             required: true,
-            defaultValue: 'DRAFT',
-            admin: { hidden: true },
+            defaultValue: CREDENTIAL_BATCH_STATUS.DRAFT,
+            // admin: { hidden: true },
         },
         {
             name: 'template',

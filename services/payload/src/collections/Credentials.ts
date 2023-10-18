@@ -1,3 +1,4 @@
+import payload from 'payload';
 import { CollectionConfig } from 'payload/types';
 
 import ActionsButton from '../components/ActionsButton';
@@ -13,7 +14,26 @@ const CredentialsCollection: CollectionConfig = {
         disableDuplicate: true,
         components: { views: { List: DefaultListView } },
     },
-    access: { delete: () => false },
+    access: {
+        delete: async ({ id }) => {
+            try {
+                if (!id) return false;
+
+                const doc = await payload.findByID({ collection: 'credential', id });
+
+                if (!doc) return false;
+
+                return doc.status === CREDENTIAL_STATUS.DRAFT;
+            } catch (error) {
+                console.error('Error getting delete permission for credential batch!', {
+                    error,
+                    id,
+                });
+
+                return false;
+            }
+        },
+    },
     fields: [
         { name: 'credentialName', type: 'text' },
         { name: 'earnerName', type: 'text' },
