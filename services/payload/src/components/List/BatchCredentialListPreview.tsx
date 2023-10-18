@@ -23,11 +23,13 @@ const FIELDS_TO_DISPLAY = ['earnerName', 'credentialName', 'emailAddress', 'acti
 type BatchCredentialListPreviewProps = {
     data: { docs: Credential[]; totalDocs: number | null };
     refetch: () => Promise<void>;
+    readOnly?: boolean;
 };
 
 const BatchCredentialListPreview: React.FC<BatchCredentialListPreviewProps> = ({
     data,
     refetch,
+    readOnly = false,
 }) => {
     const { collections } = useConfig();
     const collection = collections.find(collection => collection.slug === 'credential');
@@ -81,6 +83,7 @@ const BatchCredentialListPreview: React.FC<BatchCredentialListPreviewProps> = ({
                                             Cell: props => (
                                                 <ActionsButton
                                                     simple
+                                                    readOnly={readOnly}
                                                     onDelete={refetch}
                                                     {...props}
                                                 />

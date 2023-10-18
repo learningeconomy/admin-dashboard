@@ -10,6 +10,7 @@ import './batch.scss';
 import '../../global.scss';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../../helpers/handlebarhelpers';
 import BatchSent from './BatchSent';
+import { CREDENTIAL_BATCH_STATUS } from '../../constants/batches';
 
 const baseClass = 'collection-edit';
 
@@ -29,6 +30,8 @@ const CreateBatch: React.FC<Props> = props => {
         hasSavePermission,
         id,
     } = props;
+
+    const isReadOnly = !hasSavePermission || data?.status !== CREDENTIAL_BATCH_STATUS.DRAFT;
 
     const batchSlug = 'batch-sent';
 
@@ -83,14 +86,14 @@ const CreateBatch: React.FC<Props> = props => {
                 action={action}
                 onSubmit={handleOnSubmit}
                 onSuccess={onSave}
-                disabled={!hasSavePermission}
+                disabled={isReadOnly}
                 initialState={internalState}
             >
                 <section className="h-full w-full flex">
                     {!isLoading && (
                         <>
                             <RenderBatchFlowFields
-                                readOnly={!hasSavePermission}
+                                readOnly={isReadOnly}
                                 permissions={permissions.fields}
                                 filter={field =>
                                     !field?.admin?.position || field?.admin?.position !== 'sidebar'

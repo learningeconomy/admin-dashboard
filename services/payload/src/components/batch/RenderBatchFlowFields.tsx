@@ -232,7 +232,7 @@ const FormSteps = (props: Props) => {
             <section className="h-full w-full overflow-x-hidden flex-shrink flex">
                 <RenderSlide ref={refs[0]} formProps={props} step={1} />
                 <RenderSlide ref={refs[1]} formProps={props} step={2} />
-                <UploadCSV ref={refs[2]} />
+                <UploadCSV ref={refs[2]} formProps={props} />
                 <RenderSlide ref={refs[3]} formProps={props} step={4} />
                 <BatchPreviewSubmit ref={refs[4]} />
             </section>
@@ -245,9 +245,12 @@ const FormSteps = (props: Props) => {
 
             <HorizontalNavFooter
                 mainAction={handleNextStep}
+                goForward={props.readOnly ? () => goForward(false) : undefined}
                 goBack={currentPage > 0 ? () => goBack(false) : undefined}
-                mainText={currentPage === 4 ? 'Sign & Send' : 'Continue'}
-                quitText="Save as Draft & Quit"
+                mainText={
+                    props.readOnly ? 'Duplicate' : currentPage === 4 ? 'Sign & Send' : 'Continue'
+                }
+                quitText={props.readOnly ? 'Back' : 'Save as Draft & Quit'}
                 quit={() => history.push('/admin/collections/credential-batch')}
             />
         </>

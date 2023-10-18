@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Papa from 'papaparse';
+import { RenderFieldProps as Props } from '../types';
 import { useDocumentInfo } from 'payload/components/utilities';
 import BatchCredentialListPreview from '../List/BatchCredentialListPreview';
 import { useField } from 'payload/components/forms';
@@ -10,7 +11,10 @@ import {
 } from '../../helpers/handlebarhelpers';
 import { AUTOMATIC_FIELDS } from '../../helpers/credential.helpers';
 
-const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) {
+const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function UploadCSV(
+    { formProps },
+    ref
+) {
     const { id } = useDocumentInfo();
     const { value } = useField({ path: 'csvFields' });
     const { value: templateId } = useField({ path: 'template' });
@@ -109,18 +113,23 @@ const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) 
             <h2 className="mt-5 text-[--theme-text] text-3xl font-semibold mb-5 font-inter">
                 Upload & Manage Earner Information
             </h2>
-            <p className="text-[--theme-text] text-xl font-medium font-inter mb-15">
-                Upload a CSV file to import credential and earner information.
-            </p>
-            <form>
-                <input
-                    type={'file'}
-                    id={'csvFileInput'}
-                    accept={'.csv'}
-                    onChange={handleOnChange}
-                    className="upload-csv-input"
-                />
-            </form>
+            {!formProps.readOnly && (
+                <>
+                    <p className="text-[--theme-text] text-xl font-medium font-inter mb-15">
+                        Upload a CSV file to import credential and earner information.
+                    </p>
+
+                    <form>
+                        <input
+                            type={'file'}
+                            id={'csvFileInput'}
+                            accept={'.csv'}
+                            onChange={handleOnChange}
+                            className="upload-csv-input"
+                        />
+                    </form>
+                </>
+            )}
 
             {fieldsIntersection.missingInCSV.length > 0 ? (
                 <output className="block rounded bg-red-500 text-white px-6 py-2 my-3">
@@ -142,7 +151,11 @@ const UploadCSV = React.forwardRef<HTMLElement>(function UploadCSV(_props, ref) 
 
             <section>
                 {id && data && (
-                    <BatchCredentialListPreview data={data} refetch={fetchBatchCredentials} />
+                    <BatchCredentialListPreview
+                        data={data}
+                        refetch={fetchBatchCredentials}
+                        readOnly={formProps.readOnly}
+                    />
                 )}
             </section>
         </section>

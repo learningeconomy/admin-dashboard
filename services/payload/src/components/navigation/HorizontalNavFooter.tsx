@@ -11,6 +11,7 @@ import Autosave from 'payload/dist/admin/components/elements/Autosave';
 type HorizontalNavFooterProps = {
     mainAction?: () => void;
     canDoMainAction?: boolean;
+    goForward?: () => void;
     goBack?: () => void;
     quit?: () => void;
     mainText?: string;
@@ -23,6 +24,7 @@ type HorizontalNavFooterProps = {
 const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
     mainAction = () => { },
     canDoMainAction = true,
+    goForward,
     goBack,
     quit,
     mainText = 'Continue',
@@ -87,6 +89,18 @@ const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
                     {mainText}
                 </button>
             </Flipped>
+
+            {goForward && (
+                <Flipped flipId="back-button">
+                    <button
+                        type="button"
+                        className="w-11 h-11 shadow rounded-full bg-[--theme-bg] flex items-center justify-center outline-none"
+                        onClick={goForward}
+                    >
+                        <Arrow className="text-green-500 w-6 h-6 rotate-180" />
+                    </button>
+                </Flipped>
+            )}
         </Flipper>
     );
 };
