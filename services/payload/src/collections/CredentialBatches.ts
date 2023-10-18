@@ -2,18 +2,28 @@ import { CollectionConfig } from 'payload/types';
 import BatchPageDescription from '../components/batch/BatchPageDescription';
 import CreateBatch from '../components/batch/CreateBatch';
 import payload from 'payload';
-import { CREDENTIAL_STATUS } from '../constants/credentials';
 
 const CredentialsBatchesCollection: CollectionConfig = {
     slug: 'credential-batch',
     labels: { plural: 'Issuance Overview' },
     access: {
         delete: async ({ id }) => {
-            const doc = await payload.findByID({ collection: 'credential-batch', id });
+            try {
+                if (!id) return false;
 
-            if (!doc) return false;
+                const doc = await payload.findByID({ collection: 'credential-batch', id });
 
-            return doc.status === 'DRAFT';
+                if (!doc) return false;
+
+                return doc.status === 'DRAFT';
+            } catch (error) {
+                console.error('Error getting delete permission for credential batch!', {
+                    error,
+                    id,
+                });
+
+                return false;
+            }
         },
     },
     admin: {
