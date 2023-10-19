@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useModal } from '@faceless-ui/modal';
+import { useConfig } from 'payload/components/utilities';
 import { Props } from 'payload/components/views/Cell';
 
 import Caret from './svgs/Caret';
@@ -21,6 +22,9 @@ type ActionButton =
 const ActionsButton: React.FC<
     Props & { simple?: boolean; onDelete?: () => Promise<void>; readOnly?: boolean }
 > = ({ rowData, simple = false, readOnly = false, onDelete }) => {
+    const {
+        routes: { admin: adminRoute },
+    } = useConfig();
     const [isOpen, setIsOpen] = useState(false);
     const [position, setPosition] = useState<'absolute' | 'fixed'>('absolute');
     const container = useRef<HTMLElement>();
@@ -54,7 +58,12 @@ const ActionsButton: React.FC<
     }, [isOpen, container.current]);
 
     const items: ActionButton[] = [
-        { type: 'link', label: 'View Details', icon: <Eye />, url: `credential/${rowData.id}` },
+        {
+            type: 'link',
+            label: 'View Details',
+            icon: <Eye />,
+            url: `${adminRoute}/collections/credential/${rowData.id}`,
+        },
     ];
 
     if (simple && !readOnly) {
