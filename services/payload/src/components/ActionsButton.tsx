@@ -109,7 +109,7 @@ const ActionsButton: React.FC<
             type: 'link',
             label: 'View Batch',
             icon: <BarGraph />,
-            url: `credential-batch/${rowData.batch}`,
+            url: `${adminRoute}/collections/credential-batch/${rowData.batch}`,
         });
     }
 
