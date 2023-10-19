@@ -3,6 +3,7 @@ import BatchPageDescription from '../components/batch/BatchPageDescription';
 import CreateBatch from '../components/batch/CreateBatch';
 import payload from 'payload';
 import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
+import CredentialBatchStatusCell from '../components/batch/CredentialBatchStatusCell';
 
 const CredentialsBatchesCollection: CollectionConfig = {
     slug: 'credential-batch',
@@ -68,7 +69,7 @@ const CredentialsBatchesCollection: CollectionConfig = {
             type: 'text',
             required: true,
             defaultValue: CREDENTIAL_BATCH_STATUS.DRAFT,
-            // admin: { hidden: true },
+            admin: { hidden: true, components: { Cell: CredentialBatchStatusCell } },
         },
         {
             name: 'template',
