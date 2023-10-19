@@ -132,18 +132,20 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
             )}
 
             {fieldsIntersection.missingInCSV.length > 0 ? (
-                <output className="block rounded bg-red-500 text-white px-6 py-2 my-3">
+                <output className="block rounded bg-red-400 text-black font-roboto px-6 py-2 my-3">
                     CSV is missing the following fields:{' '}
-                    {fieldsIntersection.missingInCSV.join(', ')}.
+                    <span className="font-bold">{fieldsIntersection.missingInCSV.join(', ')}.</span>
                 </output>
             ) : (
                 <></>
             )}
 
             {fieldsIntersection.missingInTemplate.length > 0 ? (
-                <output className="block rounded bg-orange-500 text-white px-6 py-2 my-3">
+                <output className="block rounded bg-orange-400 text-black font-roboto px-6 py-2 my-3">
                     Template is missing the following fields that were in the CSV:{' '}
-                    {fieldsIntersection.missingInTemplate.join(', ')}.
+                    <span className="font-bold">
+                        {fieldsIntersection.missingInTemplate.join(', ')}.
+                    </span>
                 </output>
             ) : (
                 <></>

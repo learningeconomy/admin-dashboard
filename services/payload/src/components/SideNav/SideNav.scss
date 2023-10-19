@@ -38,6 +38,7 @@
             transform 200ms ease,
             width 200ms ease;
         transform: translateX(-400px);
+        margin-right: -30px;
 
         & > header > button {
             transition: position 200ms ease;

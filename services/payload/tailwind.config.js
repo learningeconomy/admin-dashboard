@@ -21,6 +21,7 @@ module.exports = {
             },
             fontFamily: {
                 inter: ['Inter'],
+                roboto: ['Roboto Flex'],
             },
             fontSize: {
                 zero: '0',

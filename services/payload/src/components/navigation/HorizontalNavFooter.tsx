@@ -11,10 +11,13 @@ import Autosave from 'payload/dist/admin/components/elements/Autosave';
 type HorizontalNavFooterProps = {
     mainAction?: () => void;
     canDoMainAction?: boolean;
+    secondaryAction?: () => void;
+    canDoSecondaryAction?: boolean;
     goForward?: () => void;
     goBack?: () => void;
     quit?: () => void;
     mainText?: string;
+    secondaryText?: string;
     quitText?: string;
     className?: string;
     tag?: keyof JSX.IntrinsicElements;
@@ -24,10 +27,13 @@ type HorizontalNavFooterProps = {
 const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
     mainAction = () => { },
     canDoMainAction = true,
+    secondaryAction,
+    canDoSecondaryAction = true,
     goForward,
     goBack,
     quit,
     mainText = 'Continue',
+    secondaryText = '',
     quitText = 'Quit',
     className = '',
     tag = 'footer',
@@ -72,16 +78,28 @@ const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
                         className="flex-grow max-w-xs bg-transparent rounded-xl px-4 py-2 border-2 border-slate-500 text-slate-500 font-inter text-xl font-semibold outline-none justify-self-end"
                         type="button"
                         onClick={quit}
-                        disabled={!canDoMainAction}
                     >
                         {quitText}
                     </button>
                 </Flipped>
             )}
 
+            {secondaryAction && (
+                <Flipped flipId="secondary-action-button">
+                    <button
+                        className="flex-grow max-w-xs bg-green-500 rounded-xl px-4 py-2 text-white font-inter text-xl font-semibold outline-none justify-self-end disabled:opacity-50"
+                        type="button"
+                        onClick={secondaryAction}
+                        disabled={!canDoSecondaryAction}
+                    >
+                        {secondaryText}
+                    </button>
+                </Flipped>
+            )}
+
             <Flipped flipId="main-action-button">
                 <button
-                    className="flex-grow max-w-xs bg-green-500 rounded-xl px-4 py-2 text-white font-inter text-xl font-semibold outline-none justify-self-end"
+                    className="flex-grow max-w-xs bg-green-500 rounded-xl px-4 py-2 text-white font-inter text-xl font-semibold outline-none justify-self-end disabled:opacity-50"
                     type="button"
                     onClick={mainAction}
                     disabled={!canDoMainAction}

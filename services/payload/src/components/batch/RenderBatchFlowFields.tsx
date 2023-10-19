@@ -227,9 +227,11 @@ const FormSteps = (props: Props) => {
         goForward(false);
     };
 
+    const duplicate = () => { };
+
     return (
         <>
-            <section className="h-full w-full overflow-x-hidden flex-shrink flex">
+            <section className="h-full w-full overflow-x-hidden flex-shrink pt-12 flex md:pt-0">
                 <RenderSlide ref={refs[0]} formProps={props} step={1} />
                 <RenderSlide ref={refs[1]} formProps={props} step={2} />
                 <UploadCSV ref={refs[2]} formProps={props} />
@@ -245,12 +247,13 @@ const FormSteps = (props: Props) => {
 
             <HorizontalNavFooter
                 mainAction={handleNextStep}
-                goForward={props.readOnly ? () => goForward(false) : undefined}
+                secondaryAction={props.readOnly ? duplicate : undefined}
+                canDoSecondaryAction
+                canDoMainAction={!props.readOnly || currentPage !== 4}
+                secondaryText="Duplicate & Edit"
                 goBack={currentPage > 0 ? () => goBack(false) : undefined}
-                mainText={
-                    props.readOnly ? 'Duplicate' : currentPage === 4 ? 'Sign & Send' : 'Continue'
-                }
-                quitText={props.readOnly ? 'Back' : 'Save as Draft & Quit'}
+                mainText={currentPage === 4 ? 'Sign & Send' : 'Continue'}
+                quitText={props.readOnly ? 'Quit' : 'Save as Draft & Quit'}
                 quit={() => history.push('/admin/collections/credential-batch')}
             />
         </>
