@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 const secret =
     process.env.PAYLOAD_SECRET ??
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa';
-const expires = process.env.TOKEN_EXPIRATION_TIME_IN_SECONDS;
+const expires = process.env.TOKEN_EXPIRATION_TIME_IN_SECONDS ?? 14 * 24 * 60 * 60; // Default to 2 weeks
 
 export const generateJwtFromId = (id: string) => {
     try {
