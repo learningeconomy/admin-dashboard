@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import RenderCustomComponent from 'payload/dist/admin/components/utilities/RenderCustomComponent';
@@ -26,6 +26,7 @@ import {
 } from '../../helpers/horizontalNav.helpers';
 import HorizontalNavHeader from '../navigation/HorizontalNavHeader';
 import HorizontalNavFooter from '../navigation/HorizontalNavFooter';
+import { useConfig, useDocumentInfo } from 'payload/components/utilities';
 // hardcoded for now, but could be perhaps be defined in the database
 const MAP_FIELDS_TO_STEPS = {
     1: ['title', 'description', 'internalNotes'],
@@ -203,7 +204,12 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
 const FormSteps = (props: Props) => {
     const history = useHistory();
 
-    const { submit, validateForm } = useForm();
+    const { submit } = useForm();
+
+    const {
+        routes: { admin: adminRoute },
+    } = useConfig();
+    const { id } = useDocumentInfo();
 
     const refs = getUnnamedRefsFromArray([1, 2, 3, 4, 5]);
     const { on, scrollTo } = useHorizontalPages({ refs });
@@ -227,7 +233,15 @@ const FormSteps = (props: Props) => {
         goForward(false);
     };
 
-    const duplicate = () => { };
+    const duplicate = async () => {
+        const result = await fetch(`/api/credential-batch/${id}/duplicate`, { method: 'POST' });
+
+        if (result.status === 200) {
+            const newBatch = await result.json();
+
+            history.push(`${adminRoute}/collections/credential-batch/${newBatch.id}`);
+        }
+    };
 
     return (
         <>
@@ -254,7 +268,7 @@ const FormSteps = (props: Props) => {
                 goBack={currentPage > 0 ? () => goBack(false) : undefined}
                 mainText={currentPage === 4 ? 'Sign & Send' : 'Continue'}
                 quitText={props.readOnly ? 'Quit' : 'Save as Draft & Quit'}
-                quit={() => history.push('/admin/collections/credential-batch')}
+                quit={() => history.push(`${adminRoute}/collections/credential-batch`)}
             />
         </>
     );

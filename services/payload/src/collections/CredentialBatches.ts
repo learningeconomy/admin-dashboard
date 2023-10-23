@@ -4,6 +4,7 @@ import CreateBatch from '../components/batch/CreateBatch';
 import payload from 'payload';
 import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
 import CredentialBatchStatusCell from '../components/batch/CredentialBatchStatusCell';
+import { duplicateBatch } from '../endpoints/duplicateBatch';
 
 const CredentialsBatchesCollection: CollectionConfig = {
     slug: 'credential-batch',
@@ -43,6 +44,7 @@ const CredentialsBatchesCollection: CollectionConfig = {
             autosave: true,
         },
     },
+    endpoints: [{ path: '/:id/duplicate', method: 'post', handler: duplicateBatch }],
     fields: [
         {
             name: 'title',
