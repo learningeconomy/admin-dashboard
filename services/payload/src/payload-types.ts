@@ -56,6 +56,7 @@ export interface CredentialBatch {
   status: string;
   template: string | CredentialTemplate;
   emailTemplate: string | EmailTemplate;
+  from?: string;
   csvFields?:
     | {
         [k: string]: unknown;
@@ -73,6 +74,7 @@ export interface EmailTemplate {
   id: string;
   title: string;
   internalNotes?: string;
+  from?: string;
   emailSubjectTitle?: string;
   emailTemplatesHandlebarsCode: string;
   updatedAt: string;
@@ -100,5 +102,4 @@ export interface Credential {
   revokedBy?: string | User;
   updatedAt: string;
   createdAt: string;
-  _status?: 'draft' | 'published';
 }

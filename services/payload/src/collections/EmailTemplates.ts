@@ -38,6 +38,11 @@ const EmailTemplatesCollection: CollectionConfig = {
             maxLength: 1000,
         },
         {
+            name: 'from',
+            type: 'text',
+            required: false,
+        },
+        {
             name: 'emailSubjectTitle',
             type: 'text',
             required: false,

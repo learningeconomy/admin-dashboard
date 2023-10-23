@@ -59,6 +59,7 @@ export const sendEmail: PayloadHandler = async (req, res) => {
 
     const email = {
         to: credential.emailAddress,
+        from: credential.batch.from || emailTemplateRecord.from,
         subject: emailTemplateRecord?.emailSubjectTitle || 'Claim Credential',
         email: 'test email2',
         html: `${parsedHtml}`,

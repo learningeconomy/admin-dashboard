@@ -5,6 +5,7 @@ import { sendEmails } from '../jobs/queue.server';
 import { generateJwtFromId } from '../helpers/jwtHelpers';
 import Handlebars from 'handlebars';
 import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
+import { CredentialBatch } from 'payload/generated-types';
 
 export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     if (!req.user) throw new Forbidden();
@@ -64,6 +65,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         return {
             credentialId: record.id,
             to: record?.emailAddress,
+            from: (record.batch as CredentialBatch).from || emailTemplateRecord.from,
             subject: emailTemplateRecord?.emailSubjectTitle || 'Claim Credential',
             email: 'test email2',
             html: `${parsedHtml}`,

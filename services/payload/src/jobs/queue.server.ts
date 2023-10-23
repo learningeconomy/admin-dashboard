@@ -59,6 +59,7 @@ export function registerQueue<T>(name: string, processor: Processor<T>) {
 export type Email = {
     credentialId?: string;
     to: string;
+    from?: string;
     subject: string;
     text?: string;
     html?: string;
@@ -74,14 +75,15 @@ These are called sandboxed processors."
 export const emailQueue = registerQueue('email', async (job: Job<Email>) => {
     console.log('///emailQueue job', job);
 
-    const { to, subject, text, html, credentialId } = job.data;
+    const { to, from, subject, text, html, credentialId } = job.data;
 
     await payload.sendEmail({
         to,
         subject,
         text,
         html,
-        from: process.env.EMAIL_FROM || 'Learning Economy <beestontaylor@learningeconomy.io>',
+        from:
+            from || process.env.EMAIL_FROM || 'Learning Economy <beestontaylor@learningeconomy.io>',
     });
 
     if (credentialId) {

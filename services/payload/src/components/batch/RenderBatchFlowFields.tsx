@@ -32,7 +32,7 @@ const MAP_FIELDS_TO_STEPS = {
     1: ['title', 'description', 'internalNotes'],
     2: ['template'],
     3: [],
-    4: ['emailTemplate'],
+    4: ['from', 'emailTemplate'],
     5: [],
 };
 

@@ -88,6 +88,12 @@ const CredentialsBatchesCollection: CollectionConfig = {
             hasMany: false,
         },
         {
+            name: 'from',
+            label: 'Email From',
+            type: 'text',
+            required: false,
+        },
+        {
             name: 'csvFields',
             type: 'json',
             admin: { hidden: true },
