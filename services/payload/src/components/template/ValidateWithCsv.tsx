@@ -65,8 +65,6 @@ const ValidateWithCsv: React.FC<ValidateWithCsvProps> = ({ path }) => {
         document.body.removeChild(link);
     };
 
-    console.log({ csvFields });
-
     return (
         <section className="w-full mt-5">
             {csvFields &&
