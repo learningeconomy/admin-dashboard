@@ -1,20 +1,7 @@
 import { CollectionConfig } from 'payload/types';
 import CreateTemplate from '../components/template/CreateTemplate';
 import TemplatePageDescription from '../components/template/TemplatePageDescription';
-
-const placeHolderVc = `{
-  "@context": [
-    "https://www.w3.org/2018/credentials/v1",
-    "https://www.w3.org/2018/credentials/examples/v1"
-  ],
-  "type": ["VerifiableCredential", "AlumniCredential"],
-  "issuer": { "id": "{{ schoolId }}" },
-  "name": "{{ name }}",
-  "description": "{{ description }}",
-  "issuanceDate": "{{ now }}",
-  "credentialSubject": { "id": "{{ studentId }}" },
-  "id": "{{ credentialId }}"
-}`;
+import ValidateWithCsv from '../components/template/ValidateWithCsv';
 
 const CredentialsTemplatesCollection: CollectionConfig = {
     slug: 'credential-template',
@@ -62,6 +49,14 @@ so please do not include them! Additionally, the fields credentialName, earnerNa
 now, and issuanceDate are available in all credentials regardless of CSV contents.`,
             },
             required: true,
+        },
+        {
+            name: 'validateWithCsv',
+            type: 'ui',
+            admin: {
+                components: { Field: ValidateWithCsv },
+                condition: ({ credentialTemplateJson }) => Boolean(credentialTemplateJson),
+            },
         },
     ],
 };

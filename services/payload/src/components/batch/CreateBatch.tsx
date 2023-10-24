@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useModal } from '@faceless-ui/modal';
 import { Props } from 'payload/components/views/Edit';
 import { useAuth } from 'payload/components/utilities';
@@ -8,7 +8,6 @@ import fieldTypes from 'payload/dist/admin/components/forms/field-types';
 import Form from '../Form/Form';
 import './batch.scss';
 import '../../global.scss';
-import { insertValuesIntoHandlebarsJsonTemplate } from '../../helpers/handlebarhelpers';
 import BatchSent from './BatchSent';
 import { CREDENTIAL_BATCH_STATUS } from '../../constants/batches';
 
@@ -72,11 +71,6 @@ const CreateBatch: React.FC<Props> = props => {
         openModal(batchSlug);
         // if success show success modal....
     };
-
-    useEffect(() => {
-        const jsonTemplateValue = insertValuesIntoHandlebarsJsonTemplate();
-        console.log('//jsonTemplateValue', jsonTemplateValue);
-    }, []);
 
     return (
         <OperationContext.Provider value={operation}>

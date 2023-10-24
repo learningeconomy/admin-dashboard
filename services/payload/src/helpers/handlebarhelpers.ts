@@ -1,7 +1,7 @@
 import { AUTOMATIC_FIELDS } from './credential.helpers';
 import { createJsonHandlebars } from './handlebarsJson';
 
-export const HANDLEBAR_TAG_REGEX = /{{[{]?(.*?)[}]?}}/g;
+export const HANDLEBAR_TAG_REGEX = /{{[{[]?(.*?)[\]}]?}}/g;
 
 const placeHolderVcTemplate = `{
     "@context": [

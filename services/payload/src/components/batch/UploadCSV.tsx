@@ -16,12 +16,12 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
     ref
 ) {
     const { id } = useDocumentInfo();
-    const { value } = useField({ path: 'csvFields' });
-    const { value: templateId } = useField({ path: 'template' });
+    const { value } = useField<string[]>({ path: 'csvFields' });
+    const { value: templateId } = useField<string>({ path: 'template' });
 
     const [data, setData] = useState();
     const [fields, setFields] = useState<string[]>([...(value ?? []), ...AUTOMATIC_FIELDS]);
-    const [templateFields, setTemplateFields] = useState([]);
+    const [templateFields, setTemplateFields] = useState<string[]>([]);
     const [template, setTemplate] = useState<CredentialTemplate | undefined>();
 
     const fieldsIntersection = getFieldsIntersectionFromHandlebarsJsonTemplate(

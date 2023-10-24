@@ -1,107 +1,42 @@
 import React, { useCallback } from 'react';
-import { Props } from '../types';
+import { Props } from 'payload/components/views/Edit';
 import { useAuth } from 'payload/components/utilities';
 import { OperationContext } from 'payload/dist/admin/components/utilities/OperationProvider';
-import CustomRenderFields from '../CustomRenderFields';
+import RenderTemplateFlowFields from './RenderTemplateFlowFields';
 import fieldTypes from 'payload/dist/admin/components/forms/field-types';
-import Form from 'payload/dist/admin/components/forms/Form';
-import { useForm } from 'payload/components/forms';
+import Form from '../Form/Form';
+import './template.scss';
+import '../../global.scss';
+
 const baseClass = 'collection-edit';
-import RenderFields from 'payload/dist/admin/components/forms/RenderFields';
-import SidebarMenu from '../Form/SidebarMenu';
 
-const TemplateForm: React.FC = (props: Props) => {
-    const { submit, validateForm } = useForm();
-
-    const {
-        collection,
-        isEditing,
-        data,
-        onSave: onSaveFromProps,
-        permissions,
-        isLoading,
-        internalState,
-        apiURL,
-        action,
-        hasSavePermission,
-        disableEyebrow,
-        disableActions,
-        disableLeaveWithoutSaving,
-        customHeader,
-        id,
-        updatedAt,
-    } = props;
-
-    const {
-        slug,
-        fields,
-        admin: { useAsTitle, disableDuplicate, preview, hideAPIURL },
-        versions,
-        timestamps,
-        auth,
-        upload,
-    } = collection;
-
-    return (
-        <>
-            <CustomRenderFields
-                readOnly={!hasSavePermission}
-                permissions={permissions.fields}
-                filter={field => !field?.admin?.position || field?.admin?.position !== 'sidebar'}
-                fieldTypes={fieldTypes}
-                fieldSchema={fields}
-            />
-            <div></div>
-        </>
-    );
-};
-
-const CreateTemplate: React.FC = (props: Props) => {
+const CreateTemplate: React.FC<Props> = props => {
     const { user, refreshCookieAsync } = useAuth();
+
     const {
         collection,
         isEditing,
-        data,
         onSave: onSaveFromProps,
         permissions,
         isLoading,
         internalState,
-        apiURL,
         action,
         hasSavePermission,
-        disableEyebrow,
-        disableActions,
-        disableLeaveWithoutSaving,
-        customHeader,
         id,
-        updatedAt,
     } = props;
 
-    const {
-        slug,
-        fields,
-        admin: { useAsTitle, disableDuplicate, preview, hideAPIURL },
-        versions,
-        timestamps,
-        auth,
-        upload,
-    } = collection;
+    const isReadOnly = !hasSavePermission;
+
+    const { fields, auth } = collection;
 
     const operation = isEditing ? 'update' : 'create';
 
-    const { submit, validateForm } = useForm();
-
     const onSave = useCallback(
         async json => {
-            if (auth && id === user.id) {
-                await refreshCookieAsync();
-            }
+            if (auth && id === user.id) await refreshCookieAsync();
 
             if (typeof onSaveFromProps === 'function') {
-                onSaveFromProps({
-                    ...json,
-                    operation: id ? 'update' : 'create',
-                });
+                onSaveFromProps({ ...json, operation: id ? 'update' : 'create' });
             }
         },
         [id, onSaveFromProps, auth, user, refreshCookieAsync]
@@ -114,15 +49,22 @@ const CreateTemplate: React.FC = (props: Props) => {
                 method={id ? 'patch' : 'post'}
                 action={action}
                 onSuccess={onSave}
-                disabled={!hasSavePermission}
+                disabled={isReadOnly}
                 initialState={internalState}
             >
-                <section className="flow-container">
-                    <h1>Create Template</h1>
+                <section className="h-full w-full flex">
                     {!isLoading && (
                         <>
-                            <TemplateForm {...props} />
-                            <SidebarMenu {...props} />
+                            <RenderTemplateFlowFields
+                                readOnly={isReadOnly}
+                                permissions={permissions.fields}
+                                filter={field =>
+                                    !field?.admin?.position || field?.admin?.position !== 'sidebar'
+                                }
+                                fieldTypes={fieldTypes}
+                                fieldSchema={fields}
+                                className="h-full w-full flex flex-col relative"
+                            />
                         </>
                     )}
                 </section>

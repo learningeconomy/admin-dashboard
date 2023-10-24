@@ -569,3 +569,17 @@ td {
         padding: 1.9230769231rem 0 3.8461538462rem;
     }
 }
+
+strong,
+.per-page__button {
+    & > svg.icon {
+        display: inline-block;
+    }
+}
+
+.popup-button > strong {
+    display: flex;
+
+    align-items: center;
+    gap: 0.125rem;
+}
