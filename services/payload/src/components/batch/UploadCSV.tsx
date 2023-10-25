@@ -10,6 +10,7 @@ import {
     getFieldsIntersectionFromHandlebarsJsonTemplate,
 } from '../../helpers/handlebarhelpers';
 import { AUTOMATIC_FIELDS } from '../../helpers/credential.helpers';
+import CircleBang from '../svgs/CircleBang';
 
 const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function UploadCSV(
     { formProps },
@@ -132,8 +133,9 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
             )}
 
             {fieldsIntersection.missingInCSV.length > 0 ? (
-                <output className="block rounded bg-red-400 text-black font-roboto px-6 py-2 my-3">
-                    CSV is missing the following fields:{' '}
+                <output className="flex gap-2 items-center flex-wrap rounded bg-red-400 text-black font-roboto px-6 py-2 my-3">
+                    <CircleBang className="w-5 h-5" />
+                    <span>CSV is missing the following fields:</span>
                     <span className="font-bold">{fieldsIntersection.missingInCSV.join(', ')}.</span>
                 </output>
             ) : (
@@ -141,8 +143,9 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
             )}
 
             {fieldsIntersection.missingInTemplate.length > 0 ? (
-                <output className="block rounded bg-orange-400 text-black font-roboto px-6 py-2 my-3">
-                    Template is missing the following fields that were in the CSV:{' '}
+                <output className="flex gap-2 items-center flex-wrap rounded bg-orange-400 text-black font-roboto px-6 py-2 my-3">
+                    <CircleBang className="w-5 h-5" />
+                    <span>Template is missing the following fields that were in the CSV:</span>
                     <span className="font-bold">
                         {fieldsIntersection.missingInTemplate.join(', ')}.
                     </span>

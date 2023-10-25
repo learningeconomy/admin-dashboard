@@ -8,6 +8,8 @@ import {
     getFieldsIntersectionFromHandlebarsJsonTemplate,
 } from '../../helpers/handlebarhelpers';
 import { AUTOMATIC_FIELDS } from '../../helpers/credential.helpers';
+import CircleCheck from '../svgs/CircleCheck';
+import CircleBang from '../svgs/CircleBang';
 
 export type ValidateWithCsvProps = {
     path: string;
@@ -69,15 +71,17 @@ const ValidateWithCsv: React.FC<ValidateWithCsvProps> = ({ path }) => {
         <section className="w-full mt-5">
             {csvFields &&
                 (fieldsIntersection.missingInTemplate.length > 0 ? (
-                    <output className="block rounded bg-red-400 text-black font-roboto px-6 py-2 my-3 mb-8">
-                        Template is missing the following fields that were in the CSV:{' '}
+                    <output className="flex gap-2 items-center flex-wrap rounded bg-red-400 text-black font-roboto px-6 py-2 my-3 mb-8">
+                        <CircleBang className="w-5 h-5" />
+                        <span>Template is missing the following fields that were in the CSV:</span>
                         <span className="font-bold">
                             {fieldsIntersection.missingInTemplate.join(', ')}.
                         </span>
                     </output>
                 ) : (
-                    <output className="block rounded bg-green-400 text-black font-roboto px-6 py-2 my-3 mb-8">
-                        Template is using all fields that were in the CSV.
+                    <output className="flex gap-2 items-center bg-green-200 text-black font-roboto px-6 py-2 my-3 mb-8">
+                        <CircleCheck className="w-5 h-5" />
+                        <span>Template is using all fields that were in the CSV.</span>
                     </output>
                 ))}
 
@@ -100,15 +104,17 @@ const ValidateWithCsv: React.FC<ValidateWithCsvProps> = ({ path }) => {
 
             {csvFields &&
                 (fieldsIntersection.missingInCSV.length > 0 ? (
-                    <output className="block rounded bg-red-400 text-black font-roboto px-6 py-2 my-3">
-                        CSV is missing the following fields:{' '}
+                    <output className="flex gap-2 items-center flex-wrap rounded bg-red-400 text-black font-roboto px-6 py-2 my-3">
+                        <CircleBang className="w-5 h-5" />
+                        <span>CSV is missing the following fields:</span>
                         <span className="font-bold">
                             {fieldsIntersection.missingInCSV.join(', ')}.
                         </span>
                     </output>
                 ) : (
-                    <output className="block rounded bg-green-400 text-black font-roboto px-6 py-2 my-3">
-                        CSV contains all fields.
+                    <output className="flex gap-2 items-center rounded bg-green-200 text-black font-roboto px-6 py-2 my-3">
+                        <CircleCheck className="w-5 h-5" />
+                        <span>CSV contains all fields.</span>
                     </output>
                 ))}
 
