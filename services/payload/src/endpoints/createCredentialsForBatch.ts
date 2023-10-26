@@ -11,22 +11,14 @@ export const createBatchCredentials: PayloadHandler = async (req, res) => {
         const id = req?.body?.batchId;
         const newFields: string[] = req?.body?.fields ?? [];
 
-        const batch = await payload.findByID({ collection: 'credential-batch', id, draft: true });
         const created = await Promise.all(
             req?.body?.credentialRecords?.map(async record => {
                 const newCredentialRecord = await payload.create({
                     collection: 'credential',
                     data: {
-                        credentialName: record?.credentialName ?? batch.title,
-                        earnerName:
-                            record?.earnerName ??
-                            record?.fullName ??
-                            record?.['Full Name'] ??
-                            record?.firstName ??
-                            record?.['First Name'] ??
-                            'Unknown',
-                        emailAddress:
-                            record?.emailAddress ?? record?.['Email Address'] ?? 'Unknown',
+                        credentialName: record?.credentialName,
+                        earnerName: record?.earnerName,
+                        emailAddress: record?.emailAddress,
                         extraFields: record,
                         status: CREDENTIAL_STATUS.DRAFT,
                         batch: id,

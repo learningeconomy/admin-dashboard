@@ -9,6 +9,7 @@ import { useField } from 'payload/components/forms';
 import withCondition from 'payload/dist/admin/components/forms/withCondition';
 import { CodeEditor } from 'payload/dist/admin/components/elements/CodeEditor';
 import ValidateWithCsv from './ValidateWithCsv';
+import CircleBang from '../svgs/CircleBang';
 
 const baseClass = 'json-field';
 
@@ -79,6 +80,16 @@ const JSONField: React.FC<Props> = props => {
             <Error showError={showError} message={errorMessage} />
             <Label htmlFor={`field-${path}`} label={label} required={required} />
             <FieldDescription value={value} description={description} className="text-black" />
+            <p className="flex gap-2 items-center flex-wrap rounded bg-blue-200 text-black font-roboto px-6 py-2 my-3">
+                <CircleBang className="w-5 h-5" />
+                <span>
+                    The following JSON fields will be overwritten, so you do not need to include
+                    them: <code className="rounded bg-gray-100 p-1">id</code>,{' '}
+                    <code className="rounded bg-gray-100 p-1">issuer.id</code>,{' '}
+                    <code className="rounded bg-gray-100 p-1">credentialSubject.id</code>,{' '}
+                    <code className="rounded bg-gray-100 p-1">issuanceDate</code>
+                </span>
+            </p>
             <CodeEditor
                 options={editorOptions}
                 defaultLanguage="json"

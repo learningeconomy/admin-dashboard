@@ -124,6 +124,15 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
                         Upload a CSV file to import credential and earner information.
                     </p>
 
+                    <p className="flex gap-2 items-center flex-wrap rounded bg-blue-200 text-black font-roboto px-6 py-2 my-3">
+                        <CircleBang className="w-5 h-5" />
+                        <span>
+                            You <b>MUST</b> include a valid email address under the column{' '}
+                            <code className="rounded bg-gray-100 p-1">emailAddress</code> for every
+                            entry in the CSV
+                        </span>
+                    </p>
+
                     <form>
                         <input
                             type={'file'}
