@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
+    "moduleResolution": "nodenext",
     "lib": [
       "dom",
       "dom.iterable",

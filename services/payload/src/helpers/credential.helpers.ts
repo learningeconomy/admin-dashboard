@@ -1,7 +1,1 @@
-export const AUTOMATIC_FIELDS = [
-    'credentialName',
-    'earnerName',
-    'emailAddress',
-    'now',
-    'issuanceDate',
-];
+export const AUTOMATIC_FIELDS = ['earnerName', 'emailAddress', 'now'];

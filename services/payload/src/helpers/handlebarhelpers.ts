@@ -40,7 +40,10 @@ export const insertValuesIntoHandlebarsJsonTemplate = (template?: string, fieldV
 };
 
 export const getFieldsFromHandlebarsJsonTemplate = (template?: string): string[] => {
-    return Array.from(template.matchAll(HANDLEBAR_TAG_REGEX)).map(match => match[1].trim());
+    const withDuplicates = Array.from(template.matchAll(HANDLEBAR_TAG_REGEX)).map(match =>
+        match[1].trim()
+    );
+    return [...new Set(withDuplicates)];
 };
 
 export const getFieldsIntersectionFromHandlebarsJsonTemplate = (

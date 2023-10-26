@@ -10,6 +10,7 @@ import {
 import { AUTOMATIC_FIELDS } from '../../helpers/credential.helpers';
 import CircleCheck from '../svgs/CircleCheck';
 import CircleBang from '../svgs/CircleBang';
+import { dedupe } from '../../helpers/array.helpers';
 
 export type ValidateWithCsvProps = {
     path: string;
@@ -28,10 +29,12 @@ const ValidateWithCsv: React.FC<ValidateWithCsvProps> = ({ path }) => {
 
     useEffect(() => {
         if (template) {
-            setTemplateFields([
-                ...getFieldsFromHandlebarsJsonTemplate(JSON.stringify(template)),
-                ...AUTOMATIC_FIELDS,
-            ]);
+            setTemplateFields(
+                dedupe([
+                    ...getFieldsFromHandlebarsJsonTemplate(JSON.stringify(template)),
+                    ...AUTOMATIC_FIELDS,
+                ])
+            );
         }
     }, [template]);
 
@@ -41,15 +44,14 @@ const ValidateWithCsv: React.FC<ValidateWithCsvProps> = ({ path }) => {
             skipEmptyLines: true,
             complete: async results => {
                 if (results?.errors?.length === 0) {
-                    setCsvFields([...(results?.meta?.fields ?? []), ...AUTOMATIC_FIELDS]);
+                    setCsvFields(dedupe([...(results?.meta?.fields ?? []), ...AUTOMATIC_FIELDS]));
                 }
             },
         });
     };
 
     const generateCsv = () => {
-        const csvContent =
-            templateFields.filter(field => !AUTOMATIC_FIELDS.includes(field)).join(',') + '\n';
+        const csvContent = templateFields.filter(field => field !== 'now').join(',') + '\n';
 
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
 

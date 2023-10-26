@@ -2,9 +2,8 @@ import { PayloadHandler } from 'payload/config';
 import { Forbidden } from 'payload/errors';
 import payload from 'payload';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
-import { withSSR } from 'react-i18next';
 
-export const createBatchCredentials: PayloadHandler = async (req, res, next) => {
+export const createBatchCredentials: PayloadHandler = async (req, res) => {
     if (!req.user) throw new Forbidden();
 
     try {
@@ -27,7 +26,7 @@ export const createBatchCredentials: PayloadHandler = async (req, res, next) => 
                             record?.['First Name'] ??
                             'Unknown',
                         emailAddress:
-                            record?.eamilAddress ?? record?.['Email Address'] ?? 'Unknown',
+                            record?.emailAddress ?? record?.['Email Address'] ?? 'Unknown',
                         extraFields: record,
                         status: CREDENTIAL_STATUS.DRAFT,
                         batch: id,
@@ -41,15 +40,11 @@ export const createBatchCredentials: PayloadHandler = async (req, res, next) => 
 
         console.log('///CREATE CRED BATCH ENDPOINT', created);
 
-        const existingFields = (batch.csvFields as string[]) ?? [];
-
-        const fields = Array.from(new Set([...newFields, ...existingFields]));
-
         const newBatch = await payload.update({
             collection: 'credential-batch',
             draft: true,
             id,
-            data: { csvFields: fields },
+            data: { csvFields: newFields },
         });
 
         // Queue up email jobs for the batch

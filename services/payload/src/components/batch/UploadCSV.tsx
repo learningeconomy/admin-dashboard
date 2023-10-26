@@ -10,7 +10,9 @@ import {
     getFieldsIntersectionFromHandlebarsJsonTemplate,
 } from '../../helpers/handlebarhelpers';
 import { AUTOMATIC_FIELDS } from '../../helpers/credential.helpers';
+import CircleCheck from '../svgs/CircleCheck';
 import CircleBang from '../svgs/CircleBang';
+import { dedupe } from '../../helpers/array.helpers';
 
 const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function UploadCSV(
     { formProps },
@@ -21,7 +23,7 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
     const { value: templateId } = useField<string>({ path: 'template' });
 
     const [data, setData] = useState();
-    const [fields, setFields] = useState<string[]>([...(value ?? []), ...AUTOMATIC_FIELDS]);
+    const [fields, setFields] = useState<string[]>(dedupe([...(value ?? []), ...AUTOMATIC_FIELDS]));
     const [templateFields, setTemplateFields] = useState<string[]>([]);
     const [template, setTemplate] = useState<CredentialTemplate | undefined>();
 
@@ -29,6 +31,8 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
         fields,
         templateFields
     );
+
+    console.log({ fields, templateFields });
 
     const fetchBatchCredentials = async () => {
         const res = await fetch('/api/get-batch-credentials', {
@@ -55,10 +59,13 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
 
     useEffect(() => {
         if (template) {
-            setTemplateFields([
-                ...getFieldsFromHandlebarsJsonTemplate(JSON.stringify(template)),
-                ...AUTOMATIC_FIELDS,
-            ]);
+            console.log({ template });
+            setTemplateFields(
+                dedupe([
+                    ...getFieldsFromHandlebarsJsonTemplate(JSON.stringify(template)),
+                    ...AUTOMATIC_FIELDS,
+                ])
+            );
         }
     }, [template]);
 
@@ -97,7 +104,7 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
 
                     if (res.status === 200) {
                         const { data, newBatch } = await res.json();
-                        setFields([...(newBatch?.csvFields ?? []), ...AUTOMATIC_FIELDS]);
+                        setFields(dedupe([...(newBatch?.csvFields ?? []), ...AUTOMATIC_FIELDS]));
                         await fetchBatchCredentials();
                         console.log('///create batch creds endpoint test', data);
                     }
@@ -132,27 +139,37 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
                 </>
             )}
 
-            {fieldsIntersection.missingInCSV.length > 0 ? (
-                <output className="flex gap-2 items-center flex-wrap rounded bg-red-400 text-black font-roboto px-6 py-2 my-3">
-                    <CircleBang className="w-5 h-5" />
-                    <span>CSV is missing the following fields:</span>
-                    <span className="font-bold">{fieldsIntersection.missingInCSV.join(', ')}.</span>
-                </output>
-            ) : (
-                <></>
-            )}
+            {data &&
+                (fieldsIntersection.missingInCSV.length > 0 ? (
+                    <output className="flex gap-2 items-center flex-wrap rounded bg-red-400 text-black font-roboto px-6 py-2 my-3">
+                        <CircleBang className="w-5 h-5" />
+                        <span>CSV is missing the following fields:</span>
+                        <span className="font-bold">
+                            {fieldsIntersection.missingInCSV.join(', ')}.
+                        </span>
+                    </output>
+                ) : (
+                    <output className="flex gap-2 items-center bg-green-200 text-black font-roboto px-6 py-2 my-3">
+                        <CircleCheck className="w-5 h-5" />
+                        <span>Template is using all fields that were in the CSV.</span>
+                    </output>
+                ))}
 
-            {fieldsIntersection.missingInTemplate.length > 0 ? (
-                <output className="flex gap-2 items-center flex-wrap rounded bg-orange-400 text-black font-roboto px-6 py-2 my-3">
-                    <CircleBang className="w-5 h-5" />
-                    <span>Template is missing the following fields that were in the CSV:</span>
-                    <span className="font-bold">
-                        {fieldsIntersection.missingInTemplate.join(', ')}.
-                    </span>
-                </output>
-            ) : (
-                <></>
-            )}
+            {data &&
+                (fieldsIntersection.missingInTemplate.length > 0 ? (
+                    <output className="flex gap-2 items-center flex-wrap rounded bg-orange-400 text-black font-roboto px-6 py-2 my-3">
+                        <CircleBang className="w-5 h-5" />
+                        <span>Template is missing the following fields that were in the CSV:</span>
+                        <span className="font-bold">
+                            {fieldsIntersection.missingInTemplate.join(', ')}.
+                        </span>
+                    </output>
+                ) : (
+                    <output className="flex gap-2 items-center rounded bg-green-200 text-black font-roboto px-6 py-2 my-3">
+                        <CircleCheck className="w-5 h-5" />
+                        <span>CSV contains all fields.</span>
+                    </output>
+                ))}
 
             <section>
                 {id && data && (
