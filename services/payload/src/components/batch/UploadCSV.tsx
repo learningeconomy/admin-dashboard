@@ -32,8 +32,6 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
         templateFields
     );
 
-    console.log({ fields, templateFields });
-
     const fetchBatchCredentials = async () => {
         const res = await fetch('/api/get-batch-credentials', {
             method: 'POST',
@@ -59,7 +57,6 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
 
     useEffect(() => {
         if (template) {
-            console.log({ template });
             setTemplateFields(
                 dedupe([
                     ...getFieldsFromHandlebarsJsonTemplate(JSON.stringify(template)),
