@@ -1,20 +1,54 @@
-# Astro Starter Kit: Basics
+# VC Claim Page
+[![Release Branch](https://img.shields.io/badge/release_branch-main-green.svg)](https://github.com/learningeconomy/admin-dashboard/tree/main)
+[![Read the Docs](https://img.shields.io/badge/docs-quickstart-green.svg)](https://docs.learncard.com/)
+[![License](https://img.shields.io/badge/license-mit-blue.svg)](https://github.com/learningeconomy/admin-dashboard/blob/main/LICENSE)
 
-```
-npm create astro@latest -- --template basics
-```
+<p float="left">
+  <img src="https://github.com/learningeconomy/admin-dashboard/assets/2185016/9926ded7-40e9-4f18-a89a-bd788274903e" width="200" />
+    <img src="https://github.com/learningeconomy/admin-dashboard/assets/2185016/31882ce0-ce6e-4661-8c42-e64958accfc3" width="350" height="0" /> 
+  <img src="https://github.com/learningeconomy/admin-dashboard/assets/2185016/31882ce0-ce6e-4661-8c42-e64958accfc3" width="350" /> 
+</p>
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+This open-source **VC Claim Page** is a joint effort between the [Digital Credentials Consortium at MIT](https://digitalcredentials.mit.edu/) and the [Learning Economy Foundation](https://www.learningeconomy.io). It's designed to provide enterprises, schools, and organizations with a straightforward way to issue Verifiable Credentials in bulk.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## Features:
+
+- **User Management**: Efficient user onboarding and management.
+- **Credential Management**: Handle individual credentials—search, view, check status, and revoke.
+- **Batch Management**: Manage groups of credentials, such as annual diploma issuances.
+- **VC & Email Template Management**: Edit and store templates for credentials and emails.
+- **Claim Page**: Allows students to claim and download their credentials.
+- **White Label Ready**: Configurable branding options.
+- **VC-API & CHAPI Integration**: Compatible with the Verifiable Credential API exchange endpoints and CHAPI.
+- **Deployment**: Fully dockerized for ease of deployment.
+
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+[![Stargazers repo roster for @learningeconomy/admin-dashboard](https://reporoster.com/stars/learningeconomy/admin-dashboard)](https://github.com/learningeconomy/admin-dashboard/stargazers)
+
+## Comments, Questions, or Palpitations of the Heart?
+The best way to start engaging in the community is to participate in our Github Discussions: 
+- [Post an Issue or Ask for Help 💖](https://github.com/learningeconomy/admin-dashboard/issues)
+
+### Claim Page
+
+This service handles the webpage that users see when claiming a credential.
+
+- **Environment Setup**:
+    - A sample environment file is provided as `.env.sample`.
+    - Copy `.env.sample` to `.env` and replace the dummy values with actual values for your setup.
+
+
+
 
 ## 🚀 Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
+The VC Claim page uses Astro. You'll see the following folders and files:
 
 ```
 /
@@ -49,6 +83,5 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## License
+MIT © [MIT](#)
