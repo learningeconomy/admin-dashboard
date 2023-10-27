@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "moduleResolution": "nodenext",
+    "module": "nodenext",
     "lib": [
       "dom",
       "dom.iterable",
