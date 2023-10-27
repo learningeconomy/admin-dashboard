@@ -41,6 +41,7 @@ const EmailTemplatesCollection: CollectionConfig = {
             name: 'from',
             type: 'text',
             required: false,
+            admin: { description: 'Example: Bob <bob@gmail.com>' },
         },
         {
             name: 'emailSubjectTitle',

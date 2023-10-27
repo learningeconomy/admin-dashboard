@@ -15,6 +15,25 @@ const CredentialsCollection: CollectionConfig = {
         components: { views: { List: DefaultListView } },
     },
     access: {
+        create: () => false,
+        update: async ({ id }) => {
+            try {
+                if (!id) return false;
+
+                const doc = await payload.findByID({ collection: 'credential', id });
+
+                if (!doc) return false;
+
+                return doc.status === CREDENTIAL_STATUS.DRAFT;
+            } catch (error) {
+                console.error('Error getting update permission for credential!', {
+                    error,
+                    id,
+                });
+
+                return false;
+            }
+        },
         delete: async ({ id }) => {
             try {
                 if (!id) return false;
@@ -25,7 +44,7 @@ const CredentialsCollection: CollectionConfig = {
 
                 return doc.status === CREDENTIAL_STATUS.DRAFT;
             } catch (error) {
-                console.error('Error getting delete permission for credential batch!', {
+                console.error('Error getting delete permission for credential!', {
                     error,
                     id,
                 });

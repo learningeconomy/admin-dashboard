@@ -92,6 +92,7 @@ const CredentialsBatchesCollection: CollectionConfig = {
             label: 'Email From',
             type: 'text',
             required: false,
+            admin: { description: 'Example: Bob <bob@gmail.com>' },
         },
         {
             name: 'csvFields',
