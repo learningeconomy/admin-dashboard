@@ -60,7 +60,8 @@ a credential.
 
 - **Environment Setup**:
     - A sample environment file is provided as `.env.sample`.
-    - Copy `.env.sample` to `.env` and replace the dummy values with actual values for your setup.
+    - Copy `.env.sample` to `.env` and replace the PUBLIC_PAYLOAD_URL with the URL to your Dashboard API.
+        - If running locally, the sample value of `http://localhost:3000/api` will be correct. Otherwise, this will be the URL of your Dashboard API!
 
 ### Dashboard
 
@@ -69,6 +70,14 @@ Located inside `services/payload`, this service provides the dashboard functiona
 - **Environment Setup**:
     - A sample environment file is provided as `.env.sample`.
     - Copy `.env.sample` to `.env` and replace the dummy values with actual values for your setup.
+        - `MONGODB_URI`: URI for connecting to MongoDB. [See here for more information](https://www.mongodb.com/docs/manual/installation/)
+        - `PAYLOAD_SECRET`: A secret value to use when signing JWTs for authentication into the dashboard. You may use anything here, but please change it from the default and keep it safe!
+        - `COORDINATOR_URL`: If running locally, the sample value of `http://localhost:4005` will be correct. Otherwise, this will be the URL of the DCC Workflow Coordinator Service!
+        - `TENANT_NAME`: The tenant name used to sign credentials. This will need to match what you set up in the DCC Services!
+        - `STATUS_URL`: If running locally, the sample value of `http://localhost:4008` will be correct. Otherwise, this will be the URL of the DCC Credential Status Service!
+        - `SMTP_HOST`: The SMTP host to use for sending emails
+        - `SMTP_USER`: The SMTP user to use for sending emails
+        - `SMTP_PASS`: The SMTP password to use for sending emails
 
 ### DCC Services
 
@@ -80,8 +89,20 @@ Located inside `services/dcc-services`, this service handles digital credential 
 
 - **Environment Setup**:
     - Sample environment files are provided for each service as `.coordinator.env.sample`, `.signing-service.env.sample`, and `.status-service.env.sample`.
+    - More information on each configuration can be found [here](https://github.com/digitalcredentials/workflow-coordinator#configuration).
     - Copy these sample files to `.coordinator.env`, `.signing-service.env`, and `.status-service.env` respectively, replacing the dummy values with actual values for your setup.
-    - More information on the configuration can be found [here](https://github.com/digitalcredentials/workflow-coordinator#configuration).
+        - `.coordinator.env`
+            - `ENABLE_STATUS_SERVICE`: Set this to true
+            - `PUBLIC_EXCHANGE_HOST`: This must be set to the API route of the Dashboard service. 
+                - If running locally, you may use `http://localhost:3000/api`
+                - If running locally and you would like to test out the QR codes with your phone, you can use the command `ip a` to find your local IP, and set it to that (e.g. `http://192.168.68.68:3000/api`)
+                - At deploy time, this should be set to the API route of the live Dashboard service.
+            - `TENANT_TOKEN_${TENANT_NAME}`: This should be set to `UNPROTECTED` for now. We are not using JWTs for tenants (yet)
+        - `.signing-service.env`
+            - `TENANT_SEED_${TENANT_NAME}`: This should be set to a random, secure hex string to be used as the seed for signing VCs
+        - `.status-service.env`
+            - [See here for information about setting this up](https://github.com/digitalcredentials/status-service)
+            - Additionally, you'll want to set `CRED_STATUS_DID_SEED` to a secure random hex string to use as the seed for signing the Status Service VCs. This can, but does not have to, be different than the seed used in the signing service
 
 ## Deployment
 
@@ -103,15 +124,9 @@ For cloud deployment (e.g., on an AWS EC2 instance), you can also use the provid
 docker-compose -f compose.yaml up -d
 ```
 
-## Repository
-
-The repository can be found at [https://github.com/learningeconomy/admin-dashboard](https://github.com/learningeconomy/admin-dashboard).
-
 ---
 
 **Note:** Ensure that you have Docker and Docker Compose installed on your machine for deploying the services.
-
-This README provides a high-level overview of the services, for more detailed information refer to the README files within each service's directory.
 
 ## License
 MIT © [MIT](#)
