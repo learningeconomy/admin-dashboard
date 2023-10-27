@@ -4,7 +4,11 @@ import { useTranslation } from 'react-i18next';
 import RenderCustomComponent from 'payload/dist/admin/components/utilities/RenderCustomComponent';
 import useIntersect from 'payload/dist/admin/hooks/useIntersect';
 import { RenderFieldProps as Props } from '../types';
-import { fieldAffectsData, fieldIsPresentationalOnly } from 'payload/dist/fields/config/types';
+import {
+    Field,
+    fieldAffectsData,
+    fieldIsPresentationalOnly,
+} from 'payload/dist/fields/config/types';
 import { useOperation } from 'payload/dist/admin/components/utilities/OperationProvider/index';
 import { getTranslation } from 'payload/dist/utilities/getTranslation';
 import { useAllFormFields, useForm } from 'payload/components/forms';
@@ -43,11 +47,37 @@ const getFieldsForStep = (step = 1, fieldSchema = []) => {
     return stepFields;
 };
 
-const getInvalidFormFieldsForStep = (step: number, formFields: Fields) => {
-    const fieldsForStep = MAP_FIELDS_TO_STEPS[step];
-    const failedValidationFields = fieldsForStep?.filter(field => !formFields[field].valid) ?? [];
+const getFieldValuesWithValidators = (
+    step: number,
+    fieldValues: Fields,
+    fieldsCollection: Field[]
+) => {
+    const fieldsForStep: string[] = MAP_FIELDS_TO_STEPS[step];
 
-    return failedValidationFields.length === 0;
+    return (
+        fieldsForStep?.map(fieldName => ({
+            value: fieldValues[fieldName].value,
+            validate: fieldsCollection.find(field => (field as any).name === fieldName).validate,
+        })) ?? []
+    );
+};
+
+const isStepValid = async (
+    valuesWithValidators: { value: any; validate: (value: any) => Promise<boolean> }[]
+) => {
+    try {
+        const results = await Promise.all(
+            valuesWithValidators.map(async ({ value, validate }) => {
+                return (await validate?.(value)) ?? true;
+            })
+        );
+
+        return results.every(Boolean);
+    } catch (error) {
+        // validate function is expecting t to be passed in in order to get an error message, which
+        // will throw an error because we're not passing it in and ignoring the error message
+        return false;
+    }
 };
 
 type RenderSlideProps = {
@@ -209,7 +239,7 @@ const FormSteps = (props: Props) => {
     const {
         routes: { admin: adminRoute },
     } = useConfig();
-    const { id } = useDocumentInfo();
+    const { id, collection } = useDocumentInfo();
 
     const refs = getUnnamedRefsFromArray([1, 2, 3, 4, 5]);
     const { on, scrollTo } = useHorizontalPages({ refs });
@@ -223,12 +253,22 @@ const FormSteps = (props: Props) => {
     // and the `dispatchFields` method is usable to send field state up to the form
     const [fields, _dispatchFields] = useAllFormFields();
 
+    const [isValid, setIsValid] = useState(false);
+    const [csvStepIsValid, setCsvStepIsValid] = useState(false);
+
+    const valuesWithValidators = getFieldValuesWithValidators(
+        currentPage + 1,
+        fields,
+        collection.fields
+    );
+    const values = valuesWithValidators.map(({ value }) => value);
+
+    useEffect(() => {
+        isStepValid(valuesWithValidators).then(setIsValid);
+    }, [values.join(',')]);
+
     const handleNextStep = async () => {
-        if (currentPage === 4) return submit();
-
-        const formStepValid = getInvalidFormFieldsForStep(currentPage + 1, fields);
-
-        if (!formStepValid) return submit();
+        if (currentPage === 4 || !isValid) return submit();
 
         goForward(false);
     };
@@ -248,7 +288,7 @@ const FormSteps = (props: Props) => {
             <section className="h-full w-full overflow-x-hidden flex-shrink pt-12 flex md:pt-0">
                 <RenderSlide ref={refs[0]} formProps={props} step={1} />
                 <RenderSlide ref={refs[1]} formProps={props} step={2} />
-                <UploadCSV ref={refs[2]} formProps={props} />
+                <UploadCSV ref={refs[2]} formProps={props} setIsValid={setCsvStepIsValid} />
                 <RenderSlide ref={refs[3]} formProps={props} step={4} />
                 <BatchPreviewSubmit ref={refs[4]} />
             </section>
@@ -263,7 +303,11 @@ const FormSteps = (props: Props) => {
                 mainAction={handleNextStep}
                 secondaryAction={props.readOnly ? duplicate : undefined}
                 canDoSecondaryAction
-                canDoMainAction={!props.readOnly || currentPage !== 4}
+                canDoMainAction={
+                    isValid &&
+                    (currentPage !== 2 || csvStepIsValid) &&
+                    (!props.readOnly || currentPage !== 4)
+                }
                 secondaryText="Duplicate & Edit"
                 goBack={currentPage > 0 ? () => goBack(false) : undefined}
                 mainText={currentPage === 4 ? 'Sign & Send' : 'Continue'}

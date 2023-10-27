@@ -14,8 +14,13 @@ import CircleCheck from '../svgs/CircleCheck';
 import CircleBang from '../svgs/CircleBang';
 import { dedupe } from '../../helpers/array.helpers';
 
-const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function UploadCSV(
-    { formProps },
+export type UploadCSVProps = {
+    formProps: Props;
+    setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadCSV(
+    { formProps, setIsValid },
     ref
 ) {
     const { id } = useDocumentInfo();
@@ -65,6 +70,11 @@ const UploadCSV = React.forwardRef<HTMLElement, { formProps: Props }>(function U
             );
         }
     }, [template]);
+
+    useEffect(
+        () => setIsValid(data && fieldsIntersection.missingInCSV.length === 0),
+        [data, fieldsIntersection.missingInCSV.length]
+    );
 
     // replace this with react-query package...todo
     useEffect(() => {
