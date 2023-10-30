@@ -4,7 +4,7 @@ import { RenderFieldProps as Props } from '../types';
 import { useDocumentInfo } from 'payload/components/utilities';
 import BatchCredentialListPreview from '../List/BatchCredentialListPreview';
 import { useField } from 'payload/components/forms';
-import { CredentialTemplate } from 'payload/generated-types';
+import { Credential, CredentialTemplate } from 'payload/generated-types';
 import {
     getFieldsFromHandlebarsJsonTemplate,
     getFieldsIntersectionFromHandlebarsJsonTemplate,
@@ -13,6 +13,7 @@ import { AUTOMATIC_FIELDS } from '../../helpers/credential.helpers';
 import CircleCheck from '../svgs/CircleCheck';
 import CircleBang from '../svgs/CircleBang';
 import { dedupe } from '../../helpers/array.helpers';
+import { PaginatedDocs } from 'payload/dist/mongoose/types';
 
 export type UploadCSVProps = {
     formProps: Props;
@@ -27,7 +28,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
     const { value } = useField<string[]>({ path: 'csvFields' });
     const { value: templateId } = useField<string>({ path: 'template' });
 
-    const [data, setData] = useState();
+    const [data, setData] = useState<PaginatedDocs<Credential>>();
     const [fields, setFields] = useState<string[]>(dedupe([...(value ?? []), ...AUTOMATIC_FIELDS]));
     const [templateFields, setTemplateFields] = useState<string[]>([]);
     const [template, setTemplate] = useState<CredentialTemplate | undefined>();
@@ -37,16 +38,17 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
         templateFields
     );
 
-    const fetchBatchCredentials = async () => {
+    const fetchBatchCredentials = async (page = 1) => {
         const res = await fetch('/api/get-batch-credentials', {
             method: 'POST',
-            body: JSON.stringify({ batchId: id }),
+            body: JSON.stringify({ batchId: id, page }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
         });
         if (res.status === 200) {
             const { data } = await res.json();
+
             setData(data);
             console.log('///get batch credentials', data);
         }

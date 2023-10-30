@@ -5,6 +5,7 @@ import { RelationshipProvider } from 'payload/dist/admin/components/views/collec
 import { getTranslation } from 'payload/dist/utilities/getTranslation';
 import { StaggeredShimmers } from 'payload/dist/admin/components/elements/ShimmerEffect';
 import SortColumn from 'payload/dist/admin/components/elements/SortColumn';
+import Paginator from 'payload/dist/admin/components/elements/Paginator';
 import { SelectionProvider } from 'payload/dist/admin/components/views/collections/List/SelectionProvider';
 import formatFilesize from '../../helpers/formatFileSize';
 import Table from '../Table/Table';
@@ -15,14 +16,15 @@ import { Credential } from 'payload/generated-types';
 import { Column } from 'payload/dist/admin/components/elements/Table/types';
 import { Cell } from 'payload/components/views/Cell';
 import ActionsButton from '../ActionsButton';
+import { PaginatedDocs } from 'payload/dist/mongoose/types';
 
 const baseClass = 'collection-list';
 
 const FIELDS_TO_DISPLAY = ['earnerName', 'credentialName', 'emailAddress', 'actionButton'];
 
 type BatchCredentialListPreviewProps = {
-    data: { docs: Credential[]; totalDocs: number | null };
-    refetch: () => Promise<void>;
+    data: PaginatedDocs<Credential>;
+    refetch: (page: number) => Promise<void>;
     readOnly?: boolean;
 };
 
@@ -117,9 +119,36 @@ const BatchCredentialListPreview: React.FC<BatchCredentialListPreviewProps> = ({
                         />
                     )}
                     {data.docs && data.docs.length > 0 && (
-                        <RelationshipProvider>
-                            <Table data={formattedDocs} columns={columns} />
-                        </RelationshipProvider>
+                        <>
+                            <RelationshipProvider>
+                                <Table data={formattedDocs} columns={columns} />
+                            </RelationshipProvider>
+
+                            <div className={`${baseClass}__page-controls`}>
+                                <Paginator
+                                    limit={data.limit}
+                                    totalPages={data.totalPages}
+                                    page={data.page}
+                                    hasPrevPage={data.hasPrevPage}
+                                    hasNextPage={data.hasNextPage}
+                                    prevPage={data.prevPage}
+                                    nextPage={data.nextPage}
+                                    numberOfNeighbors={1}
+                                    onChange={refetch}
+                                />
+                                {data?.totalDocs > 0 && (
+                                    <>
+                                        <div className={`${baseClass}__page-info`}>
+                                            {data.page * data.limit - (data.limit - 1)}-
+                                            {data.totalPages > 1 && data.totalPages !== data.page
+                                                ? data.limit * data.page
+                                                : data.totalDocs}{' '}
+                                            {t('of')} {data.totalDocs}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </>
                     )}
                     {data.docs && data.docs.length === 0 && (
                         <div className={`${baseClass}__no-results`}>
