@@ -310,7 +310,7 @@ const FormSteps = (props: Props) => {
                 }
                 secondaryText="Duplicate & Edit"
                 goBack={currentPage > 0 ? () => goBack(false) : undefined}
-                mainText={currentPage === 4 ? 'Sign & Send' : 'Continue'}
+                mainText={currentPage === 4 ? 'Send' : 'Continue'}
                 quitText={props.readOnly ? 'Quit' : 'Save as Draft & Quit'}
                 quit={() => history.push(`${adminRoute}/collections/credential-batch`)}
             />
