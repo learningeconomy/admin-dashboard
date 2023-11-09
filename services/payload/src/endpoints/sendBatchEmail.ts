@@ -67,10 +67,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
             earnerName: record.earnerName,
             emailAddress: record.emailAddress,
             now: new Date().toISOString(),
-            issuanceDate:
-                (record.extraFields as any)?.awardedDate ??
-                record.extraFields?.['Awarded Date'] ??
-                record.updatedAt,
+            issuanceDate: new Date().toISOString(),
         };
         const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
         return {

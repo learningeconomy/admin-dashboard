@@ -48,10 +48,7 @@ export const getCredentialLinks: PayloadHandler = async (req, res) => {
                 earnerName: credential.earnerName,
                 emailAddress: credential.emailAddress,
                 now: new Date().toISOString(),
-                issuanceDate:
-                    (credential.extraFields as any)?.awardedDate ??
-                    credential.extraFields?.['Awarded Date'] ??
-                    credential.updatedAt,
+                issuanceDate: new Date().toISOString(),
             }
         ) as any as UnsignedVC;
 
