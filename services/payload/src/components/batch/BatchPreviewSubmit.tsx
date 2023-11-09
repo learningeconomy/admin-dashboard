@@ -50,7 +50,7 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
                 Confirmation
             </h2>
             <p className="text-[--theme-text] text-xl font-medium font-inter mb-15">
-                Review and confirm the batch details before sending credentials to earners.
+                Review and confirm the details for this batch before sending credential claim emails to earners. Please make sure the details for your batch are correct before submitting for processing.
             </p>
 
             <Accordion type="single" className="mb-5" defaultValue="batch">
