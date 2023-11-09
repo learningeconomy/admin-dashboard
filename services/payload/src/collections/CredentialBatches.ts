@@ -28,6 +28,24 @@ const CredentialsBatchesCollection: CollectionConfig = {
                 return false;
             }
         },
+        update: async ({ id }) => {
+            try {
+                if (!id) return false;
+
+                const doc = await payload.findByID({ collection: 'credential-batch', id });
+
+                if (!doc) return false;
+
+                return doc.status === CREDENTIAL_BATCH_STATUS.DRAFT;
+            } catch (error) {
+                console.error('Error getting delete permission for credential batch!', {
+                    error,
+                    id,
+                });
+
+                return false;
+            }
+        },
     },
     admin: {
         defaultColumns: ['title', 'id', 'status'],
