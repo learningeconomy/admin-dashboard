@@ -57,7 +57,15 @@ const CredentialsCollection: CollectionConfig = {
         { name: 'credentialName', type: 'text' },
         { name: 'earnerName', type: 'text' },
         { name: 'emailAddress', type: 'email' },
-        { name: 'extraFields', type: 'json' },
+        {
+            name: 'extraFields',
+            type: 'json',
+            label: 'Credential Fields',
+            admin: {
+                description:
+                    'You can edit and update the values for additional credential fields in the editor.',
+            },
+        },
         {
             name: 'status',
             type: 'text',
