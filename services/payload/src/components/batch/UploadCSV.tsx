@@ -149,6 +149,17 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                         </span>
                     </p>
 
+                    {data && fields?.length > 0 && fields?.includes('issuanceDate') && (
+                        <output className="flex gap-2 items-center flex-wrap rounded bg-blue-200 text-black font-roboto px-6 py-2 my-3">
+                            <CircleBang className="w-5 h-5" />
+                            <span>
+                                The field <b>issuanceDate</b> is special field that is populated by
+                                the system, if the CSV contains this field, the values will be
+                                ignored.
+                            </span>
+                        </output>
+                    )}
+
                     <form>
                         <input
                             type={'file'}
