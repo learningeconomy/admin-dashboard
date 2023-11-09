@@ -63,7 +63,7 @@ const CredentialsCollection: CollectionConfig = {
             label: 'Credential Fields',
             admin: {
                 description:
-                    'You can edit and update the values for additional credential fields in the editor.',
+                    'You can edit and update the values for additional credential fields in the editor. Hit the Save button to save your changes.',
             },
         },
         {
