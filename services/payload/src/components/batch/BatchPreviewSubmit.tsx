@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useAllFormFields } from 'payload/components/forms';
-
+import BatchCredentialListPreview from '../List/BatchCredentialListPreview';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
 import { CredentialTemplate } from 'payload/generated-types';
+import { PaginatedDocs } from 'payload/dist/mongoose/types';
+import { useDocumentInfo } from 'payload/components/utilities';
 
 const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSubmit(_props, ref) {
     const [template, setTemplate] = useState<CredentialTemplate | undefined>();
     const [fields] = useAllFormFields();
+    const [credData, setCredData] = useState<PaginatedDocs<Credential>>();
+    const { id } = useDocumentInfo();
+
+    console.log('///BATCH PREVIEW SUBMIT', 'batchid', id);
 
     useEffect(() => {
         if (fields.template.value) {
@@ -18,16 +24,36 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
         }
     }, [fields?.template?.value]);
 
+    const fetchBatchCredentials = async (page = 1) => {
+        const res = await fetch('/api/get-batch-credentials', {
+            method: 'POST',
+            body: JSON.stringify({ batchId: id, page }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        });
+        if (res.status === 200) {
+            const { data } = await res.json();
+
+            setCredData(data);
+            console.log('///get batch credentials', data);
+        }
+    };
+
+    useEffect(() => {
+        fetchBatchCredentials();
+    }, [id]);
+
     return (
         <section className="w-full h-full flex-shrink-0 p-10 overflow-y-auto" ref={ref}>
             <h2 className="mt-5 text-[--theme-text] text-3xl font-semibold mb-5 font-inter">
                 Confirmation
             </h2>
             <p className="text-[--theme-text] text-xl font-medium font-inter mb-15">
-                Review and confirm the batch details before sending credentials to earners.
+                Review and confirm the details for this batch before sending credential claim emails to earners. Please make sure the details for your batch are correct before submitting for processing.
             </p>
 
-            <Accordion type="single" collapsible className="mb-5">
+            <Accordion type="single" className="mb-5" defaultValue="batch">
                 <AccordionItem value="batch">
                     <AccordionTrigger>Batch: {fields.title.value}</AccordionTrigger>
                     <AccordionContent>
@@ -52,7 +78,7 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
                 </AccordionItem>
             </Accordion>
 
-            <Accordion type="single" collapsible className="mb-5">
+            <Accordion type="single" className="mb-5" defaultValue="template">
                 <AccordionItem value="template">
                     <AccordionTrigger>Template: {template?.title}</AccordionTrigger>
                     <AccordionContent>
@@ -74,6 +100,20 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
                             </p>
                         </section>
                     </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+
+            <Accordion type="single" className="mb-5" defaultValue="credentials">
+                <AccordionItem value="credentials">
+                
+                    <AccordionTrigger>Credentials From CSV</AccordionTrigger>
+                    {id && credData && (
+                        <BatchCredentialListPreview
+                            data={credData}
+                            refetch={fetchBatchCredentials}
+                            readOnly={true}
+                        />
+                    )}
                 </AccordionItem>
             </Accordion>
         </section>
