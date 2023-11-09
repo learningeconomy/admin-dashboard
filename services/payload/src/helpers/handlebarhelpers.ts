@@ -1,4 +1,4 @@
-import { AUTOMATIC_FIELDS } from './credential.helpers';
+import { GUARANTEED_FIELDS } from './credential.helpers';
 import { createJsonHandlebars } from './handlebarsJson';
 
 export const HANDLEBAR_TAG_REGEX = /{{[{[]?(.*?)[\]}]?}}/g;
@@ -60,7 +60,7 @@ export const getFieldsIntersectionFromHandlebarsJsonTemplate = (
 };
 
 export const validateBatchCSV = (batchFields: string[], template: string): boolean => {
-    const templateFields = [...getFieldsFromHandlebarsJsonTemplate(template), ...AUTOMATIC_FIELDS];
+    const templateFields = [...getFieldsFromHandlebarsJsonTemplate(template), ...GUARANTEED_FIELDS];
 
     return templateFields.some(field => !batchFields.includes(field));
 };

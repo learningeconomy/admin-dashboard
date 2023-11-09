@@ -7,7 +7,7 @@ import {
     getFieldsFromHandlebarsJsonTemplate,
     getFieldsIntersectionFromHandlebarsJsonTemplate,
 } from '../../helpers/handlebarhelpers';
-import { AUTOMATIC_FIELDS } from '../../helpers/credential.helpers';
+import { GUARANTEED_FIELDS } from '../../helpers/credential.helpers';
 import CircleCheck from '../svgs/CircleCheck';
 import CircleBang from '../svgs/CircleBang';
 import { dedupe } from '../../helpers/array.helpers';
@@ -32,7 +32,7 @@ const ValidateWithCsv: React.FC<ValidateWithCsvProps> = ({ path }) => {
             setTemplateFields(
                 dedupe([
                     ...getFieldsFromHandlebarsJsonTemplate(JSON.stringify(template)),
-                    ...AUTOMATIC_FIELDS,
+                    ...GUARANTEED_FIELDS,
                 ])
             );
         }
@@ -44,7 +44,7 @@ const ValidateWithCsv: React.FC<ValidateWithCsvProps> = ({ path }) => {
             skipEmptyLines: true,
             complete: async results => {
                 if (results?.errors?.length === 0) {
-                    setCsvFields(dedupe([...(results?.meta?.fields ?? []), ...AUTOMATIC_FIELDS]));
+                    setCsvFields(dedupe([...(results?.meta?.fields ?? []), ...GUARANTEED_FIELDS]));
                 }
             },
         });

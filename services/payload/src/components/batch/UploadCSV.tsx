@@ -9,7 +9,7 @@ import {
     getFieldsFromHandlebarsJsonTemplate,
     getFieldsIntersectionFromHandlebarsJsonTemplate,
 } from '../../helpers/handlebarhelpers';
-import { AUTOMATIC_FIELDS, GENERATED_FIELDS } from '../../helpers/credential.helpers';
+import { GUARANTEED_FIELDS, GENERATED_FIELDS } from '../../helpers/credential.helpers';
 import CircleCheck from '../svgs/CircleCheck';
 import CircleBang from '../svgs/CircleBang';
 import { dedupe } from '../../helpers/array.helpers';
@@ -67,7 +67,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
             setTemplateFields(
                 dedupe([
                     ...getFieldsFromHandlebarsJsonTemplate(JSON.stringify(template)),
-                    ...AUTOMATIC_FIELDS,
+                    ...GUARANTEED_FIELDS,
                 ])
             );
         }
