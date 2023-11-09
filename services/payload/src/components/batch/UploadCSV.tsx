@@ -9,7 +9,7 @@ import {
     getFieldsFromHandlebarsJsonTemplate,
     getFieldsIntersectionFromHandlebarsJsonTemplate,
 } from '../../helpers/handlebarhelpers';
-import { AUTOMATIC_FIELDS } from '../../helpers/credential.helpers';
+import { AUTOMATIC_FIELDS, GENERATED_FIELDS } from '../../helpers/credential.helpers';
 import CircleCheck from '../svgs/CircleCheck';
 import CircleBang from '../svgs/CircleBang';
 import { dedupe } from '../../helpers/array.helpers';
@@ -29,7 +29,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
     const { value: templateId } = useField<string>({ path: 'template' });
 
     const [data, setData] = useState<PaginatedDocs<Credential>>();
-    const [fields, setFields] = useState<string[]>(dedupe([...(value ?? []), ...AUTOMATIC_FIELDS]));
+    const [fields, setFields] = useState<string[]>(dedupe([...(value ?? []), ...GENERATED_FIELDS]));
     const [templateFields, setTemplateFields] = useState<string[]>([]);
     const [template, setTemplate] = useState<CredentialTemplate | undefined>();
 
@@ -113,7 +113,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
 
                     if (res.status === 200) {
                         const { data, newBatch } = await res.json();
-                        setFields(dedupe([...(newBatch?.csvFields ?? []), ...AUTOMATIC_FIELDS]));
+                        setFields(dedupe([...(newBatch?.csvFields ?? []), ...GENERATED_FIELDS]));
                         await fetchBatchCredentials();
                         console.log('///create batch creds endpoint test', data);
                     }
@@ -140,8 +140,12 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                         <CircleBang className="w-5 h-5" />
                         <span>
                             You <b>MUST</b> include a valid email address under the column{' '}
-                            <code className="rounded bg-gray-100 p-1">emailAddress</code> for every
-                            entry in the CSV
+                            <code className="rounded bg-gray-100 p-1">emailAddress</code>, a valid
+                            name under the column{' '}
+                            <code className="rounded bg-gray-100 p-1">earnerName</code>, and a valid
+                            credential name under the column{' '}
+                            <code className="rounded bg-gray-100 p-1">credentialName</code> for
+                            every entry in the CSV
                         </span>
                     </p>
 
@@ -169,7 +173,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                 ) : (
                     <output className="flex gap-2 items-center bg-green-200 text-black font-roboto px-6 py-2 my-3">
                         <CircleCheck className="w-5 h-5" />
-                        <span>Template is using all fields that were in the CSV.</span>
+                        <span>CSV contains all fields.</span>
                     </output>
                 ))}
 
@@ -185,7 +189,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                 ) : (
                     <output className="flex gap-2 items-center rounded bg-green-200 text-black font-roboto px-6 py-2 my-3">
                         <CircleCheck className="w-5 h-5" />
-                        <span>CSV contains all fields.</span>
+                        <span>Template is using all fields that were in the CSV.</span>
                     </output>
                 ))}
 
