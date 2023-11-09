@@ -60,7 +60,18 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         const jwt = generateJwtFromId(record?.id);
         const link = `${claimPageBaseUrl}/?token=${jwt}`;
         // replace handlebar variables in email template with record data
-        const mergedRecordWithLink = { ...record, link };
+        const mergedRecordWithLink = {
+            ...(record.extraFields as any),
+            link,
+            credentialName: record.credentialName,
+            earnerName: record.earnerName,
+            emailAddress: record.emailAddress,
+            now: new Date().toISOString(),
+            issuanceDate:
+                (record.extraFields as any)?.awardedDate ??
+                record.extraFields?.['Awarded Date'] ??
+                record.updatedAt,
+        };
         const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
         return {
             credentialId: record.id,
