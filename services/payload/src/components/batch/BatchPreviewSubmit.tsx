@@ -9,8 +9,10 @@ import { useDocumentInfo } from 'payload/components/utilities';
 const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSubmit(_props, ref) {
     const [template, setTemplate] = useState<CredentialTemplate | undefined>();
     const [fields] = useAllFormFields();
-    const [credData, setCredData ] = useState<PaginatedDocs<Credential>>();
+    const [credData, setCredData] = useState<PaginatedDocs<Credential>>();
     const { id } = useDocumentInfo();
+
+    console.log('///BATCH PREVIEW SUBMIT', 'batchid', id);
 
     useEffect(() => {
         if (fields.template.value) {
@@ -21,7 +23,6 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
             setTemplate(undefined);
         }
     }, [fields?.template?.value]);
-
 
     const fetchBatchCredentials = async (page = 1) => {
         const res = await fetch('/api/get-batch-credentials', {
@@ -39,6 +40,9 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
         }
     };
 
+    useEffect(() => {
+        fetchBatchCredentials();
+    }, [id]);
 
     return (
         <section className="w-full h-full flex-shrink-0 p-10 overflow-y-auto" ref={ref}>
@@ -49,7 +53,7 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
                 Review and confirm the batch details before sending credentials to earners.
             </p>
 
-            <Accordion type="single" collapsible className="mb-5">
+            <Accordion type="single" className="mb-5" defaultValue="batch">
                 <AccordionItem value="batch">
                     <AccordionTrigger>Batch: {fields.title.value}</AccordionTrigger>
                     <AccordionContent>
@@ -74,7 +78,7 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
                 </AccordionItem>
             </Accordion>
 
-            <Accordion type="single" collapsible className="mb-5">
+            <Accordion type="single" className="mb-5" defaultValue="template">
                 <AccordionItem value="template">
                     <AccordionTrigger>Template: {template?.title}</AccordionTrigger>
                     <AccordionContent>
@@ -99,15 +103,19 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
                 </AccordionItem>
             </Accordion>
 
-            <section>
-                {id && credData && (
-                    <BatchCredentialListPreview
-                        data={credData}
-                        refetch={fetchBatchCredentials}
-                        readOnly={true}
-                    />
-                )}
-            </section>
+            <Accordion type="single" className="mb-5" defaultValue="credentials">
+                <AccordionItem value="credentials">
+                
+                    <AccordionTrigger>Credentials From CSV</AccordionTrigger>
+                    {id && credData && (
+                        <BatchCredentialListPreview
+                            data={credData}
+                            refetch={fetchBatchCredentials}
+                            readOnly={true}
+                        />
+                    )}
+                </AccordionItem>
+            </Accordion>
         </section>
     );
 });
