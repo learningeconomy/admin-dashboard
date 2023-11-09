@@ -6,15 +6,14 @@ import { generateJwtFromId } from '../helpers/jwtHelpers';
 import Handlebars from 'handlebars';
 import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
 import { CredentialBatch } from 'payload/generated-types';
+import { objectWithoutKey } from '../helpers/credential.helpers';
 
 export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     if (!req.user) throw new Forbidden();
-    console.log('////req?.body', req.body);
+
     //get batch id
     const batchId = req?.body?.batchId;
     const emailTemplateId = req?.body?.emailTemplateId;
-
-    console.log('//emailTemplateId', emailTemplateId);
 
     if (!batchId || !emailTemplateId) return res.sendStatus(400);
     //get email template for batch
@@ -26,13 +25,9 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         locale: 'en',
     });
 
-    console.log('///emailTemplateRecord', emailTemplateRecord);
-
     // email template code
     const emailTemplate = emailTemplateRecord?.emailTemplatesHandlebarsCode;
     if (!emailTemplate) return res.sendStatus(500);
-
-    console.log('///emailTemplate', emailTemplate);
 
     // get all credentials records associated with batchId
     const query = {
@@ -41,7 +36,6 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         },
     };
 
-    console.log('//req body', req?.body);
     const data = await payload.find({
         collection: 'credential', // required
         depth: 2,
@@ -61,7 +55,11 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         const link = `${claimPageBaseUrl}/?token=${jwt}`;
         // replace handlebar variables in email template with record data
         const mergedRecordWithLink = { ...record, link };
-        const parsedHtml = handlebarsTemplate(mergedRecordWithLink);
+        const { otherKeys, deletedKey } = objectWithoutKey(mergedRecordWithLink, 'extraFields');
+        const flattenedRecord = { ...otherKeys, ...deletedKey };
+
+        const parsedHtml = handlebarsTemplate(flattenedRecord);
+
         return {
             credentialId: record.id,
             to: record?.emailAddress,
@@ -77,8 +75,6 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         id: batchId,
         data: { status: CREDENTIAL_BATCH_STATUS.SENDING },
     });
-
-    console.log('///email map', emails);
 
     // get email template for batch and insert data into template
 
