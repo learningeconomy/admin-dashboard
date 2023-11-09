@@ -74,8 +74,8 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
     }, [template]);
 
     useEffect(
-        () => setIsValid(data && fieldsIntersection.missingInCSV.length === 0),
-        [data, fieldsIntersection.missingInCSV.length]
+        () => setIsValid(data?.docs.length > 0 && fieldsIntersection.missingInCSV.length === 0),
+        [data?.docs.length, fieldsIntersection.missingInCSV.length]
     );
 
     // replace this with react-query package...todo
@@ -93,6 +93,13 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                 console.log(results.data);
                 // if no errors and there is data
                 if (results?.data?.length > 0 && results?.errors?.length === 0) {
+                    const allFields = results?.meta?.fields ?? [];
+
+                    // A field only counts if all entries in the CSV actually have it
+                    const includedFields = allFields.filter(field => {
+                        return results?.data.every(result => Boolean(result[field]));
+                    });
+
                     // Send parsed csv object to endpoint to create credential records
                     const res = await fetch('/api/create-batch-credentials', {
                         // Adding method type
@@ -102,7 +109,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                         body: JSON.stringify({
                             batchId: id,
                             credentialRecords: results?.data,
-                            fields: results?.meta?.fields ?? [],
+                            fields: includedFields,
                         }),
                         // Adding headers to the request
                         headers: {
@@ -172,7 +179,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                 </>
             )}
 
-            {data &&
+            {data?.docs.length > 0 &&
                 (fieldsIntersection.missingInCSV.length > 0 ? (
                     <output className="flex gap-2 items-center flex-wrap rounded bg-red-400 text-black font-roboto px-6 py-2 my-3">
                         <CircleBang className="w-5 h-5" />
@@ -188,7 +195,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                     </output>
                 ))}
 
-            {data &&
+            {data?.docs.length > 0 &&
                 (fieldsIntersection.missingInTemplate.length > 0 ? (
                     <output className="flex gap-2 items-center flex-wrap rounded bg-orange-400 text-black font-roboto px-6 py-2 my-3">
                         <CircleBang className="w-5 h-5" />
