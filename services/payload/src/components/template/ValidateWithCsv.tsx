@@ -1,4 +1,5 @@
 import React, { useState, useEffect, ChangeEventHandler } from 'react';
+import { produce } from 'immer';
 import Papa from 'papaparse';
 import { useField } from 'payload/components/forms';
 import Label from 'payload/dist/admin/components/forms/Label';
@@ -7,7 +8,7 @@ import {
     getFieldsFromHandlebarsJsonTemplate,
     getFieldsIntersectionFromHandlebarsJsonTemplate,
 } from '../../helpers/handlebarhelpers';
-import { GUARANTEED_FIELDS } from '../../helpers/credential.helpers';
+import { GENERATED_FIELDS, GUARANTEED_FIELDS } from '../../helpers/credential.helpers';
 import CircleCheck from '../svgs/CircleCheck';
 import CircleBang from '../svgs/CircleBang';
 import { dedupe } from '../../helpers/array.helpers';
@@ -19,7 +20,7 @@ export type ValidateWithCsvProps = {
 const ValidateWithCsv: React.FC<ValidateWithCsvProps> = ({ path }) => {
     const [csvFields, setCsvFields] = useState<string[]>();
     const [templateFields, setTemplateFields] = useState<string[]>([]);
-    const { value: template } = useField<string>({ path });
+    const { value: template } = useField<Record<string, any> | string>({ path });
     const { value: title } = useField<string>({ path: 'title' });
 
     const fieldsIntersection = getFieldsIntersectionFromHandlebarsJsonTemplate(
@@ -29,12 +30,26 @@ const ValidateWithCsv: React.FC<ValidateWithCsvProps> = ({ path }) => {
 
     useEffect(() => {
         if (template) {
-            setTemplateFields(
-                dedupe([
-                    ...getFieldsFromHandlebarsJsonTemplate(JSON.stringify(template)),
-                    ...GUARANTEED_FIELDS,
-                ])
-            );
+            if (typeof template === 'object') {
+                // Remove overridden fields
+                const sanitizedTemplate = produce(template, draft => {
+                    if (draft.id) delete draft.id;
+                    if (draft.issuer?.id) delete draft.issuer.id;
+                    if (draft.credentialSubject?.id) delete draft.credentialSubject.id;
+                    if (draft.issuanceDate) delete draft.issuanceDate;
+                });
+
+                setTemplateFields(
+                    dedupe([
+                        ...getFieldsFromHandlebarsJsonTemplate(JSON.stringify(sanitizedTemplate)),
+                        ...GUARANTEED_FIELDS,
+                    ])
+                );
+            } else {
+                setTemplateFields(
+                    dedupe([...getFieldsFromHandlebarsJsonTemplate(template), ...GUARANTEED_FIELDS])
+                );
+            }
         }
     }, [template]);
 
@@ -51,7 +66,8 @@ const ValidateWithCsv: React.FC<ValidateWithCsvProps> = ({ path }) => {
     };
 
     const generateCsv = () => {
-        const csvContent = templateFields.filter(field => field !== 'now').join(',') + '\n';
+        const csvContent =
+            templateFields.filter(field => !GENERATED_FIELDS.includes(field)).join(',') + '\n';
 
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
 

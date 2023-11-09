@@ -13,6 +13,17 @@ import CircleBang from '../svgs/CircleBang';
 
 const baseClass = 'json-field';
 
+const getOverwrittenFields = (value: Record<string, any>): string[] => {
+    const fields: string[] = [];
+
+    if (value?.id) fields.push('id');
+    if (value?.issuer?.id) fields.push('issuer.id');
+    if (value?.credentialSubject?.id) fields.push('credentialSubject.id');
+    if (value?.issuanceDate) fields.push('issuanceDate');
+
+    return fields;
+};
+
 const JSONField: React.FC<Props> = props => {
     const {
         path: pathFromProps,
@@ -34,7 +45,9 @@ const JSONField: React.FC<Props> = props => {
         [validate, required, jsonError]
     );
 
-    const { value, initialValue, showError, setValue, errorMessage } = useField<string>({
+    const { value, initialValue, showError, setValue, errorMessage } = useField<{
+        value: Record<string, any>;
+    }>({
         path,
         validate: memoizedValidate,
         condition,
@@ -69,6 +82,8 @@ const JSONField: React.FC<Props> = props => {
         .filter(Boolean)
         .join(' ');
 
+    const overwrittenFields = getOverwrittenFields(value);
+
     return (
         <div
             className={classes}
@@ -90,6 +105,20 @@ const JSONField: React.FC<Props> = props => {
                     <code className="rounded bg-gray-100 p-1">issuanceDate</code>
                 </span>
             </p>
+            {overwrittenFields.length > 0 && (
+                <p className="flex gap-2 items-center flex-wrap rounded bg-orange-400 text-black font-roboto px-6 py-2 my-3">
+                    <CircleBang className="w-5 h-5" />
+                    <span>
+                        <b>Warning:</b> You are using the following fields that will be overwritten:{' '}
+                        {overwrittenFields.map((field, index) => (
+                            <>
+                                <code className="rounded bg-gray-100 p-1">{field}</code>
+                                {index === overwrittenFields.length - 1 ? '' : ', '}
+                            </>
+                        ))}
+                    </span>
+                </p>
+            )}
             <CodeEditor
                 options={editorOptions}
                 defaultLanguage="json"
