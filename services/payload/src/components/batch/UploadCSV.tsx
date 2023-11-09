@@ -154,7 +154,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                             <CircleBang className="w-5 h-5" />
                             <span>
                                 The field <b>issuanceDate</b> is special field that is populated by
-                                the system, if the CSV contains this field, the values will be
+                                the system; if the CSV contains this field, the values will be
                                 ignored.
                             </span>
                         </output>
