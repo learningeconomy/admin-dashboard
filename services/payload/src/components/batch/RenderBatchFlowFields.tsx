@@ -31,6 +31,9 @@ import {
 import HorizontalNavHeader from '../navigation/HorizontalNavHeader';
 import HorizontalNavFooter from '../navigation/HorizontalNavFooter';
 import { useConfig, useDocumentInfo } from 'payload/components/utilities';
+import { dedupe } from '../../helpers/array.helpers';
+import { GENERATED_FIELDS } from '../../helpers/credential.helpers';
+import SelectEmailTemplate from './SelectEmailTemplate';
 // hardcoded for now, but could be perhaps be defined in the database
 const MAP_FIELDS_TO_STEPS = {
     1: ['title', 'description', 'internalNotes'],
@@ -254,8 +257,13 @@ const FormSteps = (props: Props) => {
     // and the `dispatchFields` method is usable to send field state up to the form
     const [fields, _dispatchFields] = useAllFormFields();
 
+    const [csvFields, setCsvFields] = useState<string[]>(
+        dedupe([...((fields.csvFields?.value as any) ?? []), ...GENERATED_FIELDS])
+    );
+
     const [isValid, setIsValid] = useState(false);
     const [csvStepIsValid, setCsvStepIsValid] = useState(false);
+    const [emailStepIsValid, setEmailStepIsValid] = useState(false);
 
     const valuesWithValidators = getFieldValuesWithValidators(
         currentPage + 1,
@@ -263,6 +271,20 @@ const FormSteps = (props: Props) => {
         collection.fields
     );
     const values = valuesWithValidators.map(({ value }) => value);
+
+    const fetchCsvFields = async () => {
+        const response = await fetch('/api/get-batch-fields', {
+            method: 'POST',
+            body: JSON.stringify({ id }),
+            headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        });
+
+        if (response.status === 200) {
+            const newFields = await response.json();
+
+            setCsvFields(dedupe([...newFields, ...GENERATED_FIELDS]));
+        }
+    };
 
     useEffect(() => {
         isStepValid(valuesWithValidators).then(setIsValid);
@@ -305,8 +327,20 @@ const FormSteps = (props: Props) => {
             <section className="h-full w-full snap-mandatory snap-x overflow-x-hidden flex-shrink pt-12 flex md:pt-0">
                 <RenderSlide ref={refs[0]} formProps={props} step={1} />
                 <RenderSlide ref={refs[1]} formProps={props} step={2} />
-                <UploadCSV ref={refs[2]} formProps={props} setIsValid={setCsvStepIsValid} />
-                <RenderSlide ref={refs[3]} formProps={props} step={4} />
+                <UploadCSV
+                    ref={refs[2]}
+                    formProps={props}
+                    setIsValid={setCsvStepIsValid}
+                    csvFields={csvFields}
+                    setCsvFields={setCsvFields}
+                    refetchCsvFields={fetchCsvFields}
+                />
+                <SelectEmailTemplate
+                    ref={refs[3]}
+                    formProps={props}
+                    setIsValid={setEmailStepIsValid}
+                    csvFields={csvFields}
+                />
                 <BatchPreviewSubmit ref={refs[4]} />
             </section>
 
@@ -323,6 +357,7 @@ const FormSteps = (props: Props) => {
                 canDoMainAction={
                     isValid &&
                     (currentPage !== 2 || csvStepIsValid) &&
+                    (currentPage !== 3 || emailStepIsValid) &&
                     (!props.readOnly || currentPage !== 4)
                 }
                 secondaryText="Duplicate & Edit"

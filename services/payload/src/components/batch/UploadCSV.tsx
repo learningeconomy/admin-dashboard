@@ -18,55 +18,39 @@ import { PaginatedDocs } from 'payload/dist/mongoose/types';
 export type UploadCSVProps = {
     formProps: Props;
     setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
+    csvFields: string[];
+    setCsvFields: React.Dispatch<React.SetStateAction<string[]>>;
+    refetchCsvFields: () => Promise<void>;
 };
 
 const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadCSV(
-    { formProps, setIsValid },
+    { formProps, setIsValid, csvFields, refetchCsvFields, setCsvFields },
     ref
 ) {
     const { id } = useDocumentInfo();
-    const { value } = useField<string[]>({ path: 'csvFields' });
     const { value: templateId } = useField<string>({ path: 'template' });
 
-    const [data, setData] = useState<PaginatedDocs<Credential>>();
-    const [fields, setFields] = useState<string[]>(dedupe([...(value ?? []), ...GENERATED_FIELDS]));
+    const [credentialData, setCredentialData] = useState<PaginatedDocs<Credential>>();
     const [templateFields, setTemplateFields] = useState<string[]>([]);
     const [template, setTemplate] = useState<CredentialTemplate | undefined>();
 
     const fieldsIntersection = getFieldsIntersectionFromHandlebarsJsonTemplate(
-        fields,
+        csvFields,
         templateFields
     );
 
     const fetchBatchCredentials = async (page = 1) => {
-        const [credentials, fields] = await Promise.all([
-            fetch('/api/get-batch-credentials', {
-                method: 'POST',
-                body: JSON.stringify({ batchId: id, page }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-            }),
-            fetch('/api/get-batch-fields', {
-                method: 'POST',
-                body: JSON.stringify({ id }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-            }),
-        ]);
+        refetchCsvFields();
+        const response = await fetch('/api/get-batch-credentials', {
+            method: 'POST',
+            body: JSON.stringify({ batchId: id, page }),
+            headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        });
 
-        if (credentials.status === 200) {
-            const { data } = await credentials.json();
+        if (response.status === 200) {
+            const { data } = await response.json();
 
-            setData(data);
-            console.log('///get batch credentials', data);
-        }
-
-        if (fields.status === 200) {
-            const newFields = await fields.json();
-
-            setFields(dedupe([...newFields, ...GENERATED_FIELDS]));
+            setCredentialData(data);
         }
     };
 
@@ -90,8 +74,11 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
     }, [template]);
 
     useEffect(
-        () => setIsValid(data?.docs.length > 0 && fieldsIntersection.missingInCSV.length === 0),
-        [data?.docs.length, fieldsIntersection.missingInCSV.length]
+        () =>
+            setIsValid(
+                credentialData?.docs.length > 0 && fieldsIntersection.missingInCSV.length === 0
+            ),
+        [credentialData?.docs.length, fieldsIntersection.missingInCSV.length]
     );
 
     // replace this with react-query package...todo
@@ -99,14 +86,11 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
         fetchBatchCredentials();
     }, []);
 
-    const handleOnChange = e => {
+    const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = e => {
         Papa.parse(e.target.files[0], {
             header: true,
             skipEmptyLines: true,
             complete: async results => {
-                console.log('///parsed results', results);
-
-                console.log(results.data);
                 // if no errors and there is data
                 if (results?.data?.length > 0 && results?.errors?.length === 0) {
                     const allFields = results?.meta?.fields ?? [];
@@ -128,17 +112,13 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                             fields: includedFields,
                         }),
                         // Adding headers to the request
-                        headers: {
-                            'Content-type': 'application/json; charset=UTF-8',
-                        },
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' },
                     });
-                    console.log('///res', res);
 
                     if (res.status === 200) {
-                        const { data, newBatch } = await res.json();
-                        setFields(dedupe([...(newBatch?.csvFields ?? []), ...GENERATED_FIELDS]));
+                        const { newBatch } = await res.json();
+                        setCsvFields(dedupe([...(newBatch?.csvFields ?? []), ...GENERATED_FIELDS]));
                         await fetchBatchCredentials();
-                        console.log('///create batch creds endpoint test', data);
                     }
                 }
             },
@@ -172,9 +152,9 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                         </span>
                     </p>
 
-                    {data?.docs.length > 0 &&
-                        fields?.length > 0 &&
-                        fields?.includes('issuanceDate') && (
+                    {credentialData?.docs.length > 0 &&
+                        csvFields?.length > 0 &&
+                        csvFields?.includes('issuanceDate') && (
                             <output className="flex gap-2 items-center flex-wrap rounded bg-blue-200 text-black font-roboto px-6 py-2 my-3">
                                 <CircleBang className="w-5 h-5" />
                                 <span>
@@ -197,7 +177,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                 </>
             )}
 
-            {data?.docs.length > 0 &&
+            {credentialData?.docs.length > 0 &&
                 (fieldsIntersection.missingInCSV.length > 0 ? (
                     <output className="flex gap-2 items-center flex-wrap rounded bg-red-400 text-black font-roboto px-6 py-2 my-3">
                         <CircleBang className="w-5 h-5" />
@@ -213,7 +193,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                     </output>
                 ))}
 
-            {data?.docs.length > 0 &&
+            {credentialData?.docs.length > 0 &&
                 (fieldsIntersection.missingInTemplate.length > 0 ? (
                     <output className="flex gap-2 items-center flex-wrap rounded bg-orange-400 text-black font-roboto px-6 py-2 my-3">
                         <CircleBang className="w-5 h-5" />
@@ -230,9 +210,9 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                 ))}
 
             <section>
-                {id && data && (
+                {id && credentialData && (
                     <BatchCredentialListPreview
-                        data={data}
+                        data={credentialData}
                         refetch={fetchBatchCredentials}
                         readOnly={formProps.readOnly}
                     />
