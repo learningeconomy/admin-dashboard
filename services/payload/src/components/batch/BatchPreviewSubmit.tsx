@@ -45,12 +45,14 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
     }, [id]);
 
     return (
-        <section className="w-full h-full flex-shrink-0 p-10 overflow-y-auto" ref={ref}>
+        <section className="w-full h-full snap-start flex-shrink-0 p-10 overflow-y-auto" ref={ref}>
             <h2 className="mt-5 text-[--theme-text] text-3xl font-semibold mb-5 font-inter">
                 Confirmation
             </h2>
             <p className="text-[--theme-text] text-xl font-medium font-inter mb-15">
-                Review and confirm the details for this batch before sending credential claim emails to earners. Please make sure the details for your batch are correct before submitting for processing.
+                Review and confirm the details for this batch before sending credential claim emails
+                to earners. Please make sure the details for your batch are correct before
+                submitting for processing.
             </p>
 
             <Accordion type="single" className="mb-5" defaultValue="batch">
@@ -105,7 +107,6 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
 
             <Accordion type="single" className="mb-5" defaultValue="credentials">
                 <AccordionItem value="credentials">
-                
                     <AccordionTrigger>Credentials From CSV</AccordionTrigger>
                     {id && credData && (
                         <BatchCredentialListPreview

@@ -223,7 +223,7 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
     return (
         <section
             ref={ref}
-            className="batch-flow-slide w-full h-full flex-shrink-0 px-20 pb-10 pt-15 overflow-y-auto"
+            className="batch-flow-slide snap-start w-full h-full flex-shrink-0 px-20 pb-10 pt-15 overflow-y-auto"
         >
             {getTitle()}
             {renderFields}
@@ -285,7 +285,7 @@ const FormSteps = (props: Props) => {
 
     return (
         <>
-            <section className="h-full w-full overflow-x-hidden flex-shrink pt-12 flex md:pt-0">
+            <section className="h-full w-full snap-mandatory snap-x overflow-x-hidden flex-shrink pt-12 flex md:pt-0">
                 <RenderSlide ref={refs[0]} formProps={props} step={1} />
                 <RenderSlide ref={refs[1]} formProps={props} step={2} />
                 <UploadCSV ref={refs[2]} formProps={props} setIsValid={setCsvStepIsValid} />
