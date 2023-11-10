@@ -5,6 +5,7 @@ import ActionsButton from '../components/ActionsButton';
 import CredentialStatusCell from '../components/credential/CredentialStatusCell';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
 import DefaultListView from '../components/List/DefaultListView';
+import CreateCredential from '../components/credential/CreateCredential';
 
 const CredentialsCollection: CollectionConfig = {
     slug: 'credential',
@@ -13,7 +14,7 @@ const CredentialsCollection: CollectionConfig = {
         useAsTitle: 'credentialName',
         disableDuplicate: true,
         hideAPIURL: true,
-        components: { views: { List: DefaultListView } },
+        components: { views: { List: DefaultListView, Edit: CreateCredential } },
     },
     access: {
         create: () => false,

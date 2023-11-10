@@ -62,7 +62,7 @@ const ActionsButton: React.FC<
             type: 'link',
             label: 'View Details',
             icon: <Eye />,
-            url: `${adminRoute}/collections/credential/${rowData.id}`,
+            url: `${adminRoute}/collections/credential/${rowData.id}?fromBatchPage=true`,
         },
     ];
 
