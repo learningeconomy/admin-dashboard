@@ -39,18 +39,34 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
     );
 
     const fetchBatchCredentials = async (page = 1) => {
-        const res = await fetch('/api/get-batch-credentials', {
-            method: 'POST',
-            body: JSON.stringify({ batchId: id, page }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-        });
-        if (res.status === 200) {
-            const { data } = await res.json();
+        const [credentials, fields] = await Promise.all([
+            fetch('/api/get-batch-credentials', {
+                method: 'POST',
+                body: JSON.stringify({ batchId: id, page }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }),
+            fetch('/api/get-batch-fields', {
+                method: 'POST',
+                body: JSON.stringify({ id }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            }),
+        ]);
+
+        if (credentials.status === 200) {
+            const { data } = await credentials.json();
 
             setData(data);
             console.log('///get batch credentials', data);
+        }
+
+        if (fields.status === 200) {
+            const newFields = await fields.json();
+
+            setFields(dedupe([...newFields, ...GENERATED_FIELDS]));
         }
     };
 

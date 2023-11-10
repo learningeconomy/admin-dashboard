@@ -14,6 +14,7 @@ import SideNav from './components/SideNav/SideNav';
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
+import { getBatchFields } from './endpoints/getBatchFields';
 import { sendEmail } from './endpoints/sendEmail';
 import { getCredential } from './endpoints/getCredential';
 import { sendBatchEmail } from './endpoints/sendBatchEmail';
@@ -97,6 +98,7 @@ export default buildConfig({
         { method: 'post', path: '/send-batch-email', handler: sendBatchEmail },
         { method: 'get', path: '/payload-version', handler: readPayloadVersion },
         { method: 'post', path: '/get-batch-credentials', handler: getBatchCredentials },
+        { method: 'post', path: '/get-batch-fields', handler: getBatchFields },
         { method: 'post', path: '/create-batch-credentials', handler: createBatchCredentials },
         // This is a security hole that needs to go away when we're done testing!!!
         // Commented out to close hole. If you need to generate a link for a cred, just hit the
