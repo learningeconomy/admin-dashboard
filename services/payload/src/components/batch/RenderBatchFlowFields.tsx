@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import RenderCustomComponent from 'payload/dist/admin/components/utilities/RenderCustomComponent';
 import useIntersect from 'payload/dist/admin/hooks/useIntersect';
@@ -232,6 +232,7 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
 });
 
 const FormSteps = (props: Props) => {
+    const location = useLocation();
     const history = useHistory();
 
     const { submit } = useForm();
@@ -266,6 +267,22 @@ const FormSteps = (props: Props) => {
     useEffect(() => {
         isStepValid(valuesWithValidators).then(setIsValid);
     }, [values.join(',')]);
+
+    // This effect listens for changes in the URL and updates the currentPage state
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const page = searchParams.get('page');
+
+        if (page && page !== currentPage.toString()) scrollTo[Number(page)]?.(false);
+    }, [location.search, currentPage]);
+
+    // This effect updates the URL whenever currentPage changes
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+
+        searchParams.set('page', currentPage.toString());
+        setTimeout(() => history.replace({ search: searchParams.toString() }), 300);
+    }, [currentPage, history, location.search]);
 
     const handleNextStep = async () => {
         if (currentPage === 4 || !isValid) return submit();

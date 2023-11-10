@@ -12,6 +12,7 @@ const CredentialsCollection: CollectionConfig = {
         defaultColumns: ['credentialName', 'id', 'status', 'actionButton'],
         useAsTitle: 'credentialName',
         disableDuplicate: true,
+        hideAPIURL: true,
         components: { views: { List: DefaultListView } },
     },
     access: {
