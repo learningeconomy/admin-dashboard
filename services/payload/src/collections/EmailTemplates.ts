@@ -1,5 +1,8 @@
 import { CollectionConfig } from 'payload/types';
+import CreateEmailTemplate from '../components/email-template/CreateEmailTemplate';
+import CodeEditorWithCsvValidation from '../components/email-template/CodeEditorWithCsvValidation';
 import EmailPageDescription from '../components/Email/EmailPageDescription';
+
 const placeholderEmailData = `
   <html>
   <body>
@@ -19,6 +22,11 @@ const EmailTemplatesCollection: CollectionConfig = {
         defaultColumns: ['title', 'id', 'status'],
         description: EmailPageDescription,
         useAsTitle: 'title',
+        components: {
+            views: {
+                Edit: CreateEmailTemplate,
+            },
+        },
     },
     versions: {
         drafts: true,
@@ -55,6 +63,9 @@ const EmailTemplatesCollection: CollectionConfig = {
             type: 'code', // required
             admin: {
                 language: 'handlebars',
+                description:
+                    'Write an email template using Handlebars syntax that will be used as the body when sending emails.',
+                components: { Field: CodeEditorWithCsvValidation },
             },
             defaultValue: placeholderEmailData,
             required: true,
