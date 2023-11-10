@@ -268,13 +268,13 @@ const FormSteps = (props: Props) => {
         isStepValid(valuesWithValidators).then(setIsValid);
     }, [values.join(',')]);
 
-    // This effect listens for changes in the URL and updates the currentPage state
+    // This effect sets the current page on mount
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const page = searchParams.get('page');
 
         if (page && page !== currentPage.toString()) scrollTo[Number(page)]?.(false);
-    }, [location.search, currentPage]);
+    }, []);
 
     // This effect updates the URL whenever currentPage changes
     useEffect(() => {
