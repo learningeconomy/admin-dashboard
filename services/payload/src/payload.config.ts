@@ -46,7 +46,7 @@ export default buildConfig({
         fromName: 'Learning Economy',
         fromAddress: 'beestontaylor@learningeconomy.io',
     },
-    serverURL: 'http://localhost:3000',
+    serverURL: process.env.SERVER_URL || 'http://localhost:3000',
     cors: '*',
     admin: {
         css: require.resolve('./components/global.scss'),

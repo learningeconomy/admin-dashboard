@@ -78,6 +78,9 @@ Located inside `services/payload`, this service provides the dashboard functiona
         - `SMTP_HOST`: The SMTP host to use for sending emails
         - `SMTP_USER`: The SMTP user to use for sending emails
         - `SMTP_PASS`: The SMTP password to use for sending emails
+        - `EMAIL_FROM`: The Email From to use by default when sending emails
+        - `CLAIM_PAGE_URL`: If running locally, the sample value of `http://localhost:8080` will be correct. Otherwise, this will be the URL of your Claim Page!
+        - `SERVER_URL`: If running locally, the sample value of `http://localhost:3000` will be correct. Otherwise, this will be the URL of your Dashboard API!
 
 ### DCC Services
 
