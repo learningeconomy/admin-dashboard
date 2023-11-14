@@ -9,7 +9,7 @@ const TemplatePageDescription: React.FC = () => {
         routes: { admin: adminRoute },
     } = useConfig();
 
-    const [count, setCount] = useState<number | undefined>();
+    const [count, setCount] = useState<number | undefined>(0);
 
     const fetchBatchCredentials = async (page = 1) => {
         const res = await fetch('/api/get-collection-count', {
@@ -38,11 +38,10 @@ const TemplatePageDescription: React.FC = () => {
 
     return (
         <div className="header_wrapper">
-            {count && (
-                <p className="header_paragraph">
-                    <span className="header_number">{count}</span> Published Templates
-                </p>
-            )}
+            <p className="header_paragraph">
+                <span className="header_number">{count}</span> Published Templates
+            </p>
+
             <Link
                 className="header_template_button"
                 activeClassName="active"

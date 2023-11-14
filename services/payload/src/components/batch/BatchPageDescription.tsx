@@ -8,7 +8,7 @@ const BatchPageDescription: React.FC = () => {
         routes: { admin: adminRoute },
     } = useConfig();
 
-    const [count, setCount] = useState<number | undefined>();
+    const [count, setCount] = useState<number | undefined>(0);
 
     const fetchBatchCredentials = async (page = 1) => {
         const res = await fetch('/api/get-collection-count', {
@@ -37,11 +37,7 @@ const BatchPageDescription: React.FC = () => {
         <div>
             <div className="header_wrapper">
                 <p className="header_paragraph">
-                    {count && (
-                        <>
-                            <span className="header_number">{count}</span> Issued Batches
-                        </>
-                    )}
+                    <span className="header_number">{count}</span> Issued Batches
                 </p>
                 <Link
                     className="header_button"
