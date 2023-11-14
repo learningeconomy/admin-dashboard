@@ -60,7 +60,7 @@ const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
                 </Flipped>
             )}
 
-            {showAutosave && (
+            {showAutosave ? (
                 <Flipped flipId="autosave">
                     <span className="flex flex-grow font-inter text-slate-700 text-base dark:text-slate-300">
                         <Autosave
@@ -69,6 +69,10 @@ const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
                             id={id}
                         />
                     </span>
+                </Flipped>
+            ) : (
+                <Flipped flipId="autosave">
+                    <span className="flex flex-grow font-inter text-slate-700 text-base dark:text-slate-300" />
                 </Flipped>
             )}
 

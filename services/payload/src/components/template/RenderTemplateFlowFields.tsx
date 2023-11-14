@@ -140,11 +140,15 @@ const FormSteps = (props: Props) => {
             </section>
 
             <HorizontalNavFooter
-                mainAction={() => submit()}
+                mainAction={() =>
+                    submit().then(() =>
+                        history.push(`${adminRoute}/collections/credential-template`)
+                    )
+                }
                 canDoMainAction
-                secondaryText="Duplicate & Edit"
-                mainText="Publish"
-                quitText="Save as Draft & Quit"
+                mainText="Save and Quit"
+                quitText="Quit Without Saving"
+                showAutosave={false}
                 quit={() => history.push(`${adminRoute}/collections/credential-template`)}
             />
         </>
