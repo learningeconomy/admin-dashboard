@@ -8,13 +8,14 @@ import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
 export const getCollectionCount: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
     const collectionName = req?.body?.collectionName;
+    const payloadQuery = req?.body?.query;
     console.log('///collectioNName', req?.body);
     try {
         const data = await payload.find({
             collection: collectionName, // required
             depth: 1,
             pagination: false,
-            where: { status: { equals: CREDENTIAL_BATCH_STATUS.SENT } }, // pass a `where` query here
+            where: payloadQuery, // pass a `where` query here
             sort: '-title',
             locale: 'en',
         });
