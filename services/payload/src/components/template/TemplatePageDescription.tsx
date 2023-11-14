@@ -34,8 +34,6 @@ const TemplatePageDescription: React.FC = () => {
         fetchBatchCredentials();
     }, []);
 
-    console.log('///count', count);
-
     return (
         <div className="header_wrapper">
             <p className="header_paragraph">
