@@ -20,17 +20,16 @@ export type UploadCSVProps = {
     setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
     csvFields: string[];
     setCsvFields: React.Dispatch<React.SetStateAction<string[]>>;
-    refetchCsvFields: () => Promise<void>;
+    refetchBatchCredentials: () => Promise<void>;
+    credentialData: PaginatedDocs<Credential>;
 };
 
 const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadCSV(
-    { formProps, setIsValid, csvFields, refetchCsvFields, setCsvFields },
+    { formProps, setIsValid, csvFields, setCsvFields, refetchBatchCredentials, credentialData },
     ref
 ) {
     const { id } = useDocumentInfo();
     const { value: templateId } = useField<string>({ path: 'template' });
-
-    const [credentialData, setCredentialData] = useState<PaginatedDocs<Credential>>();
     const [templateFields, setTemplateFields] = useState<string[]>([]);
     const [template, setTemplate] = useState<CredentialTemplate | undefined>();
 
@@ -38,21 +37,6 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
         csvFields,
         templateFields
     );
-
-    const fetchBatchCredentials = async (page = 1) => {
-        refetchCsvFields();
-        const response = await fetch('/api/get-batch-credentials', {
-            method: 'POST',
-            body: JSON.stringify({ batchId: id, page }),
-            headers: { 'Content-type': 'application/json; charset=UTF-8' },
-        });
-
-        if (response.status === 200) {
-            const { data } = await response.json();
-
-            setCredentialData(data);
-        }
-    };
 
     useEffect(() => {
         if (templateId) {
@@ -82,11 +66,6 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
             ),
         [credentialData?.docs.length, fieldsIntersection.missingInCSV.length]
     );
-
-    // replace this with react-query package...todo
-    useEffect(() => {
-        fetchBatchCredentials();
-    }, []);
 
     const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = e => {
         Papa.parse(e.target.files[0], {
@@ -120,7 +99,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                     if (res.status === 200) {
                         const { newBatch } = await res.json();
                         setCsvFields(dedupe([...(newBatch?.csvFields ?? []), ...GENERATED_FIELDS]));
-                        await fetchBatchCredentials();
+                        await refetchBatchCredentials();
                     }
                 }
             },
@@ -215,7 +194,7 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                 {id && credentialData && (
                     <BatchCredentialListPreview
                         data={credentialData}
-                        refetch={fetchBatchCredentials}
+                        refetch={refetchBatchCredentials}
                         readOnly={formProps.readOnly}
                     />
                 )}

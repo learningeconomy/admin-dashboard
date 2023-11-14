@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { PaginatedDocs } from 'payload/dist/mongoose/types';
+import { Credential } from 'payload/generated-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import RenderCustomComponent from 'payload/dist/admin/components/utilities/RenderCustomComponent';
@@ -15,12 +17,6 @@ import { useAllFormFields, useForm } from 'payload/components/forms';
 import { Fields } from 'payload/dist/admin/components/forms/Form/types';
 import BatchPreviewSubmit from './BatchPreviewSubmit';
 
-import './batch.scss';
-
-const baseClass = 'render-fields';
-
-const intersectionObserverOptions = { rootMargin: '1000px' };
-
 import UploadCSV from './UploadCSV';
 import useHorizontalPages from '../../hooks/useHorizontalPages';
 import {
@@ -34,6 +30,13 @@ import { useConfig, useDocumentInfo } from 'payload/components/utilities';
 import { dedupe } from '../../helpers/array.helpers';
 import { GENERATED_FIELDS } from '../../helpers/credential.helpers';
 import SelectEmailTemplate from './SelectEmailTemplate';
+
+import './batch.scss';
+
+const baseClass = 'render-fields';
+
+const intersectionObserverOptions = { rootMargin: '1000px' };
+
 // hardcoded for now, but could be perhaps be defined in the database
 const MAP_FIELDS_TO_STEPS = {
     1: ['title', 'description', 'internalNotes'],
@@ -262,6 +265,7 @@ const FormSteps = (props: Props) => {
     );
 
     const [isValid, setIsValid] = useState(false);
+    const [credentialData, setCredentialData] = useState<PaginatedDocs<Credential>>();
     const [csvStepIsValid, setCsvStepIsValid] = useState(false);
     const [emailStepIsValid, setEmailStepIsValid] = useState(false);
 
@@ -285,6 +289,25 @@ const FormSteps = (props: Props) => {
             setCsvFields(dedupe([...newFields, ...GENERATED_FIELDS]));
         }
     };
+
+    const fetchBatchCredentials = async (page = 1) => {
+        fetchCsvFields();
+        const response = await fetch('/api/get-batch-credentials', {
+            method: 'POST',
+            body: JSON.stringify({ batchId: id, page }),
+            headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        });
+
+        if (response.status === 200) {
+            const { data } = await response.json();
+
+            setCredentialData(data);
+        }
+    };
+
+    useEffect(() => {
+        fetchBatchCredentials();
+    }, []);
 
     useEffect(() => {
         isStepValid(valuesWithValidators).then(setIsValid);
@@ -333,7 +356,8 @@ const FormSteps = (props: Props) => {
                     setIsValid={setCsvStepIsValid}
                     csvFields={csvFields}
                     setCsvFields={setCsvFields}
-                    refetchCsvFields={fetchCsvFields}
+                    refetchBatchCredentials={fetchBatchCredentials}
+                    credentialData={credentialData}
                 />
                 <SelectEmailTemplate
                     ref={refs[3]}
@@ -341,7 +365,11 @@ const FormSteps = (props: Props) => {
                     setIsValid={setEmailStepIsValid}
                     csvFields={csvFields}
                 />
-                <BatchPreviewSubmit ref={refs[4]} />
+                <BatchPreviewSubmit
+                    ref={refs[4]}
+                    credentialData={credentialData}
+                    refetchBatchCredentials={fetchBatchCredentials}
+                />
             </section>
 
             <HorizontalNavHeader
