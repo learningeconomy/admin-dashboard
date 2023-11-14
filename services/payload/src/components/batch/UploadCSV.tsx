@@ -66,7 +66,9 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
         if (template) {
             setTemplateFields(
                 dedupe([
-                    ...getFieldsFromHandlebarsJsonTemplate(JSON.stringify(template)),
+                    ...getFieldsFromHandlebarsJsonTemplate(
+                        JSON.stringify(template.credentialTemplateJson || {})
+                    ),
                     ...GUARANTEED_FIELDS,
                 ])
             );

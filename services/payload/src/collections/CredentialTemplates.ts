@@ -6,7 +6,7 @@ import CodeEditorWithCsvValidation from '../components/template/CodeEditorWithCs
 const CredentialsTemplatesCollection: CollectionConfig = {
     slug: 'credential-template',
     admin: {
-        defaultColumns: ['title', 'id', 'status'],
+        defaultColumns: ['title', 'id'],
         useAsTitle: 'title',
         description: TemplatePageDescription,
         components: {
@@ -14,9 +14,6 @@ const CredentialsTemplatesCollection: CollectionConfig = {
                 Edit: CreateTemplate,
             },
         },
-    },
-    versions: {
-        drafts: true,
     },
     fields: [
         {
