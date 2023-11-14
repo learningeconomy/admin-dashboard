@@ -33,7 +33,7 @@ const BatchPreviewSubmit = React.forwardRef<HTMLElement>(function BatchPreviewSu
             },
         });
         if (res.status === 200) {
-            const { data } = await res.json();
+            const { count } = await res.json();
 
             setCredData(data);
             console.log('///get batch credentials', data);

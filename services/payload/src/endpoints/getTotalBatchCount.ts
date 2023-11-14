@@ -3,10 +3,10 @@ import payload from 'payload';
 
 import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
 
-export const getTotalBatchCount: PayloadHandler = async(req, res) => {
-    if (!req.user || req?.body?.collectionName) return res.sendStatus(401);
+export const getTotalBatchCount: PayloadHandler = async (req, res) => {
+    if (!req.user) return res.sendStatus(401);
 
-    const collectionName = req?.body;
+    const collectionName = req?.body?.collectionName;
     console.log('///collectioNName', req?.body);
 
     try {
@@ -16,7 +16,7 @@ export const getTotalBatchCount: PayloadHandler = async(req, res) => {
             collection: collectionName, // required
             depth: 1,
             pagination: false,
-            where: { status: { equals: CREDENTIAL_BATCH_STATUS.SENT} }, // pass a `where` query here
+            where: { status: { equals: CREDENTIAL_BATCH_STATUS.SENT } }, // pass a `where` query here
             sort: '-title',
             locale: 'en',
         });
