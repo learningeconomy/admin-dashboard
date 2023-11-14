@@ -6,8 +6,8 @@ export const totalSentBatchesQuery = { status: { equals: CREDENTIAL_BATCH_STATUS
 
 //payload localAPI query object for getting all credential templates that are published status
 export const totalCredentialTemplatePublishedQuery = {
-    _status: {
-        equals: "published",
+    title: {
+        exists: true
     },
 };
 
