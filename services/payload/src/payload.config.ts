@@ -18,7 +18,7 @@ import { getBatchFields } from './endpoints/getBatchFields';
 import { sendEmail } from './endpoints/sendEmail';
 import { getCredential } from './endpoints/getCredential';
 import { sendBatchEmail } from './endpoints/sendBatchEmail';
-import { getTotalBatchCount } from './endpoints/getTotalBatchCount';
+import { getCollectionCount } from './endpoints/getCollectionCount';
 
 import { getCredentialLinks } from './endpoints/getCredentialLinks';
 import { forwardExchangeRequest } from './endpoints/exchange';
@@ -106,7 +106,7 @@ export default buildConfig({
         // Resend button and check browser logs!
         // { method: 'get', path: '/get-credential-jwt', handler: getCredentialJwt },
         { method: 'get', path: '/get-credential', handler: getCredential },
-        { method: 'post', path: '/get-sent-batch-count', handler: getTotalBatchCount },
+        { method: 'post', path: '/get-collection-count', handler: getCollectionCount },
         { method: 'get', path: '/get-credential-links', handler: getCredentialLinks },
         { method: 'post', path: '/exchange/:a/:b/:token', handler: forwardExchangeRequest },
         { method: 'post', path: '/revoke-credential/:id', handler: revokeCredential },

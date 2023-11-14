@@ -3,15 +3,13 @@ import payload from 'payload';
 
 import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
 
-export const getTotalBatchCount: PayloadHandler = async (req, res) => {
-    if (!req.user) return res.sendStatus(401);
 
+// returns count given a collectionName and query object for matching
+export const getCollectionCount: PayloadHandler = async (req, res) => {
+    if (!req.user) return res.sendStatus(401);
     const collectionName = req?.body?.collectionName;
     console.log('///collectioNName', req?.body);
-
     try {
-        let version = '1.00';
-
         const data = await payload.find({
             collection: collectionName, // required
             depth: 1,

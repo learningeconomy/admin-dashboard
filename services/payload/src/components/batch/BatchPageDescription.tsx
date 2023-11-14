@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useConfig } from 'payload/dist/admin/components/utilities/Config';
 import { Link } from 'react-router-dom';
+import { totalSentBatchesQuery } from '../../constants/countQueries';
 
 const BatchPageDescription: React.FC = () => {
     const {
@@ -11,10 +12,11 @@ const BatchPageDescription: React.FC = () => {
 
     console.log('//BATCH PAGE DESC RENDER2')
 
+
     const fetchBatchCredentials = async (page = 1) => {
-        const res = await fetch('/api/get-sent-batch-count', {
+        const res = await fetch('/api/get-collection-count', {
             method: 'POST',
-            body: JSON.stringify({collectionName: 'credential-batch'}),
+            body: JSON.stringify({collectionName: 'credential-batch', query: totalSentBatchesQuery}),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
