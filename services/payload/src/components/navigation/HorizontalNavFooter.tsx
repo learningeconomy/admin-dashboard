@@ -7,6 +7,7 @@ import Arrow from '../svgs/Arrow';
 
 import './navigation.scss';
 import Autosave from 'payload/dist/admin/components/elements/Autosave';
+import LeaveWithoutSaving from 'payload/dist/admin/components/modals/LeaveWithoutSaving';
 
 type HorizontalNavFooterProps = {
     mainAction?: () => void;
@@ -72,7 +73,9 @@ const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
                 </Flipped>
             ) : (
                 <Flipped flipId="autosave">
-                    <span className="flex flex-grow font-inter text-slate-700 text-base dark:text-slate-300" />
+                    <span className="flex flex-grow font-inter text-slate-700 text-base dark:text-slate-300">
+                        <LeaveWithoutSaving />
+                    </span>
                 </Flipped>
             )}
 
