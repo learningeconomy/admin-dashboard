@@ -106,7 +106,7 @@ export default buildConfig({
         // Resend button and check browser logs!
         // { method: 'get', path: '/get-credential-jwt', handler: getCredentialJwt },
         { method: 'get', path: '/get-credential', handler: getCredential },
-        { method: 'get', path: '/get-sent-batch-count', handler: getTotalBatchCount },
+        { method: 'post', path: '/get-sent-batch-count', handler: getTotalBatchCount },
         { method: 'get', path: '/get-credential-links', handler: getCredentialLinks },
         { method: 'post', path: '/exchange/:a/:b/:token', handler: forwardExchangeRequest },
         { method: 'post', path: '/revoke-credential/:id', handler: revokeCredential },
