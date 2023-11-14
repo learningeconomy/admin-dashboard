@@ -12,7 +12,7 @@ export const totalCredentialTemplatePublishedQuery = {
 };
 
 export const totalEmailTemplatePublishedQuery = {
-    _status: {
-        equals: 'published'
-    }
+    title: {
+        exists: true
+    },
 }

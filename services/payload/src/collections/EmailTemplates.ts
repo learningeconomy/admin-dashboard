@@ -19,7 +19,7 @@ const placeholderEmailData = `
 const EmailTemplatesCollection: CollectionConfig = {
     slug: 'email-template',
     admin: {
-        defaultColumns: ['title', 'id', 'status'],
+        defaultColumns: ['title', 'id'],
         description: EmailPageDescription,
         useAsTitle: 'title',
         components: {
@@ -27,9 +27,6 @@ const EmailTemplatesCollection: CollectionConfig = {
                 Edit: CreateEmailTemplate,
             },
         },
-    },
-    versions: {
-        drafts: true,
     },
     fields: [
         {
