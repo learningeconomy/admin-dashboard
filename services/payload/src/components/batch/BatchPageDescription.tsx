@@ -10,23 +10,22 @@ const BatchPageDescription: React.FC = () => {
 
     const [count, setCount] = useState<number | undefined>();
 
-    console.log('//BATCH PAGE DESC RENDER2')
-
-
     const fetchBatchCredentials = async (page = 1) => {
         const res = await fetch('/api/get-collection-count', {
             method: 'POST',
-            body: JSON.stringify({collectionName: 'credential-batch', query: totalSentBatchesQuery}),
+            body: JSON.stringify({
+                collectionName: 'credential-batch',
+                query: totalSentBatchesQuery,
+            }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
         });
-        console.log('/res', res)
+
         if (res.status === 200) {
             const data = await res.json();
-            console.log('///data', data);
+
             setCount(data?.count);
-            console.log('///get batch credentials', data);
         }
     };
 
@@ -38,7 +37,11 @@ const BatchPageDescription: React.FC = () => {
         <div>
             <div className="header_wrapper">
                 <p className="header_paragraph">
-                    <span className="header_number">{count}</span> Issued Batches
+                    {count && (
+                        <>
+                            <span className="header_number">{count}</span> Issued Batches
+                        </>
+                    )}
                 </p>
                 <Link
                     className="header_button"
