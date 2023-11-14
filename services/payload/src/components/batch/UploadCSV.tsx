@@ -68,6 +68,8 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
     );
 
     const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+        if (!e.target.files[0]) return;
+
         Papa.parse(e.target.files[0], {
             header: true,
             skipEmptyLines: true,
@@ -102,6 +104,8 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                         await refetchBatchCredentials();
                     }
                 }
+
+                e.target.value = null;
             },
         });
     };
