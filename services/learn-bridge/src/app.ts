@@ -13,12 +13,15 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/health-check', async (_req: TypedRequest<{}>, res) => {
-    const test = await fetch('http://localhost:3000/api/get-user-credentials');
+    const email = 'kyle+kirk@learningeconomy.io';
 
-    console.log('🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆');
-    console.log('test:', await test.text());
+    const test = await fetch('http://localhost:3000/api/get-user-credentials', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+    });
 
-    return res.status(200).json({ message: 'Alive!' });
+    return res.status(200).json(await test.json());
 
     /* const learnCard = await getWallet();
 
