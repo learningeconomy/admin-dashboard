@@ -19,10 +19,11 @@ import { sendEmail } from './endpoints/sendEmail';
 import { getCredential } from './endpoints/getCredential';
 import { sendBatchEmail } from './endpoints/sendBatchEmail';
 import { getCollectionCount } from './endpoints/getCollectionCount';
-
 import { getCredentialLinks } from './endpoints/getCredentialLinks';
 import { forwardExchangeRequest } from './endpoints/exchange';
 import { revokeCredential } from './endpoints/revokeCredential';
+import { getUserCredentials } from './endpoints/getUserCredentials';
+
 import DashboardRedirect from './components/DashboardRedirect';
 import AccountSettings from './components/AccountSettings';
 
@@ -83,6 +84,8 @@ export default buildConfig({
                         require.resolve('./mocks/emptyObject'),
                     [require.resolve('./endpoints/exchange')]:
                         require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./endpoints/getUserCredentials')]:
+                        require.resolve('./mocks/emptyObject'),
                 },
             },
         }),
@@ -110,6 +113,7 @@ export default buildConfig({
         { method: 'get', path: '/get-credential-links', handler: getCredentialLinks },
         { method: 'post', path: '/exchange/:a/:b/:token', handler: forwardExchangeRequest },
         { method: 'post', path: '/revoke-credential/:id', handler: revokeCredential },
+        { method: 'get', path: '/get-user-credentials', handler: getUserCredentials },
     ],
     typescript: {
         outputFile: path.resolve(__dirname, 'payload-types.ts'),

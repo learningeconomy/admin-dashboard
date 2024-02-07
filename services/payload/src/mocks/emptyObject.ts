@@ -5,4 +5,5 @@ export const generateJwtFromId = {};
 export const forwardExchangeRequest = () => { };
 export const emailQueue = {};
 export const sendEmails = {};
+export const getUserCredentials = () => { };
 export default {};

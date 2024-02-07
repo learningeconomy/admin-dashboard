@@ -1,8 +1,6 @@
 import { PayloadHandler } from 'payload/config';
 
 export const readPayloadVersion: PayloadHandler = (req, res) => {
-    if (!req.user) return res.sendStatus(401);
-
     try {
         let version = '1.00';
 

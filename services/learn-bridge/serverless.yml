@@ -1,0 +1,38 @@
+service: motlow-learn-bridge
+
+useDotenv: true
+configValidationMode: off
+
+frameworkVersion: '3'
+
+provider:
+  name: azure
+  functionApp:
+    extensionVersion: '~4'
+  resourceGroup: metaversity-rg
+  prefix: 'bridge'
+  region: West US 2
+  runtime: nodejs14
+  environment: 
+    CAMPUS_API_URL: ${env:CAMPUS_API_URL}
+
+plugins:
+  - serverless-azure-functions
+
+package:
+  patterns:
+    - "!**"
+    - dist/**
+    - app/**
+    - host.json
+    - local.settings.json
+
+functions:
+  app:
+    handler: dist/azure.app
+    events:
+      - http: true
+        route: "{a}"
+        method: ANY
+        cors: true
+        authLevel: anonymous
