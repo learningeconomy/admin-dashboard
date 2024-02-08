@@ -12,8 +12,31 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/health-check', async (_req: TypedRequest<{}>, res) => {
+app.get('/health-check', async (req: TypedRequest<{}>, res) => {
     const email = 'kyle+kirk@learningeconomy.io';
+
+    const test = await fetch('http://localhost:3000/api/get-user-credentials', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+    });
+
+    return res.status(200).json(await test.json());
+
+    /* const learnCard = await getWallet();
+
+    const uvc = learnCard.invoke.getTestVc();
+    uvc.issuer = { id: issuerDid };
+
+    const vc = await learnCard.invoke.issueCredential(uvc, { verificationMethod }); */
+
+    // res.status(200).json({ vc, message: 'Alive!' });
+});
+
+app.post('/get-user-credentials-by-email', async (req: TypedRequest<{ email: string }>, res) => {
+    const email = req.body.email;
+
+    console.log('🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆 LearnBridge!');
 
     const test = await fetch('http://localhost:3000/api/get-user-credentials', {
         method: 'post',
