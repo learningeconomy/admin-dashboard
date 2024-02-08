@@ -6,4 +6,5 @@ export const forwardExchangeRequest = () => { };
 export const emailQueue = {};
 export const sendEmails = {};
 export const getUserCredentials = () => { };
+export const getCredentialsLinks = () => { };
 export default {};

@@ -13,24 +13,25 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/health-check', async (req: TypedRequest<{}>, res) => {
-    const email = 'kyle+kirk@learningeconomy.io';
+    const email = 'beeston.taylor@gmail.com';
 
-    const test = await fetch('http://localhost:3000/api/get-user-credentials', {
+    const idResponse = await fetch('http://localhost:3000/api/get-user-credentials', {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
     });
 
-    return res.status(200).json(await test.json());
+    const ids = await idResponse.json();
 
-    /* const learnCard = await getWallet();
+    const credResponse = await fetch('http://localhost:3000/api/get-credentials-links', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids }),
+    });
 
-    const uvc = learnCard.invoke.getTestVc();
-    uvc.issuer = { id: issuerDid };
+    const credentials = await credResponse.json();
 
-    const vc = await learnCard.invoke.issueCredential(uvc, { verificationMethod }); */
-
-    // res.status(200).json({ vc, message: 'Alive!' });
+    return res.status(200).json(credentials);
 });
 
 app.post('/get-user-credentials-by-email', async (req: TypedRequest<{ email: string }>, res) => {
