@@ -45,15 +45,6 @@ app.post('/get-user-credentials-by-email', async (req: TypedRequest<{ email: str
     });
 
     return res.status(200).json(await test.json());
-
-    /* const learnCard = await getWallet();
-
-    const uvc = learnCard.invoke.getTestVc();
-    uvc.issuer = { id: issuerDid };
-
-    const vc = await learnCard.invoke.issueCredential(uvc, { verificationMethod }); */
-
-    // res.status(200).json({ vc, message: 'Alive!' });
 });
 
 app.get('/list', async (req: TypedRequest<{}>, res) => {
