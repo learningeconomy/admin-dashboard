@@ -37,15 +37,24 @@ app.get('/health-check', async (req: TypedRequest<{}>, res) => {
 app.post('/get-user-credentials-by-email', async (req: TypedRequest<{ email: string }>, res) => {
     const email = req.body.email;
 
-    console.log('🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆 LearnBridge!');
-
-    const test = await fetch('http://localhost:3000/api/get-user-credentials', {
+    // Get admin dashboard ids for issued credentials (these aren't real VCs, just ids linking to AD credential templates)
+    const idResponse = await fetch('http://localhost:3000/api/get-user-credentials', {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
     });
+    const ids = await idResponse.json();
 
-    return res.status(200).json(await test.json());
+    // now get the credentials from admin dashboard as unsigned VCs
+    //   this has all the data that we need for the actual credential, but we need LC to sign them before issuing a real VC
+    const credentialResponse = await fetch('http://localhost:3000/api/get-credentials-links', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids }),
+    });
+    const unsignedVCs = await credentialResponse.json();
+
+    return res.status(200).json(unsignedVCs);
 });
 
 app.get('/list', async (req: TypedRequest<{}>, res) => {
