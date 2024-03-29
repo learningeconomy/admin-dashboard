@@ -6,8 +6,6 @@ import Logout from '../Logout/Logout';
 import Account from '../Account/Account';
 import { useAuth } from 'payload/dist/admin/components/utilities/Auth';
 
-import Logo from '../../assets/tdm-alt-logo.png';
-import SmallLogo from '../../assets/tdm-logo.png';
 import ListChecks from '../../assets/list-checks.svg';
 import FileCheck from '../../assets/file-check.svg';
 import FileEdit from '../../assets/file-edit.svg';
@@ -17,12 +15,17 @@ import MembershipBatches from '../../assets/list-checks.svg';
 import MembershipTemplates from '../../assets/file-edit.svg';
 import Users from '../../assets/users.svg';
 import Caret from '../svgs/Caret';
+import useScreenWidth from '../../hooks/useScreenWidth';
 
 const SideNav: React.FC = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const width = useScreenWidth();
+
+    const [isOpen, setIsOpen] = useState(width > 1024);
     const { user } = useAuth();
 
-    const close = () => setIsOpen(false);
+    const close = () => {
+        if (width <= 1024) setIsOpen(false);
+    };
 
     const {
         routes: { admin },
@@ -46,7 +49,15 @@ const SideNav: React.FC = () => {
                     />
                 </button>
 
-                <img className="h-15" src={isOpen ? Logo : SmallLogo} alt="Tec de Monterray logo" />
+                <img
+                    className="h-15"
+                    src={
+                        isOpen
+                            ? '/assets/StarfleetTransparent.webp'
+                            : '/assets/StarfleetTransparentLogoOnly.webp'
+                    }
+                    alt="Starfleet logo"
+                />
             </header>
 
             <section>

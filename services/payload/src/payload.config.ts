@@ -55,9 +55,9 @@ export default buildConfig({
         css: require.resolve('./components/global.scss'),
         user: Users.slug,
         meta: {
-            titleSuffix: '- Tecnológico de Monterrey',
-            favicon: '/assets/tdm-logo.png',
-            ogImage: '/assets/tdm-og.png',
+            titleSuffix: '- Starfleet Academy',
+            favicon: '/assets/Starfleet.webp',
+            ogImage: '/assets/Starfleet.webp',
         },
         components: {
             Nav: SideNav,
