@@ -10,7 +10,7 @@ const router = express.Router();
 
 const app = express();
 
-const PAYLOAD_URL = 'http://localhost:4444';
+const PAYLOAD_URL = process.env.PAYLOAD_URL || 'http://localhost:3000';
 
 app.use(cors());
 app.use(express.json());
