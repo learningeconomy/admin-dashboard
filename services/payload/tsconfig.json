@@ -1,38 +1,40 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "moduleResolution": "nodenext",
-    "module": "nodenext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+    "compilerOptions": {
+        "target": "esnext",
+        "moduleResolution": "nodenext",
+        "module": "nodenext",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "allowJs": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "jsx": "react",
+        "baseUrl": ".",
+        "paths": {
+            "payload/generated-types": [
+                "./src/payload-types.ts"
+            ],
+            "@/*": [
+                "./*"
+            ]
+        }
+    },
+    "include": [
+        "src"
     ],
-    "allowJs": true,
-    "strict": false,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "jsx": "react",
-    "baseUrl": ".",
-    "paths": {
-      "payload/generated-types": [
-        "./src/payload-types.ts"
-      ],
-      "@/*": ["./*"]
+    "exclude": [
+        "node_modules",
+        "dist",
+        "build"
+    ],
+    "ts-node": {
+        "transpileOnly": true,
+        "swc": true
     }
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build"
-  ],
-  "ts-node": {
-    "transpileOnly": true,
-    "swc": true
-  }
 }

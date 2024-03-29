@@ -10,13 +10,14 @@ export const createBatchCredentials: PayloadHandler = async (req, res) => {
         console.log('//req body', req?.body);
         const id = req?.body?.batchId;
         const newFields: string[] = req?.body?.fields ?? [];
+        const isMembership = req?.body?.isMembership ?? false;
 
         const created = await Promise.all(
             req?.body?.credentialRecords?.map(async record => {
                 const newCredentialRecord = await payload.create({
-                    collection: 'credential',
+                    collection: isMembership ? 'membership' : 'credential',
                     data: {
-                        credentialName: record?.credentialName,
+                        ...(isMembership ? {} : { credentialName: record?.credentialName }),
                         earnerName: record?.earnerName,
                         emailAddress: record?.emailAddress,
                         extraFields: record,
@@ -33,7 +34,7 @@ export const createBatchCredentials: PayloadHandler = async (req, res) => {
         console.log('///CREATE CRED BATCH ENDPOINT', created);
 
         const newBatch = await payload.update({
-            collection: 'credential-batch',
+            collection: isMembership ? 'membership-batch' : 'credential-batch',
             draft: true,
             id,
             data: { csvFields: newFields },

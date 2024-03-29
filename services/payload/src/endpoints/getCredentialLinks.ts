@@ -3,6 +3,7 @@ import { PayloadHandler } from 'payload/config';
 import payload from 'payload';
 import jwt from 'jsonwebtoken';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../helpers/handlebarhelpers';
+import createLocal from 'payload/dist/collections/operations/local/create';
 
 const coordinatorUrl = process.env.COORDINATOR_URL ?? 'http://localhost:4005';
 const secret =
@@ -12,6 +13,7 @@ const tenantName = process.env.TENANT_NAME ?? 'test';
 
 export const getCredentialLinks: PayloadHandler = async (req, res) => {
     let id: string;
+    let collection: 'credential' | 'membership';
 
     const authHeader = req.headers.authorization;
 
@@ -25,12 +27,15 @@ export const getCredentialLinks: PayloadHandler = async (req, res) => {
         if (typeof decoded === 'string' || !decoded.id) return res.sendStatus(401);
 
         id = decoded.id;
+        collection = decoded.collection || 'credential';
+
+        console.log('What', decoded);
     } catch (error) {
         return res.sendStatus(401);
     }
 
     try {
-        const credential = await payload.findByID({ id, collection: 'credential', depth: 3 });
+        const credential = await payload.findByID({ id, collection, depth: 3 });
 
         if (
             typeof credential?.batch === 'string' ||
@@ -44,7 +49,9 @@ export const getCredentialLinks: PayloadHandler = async (req, res) => {
             JSON.stringify(credential.batch.template.credentialTemplateJson),
             {
                 ...(credential.extraFields as any),
-                credentialName: credential.credentialName,
+                ...(collection === 'membership'
+                    ? {}
+                    : { credentialName: credential.credentialName }),
                 earnerName: credential.earnerName,
                 emailAddress: credential.emailAddress,
                 now: new Date().toISOString(),
@@ -53,7 +60,7 @@ export const getCredentialLinks: PayloadHandler = async (req, res) => {
         ) as any as UnsignedVC;
 
         // Prep for sending to signing service
-        builtCredential.id = id;
+        builtCredential.id = collection === 'membership' ? credential.batch.template.id : id;
         if (typeof builtCredential?.issuer === 'string') builtCredential.issuer = {};
         if ('id' in (builtCredential?.issuer ?? {})) delete builtCredential.issuer.id;
 
@@ -118,7 +125,10 @@ export const getCredentialLinks: PayloadHandler = async (req, res) => {
         res.status(200).json({
             links: updatedResults,
             metadata: {
-                credentialName: credential.credentialName,
+                credentialName:
+                    collection === 'credential'
+                        ? credential.credentialName
+                        : credential.batch.template.title,
                 earnerName: credential.earnerName,
                 awardedDate: credential.updatedAt,
                 issuedDate: new Date().toISOString(),

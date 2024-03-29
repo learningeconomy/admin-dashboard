@@ -9,12 +9,12 @@ import { CREDENTIAL_STATUS } from '../constants/credentials';
 export const sendEmail: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(400);
 
-    const { credentialId } = req.body;
+    const { credentialId, collection = 'credential' } = req.body;
 
     if (!credentialId) return res.sendStatus(400);
 
     const credential = await payload.findByID({
-        collection: 'credential',
+        collection,
         depth: 3,
         id: credentialId,
         locale: 'en',
@@ -51,8 +51,8 @@ export const sendEmail: PayloadHandler = async (req, res) => {
 
     const claimPageBaseUrl = process.env.CLAIM_PAGE_URL || 'https://localhost:4321';
 
-    const jwt = generateJwtFromId(credential.id);
-    const link = `${claimPageBaseUrl}/?token=${jwt}`;
+    const jwt = generateJwtFromId(credential.id, collection);
+    const link = `${claimPageBaseUrl}/?token=${jwt}&url=${payload.config.serverURL}/api`;
     // replace handlebar variables in email template with record data
     const mergedRecordWithLink = {
         ...(credential.extraFields as any),
@@ -76,13 +76,13 @@ export const sendEmail: PayloadHandler = async (req, res) => {
     try {
         if (credential.status === CREDENTIAL_STATUS.DRAFT) {
             await payload.update({
-                collection: 'credential',
+                collection,
                 id: credential.id,
                 data: { status: CREDENTIAL_STATUS.SENT },
             });
         }
         console.log('///emailsData', email);
-        emailQueue.add('send-test-email', email);
+        emailQueue.add('send-test-email', { email, collection });
 
         res.status(200).json({ email, link });
     } catch (err) {

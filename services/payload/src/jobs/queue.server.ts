@@ -72,51 +72,59 @@ export type Email = {
 the registerQueue function, BullMQ will spawn a new process to run the file. 
 These are called sandboxed processors."
 */
-export const emailQueue = registerQueue('email', async (job: Job<Email>) => {
-    console.log('///emailQueue job', job);
+export const emailQueue = registerQueue(
+    'email',
+    async (job: Job<{ email: Email; collection: 'credential' | 'membership' }>) => {
+        console.log('///emailQueue job', job);
 
-    const { to, from, subject, text, html, credentialId } = job.data;
+        const { to, from, subject, text, html, credentialId } = job.data.email;
 
-    await payload.sendEmail({
-        to,
-        subject,
-        text,
-        html,
-        from:
-            from || process.env.EMAIL_FROM || 'Learning Economy <beestontaylor@learningeconomy.io>',
-    });
-
-    if (credentialId) {
-        await payload.update({
-            collection: 'credential',
-            id: credentialId,
-            data: { status: CREDENTIAL_STATUS.SENT },
+        await payload.sendEmail({
+            to,
+            subject,
+            text,
+            html,
+            from:
+                from ||
+                process.env.EMAIL_FROM ||
+                'Learning Economy <beestontaylor@learningeconomy.io>',
         });
+
+        if (credentialId) {
+            await payload.update({
+                collection: job.data.collection,
+                id: credentialId,
+                data: { status: CREDENTIAL_STATUS.SENT },
+            });
+        }
     }
-});
+);
 
 export const emailsFinishedQueue = registerQueue(
     'emailsFinished',
-    async (job: Job<{ batchId: string }>) => {
-        console.log('///emailsFinishedQueu job', job);
-
+    async (job: Job<{ batchId: string; collection: 'credential' | 'membership' }>) => {
         return payload.update({
-            collection: 'credential-batch',
+            collection:
+                job.data.collection === 'credential' ? 'credential-batch' : 'membership-batch',
             id: job.data.batchId,
             data: { status: CREDENTIAL_BATCH_STATUS.SENT },
         });
     }
 );
 
-export const sendEmails = async (batchId: string, emails: Email[]) => {
+export const sendEmails = async (
+    batchId: string,
+    emails: Email[],
+    collection: 'credential' | 'membership' = 'credential'
+) => {
     return flowProducer.add({
         name: `send-emails-for-${batchId}`,
         queueName: 'emailsFinished',
-        data: { batchId },
+        data: { batchId, collection },
         children: emails.map(email => ({
             name: email.credentialId || email.to,
             queueName: 'email',
-            data: email,
+            data: { email, collection },
         })),
     });
 };

@@ -1,26 +1,26 @@
 import { CollectionConfig } from 'payload/types';
-import BatchPageDescription from '../components/batch/BatchPageDescription';
-import CreateBatch from '../components/batch/CreateBatch';
+import MembershipBatchPageDescription from '../components/membership-batch/MembershipBatchPageDescription';
+import CreateMembershipBatch from '../components/membership-batch/CreateMembershipBatch';
 import payload from 'payload';
 import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
-import CredentialBatchStatusCell from '../components/batch/CredentialBatchStatusCell';
+import CredentialBatchStatusCell from '../components/membership-batch/CredentialBatchStatusCell';
 import { duplicateBatch } from '../endpoints/duplicateBatch';
 
-const CredentialsBatchesCollection: CollectionConfig = {
-    slug: 'credential-batch',
-    labels: { plural: 'Issuance Overview' },
+const MembershipBatchesCollection: CollectionConfig = {
+    slug: 'membership-batch',
+    labels: { plural: 'Membership Issuance Overview' },
     access: {
         delete: async ({ id }) => {
             try {
                 if (!id) return false;
 
-                const doc = await payload.findByID({ collection: 'credential-batch', id });
+                const doc = await payload.findByID({ collection: 'membership-batch', id });
 
                 if (!doc) return false;
 
                 return doc.status === CREDENTIAL_BATCH_STATUS.DRAFT;
             } catch (error) {
-                console.error('Error getting delete permission for credential batch!', {
+                console.error('Error getting delete permission for membership batch!', {
                     error,
                     id,
                 });
@@ -32,13 +32,13 @@ const CredentialsBatchesCollection: CollectionConfig = {
             try {
                 if (!id) return false;
 
-                const doc = await payload.findByID({ collection: 'credential-batch', id });
+                const doc = await payload.findByID({ collection: 'membership-batch', id });
 
                 if (!doc) return false;
 
                 return doc.status === CREDENTIAL_BATCH_STATUS.DRAFT;
             } catch (error) {
-                console.error('Error getting delete permission for credential batch!', {
+                console.error('Error getting delete permission for membership batch!', {
                     error,
                     id,
                 });
@@ -50,12 +50,8 @@ const CredentialsBatchesCollection: CollectionConfig = {
     admin: {
         defaultColumns: ['title', 'id', 'status'],
         useAsTitle: 'title',
-        description: BatchPageDescription,
-        components: {
-            views: {
-                Edit: CreateBatch,
-            },
-        },
+        description: MembershipBatchPageDescription,
+        components: { views: { Edit: CreateMembershipBatch } },
     },
     versions: {
         drafts: {
@@ -63,7 +59,7 @@ const CredentialsBatchesCollection: CollectionConfig = {
         },
     },
     endpoints: [
-        { path: '/:id/duplicate', method: 'post', handler: duplicateBatch('credential-batch') },
+        { path: '/:id/duplicate', method: 'post', handler: duplicateBatch('membership-batch') },
     ],
     fields: [
         {
@@ -97,7 +93,7 @@ const CredentialsBatchesCollection: CollectionConfig = {
             name: 'template',
             type: 'relationship',
             required: true,
-            relationTo: 'credential-template',
+            relationTo: 'membership-template',
             hasMany: false,
         },
         {
@@ -122,4 +118,4 @@ const CredentialsBatchesCollection: CollectionConfig = {
     ],
 };
 
-export default CredentialsBatchesCollection;
+export default MembershipBatchesCollection;

@@ -13,6 +13,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     //get batch id
     const batchId = req?.body?.batchId;
     const emailTemplateId = req?.body?.emailTemplateId;
+    const collection = req?.body?.collection || 'credential';
 
     console.log('//emailTemplateId', emailTemplateId);
 
@@ -43,7 +44,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     console.log('//req body', req?.body);
     const data = await payload.find({
-        collection: 'credential', // required
+        collection, // required
         depth: 2,
         where: { ...query }, // pass a `where` query here
         sort: '-title',
@@ -57,8 +58,8 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     const claimPageBaseUrl = process.env.CLAIM_PAGE_URL || 'https://localhost:4321';
 
     const emails = data?.docs?.map(record => {
-        const jwt = generateJwtFromId(record?.id);
-        const link = `${claimPageBaseUrl}/?token=${jwt}`;
+        const jwt = generateJwtFromId(record?.id, collection);
+        const link = `${claimPageBaseUrl}/?token=${jwt}&url=${payload.config.serverURL}/api`;
         // replace handlebar variables in email template with record data
         const mergedRecordWithLink = {
             ...(record.extraFields as any),
@@ -81,7 +82,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     });
 
     await payload.update({
-        collection: 'credential-batch',
+        collection: collection === 'credential' ? 'credential-batch' : 'membership-batch',
         id: batchId,
         data: { status: CREDENTIAL_BATCH_STATUS.SENDING },
     });
@@ -92,7 +93,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     try {
         // send emails to email queue
-        sendEmails(batchId, emails);
+        sendEmails(batchId, emails, collection);
 
         res.status(200).json({ emails });
     } catch (err) {

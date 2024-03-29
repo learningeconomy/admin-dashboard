@@ -12,6 +12,7 @@ const secret =
 export const forwardExchangeRequest: PayloadHandler = async (req, res) => {
     const { a, b, token } = req.params;
     let id: string;
+    let collection: 'credential' | 'membership';
 
     try {
         const decoded = jwt.verify(token, secret);
@@ -19,6 +20,7 @@ export const forwardExchangeRequest: PayloadHandler = async (req, res) => {
         if (typeof decoded === 'string' || !decoded.id) return res.sendStatus(401);
 
         id = decoded.id;
+        collection = decoded.collection || 'credential';
     } catch (error) {
         return res.sendStatus(401);
     }
@@ -34,9 +36,14 @@ export const forwardExchangeRequest: PayloadHandler = async (req, res) => {
 
     if (credential?.credentialStatus?.id) {
         await payload.update({
-            collection: 'credential',
+            collection,
             id,
-            data: { status: CREDENTIAL_STATUS.CLAIMED },
+            data: {
+                status: CREDENTIAL_STATUS.CLAIMED,
+                ...(collection === 'membership'
+                    ? { targetDid: credential.credentialSubject.id }
+                    : {}),
+            },
         });
     }
 

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Flipper, Flipped } from 'react-flip-toolkit';
 import './SideNav.scss';
 import { Link, NavLink } from 'react-router-dom';
 import { useConfig } from 'payload/dist/admin/components/utilities/Config';
@@ -13,6 +12,9 @@ import ListChecks from '../../assets/list-checks.svg';
 import FileCheck from '../../assets/file-check.svg';
 import FileEdit from '../../assets/file-edit.svg';
 import MailPlus from '../../assets/mail-plus.svg';
+import Memberships from '../../assets/file-check.svg';
+import MembershipBatches from '../../assets/list-checks.svg';
+import MembershipTemplates from '../../assets/file-edit.svg';
 import Users from '../../assets/users.svg';
 import Caret from '../svgs/Caret';
 
@@ -94,12 +96,45 @@ const SideNav: React.FC = () => {
 
                 <NavLink
                     className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                    to="/admin/collections/membership-batch"
+                    onClick={close}
+                >
+                    <img src={MembershipBatches} alt="users" />
+                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
+                        Membership Batches
+                    </span>
+                </NavLink>
+
+                <NavLink
+                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                    to="/admin/collections/membership"
+                    onClick={close}
+                >
+                    <img src={Memberships} alt="users" />
+                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
+                        Memberships
+                    </span>
+                </NavLink>
+
+                <NavLink
+                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                    to="/admin/collections/membership-template"
+                    onClick={close}
+                >
+                    <img src={MembershipTemplates} alt="users" />
+                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
+                        Membership Templates
+                    </span>
+                </NavLink>
+
+                <NavLink
+                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
                     to="/admin/collections/users"
                     onClick={close}
                 >
                     <img src={Users} alt="users" />
                     <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Credentials
+                        Users
                     </span>
                 </NavLink>
             </section>

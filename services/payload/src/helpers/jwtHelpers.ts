@@ -4,9 +4,14 @@ const secret =
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa';
 const expires = process.env.TOKEN_EXPIRATION_TIME_IN_SECONDS ?? 14 * 24 * 60 * 60; // Default to 2 weeks
 
-export const generateJwtFromId = (id: string) => {
+export const generateJwtFromId = (
+    id: string,
+    collection: 'credential' | 'membership' = 'credential'
+) => {
     try {
-        const token = jwt.sign({ id }, secret, { ...(expires && { expiresIn: expires }) });
+        const token = jwt.sign({ id, collection }, secret, {
+            ...(expires && { expiresIn: expires }),
+        });
         return token;
     } catch (e) {
         throw new Error(e);

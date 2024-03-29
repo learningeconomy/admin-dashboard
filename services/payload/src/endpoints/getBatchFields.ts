@@ -5,11 +5,11 @@ import { credentialHasCsvField, getCsvFieldsFromCredential } from '../helpers/cr
 export const getBatchFields: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
 
-    const { id } = req.body;
+    const { id, collection = 'credential' } = req.body;
 
     try {
         let page = await payload.find({
-            collection: 'credential',
+            collection,
             depth: 0,
             where: { batch: { equals: id } },
             limit: 25,
@@ -24,7 +24,7 @@ export const getBatchFields: PayloadHandler = async (req, res) => {
 
         while (page.hasNextPage) {
             page = await payload.find({
-                collection: 'credential',
+                collection,
                 depth: 0,
                 where: { batch: { equals: id } },
                 limit: 25,
@@ -38,7 +38,7 @@ export const getBatchFields: PayloadHandler = async (req, res) => {
         }
 
         await payload.update({
-            collection: 'credential-batch',
+            collection: collection === 'credential' ? 'credential-batch' : 'membership-batch',
             id,
             data: { csvFields: fields },
         });

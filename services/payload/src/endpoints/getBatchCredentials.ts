@@ -1,15 +1,14 @@
 import { PayloadHandler } from 'payload/config';
-import { Forbidden } from 'payload/errors';
 import payload from 'payload';
 
-export const getBatchCredentials: PayloadHandler = async (req, res, next) => {
+export const getBatchCredentials: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
 
-    const { batchId, page = 1 } = req.body;
+    const { batchId, page = 1, collection = 'credential' } = req.body;
 
     try {
         const data = await payload.find({
-            collection: 'credential', // required
+            collection,
             depth: 1,
             page,
             limit: 10,

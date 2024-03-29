@@ -2,8 +2,11 @@ import { buildConfig } from 'payload/config';
 import path from 'path';
 import Users from './collections/Users';
 import CredentialsTemplatesCollection from './collections/CredentialTemplates';
+import MembershipTemplatesCollection from './collections/MembershipTemplates';
 import CredentialsBatchesCollection from './collections/CredentialBatches';
+import MembershipBatchesCollection from './collections/MembershipBatches';
 import CredentialsCollection from './collections/Credentials';
+import MembershipsCollection from './collections/Memberships';
 import EmailTemplatesCollection from './collections/EmailTemplates';
 //components
 import { Logo } from './components/Logo';
@@ -24,6 +27,7 @@ import { forwardExchangeRequest } from './endpoints/exchange';
 import { revokeCredential } from './endpoints/revokeCredential';
 import { getUserCredentials } from './endpoints/getUserCredentials';
 import { getCredentialsLinks } from './endpoints/getCredentialsLinks';
+import { selfIssueUserCredentials } from './endpoints/selfIssueUserCredentials';
 
 import DashboardRedirect from './components/DashboardRedirect';
 import AccountSettings from './components/AccountSettings';
@@ -33,10 +37,7 @@ export default buildConfig({
         transportOptions: {
             host: process.env.SMTP_HOST,
             transportMethod: 'SMTP',
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS,
-            },
+            auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
             port: 587,
             secure: false, // use TLS
             tls: {
@@ -60,14 +61,8 @@ export default buildConfig({
         },
         components: {
             Nav: SideNav,
-            graphics: {
-                Logo,
-                Icon,
-            },
-            views: {
-                Dashboard: DashboardRedirect,
-                Account: AccountSettings,
-            },
+            graphics: { Logo, Icon },
+            views: { Dashboard: DashboardRedirect, Account: AccountSettings },
         },
         webpack: config => ({
             ...config,
@@ -89,6 +84,8 @@ export default buildConfig({
                         require.resolve('./mocks/emptyObject'),
                     [require.resolve('./endpoints/getCredentialsLinks')]:
                         require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./endpoints/selfIssueUserCredentials')]:
+                        require.resolve('./mocks/emptyObject'),
                 },
             },
         }),
@@ -96,8 +93,11 @@ export default buildConfig({
     collections: [
         Users,
         CredentialsTemplatesCollection,
+        MembershipTemplatesCollection,
         CredentialsBatchesCollection,
+        MembershipBatchesCollection,
         CredentialsCollection,
+        MembershipsCollection,
         EmailTemplatesCollection,
     ],
     endpoints: [
@@ -107,10 +107,6 @@ export default buildConfig({
         { method: 'post', path: '/get-batch-credentials', handler: getBatchCredentials },
         { method: 'post', path: '/get-batch-fields', handler: getBatchFields },
         { method: 'post', path: '/create-batch-credentials', handler: createBatchCredentials },
-        // This is a security hole that needs to go away when we're done testing!!!
-        // Commented out to close hole. If you need to generate a link for a cred, just hit the
-        // Resend button and check browser logs!
-        // { method: 'get', path: '/get-credential-jwt', handler: getCredentialJwt },
         { method: 'get', path: '/get-credential', handler: getCredential },
         { method: 'post', path: '/get-collection-count', handler: getCollectionCount },
         { method: 'get', path: '/get-credential-links', handler: getCredentialLinks },
@@ -118,6 +114,7 @@ export default buildConfig({
         { method: 'post', path: '/revoke-credential/:id', handler: revokeCredential },
         { method: 'post', path: '/get-user-credentials', handler: getUserCredentials },
         { method: 'post', path: '/get-credentials-links', handler: getCredentialsLinks },
+        { method: 'post', path: '/issue-user-credentials', handler: selfIssueUserCredentials },
     ],
     typescript: {
         outputFile: path.resolve(__dirname, 'payload-types.ts'),

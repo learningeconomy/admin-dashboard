@@ -21,7 +21,7 @@ type ActionButton =
 
 const ActionsButton: React.FC<
     Props & { simple?: boolean; onDelete?: () => Promise<void>; readOnly?: boolean }
-> = ({ rowData, simple = false, readOnly = false, onDelete }) => {
+> = ({ rowData, simple = false, readOnly = false, onDelete, collection }) => {
     const {
         routes: { admin: adminRoute },
     } = useConfig();
@@ -62,7 +62,7 @@ const ActionsButton: React.FC<
             type: 'link',
             label: 'View Details',
             icon: <Eye />,
-            url: `${adminRoute}/collections/credential/${rowData.id}?fromBatchPage=true`,
+            url: `${adminRoute}/collections/${collection.slug}/${rowData.id}?fromBatchPage=true`,
         },
     ];
 
@@ -72,7 +72,7 @@ const ActionsButton: React.FC<
             label: 'Remove Earner',
             icon: <X />,
             onClick: async () => {
-                const res = await fetch(`/api/credential/${rowData.id}`, {
+                const res = await fetch(`/api/${collection.slug}/${rowData.id}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                 });
@@ -91,7 +91,7 @@ const ActionsButton: React.FC<
                 const response = await fetch('/api/send-email', {
                     method: 'POST',
                     headers: { 'content-type': 'application/json' },
-                    body: JSON.stringify({ credentialId: rowData.id }),
+                    body: JSON.stringify({ credentialId: rowData.id, collection: collection.slug }),
                 });
 
                 console.log(await response.json());
@@ -109,7 +109,8 @@ const ActionsButton: React.FC<
             type: 'link',
             label: 'View Batch',
             icon: <BarGraph />,
-            url: `${adminRoute}/collections/credential-batch/${rowData.batch}`,
+            url: `${adminRoute}/collections/${collection.slug === 'credential' ? 'credential-batch' : 'membership-batch'
+                }/${rowData.batch}`,
         });
     }
 

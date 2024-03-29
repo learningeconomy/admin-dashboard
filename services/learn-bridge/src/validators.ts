@@ -4,6 +4,7 @@ import { z } from 'zod';
 export const IssueEndpointValidator = z.object({
     ids: z.string().array(),
     presentation: VPValidator,
+    email: z.string().optional(),
 });
 export type IssueEndpoint = z.infer<typeof IssueEndpointValidator>;
 

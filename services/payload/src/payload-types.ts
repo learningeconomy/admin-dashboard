@@ -10,8 +10,11 @@ export interface Config {
   collections: {
     users: User;
     'credential-template': CredentialTemplate;
+    'membership-template': MembershipTemplate;
     'credential-batch': CredentialBatch;
+    'membership-batch': MembershipBatch;
     credential: Credential;
+    membership: Membership;
     'email-template': EmailTemplate;
   };
   globals: {};
@@ -46,7 +49,46 @@ export interface CredentialTemplate {
     | null;
   updatedAt: string;
   createdAt: string;
-  _status?: 'draft' | 'published';
+}
+export interface MembershipTemplate {
+  id: string;
+  title: string;
+  description?: string;
+  internalNotes?: string;
+  credentialTemplateJson:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  associatedCredentials?: string[] | Credential[];
+  updatedAt: string;
+  createdAt: string;
+}
+export interface Credential {
+  id: string;
+  credentialName?: string;
+  earnerName?: string;
+  emailAddress?: string;
+  extraFields?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  status: string;
+  batch: string | CredentialBatch;
+  revocationReason?: string;
+  revocationDate?: string;
+  revokedBy?: string | User;
+  updatedAt: string;
+  createdAt: string;
 }
 export interface CredentialBatch {
   id: string;
@@ -79,11 +121,31 @@ export interface EmailTemplate {
   emailTemplatesHandlebarsCode: string;
   updatedAt: string;
   createdAt: string;
+}
+export interface MembershipBatch {
+  id: string;
+  title: string;
+  description?: string;
+  internalNotes?: string;
+  status: string;
+  template: string | MembershipTemplate;
+  emailTemplate: string | EmailTemplate;
+  from?: string;
+  csvFields?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
   _status?: 'draft' | 'published';
 }
-export interface Credential {
+export interface Membership {
   id: string;
-  credentialName?: string;
   earnerName?: string;
   emailAddress?: string;
   extraFields?:
@@ -96,7 +158,7 @@ export interface Credential {
     | boolean
     | null;
   status: string;
-  batch: string | CredentialBatch;
+  batch: string | MembershipBatch;
   revocationReason?: string;
   revocationDate?: string;
   revokedBy?: string | User;
