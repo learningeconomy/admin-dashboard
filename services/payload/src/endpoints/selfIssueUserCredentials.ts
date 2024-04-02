@@ -94,9 +94,15 @@ export const selfIssueUserCredentials: PayloadHandler = async (req, res) => {
         })
         .filter(Boolean);
 
-    const issuedCreds = await Promise.all(
-        builtCredentials.map(uvc => learnCard.invoke.issueCredential(uvc))
-    );
+    try {
+        const issuedCreds = await Promise.all(
+            builtCredentials.map(uvc => learnCard.invoke.issueCredential(uvc))
+        );
 
-    res.status(200).json(issuedCreds);
+        res.status(200).json(issuedCreds);
+    } catch (error) {
+        console.error(error);
+
+        return res.sendStatus(500);
+    }
 };
