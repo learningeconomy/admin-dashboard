@@ -5,6 +5,7 @@ import { insertValuesIntoHandlebarsJsonTemplate } from '../helpers/handlebarhelp
 import type { UnsignedVC } from '@learncard/types';
 import { areDidsEqual, getLearnCard } from '../helpers/learncard.helpers';
 import redis from '../helpers/redis.helpers';
+import { inflateObject } from '../helpers/objects.helpers';
 
 export const selfIssueUserCredentials: PayloadHandler = async (req, res) => {
     const { authorization } = req.headers;
@@ -60,7 +61,7 @@ export const selfIssueUserCredentials: PayloadHandler = async (req, res) => {
             const builtCredential = insertValuesIntoHandlebarsJsonTemplate(
                 JSON.stringify(credential.batch.template.credentialTemplateJson),
                 {
-                    ...(credential.extraFields as any),
+                    ...(inflateObject as any)(credential.extraFields as any),
                     credentialName: credential.credentialName,
                     earnerName: credential.earnerName,
                     emailAddress: credential.emailAddress,

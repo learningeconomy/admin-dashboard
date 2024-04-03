@@ -3,7 +3,7 @@ import { PayloadHandler } from 'payload/config';
 import payload from 'payload';
 import jwt from 'jsonwebtoken';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../helpers/handlebarhelpers';
-import createLocal from 'payload/dist/collections/operations/local/create';
+import { inflateObject } from '../helpers/objects.helpers';
 
 const coordinatorUrl = process.env.COORDINATOR_URL ?? 'http://localhost:4005';
 const secret =
@@ -48,7 +48,7 @@ export const getCredentialLinks: PayloadHandler = async (req, res) => {
         const builtCredential = insertValuesIntoHandlebarsJsonTemplate(
             JSON.stringify(credential.batch.template.credentialTemplateJson),
             {
-                ...(credential.extraFields as any),
+                ...(inflateObject as any)(credential.extraFields as any),
                 ...(collection === 'membership'
                     ? {}
                     : { credentialName: credential.credentialName }),

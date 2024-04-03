@@ -3,6 +3,7 @@ import { PayloadHandler } from 'payload/config';
 import payload from 'payload';
 import jwt from 'jsonwebtoken';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../helpers/handlebarhelpers';
+import { inflateObject } from '../helpers/objects.helpers';
 
 const secret =
     process.env.PAYLOAD_SECRET ??
@@ -50,7 +51,7 @@ export const getCredential: PayloadHandler = async (req, res) => {
         const builtCredential = insertValuesIntoHandlebarsJsonTemplate(
             JSON.stringify(credential.batch.template.credentialTemplateJson),
             {
-                ...(credential.extraFields as any),
+                ...(inflateObject as any)(credential.extraFields as any),
                 credentialName: credential.credentialName,
                 earnerName: credential.earnerName,
                 emailAddress: credential.emailAddress,

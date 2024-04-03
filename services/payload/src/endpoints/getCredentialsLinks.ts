@@ -3,6 +3,7 @@ import { PayloadHandler } from 'payload/config';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../helpers/handlebarhelpers';
 import type { UnsignedVC } from '@learncard/types';
 import { generateJwtFromId } from '../helpers/jwtHelpers';
+import { inflateObject } from '../helpers/objects.helpers';
 
 const coordinatorUrl = process.env.COORDINATOR_URL ?? 'http://localhost:4005';
 const tenantName = process.env.TENANT_NAME ?? 'test';
@@ -36,7 +37,7 @@ export const getCredentialsLinks: PayloadHandler = async (req, res) => {
         const builtCredential = insertValuesIntoHandlebarsJsonTemplate(
             JSON.stringify(credential.batch.template.credentialTemplateJson),
             {
-                ...(credential.extraFields as any),
+                ...(inflateObject as any)(credential.extraFields as any),
                 credentialName: credential.credentialName,
                 earnerName: credential.earnerName,
                 emailAddress: credential.emailAddress,
