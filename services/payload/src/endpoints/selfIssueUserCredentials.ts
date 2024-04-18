@@ -44,6 +44,7 @@ export const selfIssueUserCredentials: PayloadHandler = async (req, res) => {
         collection: 'credential',
         where: { id: { in: ids } },
         depth: 3,
+        pagination: false,
     });
 
     const credentials = credential.docs;

@@ -50,12 +50,8 @@ const SideNav: React.FC = () => {
                 </button>
 
                 <img
-                    className="h-15"
-                    src={
-                        isOpen
-                            ? '/assets/StarfleetTransparent.webp'
-                            : '/assets/StarfleetTransparentLogoOnly.webp'
-                    }
+                    className="h-[9.75rem]"
+                    src={'/assets/StarfleetTransparentLogoOnly.webp'}
                     alt="Starfleet logo"
                 />
             </header>
