@@ -7,7 +7,7 @@ import Arrow from '../svgs/Arrow';
 
 import './navigation.scss';
 import Autosave from 'payload/dist/admin/components/elements/Autosave';
-import LeaveWithoutSaving from 'payload/dist/admin/components/modals/LeaveWithoutSaving';
+import { LeaveWithoutSaving } from 'payload/dist/admin/components/modals/LeaveWithoutSaving';
 
 type HorizontalNavFooterProps = {
     mainAction?: () => void;
@@ -26,7 +26,7 @@ type HorizontalNavFooterProps = {
 };
 
 const HorizontalNavFooter: React.FC<HorizontalNavFooterProps> = ({
-    mainAction = () => { },
+    mainAction = () => {},
     canDoMainAction = true,
     secondaryAction,
     canDoSecondaryAction = true,
