@@ -9,6 +9,7 @@ import { CredentialBatch } from 'payload/generated-types';
 
 export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     if (!req.user) throw new Forbidden();
+    console.log('///req', req?.transactionID);
     console.log('////req?.body', req.body);
     //get batch id
     const batchId = req?.body?.batchId;
@@ -80,14 +81,19 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
             html: `${parsedHtml}`,
         };
     });
-
-    await payload.update({
-        collection: collection === 'credential' ? 'credential-batch' : 'membership-batch',
-        id: batchId,
-        data: { status: CREDENTIAL_BATCH_STATUS.SENDING },
-    });
-
+    console.log('///emails', emails);
+    console.log('///batchId', batchId);
     console.log('///email map', emails);
+
+
+    // this seems to conflict with an update that happens  when sending Emails
+    // await payload.update({
+    //     collection: collection === 'credential' ? 'credential-batch' : 'membership-batch',
+    //     id: batchId,
+    //     data: { status: CREDENTIAL_BATCH_STATUS.SENDING },
+    // });
+
+   
 
     // get email template for batch and insert data into template
 
