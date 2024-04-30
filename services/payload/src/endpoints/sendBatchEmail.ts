@@ -9,12 +9,19 @@ import { CredentialBatch } from 'payload/generated-types';
 
 export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     if (!req.user) throw new Forbidden();
-    console.log('///req', req?.transactionID);
+
     console.log('////req?.body', req.body);
+    //create transactionId
+    const transactionId = await payload.db.beginTransaction();
+    req.transactionID = transactionId;
+    console.log('///transactionId', transactionId);
+
     //get batch id
     const batchId = req?.body?.batchId;
     const emailTemplateId = req?.body?.emailTemplateId;
     const collection = req?.body?.collection || 'credential';
+
+    console.log('///req transactionId', req?.transactionID);
 
     console.log('//emailTemplateId', emailTemplateId);
 
@@ -85,24 +92,27 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     console.log('///batchId', batchId);
     console.log('///email map', emails);
 
-
     // this seems to conflict with an update that happens  when sending Emails
-    // await payload.update({
-    //     collection: collection === 'credential' ? 'credential-batch' : 'membership-batch',
-    //     id: batchId,
-    //     data: { status: CREDENTIAL_BATCH_STATUS.SENDING },
-    // });
-
-   
+    try {
+        await payload.update({
+            req,
+            collection: collection === 'credential' ? 'credential-batch' : 'membership-batch',
+            id: batchId,
+            data: { status: CREDENTIAL_BATCH_STATUS.SENDING },
+        });
+    } catch (e) {
+        console.log('Error updating collection', e);
+    }
 
     // get email template for batch and insert data into template
 
     try {
         // send emails to email queue
-        sendEmails(batchId, emails, collection);
+        sendEmails(req, batchId, emails, collection);
 
         res.status(200).json({ emails });
     } catch (err) {
+        await payload?.db?.rollbackTransaction(transactionId);
         console.error(err);
         res.status(500).json(err);
     }

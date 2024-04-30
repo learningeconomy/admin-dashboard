@@ -2,6 +2,7 @@ import type { Job, Processor } from 'bullmq';
 import { FlowProducer, QueueEvents } from 'bullmq';
 import { Queue, Worker } from 'bullmq';
 import payload from 'payload';
+import { PayloadRequest } from 'payload/types';
 import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
 
@@ -113,10 +114,13 @@ export const emailsFinishedQueue = registerQueue(
 );
 
 export const sendEmails = async (
+    req: PayloadRequest,
     batchId: string,
     emails: Email[],
     collection: 'credential' | 'membership' = 'credential'
 ) => {
+
+
     return flowProducer.add({
         name: `send-emails-for-${batchId}`,
         queueName: 'emailsFinished',
