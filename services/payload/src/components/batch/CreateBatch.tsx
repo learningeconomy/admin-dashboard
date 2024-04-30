@@ -16,11 +16,12 @@ const baseClass = 'collection-edit';
 const CreateBatch: React.FC<Props> = props => {
     const { user, refreshCookieAsync } = useAuth();
     const { openModal } = useModal();
-
+    console.log('///Createbatch props', props);
     const {
         data,
         collection,
         isEditing,
+        fieldTypes,
         onSave: onSaveFromProps,
         permissions,
         isLoading,
