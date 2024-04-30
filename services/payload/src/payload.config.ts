@@ -1,4 +1,8 @@
-import { buildConfig } from 'payload/config';
+import { payloadCloud } from '@payloadcms/plugin-cloud'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { webpackBundler } from '@payloadcms/bundler-webpack'
+import { slateEditor } from '@payloadcms/richtext-slate'
+import { buildConfig } from 'payload/config'
 import path from 'path';
 import Users from './collections/Users';
 import CredentialsTemplatesCollection from './collections/CredentialTemplates';
@@ -49,6 +53,8 @@ export default buildConfig({
         fromName: 'Learning Economy',
         fromAddress: 'beestontaylor@learningeconomy.io',
     },
+    editor: slateEditor({}),
+    db: mongooseAdapter({url: process.env.MONGODB_URI ?? false}),
     serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
     cors: '*',
     admin: {
@@ -64,6 +70,7 @@ export default buildConfig({
             graphics: { Logo, Icon },
             views: { Dashboard: DashboardRedirect, Account: AccountSettings },
         },
+        bundler: webpackBundler(),
         webpack: config => ({
             ...config,
             resolve: {
