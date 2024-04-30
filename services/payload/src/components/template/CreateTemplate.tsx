@@ -16,6 +16,7 @@ const CreateTemplate: React.FC<Props> = props => {
     const {
         collection,
         isEditing,
+        fieldTypes,
         onSave: onSaveFromProps,
         permissions,
         isLoading,
