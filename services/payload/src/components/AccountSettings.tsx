@@ -10,12 +10,11 @@ import RenderTitle from 'payload/dist/admin/components/elements/RenderTitle';
 import ReactSelect from 'payload/dist/admin/components/elements/ReactSelect';
 import RenderFields from 'payload/dist/admin/components/forms/RenderFields';
 import Label from 'payload/dist/admin/components/forms/Label';
-import LeaveWithoutSaving from 'payload/dist/admin/components/modals/LeaveWithoutSaving';
+import { LeaveWithoutSaving } from 'payload/dist/admin/components/modals/LeaveWithoutSaving';
 import { Save } from 'payload/dist/admin/components/elements/Save';
 import { ToggleTheme } from 'payload/dist/admin/components/views/Account/ToggleTheme';
 import { Gutter } from 'payload/dist/admin/components/elements/Gutter';
 import { useAuth } from 'payload/components/utilities';
-import fieldTypes from 'payload/dist/admin/components/forms/field-types';
 import getI18n from 'payload/dist/translations/init';
 
 import type { Translation } from 'payload/dist/translations/type';
@@ -29,6 +28,7 @@ const AccountSettings: React.FC<Props> = ({
     hasSavePermission,
     initialState,
     isLoading,
+    fieldTypes,
     action,
     onSave: onSaveFromProps,
 }) => {
@@ -39,8 +39,8 @@ const AccountSettings: React.FC<Props> = ({
     } = collection;
 
     const { refreshCookieAsync } = useAuth();
-    const i18n = getI18n({}) as any;
-    const { t } = useTranslation('authentication', { i18n });
+    const { i18n, t } = useTranslation('authentication')
+
 
     const languageOptions = Object.entries(i18n?.options?.resources ?? {}).map(
         ([language, resource]) => ({
