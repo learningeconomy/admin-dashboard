@@ -17,6 +17,7 @@ const CreateEmailTemplate: React.FC<Props> = props => {
         isEditing,
         onSave: onSaveFromProps,
         permissions,
+        fieldTypes,
         isLoading,
         internalState,
         action,
