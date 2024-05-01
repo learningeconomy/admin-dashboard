@@ -10,18 +10,18 @@ import { CredentialBatch } from 'payload/generated-types';
 export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     if (!req.user) throw new Forbidden();
 
-    console.log('////req?.body', req.body);
-    //create transactionId
-    const transactionId = await payload.db.beginTransaction();
-    req.transactionID = transactionId;
-    console.log('///transactionId', transactionId);
+    // console.log('////req?.body', req.body);
+    // //create transactionId
+    // const transactionId = await payload.db.beginTransaction();
+    // req.transactionID = transactionId;
+    // console.log('///transactionId', transactionId);
 
     //get batch id
     const batchId = req?.body?.batchId;
     const emailTemplateId = req?.body?.emailTemplateId;
     const collection = req?.body?.collection || 'credential';
 
-    console.log('///req transactionId', req?.transactionID);
+    // console.log('///req transactionId', req?.transactionID);
 
     console.log('//emailTemplateId', emailTemplateId);
 
@@ -112,7 +112,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
         res.status(200).json({ emails });
     } catch (err) {
-        await payload?.db?.rollbackTransaction(transactionId);
+        // await payload?.db?.rollbackTransaction(transactionId);
         console.error(err);
         res.status(500).json(err);
     }
