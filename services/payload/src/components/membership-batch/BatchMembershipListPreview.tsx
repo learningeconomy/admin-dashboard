@@ -38,8 +38,11 @@ const BatchMembershipListPreview: React.FC<BatchMembershipListPreviewProps> = ({
     if (!data) return <></>;
 
     const {
-        breakpoints: { s: smallBreak },
+        breakpoints
     } = useWindowInfo();
+
+    const smallBreak = breakpoints?.s;
+
     const { t, i18n } = useTranslation('general');
     let formattedDocs = data.docs || [];
 
