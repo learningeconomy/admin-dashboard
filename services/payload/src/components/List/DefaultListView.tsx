@@ -53,8 +53,11 @@ const DefaultListView: React.FC<Props> = props => {
       } = props
     
       const {
-        breakpoints: { s: smallBreak },
-      } = useWindowInfo()
+        breakpoints
+      } = useWindowInfo();
+
+      const smallBreak = breakpoints?.s;
+
       const { i18n, t } = useTranslation('general')
       let formattedDocs = data.docs || []
     
