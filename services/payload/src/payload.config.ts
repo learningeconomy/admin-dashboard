@@ -5,6 +5,7 @@ import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
 import path from 'path';
 import Users from './collections/Users';
+import Tenants from './collections/Tenants';
 import CredentialsTemplatesCollection from './collections/CredentialTemplates';
 import MembershipTemplatesCollection from './collections/MembershipTemplates';
 import CredentialsBatchesCollection from './collections/CredentialBatches';
@@ -55,7 +56,8 @@ export default buildConfig({
     },
     editor: slateEditor({}),
     db: mongooseAdapter({url: process.env.MONGODB_URI ?? false}),
-    serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
+    // Server URL must be disabled for multi-tenancy to work and adapt to different subdomains
+    //serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
     cors: '*',
     admin: {
         css: require.resolve('./components/global.scss'),
@@ -99,6 +101,7 @@ export default buildConfig({
     },
     collections: [
         Users,
+        Tenants,
         CredentialsTemplatesCollection,
         MembershipTemplatesCollection,
         CredentialsBatchesCollection,

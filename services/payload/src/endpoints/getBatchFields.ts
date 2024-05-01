@@ -4,6 +4,7 @@ import { credentialHasCsvField, getCsvFieldsFromCredential } from '../helpers/cr
 
 export const getBatchFields: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
+    // TODO: Add Multi-Tenancy Permissions
 
     const { id, collection = 'credential' } = req.body;
 

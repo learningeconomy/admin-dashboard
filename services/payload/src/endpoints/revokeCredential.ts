@@ -6,6 +6,7 @@ const statusUrl = process.env.STATUS_URL ?? 'http://localhost:4008';
 
 export const revokeCredential: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
+    // TODO: Add Multi-Tenancy Permissions
 
     const { id } = req.params;
     const { reason } = req.body;

@@ -5,12 +5,16 @@ import { CREDENTIAL_STATUS } from '../constants/credentials';
 
 export const createBatchCredentials: PayloadHandler = async (req, res) => {
     if (!req.user) throw new Forbidden();
+    // TODO: Finish Adding Multi-Tenancy Permissions—don't allow creating credentials against batch you don't have permissiont to access.
 
     try {
         console.log('//req body', req?.body);
         const id = req?.body?.batchId;
         const newFields: string[] = req?.body?.fields ?? [];
         const isMembership = req?.body?.isMembership ?? false;
+        const batchCollection = isMembership ? 'membership-batch' : 'credential-batch';
+
+        const batch = await payload.findByID({ collection: batchCollection, id });
 
         const created = await Promise.all(
             req?.body?.credentialRecords?.map(async record => {
@@ -23,6 +27,7 @@ export const createBatchCredentials: PayloadHandler = async (req, res) => {
                         extraFields: record,
                         status: CREDENTIAL_STATUS.DRAFT,
                         batch: id,
+                        tenant: batch?.tenant?.id
                     },
                     locale: 'en',
                 });

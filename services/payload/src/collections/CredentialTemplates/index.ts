@@ -1,7 +1,13 @@
 import { CollectionConfig } from 'payload/types';
-import CreateTemplate from '../components/template/CreateTemplate';
-import TemplatePageDescription from '../components/template/TemplatePageDescription';
-import CodeEditorWithCsvValidation from '../components/template/CodeEditorWithCsvValidation';
+import CreateTemplate from '../../components/template/CreateTemplate';
+import TemplatePageDescription from '../../components/template/TemplatePageDescription';
+import CodeEditorWithCsvValidation from '../../components/template/CodeEditorWithCsvValidation';
+
+import { loggedIn } from './access/loggedIn'
+import { tenantAdmins } from './access/tenantAdmins'
+import { tenants } from './access/tenants'
+
+import { tenant } from '../../fields/tenant'
 
 const CredentialsTemplatesCollection: CollectionConfig = {
     slug: 'credential-template',
@@ -14,6 +20,12 @@ const CredentialsTemplatesCollection: CollectionConfig = {
                 Edit: CreateTemplate,
             },
         },
+    },
+    access: {
+        read: tenants,
+        create: loggedIn,
+        update: tenantAdmins,
+        delete: tenantAdmins,
     },
     fields: [
         {
@@ -46,6 +58,7 @@ const CredentialsTemplatesCollection: CollectionConfig = {
             },
             required: true,
         },
+        tenant,
     ],
 };
 

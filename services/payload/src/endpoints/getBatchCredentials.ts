@@ -3,6 +3,7 @@ import payload from 'payload';
 
 export const getBatchCredentials: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
+    // TODO: Add Multi-Tenancy Permissions
 
     const { batchId, page = 1, collection = 'credential' } = req.body;
 

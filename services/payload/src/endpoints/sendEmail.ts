@@ -8,6 +8,7 @@ import { CREDENTIAL_STATUS } from '../constants/credentials';
 
 export const sendEmail: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(400);
+    // TODO: Add Multi-Tenancy Permissions
 
     const { credentialId, collection = 'credential' } = req.body;
 

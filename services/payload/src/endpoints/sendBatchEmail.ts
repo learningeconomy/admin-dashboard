@@ -10,6 +10,8 @@ import { CredentialBatch } from 'payload/generated-types';
 export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     if (!req.user) throw new Forbidden();
 
+    // TODO: Add Multi-Tenancy Permissions
+
     // console.log('////req?.body', req.body);
     // //create transactionId
     // const transactionId = await payload.db.beginTransaction();

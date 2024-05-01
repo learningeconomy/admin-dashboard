@@ -1,51 +1,25 @@
 import { CollectionConfig } from 'payload/types';
-import BatchPageDescription from '../components/batch/BatchPageDescription';
-import CreateBatch from '../components/batch/CreateBatch';
+import BatchPageDescription from '../../components/batch/BatchPageDescription';
+import CreateBatch from '../../components/batch/CreateBatch';
 import payload from 'payload';
-import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
-import CredentialBatchStatusCell from '../components/batch/CredentialBatchStatusCell';
-import { duplicateBatch } from '../endpoints/duplicateBatch';
+import { CREDENTIAL_BATCH_STATUS } from '../../constants/batches';
+import CredentialBatchStatusCell from '../../components/batch/CredentialBatchStatusCell';
+import { duplicateBatch } from '../../endpoints/duplicateBatch';
+
+import { loggedIn } from './access/loggedIn'
+import { tenantAdmins } from './access/tenantAdmins'
+import { tenants } from './access/tenants'
+
+import { tenant } from '../../fields/tenant'
 
 const CredentialsBatchesCollection: CollectionConfig = {
     slug: 'credential-batch',
     labels: { plural: 'Issuance Overview' },
     access: {
-        delete: async ({ id }) => {
-            try {
-                if (!id) return false;
-
-                const doc = await payload.findByID({ collection: 'credential-batch', id });
-
-                if (!doc) return false;
-
-                return doc.status === CREDENTIAL_BATCH_STATUS.DRAFT;
-            } catch (error) {
-                console.error('Error getting delete permission for credential batch!', {
-                    error,
-                    id,
-                });
-
-                return false;
-            }
-        },
-        update: async ({ id }) => {
-            try {
-                if (!id) return false;
-
-                const doc = await payload.findByID({ collection: 'credential-batch', id });
-
-                if (!doc) return false;
-
-                return doc.status === CREDENTIAL_BATCH_STATUS.DRAFT;
-            } catch (error) {
-                console.error('Error getting delete permission for credential batch!', {
-                    error,
-                    id,
-                });
-
-                return false;
-            }
-        },
+        delete: tenantAdmins,
+        update: tenantAdmins,
+        read: tenants,
+        create: loggedIn,
     },
     admin: {
         defaultColumns: ['title', 'id', 'status'],
@@ -119,6 +93,7 @@ const CredentialsBatchesCollection: CollectionConfig = {
             type: 'json',
             admin: { hidden: true },
         },
+        tenant,
     ],
 };
 

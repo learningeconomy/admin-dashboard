@@ -1,11 +1,17 @@
 import payload from 'payload';
 import { CollectionConfig } from 'payload/types';
 
-import ActionsButton from '../components/ActionsButton';
-import CredentialStatusCell from '../components/credential/CredentialStatusCell';
-import { CREDENTIAL_STATUS } from '../constants/credentials';
-import DefaultListView from '../components/List/DefaultListView';
-import CreateCredential from '../components/credential/CreateCredential';
+import ActionsButton from '../../components/ActionsButton';
+import CredentialStatusCell from '../../components/credential/CredentialStatusCell';
+import { CREDENTIAL_STATUS } from '../../constants/credentials';
+import DefaultListView from '../../components/List/DefaultListView';
+import CreateCredential from '../../components/credential/CreateCredential';
+
+import { loggedIn } from './access/loggedIn'
+import { tenantAdmins } from './access/tenantAdmins'
+import { tenants } from './access/tenants'
+
+import { tenant } from '../../fields/tenant'
 
 const CredentialsCollection: CollectionConfig = {
     slug: 'credential',
@@ -18,44 +24,9 @@ const CredentialsCollection: CollectionConfig = {
     },
     access: {
         create: () => false,
-        update: async ({ id }) => {
-            try {
-                if (!id) return false;
-
-                const doc = await payload.findByID({ collection: 'credential', id });
-
-                if (!doc) return false;
-
-                return true;
-
-                return doc.status === CREDENTIAL_STATUS.DRAFT;
-            } catch (error) {
-                console.error('Error getting update permission for credential!', {
-                    error,
-                    id,
-                });
-
-                return false;
-            }
-        },
-        delete: async ({ id }) => {
-            try {
-                if (!id) return false;
-
-                const doc = await payload.findByID({ collection: 'credential', id });
-
-                if (!doc) return false;
-
-                return doc.status === CREDENTIAL_STATUS.DRAFT;
-            } catch (error) {
-                console.error('Error getting delete permission for credential!', {
-                    error,
-                    id,
-                });
-
-                return false;
-            }
-        },
+        read: tenants,
+        update: tenantAdmins,
+        delete: tenantAdmins,
     },
     fields: [
         { name: 'credentialName', type: 'text' },
@@ -103,6 +74,7 @@ const CredentialsCollection: CollectionConfig = {
             type: 'ui',
             admin: { components: { Field: () => null, Cell: ActionsButton } },
         },
+        tenant,
     ],
 };
 

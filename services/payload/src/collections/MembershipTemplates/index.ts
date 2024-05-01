@@ -1,7 +1,13 @@
 import { CollectionConfig } from 'payload/types';
-import CreateTemplate from '../components/membership-template/CreateTemplate';
-import MembershipTemplatePageDescription from '../components/membership-template/MembershipTemplatePageDescription';
-import CodeEditorWithCsvValidation from '../components/membership-template/CodeEditorWithCsvValidation';
+import CreateTemplate from '../../components/membership-template/CreateTemplate';
+import MembershipTemplatePageDescription from '../../components/membership-template/MembershipTemplatePageDescription';
+import CodeEditorWithCsvValidation from '../../components/membership-template/CodeEditorWithCsvValidation';
+
+import { loggedIn } from './access/loggedIn'
+import { tenantAdmins } from './access/tenantAdmins'
+import { tenants } from './access/tenants'
+
+import { tenant } from '../../fields/tenant'
 
 const MembershipTemplatesCollection: CollectionConfig = {
     slug: 'membership-template',
@@ -10,6 +16,12 @@ const MembershipTemplatesCollection: CollectionConfig = {
         useAsTitle: 'title',
         description: MembershipTemplatePageDescription,
         components: { views: { Edit: CreateTemplate } },
+    },
+    access: {
+        read: tenants,
+        create: loggedIn,
+        update: tenantAdmins,
+        delete: tenantAdmins,
     },
     fields: [
         {
@@ -48,6 +60,7 @@ const MembershipTemplatesCollection: CollectionConfig = {
             relationTo: 'credential',
             hasMany: true,
         },
+        tenant,
     ],
 };
 

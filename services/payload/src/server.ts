@@ -2,6 +2,8 @@ import express from 'express';
 import payload from 'payload';
 import path from 'path';
 
+import { seed } from './seed'
+
 require('dotenv').config();
 const app = express();
 
@@ -23,6 +25,10 @@ const start = async () => {
     });
 
     // Add your own express routes here
+    // if (process.env.PAYLOAD_SEED === 'true') {
+    //     payload.logger.info('---- SEEDING DATABASE ----')
+    //     await seed(payload)
+    // }
 
     app.listen(process.env.PORT || 3000);
 

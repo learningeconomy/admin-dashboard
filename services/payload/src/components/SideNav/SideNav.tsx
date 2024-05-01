@@ -144,6 +144,16 @@ const SideNav: React.FC = () => {
                         Users
                     </span>
                 </NavLink>
+                <NavLink
+                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                    to="/admin/collections/tenants"
+                    onClick={close}
+                >
+                    <img src={Users} alt="tenants" />
+                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
+                        Tenants
+                    </span>
+                </NavLink>
             </section>
 
             <footer className="flex flex-col gap-8">

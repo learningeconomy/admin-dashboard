@@ -1,7 +1,13 @@
 import { CollectionConfig } from 'payload/types';
-import CreateEmailTemplate from '../components/email-template/CreateEmailTemplate';
-import CodeEditorWithCsvValidation from '../components/email-template/CodeEditorWithCsvValidation';
-import EmailPageDescription from '../components/Email/EmailPageDescription';
+import CreateEmailTemplate from '../../components/email-template/CreateEmailTemplate';
+import CodeEditorWithCsvValidation from '../../components/email-template/CodeEditorWithCsvValidation';
+import EmailPageDescription from '../../components/Email/EmailPageDescription';
+
+import { loggedIn } from './access/loggedIn'
+import { tenantAdmins } from './access/tenantAdmins'
+import { tenants } from './access/tenants'
+
+import { tenant } from '../../fields/tenant'
 
 const placeholderEmailData = `
   <html>
@@ -27,6 +33,12 @@ const EmailTemplatesCollection: CollectionConfig = {
                 Edit: CreateEmailTemplate,
             },
         },
+    },
+    access: {
+        read: tenants,
+        create: loggedIn,
+        update: tenantAdmins,
+        delete: tenantAdmins,
     },
     fields: [
         {
@@ -67,6 +79,7 @@ const EmailTemplatesCollection: CollectionConfig = {
             defaultValue: placeholderEmailData,
             required: true,
         },
+        tenant,
     ],
 };
 
