@@ -69,7 +69,7 @@ const SideNav: React.FC = () => {
                 >
                     <img src={ListChecks} alt="credential-batch" />{' '}
                     <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Issuance Overview
+                        Send Credentials
                     </span>
                 </NavLink>
 
@@ -80,7 +80,7 @@ const SideNav: React.FC = () => {
                 >
                     <img src={FileCheck} alt="credential" />
                     <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Credentials
+                        Find Credentials
                     </span>
                 </NavLink>
 
@@ -92,7 +92,7 @@ const SideNav: React.FC = () => {
                 >
                     <img src={MembershipBatches} alt="users" />
                     <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Membership Batches
+                       Send Membership IDs
                     </span>
                 </NavLink>
 
@@ -103,10 +103,17 @@ const SideNav: React.FC = () => {
                 >
                     <img src={Memberships} alt="users" />
                     <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Memberships
+                        Find Memberships IDs
                     </span>
                 </NavLink>
 
+                {isOpen &&
+                    <div className="relative flex py-5 items-center">
+                        <div className="flex-grow border-t border-gray-400"></div>
+                        <span className="flex-shrink mx-4 text-gray-400">Management</span>
+                        <div className="flex-grow border-t border-gray-400"></div>
+                    </div>
+                }
                 <NavLink
                     className={`navbar-buttons ${isOpen ? 'open' : ''}`}
                     to="/admin/collections/users"
@@ -128,6 +135,13 @@ const SideNav: React.FC = () => {
                     </span>
                 </NavLink>
 
+                {isOpen &&
+                    <div className="relative flex py-5 items-center">
+                        <div className="flex-grow border-t border-gray-400"></div>
+                        <span className="flex-shrink mx-4 text-gray-400">Configuration</span>
+                        <div className="flex-grow border-t border-gray-400"></div>
+                    </div>
+                }
 
                 <NavLink
                     className={`navbar-buttons ${isOpen ? 'open' : ''}`}
