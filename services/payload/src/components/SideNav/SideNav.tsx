@@ -84,27 +84,6 @@ const SideNav: React.FC = () => {
                     </span>
                 </NavLink>
 
-                <NavLink
-                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
-                    to="/admin/collections/credential-template"
-                    onClick={close}
-                >
-                    <img src={FileEdit} alt="credential-template" />{' '}
-                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Credential Templates
-                    </span>
-                </NavLink>
-
-                <NavLink
-                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
-                    to="/admin/collections/email-template"
-                    onClick={close}
-                >
-                    <img src={MailPlus} alt="email-template" />
-                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Email Templates
-                    </span>
-                </NavLink>
 
                 <NavLink
                     className={`navbar-buttons ${isOpen ? 'open' : ''}`}
@@ -130,17 +109,6 @@ const SideNav: React.FC = () => {
 
                 <NavLink
                     className={`navbar-buttons ${isOpen ? 'open' : ''}`}
-                    to="/admin/collections/membership-template"
-                    onClick={close}
-                >
-                    <img src={MembershipTemplates} alt="users" />
-                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Membership Templates
-                    </span>
-                </NavLink>
-
-                <NavLink
-                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
                     to="/admin/collections/users"
                     onClick={close}
                 >
@@ -157,6 +125,38 @@ const SideNav: React.FC = () => {
                     <img src={Users} alt="tenants" />
                     <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
                         Tenants
+                    </span>
+                </NavLink>
+
+
+                <NavLink
+                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                    to="/admin/collections/credential-template"
+                    onClick={close}
+                >
+                    <img src={FileEdit} alt="credential-template" />{' '}
+                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
+                        Credential Templates
+                    </span>
+                </NavLink>
+                <NavLink
+                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                    to="/admin/collections/membership-template"
+                    onClick={close}
+                >
+                    <img src={MembershipTemplates} alt="users" />
+                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
+                        Membership Templates
+                    </span>
+                </NavLink>
+                <NavLink
+                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                    to="/admin/collections/email-template"
+                    onClick={close}
+                >
+                    <img src={MailPlus} alt="email-template" />
+                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
+                        Email Templates
                     </span>
                 </NavLink>
             </section>
