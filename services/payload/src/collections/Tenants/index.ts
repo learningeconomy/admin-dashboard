@@ -73,6 +73,16 @@ const Tenants: CollectionConfig = {
         beforeChange: [enablePublicVisibility],
       }
     },
+    {
+      name: 'favicon', 
+      type: 'upload', 
+      relationTo: 'media', 
+      required: false,
+      hooks: {
+        // Enable Public Visibility on tenant icons/logos so it can be viewed on login page.
+        beforeChange: [enablePublicVisibility],
+      }
+    },
   ],
 }
 

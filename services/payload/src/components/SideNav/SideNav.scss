@@ -47,6 +47,7 @@
 
         &.open {
             width: 100%;
+            max-width: 275px;
             transform: translateX(0);
 
             & > header > button {

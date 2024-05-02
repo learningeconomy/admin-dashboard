@@ -11,7 +11,6 @@ export const useTenantMetadata = () => {
 
         if (res.status === 200) {
             const { tenant } = await res.json();
-            console.log("Got tenant", tenant, theme);
             setTenant(tenant);
         }
     };
@@ -39,7 +38,9 @@ export const useTenantMetadata = () => {
         icon.src = logo?.src;
     }
 
-    return { tenant, icon, logo };
+    const favicon = tenant?.favicon?.url || tenant?.lightThemeIcon?.url;
+
+    return { tenant, icon, logo, favicon };
 };
 
 export default useTenantMetadata;

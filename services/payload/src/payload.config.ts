@@ -65,9 +65,9 @@ export default buildConfig({
         css: require.resolve('./components/global.scss'),
         user: Users.slug,
         meta: {
-            titleSuffix: '- LearnFleet Academy',
-            favicon: '/assets/Starfleet.webp',
-            ogImage: '/assets/Starfleet.webp',
+            titleSuffix: '- LearnCloud',
+            favicon: '/assets/lef-icon.png',
+            ogImage: '/assets/lef-icon.png',
         },
         components: {
             Nav: SideNav,

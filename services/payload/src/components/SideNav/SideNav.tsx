@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Helmet } from "react-helmet";
+
 import './SideNav.scss';
 import { Link, NavLink } from 'react-router-dom';
 import { useConfig } from 'payload/dist/admin/components/utilities/Config';
@@ -23,7 +25,7 @@ const SideNav: React.FC = () => {
 
     const [isOpen, setIsOpen] = useState(width > 1024);
     const { user } = useAuth();
-    const { tenant, logo } = useTenantMetadata();
+    const { tenant, logo, icon, favicon } = useTenantMetadata();
 
     const close = () => {
         if (width <= 1024) setIsOpen(false);
@@ -35,16 +37,17 @@ const SideNav: React.FC = () => {
 
     return (
         <nav className={`navbar-wrapper relative ${isOpen ? 'open' : ''}`}>
+            <Helmet>
+                <link href={favicon} rel="icon" type="image/svg+xml" data-react-helmet="true" />
+                <link rel="icon" type="image/png" href={favicon} sizes="16x16" />
+            </Helmet>
             <header>
                 <button
                     className="flex px-5 py-1 bg-slate-100 rounded-3xl shadow-[0_4px_4px_0_rgba(0,0,0,.25)] relative dark:bg-slate-800"
                     onClick={() => setIsOpen(!isOpen)}
                     type="button"
                 >
-                    <Caret
-                        className={`w-5 h-5 ${isOpen ? '-rotate-90' : 'rotate-90'
-                            } -mr-1 transition-transform`}
-                    />
+                    
                     <Caret
                         className={`w-5 h-5 ${isOpen ? 'rotate-90' : '-rotate-90'
                             } -ml-1 transition-transform`}
@@ -52,8 +55,8 @@ const SideNav: React.FC = () => {
                 </button>
 
                 <img
-                    className="h-[9.75rem]"
-                    src={logo?.src}
+                    className={`side-nav-logo ${isOpen ? 'open' : ''}`}
+                    src={isOpen ? logo?.src : icon?.src}
                     alt={logo?.alt}
                 />
             </header>
