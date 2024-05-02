@@ -1,11 +1,12 @@
-import { payloadCloud } from '@payloadcms/plugin-cloud'
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { webpackBundler } from '@payloadcms/bundler-webpack'
-import { slateEditor } from '@payloadcms/richtext-slate'
-import { buildConfig } from 'payload/config'
+import { payloadCloud } from '@payloadcms/plugin-cloud';
+import { mongooseAdapter } from '@payloadcms/db-mongodb';
+import { webpackBundler } from '@payloadcms/bundler-webpack';
+import { slateEditor } from '@payloadcms/richtext-slate';
+import { buildConfig } from 'payload/config';
 import path from 'path';
 import Users from './collections/Users';
 import Tenants from './collections/Tenants';
+import Media from './collections/Media';
 import CredentialsTemplatesCollection from './collections/CredentialTemplates';
 import MembershipTemplatesCollection from './collections/MembershipTemplates';
 import CredentialsBatchesCollection from './collections/CredentialBatches';
@@ -19,6 +20,7 @@ import { Icon } from './components/Icon';
 import SideNav from './components/SideNav/SideNav';
 
 //endpoints
+import { getTenantMetadata } from './endpoints/getTenantMetadata';
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
@@ -55,7 +57,7 @@ export default buildConfig({
         fromAddress: 'beestontaylor@learningeconomy.io',
     },
     editor: slateEditor({}),
-    db: mongooseAdapter({url: process.env.MONGODB_URI ?? false}),
+    db: mongooseAdapter({ url: process.env.MONGODB_URI ?? false }),
     // Server URL must be disabled for multi-tenancy to work and adapt to different subdomains
     //serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
     cors: '*',
@@ -102,6 +104,7 @@ export default buildConfig({
     collections: [
         Users,
         Tenants,
+        Media,
         CredentialsTemplatesCollection,
         MembershipTemplatesCollection,
         CredentialsBatchesCollection,
@@ -111,6 +114,7 @@ export default buildConfig({
         EmailTemplatesCollection,
     ],
     endpoints: [
+        { method: 'get', path: '/get-tenant-metadata', handler: getTenantMetadata },
         { method: 'post', path: '/send-email', handler: sendEmail },
         { method: 'post', path: '/send-batch-email', handler: sendBatchEmail },
         { method: 'get', path: '/payload-version', handler: readPayloadVersion },

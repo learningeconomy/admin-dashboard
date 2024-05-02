@@ -1,8 +1,14 @@
 import React from 'react';
 import './logo.scss';
 
-export const Logo: React.FC = () => (
-    <div className="logo">
-        <img src="/assets/TransparentFullLogo.png" alt="LearnFleet Academy" />
-    </div>
-);
+import useTenantMetadata from '../hooks/useTenantMetadata';
+
+export const Logo: React.FC = () => {
+    const { logo } = useTenantMetadata();
+
+    return (
+        <div className="logo">
+            <img src={logo?.src} alt={logo?.alt} />
+        </div>
+    );
+};

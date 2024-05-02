@@ -15,13 +15,15 @@ import MembershipBatches from '../../assets/list-checks.svg';
 import MembershipTemplates from '../../assets/file-edit.svg';
 import Users from '../../assets/users.svg';
 import Caret from '../svgs/Caret';
-import useScreenWidth from '../../hooks/useScreenWidth';
+import useScreenWidth from '../../hooks/useScreenWidth'; 
+import useTenantMetadata from '../../hooks/useTenantMetadata';
 
 const SideNav: React.FC = () => {
     const width = useScreenWidth();
 
     const [isOpen, setIsOpen] = useState(width > 1024);
     const { user } = useAuth();
+    const { tenant, logo } = useTenantMetadata();
 
     const close = () => {
         if (width <= 1024) setIsOpen(false);
@@ -51,8 +53,8 @@ const SideNav: React.FC = () => {
 
                 <img
                     className="h-[9.75rem]"
-                    src={'/assets/StarfleetTransparentLogoOnly.webp'}
-                    alt="Starfleet logo"
+                    src={logo?.src}
+                    alt={logo?.alt}
                 />
             </header>
 
