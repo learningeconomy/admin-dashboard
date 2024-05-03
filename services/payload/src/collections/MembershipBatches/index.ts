@@ -6,9 +6,9 @@ import { CREDENTIAL_BATCH_STATUS } from '../../constants/batches';
 import CredentialBatchStatusCell from '../../components/membership-batch/CredentialBatchStatusCell';
 import { duplicateBatch } from '../../endpoints/duplicateBatch';
 
-import { loggedIn } from './access/loggedIn'
 import { tenantAdmins } from './access/tenantAdmins'
 import { tenants } from './access/tenants'
+import { tenantIssuersOrBatchManager } from '../../access/tenantIssuersOrBatchManager'
 
 import { tenant } from '../../fields/tenant'
 
@@ -19,7 +19,7 @@ const MembershipBatchesCollection: CollectionConfig = {
         delete: tenantAdmins,
         update: tenantAdmins,
         read: tenants,
-        create: loggedIn,
+        create: tenantIssuersOrBatchManager,
     },
     admin: {
         defaultColumns: ['title', 'id', 'status'],

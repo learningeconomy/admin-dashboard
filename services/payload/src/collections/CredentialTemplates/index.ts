@@ -3,9 +3,8 @@ import CreateTemplate from '../../components/template/CreateTemplate';
 import TemplatePageDescription from '../../components/template/TemplatePageDescription';
 import CodeEditorWithCsvValidation from '../../components/template/CodeEditorWithCsvValidation';
 
-import { loggedIn } from './access/loggedIn'
-import { tenantAdmins } from './access/tenantAdmins'
 import { tenants } from './access/tenants'
+import { tenantTemplateManagers } from '../../access/tenantTemplateManagers'
 
 import { tenant } from '../../fields/tenant'
 
@@ -23,9 +22,9 @@ const CredentialsTemplatesCollection: CollectionConfig = {
     },
     access: {
         read: tenants,
-        create: loggedIn,
-        update: tenantAdmins,
-        delete: tenantAdmins,
+        create: tenantTemplateManagers,
+        update: tenantTemplateManagers,
+        delete: tenantTemplateManagers,
     },
     fields: [
         {

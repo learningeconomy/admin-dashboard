@@ -6,11 +6,16 @@ import { generateJwtFromId } from '../helpers/jwtHelpers';
 import Handlebars from 'handlebars';
 import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
 import { CredentialBatch } from 'payload/generated-types';
+import { checkPermissionToIssueCredentials } from '../utils/checkPermissionToIssueCredentials';
 
 export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     if (!req.user) throw new Forbidden();
 
     // TODO: Add Multi-Tenancy Permissions
+
+    if (!(await checkPermissionToIssueCredentials(req))) {
+        throw new Forbidden();
+    }
 
     // console.log('////req?.body', req.body);
     // //create transactionId

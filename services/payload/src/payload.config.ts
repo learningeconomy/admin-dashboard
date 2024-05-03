@@ -31,6 +31,7 @@ import { sendBatchEmail } from './endpoints/sendBatchEmail';
 import { getCollectionCount } from './endpoints/getCollectionCount';
 import { getCredentialLinks } from './endpoints/getCredentialLinks';
 import { forwardExchangeRequest } from './endpoints/exchange';
+import { permissionTo } from './endpoints/permissionTo';
 import { revokeCredential } from './endpoints/revokeCredential';
 import { getUserCredentials } from './endpoints/getUserCredentials';
 import { getCredentialsLinks } from './endpoints/getCredentialsLinks';
@@ -125,6 +126,7 @@ export default buildConfig({
         { method: 'post', path: '/get-collection-count', handler: getCollectionCount },
         { method: 'get', path: '/get-credential-links', handler: getCredentialLinks },
         { method: 'post', path: '/exchange/:a/:b/:token', handler: forwardExchangeRequest },
+        { method: 'get', path: '/permission-to/:operation/:id', handler: permissionTo },
         { method: 'post', path: '/revoke-credential/:id', handler: revokeCredential },
         { method: 'post', path: '/get-user-credentials', handler: getUserCredentials },
         { method: 'post', path: '/get-credentials-links', handler: getCredentialsLinks },

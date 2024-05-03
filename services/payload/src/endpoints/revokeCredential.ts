@@ -1,6 +1,9 @@
 import { PayloadHandler } from 'payload/config';
 import payload from 'payload';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
+import { TENANT_ROLES } from '../constants/roles/tenantRoles';
+import { checkPermissionToRevokeCredential } from '../utils/checkPermissionToRevokeCredential';
+import { isSuperAdmin } from '../utils/isSuperAdmin';
 
 const statusUrl = process.env.STATUS_URL ?? 'http://localhost:4008';
 
@@ -10,6 +13,10 @@ export const revokeCredential: PayloadHandler = async (req, res) => {
 
     const { id } = req.params;
     const { reason } = req.body;
+
+    if (!(await checkPermissionToRevokeCredential(req.user, id))) {
+            return res.sendStatus(401);
+    }
 
     try {
         const fetchResponse = await fetch(`${statusUrl}/credentials/status`, {

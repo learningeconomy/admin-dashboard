@@ -9,6 +9,8 @@ import { tenantAdmins } from './access/tenantAdmins';
 import { loginAfterCreate } from './hooks/loginAfterCreate';
 import { recordLastLoggedInTenant } from './hooks/recordLastLoggedInTenant';
 import { isSuperOrTenantAdmin } from './utilities/isSuperOrTenantAdmin';
+import { TENANT_ROLES } from '../../constants/roles/tenantRoles';
+import { USER_ROLES } from '../../constants/roles/userRoles';
 
 const Users: CollectionConfig = {
     slug: 'users',
@@ -45,11 +47,15 @@ const Users: CollectionConfig = {
             options: [
                 {
                     label: 'Super Admin',
-                    value: 'super-admin',
+                    value: USER_ROLES.SUPER_ADMIN,
+                },
+                {
+                    label: 'Tenant Manager',
+                    value: USER_ROLES.TENANT_MANAGER,
                 },
                 {
                     label: 'User',
-                    value: 'user',
+                    value: USER_ROLES.USER,
                 },
             ],
         },
@@ -77,11 +83,27 @@ const Users: CollectionConfig = {
                     options: [
                         {
                             label: 'Admin',
-                            value: 'admin',
+                            value: TENANT_ROLES.ADMIN,
+                        },
+                        {
+                            label: 'Revocation Manager',
+                            value: TENANT_ROLES.REVOCATION_MANAGER,
+                        },
+                        {
+                            label: 'Issuer',
+                            value: TENANT_ROLES.ISSUER,
+                        },
+                        {
+                            label: 'Batch Manager',
+                            value: TENANT_ROLES.BATCH_MANAGER,
+                        },
+                        {
+                            label: 'Template Manager',
+                            value: TENANT_ROLES.TEMPLATE_MANAGER,
                         },
                         {
                             label: 'User',
-                            value: 'user',
+                            value: TENANT_ROLES.USER,
                         },
                     ],
                 },

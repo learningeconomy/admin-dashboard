@@ -3,9 +3,8 @@ import CreateTemplate from '../../components/membership-template/CreateTemplate'
 import MembershipTemplatePageDescription from '../../components/membership-template/MembershipTemplatePageDescription';
 import CodeEditorWithCsvValidation from '../../components/membership-template/CodeEditorWithCsvValidation';
 
-import { loggedIn } from './access/loggedIn'
-import { tenantAdmins } from './access/tenantAdmins'
 import { tenants } from './access/tenants'
+import { tenantTemplateManagers } from '../../access/tenantTemplateManagers'
 
 import { tenant } from '../../fields/tenant'
 
@@ -19,9 +18,9 @@ const MembershipTemplatesCollection: CollectionConfig = {
     },
     access: {
         read: tenants,
-        create: loggedIn,
-        update: tenantAdmins,
-        delete: tenantAdmins,
+        create: tenantTemplateManagers,
+        update: tenantTemplateManagers,
+        delete: tenantTemplateManagers,
     },
     fields: [
         {

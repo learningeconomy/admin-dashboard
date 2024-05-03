@@ -3,9 +3,8 @@ import CreateEmailTemplate from '../../components/email-template/CreateEmailTemp
 import CodeEditorWithCsvValidation from '../../components/email-template/CodeEditorWithCsvValidation';
 import EmailPageDescription from '../../components/Email/EmailPageDescription';
 
-import { loggedIn } from './access/loggedIn'
-import { tenantAdmins } from './access/tenantAdmins'
 import { tenants } from './access/tenants'
+import { tenantTemplateManagers } from '../../access/tenantTemplateManagers'
 
 import { tenant } from '../../fields/tenant'
 
@@ -36,9 +35,9 @@ const EmailTemplatesCollection: CollectionConfig = {
     },
     access: {
         read: tenants,
-        create: loggedIn,
-        update: tenantAdmins,
-        delete: tenantAdmins,
+        create: tenantTemplateManagers,
+        update: tenantTemplateManagers,
+        delete: tenantTemplateManagers,
     },
     fields: [
         {

@@ -8,6 +8,9 @@ import './Revocation.scss';
 import { Credential } from 'payload/generated-types';
 import { CREDENTIAL_STATUS } from '../../constants/credentials';
 
+import { CUSTOM_OPERATIONS } from '../../constants/roles/customOperations';
+import usePermissionTo from '../../hooks/usePermissionTo';
+
 export type RevocationWarningProps = {
     credential: Credential;
     slug: string;
@@ -18,16 +21,18 @@ const RevocationWarning: React.FC<RevocationWarningProps> = ({ slug, credential 
     const [confirmation, setConfirmation] = useState('');
     const [batchName, setBatchName] = useState('');
     const { modalState, closeModal } = useModal();
+    const { allowed: allowedToRevoke, loading } = usePermissionTo(CUSTOM_OPERATIONS.REVOKE_CREDENTIAL, credential?.id)
 
     const isNotSentYet = credential.status === CREDENTIAL_STATUS.DRAFT;
 
     const revokeCredential = async () => {
-        await fetch(`/api/revoke-credential/${credential.id}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ reason }),
-        });
-
+        if(allowedToRevoke) {
+            await fetch(`/api/revoke-credential/${credential.id}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ reason }),
+            });
+        }
         closeModal(slug);
     };
 
@@ -40,6 +45,11 @@ const RevocationWarning: React.FC<RevocationWarningProps> = ({ slug, credential 
                 });
         }
     }, [slug, modalState?.[slug]?.isOpen]);
+
+    let revokeButton = (<button disabled={confirmation !== credential.credentialName}>Revoke</button>)
+    if(!loading && !allowedToRevoke) { 
+        revokeButton = <button disabled={true}>You do not have permission to revoke.</button>
+    }
 
     return (
         <Drawer header={false} slug={slug} gutter={false}>

@@ -2,14 +2,15 @@ import type { CollectionConfig } from 'payload/types'
 
 import { superAdmins } from '../../access/superAdmins'
 import { tenantAdmins } from './access/tenantAdmins'
+import { tenantManagers } from './access/tenantManagers'
 import enablePublicVisibility from './hooks/enablePublicVisibility';
 
 const Tenants: CollectionConfig = {
   slug: 'tenants',
   access: {
     create: superAdmins,
-    read: tenantAdmins,
-    update: tenantAdmins,
+    read: tenantManagers,
+    update: tenantManagers,
     delete: superAdmins,
   },
   admin: {
