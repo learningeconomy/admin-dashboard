@@ -67,5 +67,16 @@ The 3 typical env vars will be `MONGODB_URI`, `PAYLOAD_SECRET`, and `PAYLOAD_CON
 
 `docker run --env-file .env -p 3000:3000 my-tag`
 
+### Tenant Roles
+
+| **Tenant Role**    | **Permissions**                                        |
+|--------------------|--------------------------------------------------------|
+| Admin              | Full Read Permissions, Access to Admin Dashboard       |
+| Revocation Manager | Revoke Credential                                      |
+| Issuer             | Send/Issue Credentials; Create, Update, Delete Batches |
+| Batch Manager      | Create, Update, Delete Batches                         |
+| Template Manager   | Create, Update Templates                               |
+| User               | No privileges                                          |
+
 ## License
 MIT © [MIT](#)
