@@ -20,7 +20,6 @@ export const permissionTo: PayloadHandler = async (req, res) => {
                     operation,
                     permission: await checkPermissionToIssueCredentials(req),
                 });
-
                 break;
         }
     } catch (err) {
