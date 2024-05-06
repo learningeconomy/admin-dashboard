@@ -102,6 +102,10 @@ const Users: CollectionConfig = {
                             value: TENANT_ROLES.TEMPLATE_MANAGER,
                         },
                         {
+                            label: 'Trust Registry Manager',
+                            value: TENANT_ROLES.TRUST_REGISTRY_MANAGER,
+                        },
+                        {
                             label: 'User',
                             value: TENANT_ROLES.USER,
                         },

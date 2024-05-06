@@ -4,6 +4,7 @@ import { superAdmins } from '../../access/superAdmins'
 import { tenantAdmins } from './access/tenantAdmins'
 import { tenantManagers } from './access/tenantManagers'
 import enablePublicVisibility from './hooks/enablePublicVisibility';
+import { superAdminFieldAccess } from '../../access/superAdmins';
 
 const Tenants: CollectionConfig = {
   slug: 'tenants',
@@ -33,6 +34,12 @@ const Tenants: CollectionConfig = {
           required: true,
         },
       ],
+    },
+    {
+      name: 'addToGlobalTrustRegistry',
+      type: 'checkbox',
+      label: 'Add Trust Registry to Global Trust Registry',
+      defaultValue: false,
     },
     {
       name: 'lightThemeIcon', 

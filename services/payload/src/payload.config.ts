@@ -14,6 +14,8 @@ import MembershipBatchesCollection from './collections/MembershipBatches';
 import CredentialsCollection from './collections/Credentials';
 import MembershipsCollection from './collections/Memberships';
 import EmailTemplatesCollection from './collections/EmailTemplates';
+import TrustRegistryCollection from './collections/TrustRegistry';
+
 //components
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
@@ -21,6 +23,7 @@ import SideNav from './components/SideNav/SideNav';
 
 //endpoints
 import { getTenantMetadata } from './endpoints/getTenantMetadata';
+import { trustRegistry } from './endpoints/trustRegistry';
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
@@ -113,9 +116,11 @@ export default buildConfig({
         CredentialsCollection,
         MembershipsCollection,
         EmailTemplatesCollection,
+        TrustRegistryCollection
     ],
     endpoints: [
         { method: 'get', path: '/get-tenant-metadata', handler: getTenantMetadata },
+        { method: 'get', path: '/registry', handler: trustRegistry },
         { method: 'post', path: '/send-email', handler: sendEmail },
         { method: 'post', path: '/send-batch-email', handler: sendBatchEmail },
         { method: 'get', path: '/payload-version', handler: readPayloadVersion },

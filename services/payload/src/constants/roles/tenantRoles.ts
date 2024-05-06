@@ -5,4 +5,5 @@ export enum TENANT_ROLES {
   BATCH_MANAGER = 'batch-manager',
   REVOCATION_MANAGER = 'revocation-manager',
   TEMPLATE_MANAGER = 'template-manager',
+  TRUST_REGISTRY_MANAGER = 'trust-registry-manager',
 }

@@ -169,7 +169,7 @@ const SideNav: React.FC = () => {
                     </>
                 )}
                 {permissionOnOneOfCollection(
-                    ['credential-template', 'membership-template', 'email-template'],
+                    ['credential-template', 'membership-template', 'email-template', 'trust-registry'],
                     'create'
                 ) && (
                     <>
@@ -228,6 +228,22 @@ const SideNav: React.FC = () => {
                                     }`}
                                 >
                                     Email Templates
+                                </span>
+                            </NavLink>
+                        )}
+                        {permissionOnCollection('trust-registry', 'create') && (
+                            <NavLink
+                                className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                                to="/admin/collections/trust-registry"
+                                onClick={close}
+                            >
+                                <img src={Users} alt="trust-registry" />
+                                <span
+                                    className={`transition-[font-size] ${
+                                        isOpen ? '' : 'text-zero'
+                                    }`}
+                                >
+                                    Trust Registry
                                 </span>
                             </NavLink>
                         )}
