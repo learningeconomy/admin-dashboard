@@ -16,10 +16,18 @@ export const tenants: Access = ({ req: { user }, data }) => {
     return (
         (data?.tenant?.id && user?.lastLoggedInTenant?.id === data.tenant.id) ||
         (!user?.lastLoggedInTenant?.id && isSuperAdmin(user)) || {
-            // list of documents
-            tenant: {
-                equals: user?.lastLoggedInTenant?.id,
-            },
+            or: [
+                {
+                    tenant: {
+                        equals: user?.lastLoggedInTenant?.id,
+                    },
+                },
+                {
+                    public: {
+                        equals: true,
+                    },
+                },
+            ],
         }
     );
 };
