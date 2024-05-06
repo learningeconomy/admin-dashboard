@@ -7,21 +7,21 @@ export const usePermissionTo = (operation: CustomOperation, credentialId: string
 
     const updatePermissionData = async () => {
         // Send request to get tenant metadata
-        const res = await fetch(`/api/permission-to/${operation}/${credentialId}`, { method: 'GET' });
+        const res = await fetch(`/api/permission-to/${operation}/${credentialId}`, {
+            method: 'GET',
+        });
 
         if (res.status === 200) {
             const { permission } = await res.json();
             setAllowed(permission);
-            setLoading(false)
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        if (!credentialId) {
-            setLoading(true);
-            updatePermissionData();
-        }
-    }, [credentialId]);
+        setLoading(true);
+        updatePermissionData();
+    }, [operation, credentialId]);
 
     return { allowed, loading };
 };

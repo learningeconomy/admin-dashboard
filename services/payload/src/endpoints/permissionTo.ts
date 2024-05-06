@@ -12,7 +12,7 @@ export const permissionTo: PayloadHandler = async (req, res) => {
                 res.status(200).json({
                     credentialId: id,
                     operation,
-                    permissionToRevoke: await checkPermissionToRevokeCredential(req.user, id),
+                    permission: await checkPermissionToRevokeCredential(req.user, id),
                 });
                 break;
             case CUSTOM_OPERATIONS.ISSUE_CREDENTIALS:

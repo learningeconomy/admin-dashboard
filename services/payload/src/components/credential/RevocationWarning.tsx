@@ -94,7 +94,7 @@ const RevocationWarning: React.FC<RevocationWarningProps> = ({ slug, credential 
                             value={confirmation}
                         />
                     </label>
-                    <button disabled={confirmation !== credential.credentialName}>Revoke</button>
+                    {revokeButton}
                 </form>
             </section>
         </Drawer>

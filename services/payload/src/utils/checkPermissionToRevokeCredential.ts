@@ -32,7 +32,7 @@ export const checkPermissionToRevokeCredential = async (
     const credentialTenantId =
         typeof credentialTenant === 'string' ? credentialTenant : credentialTenant?.id;
 
-    if (checkTenantRoles([TENANT_ROLES.REVOCATION_MANAGER], req.user, credentialTenantId)) {
+    if (checkTenantRoles([TENANT_ROLES.REVOCATION_MANAGER], user, credentialTenantId)) {
         return true;
     }
 
