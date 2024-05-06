@@ -15,18 +15,8 @@
         "generate:graphQLSchema": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema",
         "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload"
     },
-    "pnpm": {
-        "supportedArchitectures": {
-            "libc": [
-                "musl"
-            ]
-        },
-        "overrides": {
-            "sharp": "0.33.3"
-        }
-    },
     "dependencies": {
-        "@faceless-ui/modal": "^2.0.1",
+        "@faceless-ui/modal": "2.0.1",
         "@faceless-ui/window-info": "^2.1.1",
         "@learncard/didkit-plugin": "^1.4.3",
         "@learncard/init": "^1.2.15",
