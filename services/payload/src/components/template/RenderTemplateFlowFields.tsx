@@ -135,7 +135,7 @@ const FormSteps = (props: Props) => {
 
     return (
         <>
-            <section className="h-full w-full overflow-x-hidden flex-shrink pt-12 flex md:pt-0">
+            <section className="flex-grow w-full overflow-x-hidden flex-shrink pt-12 flex md:pt-0">
                 <RenderSlide formProps={props} />
             </section>
 
