@@ -362,7 +362,7 @@ const FormSteps = (props: Props) => {
 
     return (
         <>
-            <section className="h-full w-full snap-mandatory snap-x overflow-x-hidden flex-shrink pt-12 flex md:pt-0">
+            <section className="flex-grow w-full snap-mandatory snap-x overflow-x-hidden flex-shrink pt-12 flex md:pt-0">
                 <RenderSlide ref={refs[0]} formProps={props} step={1} />
                 <RenderSlide ref={refs[1]} formProps={props} step={2} />
                 <UploadCSV

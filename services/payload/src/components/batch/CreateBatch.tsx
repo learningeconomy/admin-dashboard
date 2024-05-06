@@ -76,7 +76,7 @@ const CreateBatch: React.FC<Props> = props => {
     return (
         <OperationContext.Provider value={operation}>
             <Form
-                className={`${baseClass}__form`}
+                className={`${baseClass}__form h-auto flex-grow min-h-0`}
                 method={id ? 'patch' : 'post'}
                 action={action}
                 onSubmit={handleOnSubmit}
