@@ -1,9 +1,9 @@
 import type { Access } from 'payload/config'
-import type { FieldHook } from 'payload/types'
+import type { FieldAccess } from 'payload/types'
 
 import { checkUserRoles } from '../utils/checkUserRoles'
 
 export const superAdmins: Access = ({ req: { user } }) => checkUserRoles(['super-admin'], user)
 
-export const superAdminFieldAccess: FieldHook = ({ req: { user } }) =>
+export const superAdminFieldAccess: FieldAccess = ({ req: { user } }) =>
   checkUserRoles(['super-admin'], user)

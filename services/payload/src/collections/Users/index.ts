@@ -38,7 +38,7 @@ const Users: CollectionConfig = {
             name: 'roles',
             type: 'select',
             hasMany: true,
-            required: true,
+            //required: true,
             access: {
                 create: superAdminFieldAccess,
                 update: superAdminFieldAccess,

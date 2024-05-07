@@ -130,11 +130,26 @@ const RenderSlide = React.forwardRef<HTMLElement, RenderSlideProps>(function Ren
 const FormSteps: React.FC<Props & { children: React.ReactNode }> = props => {
     const history = useHistory();
 
-    const { submit } = useForm();
+    const { submit, validateForm } = useForm();
 
     const {
         routes: { admin: adminRoute },
     } = useConfig();
+
+    const submitIt = async () => {
+        try {
+            const validation = await validateForm();
+            // TODO: If validation fails, then show an error to the user.
+            if (!validation) {
+                console.error('Validation Failed');
+            }
+
+            const submission = await submit();
+            history.push(`${adminRoute}/collections/users`);
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
     return (
         <>
@@ -143,9 +158,7 @@ const FormSteps: React.FC<Props & { children: React.ReactNode }> = props => {
             </section>
 
             <HorizontalNavFooter
-                mainAction={() =>
-                    submit().then(() => history.push(`${adminRoute}/collections/users`))
-                }
+                mainAction={submitIt}
                 canDoMainAction
                 mainText="Save and Quit"
                 quitText="Quit Without Saving"

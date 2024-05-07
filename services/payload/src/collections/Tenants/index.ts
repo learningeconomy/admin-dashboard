@@ -10,7 +10,7 @@ const Tenants: CollectionConfig = {
   slug: 'tenants',
   access: {
     create: superAdmins,
-    read: tenantManagers,
+    read: tenantAdmins,
     update: tenantManagers,
     delete: superAdmins,
   },

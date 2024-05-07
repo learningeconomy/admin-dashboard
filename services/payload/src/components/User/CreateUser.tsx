@@ -26,7 +26,7 @@ const CreateUser: React.FC<Props> = props => {
         id,
     } = props;
 
-    console.log("Create User Fields", props, user)
+    console.log("Create User Fields", props, user, hasSavePermission)
 
     const isReadOnly = !hasSavePermission;
 

@@ -125,7 +125,7 @@ const SideNav: React.FC = () => {
                         </span>
                     </NavLink>
                 )}
-                {permissionOnOneOfCollection(['users', 'tenants']) && (
+                {(permissionOnCollection('users') || permissionOnCollection('tenants', 'update')) && (
                     <>
                         {isOpen && (
                             <div className="relative flex py-5 items-center">
@@ -150,7 +150,7 @@ const SideNav: React.FC = () => {
                                 </span>
                             </NavLink>
                         )}
-                        {permissionOnCollection('tenants') && (
+                        {permissionOnCollection('tenants', 'update') && (
                             <NavLink
                                 className={`navbar-buttons ${isOpen ? 'open' : ''}`}
                                 to="/admin/collections/tenants"
