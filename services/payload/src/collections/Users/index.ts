@@ -5,8 +5,12 @@ import CreateUser from '../../components/User/CreateUser';
 import { anyone } from '../../access/anyone';
 import { superAdminFieldAccess } from '../../access/superAdmins';
 import { adminsAndSelf } from './access/adminsAndSelf';
+import { userRoleManagersAndSelf } from './access/userRoleManagersAndSelf';
 import { tenantAdmins } from './access/tenantAdmins';
+import { tenantManagers } from './access/tenantManagers';
+import { tenantUserRoleManager } from './access/tenantUserRoleManager';
 import { loginAfterCreate } from './hooks/loginAfterCreate';
+import { assignToTenant } from './hooks/assignToTenant';
 import { recordLastLoggedInTenant } from './hooks/recordLastLoggedInTenant';
 import { isSuperOrTenantAdmin } from './utilities/isSuperOrTenantAdmin';
 import { TENANT_ROLES } from '../../constants/roles/tenantRoles';
@@ -24,12 +28,12 @@ const Users: CollectionConfig = {
     access: {
         read: adminsAndSelf,
         create: anyone,
-        update: adminsAndSelf,
-        delete: adminsAndSelf,
+        update: userRoleManagersAndSelf,
+        delete: userRoleManagersAndSelf,
         admin: isSuperOrTenantAdmin,
     },
     hooks: {
-        afterChange: [loginAfterCreate],
+        afterChange: [assignToTenant, loginAfterCreate],
         afterLogin: [recordLastLoggedInTenant],
     },
     fields: [
@@ -64,8 +68,8 @@ const Users: CollectionConfig = {
             type: 'array',
             label: 'Tenants',
             access: {
-                create: tenantAdmins,
-                update: tenantAdmins,
+                create: tenantManagers,
+                update: tenantUserRoleManager,
                 read: tenantAdmins,
             },
             fields: [
@@ -74,16 +78,30 @@ const Users: CollectionConfig = {
                     type: 'relationship',
                     relationTo: 'tenants',
                     required: true,
+                    access: {
+                        create: superAdminFieldAccess,
+                        update: superAdminFieldAccess,
+                        read: tenantAdmins,
+                    },
                 },
                 {
                     name: 'roles',
                     type: 'select',
                     hasMany: true,
                     required: true,
+                    access: {
+                        create: tenantUserRoleManager,
+                        update: tenantUserRoleManager,
+                        read: tenantAdmins,
+                    },
                     options: [
                         {
                             label: 'Admin',
                             value: TENANT_ROLES.ADMIN,
+                        },
+                        {
+                            label: 'User Roles Manager',
+                            value: TENANT_ROLES.USER_ROLE_MANAGER,
                         },
                         {
                             label: 'Revocation Manager',
