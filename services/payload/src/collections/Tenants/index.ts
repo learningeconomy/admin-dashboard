@@ -8,6 +8,7 @@ import { superAdminFieldAccess } from '../../access/superAdmins';
 
 const Tenants: CollectionConfig = {
   slug: 'tenants',
+  labels: { singular: 'Network', plural: 'Networks' },
   access: {
     create: superAdmins,
     read: tenantAdmins,

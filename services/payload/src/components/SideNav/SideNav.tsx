@@ -156,13 +156,13 @@ const SideNav: React.FC = () => {
                                 to="/admin/collections/tenants"
                                 onClick={close}
                             >
-                                <img src={Users} alt="tenants" />
+                                <img src={Users} alt="networks" />
                                 <span
                                     className={`transition-[font-size] ${
                                         isOpen ? '' : 'text-zero'
                                     }`}
                                 >
-                                    Tenants
+                                    Networks
                                 </span>
                             </NavLink>
                         )}

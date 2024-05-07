@@ -66,7 +66,7 @@ const Users: CollectionConfig = {
         {
             name: 'tenants',
             type: 'array',
-            label: 'Tenants',
+            label: { singular: 'Network', plural: 'Networks' },
             access: {
                 create: tenantManagers,
                 update: tenantUserRoleManager,
@@ -75,6 +75,7 @@ const Users: CollectionConfig = {
             fields: [
                 {
                     name: 'tenant',
+                    label: { singular: 'Network', plural: 'Networks' },
                     type: 'relationship',
                     relationTo: 'tenants',
                     required: true,
