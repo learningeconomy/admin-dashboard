@@ -22,6 +22,7 @@ import { Icon } from './components/Icon';
 import SideNav from './components/SideNav/SideNav';
 
 //endpoints
+import { healthCheck } from './endpoints/healthCheck';
 import { getTenantMetadata } from './endpoints/getTenantMetadata';
 import { trustRegistry } from './endpoints/trustRegistry';
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
@@ -119,6 +120,7 @@ export default buildConfig({
         TrustRegistryCollection
     ],
     endpoints: [
+        { method: 'get', path: '/health-check', handler: healthCheck },
         { method: 'get', path: '/get-tenant-metadata', handler: getTenantMetadata },
         { method: 'get', path: '/registry', handler: trustRegistry },
         { method: 'post', path: '/send-email', handler: sendEmail },
