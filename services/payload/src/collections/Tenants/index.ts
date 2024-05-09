@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload/types'
 
+import TenantPageDescription from '../../components/Tenant/TenantPageDescription';
 import { superAdmins } from '../../access/superAdmins'
 import { tenantAdmins } from './access/tenantAdmins'
 import { tenantManagers } from './access/tenantManagers'
@@ -17,6 +18,8 @@ const Tenants: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
+    defaultColumns: ['name', 'domains'],
+    description: TenantPageDescription,
   },
   fields: [
     {
