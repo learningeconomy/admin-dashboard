@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { PayloadHandler } from 'payload/config';
 import { areDidsEqual, getLearnCard } from '../helpers/learncard.helpers';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
-import redis from '../helpers/redis.helpers';
+import getRedis from '../helpers/redis.helpers';
 
 export const getUserCredentials: PayloadHandler = async (req, res) => {
     const { membership } = req.body;
@@ -60,6 +60,8 @@ export const getUserCredentials: PayloadHandler = async (req, res) => {
     );
 
     const challenge = crypto.randomBytes(32).toString('hex');
+
+    const redis = getRedis();
 
     await redis.setex(`challenge:${challenge}`, 3600, decoded.vp.holder);
 

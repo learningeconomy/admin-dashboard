@@ -9,6 +9,8 @@
 export interface Config {
   collections: {
     users: User;
+    tenants: Tenant;
+    media: Media;
     'credential-template': CredentialTemplate;
     'membership-template': MembershipTemplate;
     'credential-batch': CredentialBatch;
@@ -16,28 +18,123 @@ export interface Config {
     credential: Credential;
     membership: Membership;
     'email-template': EmailTemplate;
+    'trust-registry': TrustRegistry;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
   };
   globals: {};
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
 export interface User {
   id: string;
-  name?: string;
+  name?: string | null;
+  roles?: ('super-admin' | 'tenant-manager' | 'user')[] | null;
+  tenants?:
+    | {
+        tenant: string | Tenant;
+        roles: (
+          | 'admin'
+          | 'user-role-manager'
+          | 'revocation-manager'
+          | 'issuer'
+          | 'batch-manager'
+          | 'template-manager'
+          | 'trust-registry-manager'
+          | 'user'
+        )[];
+        id?: string | null;
+      }[]
+    | null;
+  lastLoggedInTenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;
   email: string;
-  resetPasswordToken?: string;
-  resetPasswordExpiration?: string;
-  salt?: string;
-  hash?: string;
-  loginAttempts?: number;
-  lockUntil?: string;
-  password?: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password: string | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants".
+ */
+export interface Tenant {
+  id: string;
+  name: string;
+  domains?:
+    | {
+        domain: string;
+        id?: string | null;
+      }[]
+    | null;
+  addToGlobalTrustRegistry?: boolean | null;
+  lightThemeIcon?: string | Media | null;
+  darkThemeIcon?: string | Media | null;
+  lightThemeLogo?: string | Media | null;
+  darkThemeLogo?: string | Media | null;
+  favicon?: string | Media | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt?: string | null;
+  public?: boolean | null;
+  tenant?: (string | null) | Tenant;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    tablet?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "credential-template".
+ */
 export interface CredentialTemplate {
   id: string;
   title: string;
-  description?: string;
-  internalNotes?: string;
+  description?: string | null;
+  internalNotes?: string | null;
   credentialTemplateJson:
     | {
         [k: string]: unknown;
@@ -47,14 +144,19 @@ export interface CredentialTemplate {
     | number
     | boolean
     | null;
+  tenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "membership-template".
+ */
 export interface MembershipTemplate {
   id: string;
   title: string;
-  description?: string;
-  internalNotes?: string;
+  description?: string | null;
+  internalNotes?: string | null;
   credentialTemplateJson:
     | {
         [k: string]: unknown;
@@ -64,15 +166,20 @@ export interface MembershipTemplate {
     | number
     | boolean
     | null;
-  associatedCredentials?: string[] | Credential[];
+  associatedCredentials?: (string | Credential)[] | null;
+  tenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "credential".
+ */
 export interface Credential {
   id: string;
-  credentialName?: string;
-  earnerName?: string;
-  emailAddress?: string;
+  credentialName?: string | null;
+  earnerName?: string | null;
+  emailAddress?: string | null;
   extraFields?:
     | {
         [k: string]: unknown;
@@ -84,21 +191,26 @@ export interface Credential {
     | null;
   status: string;
   batch: string | CredentialBatch;
-  revocationReason?: string;
-  revocationDate?: string;
-  revokedBy?: string | User;
+  revocationReason?: string | null;
+  revocationDate?: string | null;
+  revokedBy?: (string | null) | User;
+  tenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "credential-batch".
+ */
 export interface CredentialBatch {
   id: string;
   title: string;
-  description?: string;
-  internalNotes?: string;
+  description?: string | null;
+  internalNotes?: string | null;
   status: string;
   template: string | CredentialTemplate;
   emailTemplate: string | EmailTemplate;
-  from?: string;
+  from?: string | null;
   csvFields?:
     | {
         [k: string]: unknown;
@@ -108,29 +220,39 @@ export interface CredentialBatch {
     | number
     | boolean
     | null;
+  tenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;
-  _status?: 'draft' | 'published';
+  _status?: ('draft' | 'published') | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-template".
+ */
 export interface EmailTemplate {
   id: string;
   title: string;
-  internalNotes?: string;
-  from?: string;
-  emailSubjectTitle?: string;
+  internalNotes?: string | null;
+  from?: string | null;
+  emailSubjectTitle?: string | null;
   emailTemplatesHandlebarsCode: string;
+  tenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "membership-batch".
+ */
 export interface MembershipBatch {
   id: string;
   title: string;
-  description?: string;
-  internalNotes?: string;
+  description?: string | null;
+  internalNotes?: string | null;
   status: string;
   template: string | MembershipTemplate;
   emailTemplate: string | EmailTemplate;
-  from?: string;
+  from?: string | null;
   csvFields?:
     | {
         [k: string]: unknown;
@@ -140,14 +262,19 @@ export interface MembershipBatch {
     | number
     | boolean
     | null;
+  tenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;
-  _status?: 'draft' | 'published';
+  _status?: ('draft' | 'published') | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "membership".
+ */
 export interface Membership {
   id: string;
-  earnerName?: string;
-  emailAddress?: string;
+  earnerName?: string | null;
+  emailAddress?: string | null;
   extraFields?:
     | {
         [k: string]: unknown;
@@ -159,9 +286,65 @@ export interface Membership {
     | null;
   status: string;
   batch: string | MembershipBatch;
-  revocationReason?: string;
-  revocationDate?: string;
-  revokedBy?: string | User;
+  revocationReason?: string | null;
+  revocationDate?: string | null;
+  revokedBy?: (string | null) | User;
+  targetDid?: string | null;
+  tenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trust-registry".
+ */
+export interface TrustRegistry {
+  id: string;
+  name: string;
+  did: string;
+  url?: string | null;
+  location?: string | null;
+  internalNotes?: string | null;
+  tenant?: (string | null) | Tenant;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-preferences".
+ */
+export interface PayloadPreference {
+  id: string;
+  user: {
+    relationTo: 'users';
+    value: string | User;
+  };
+  key?: string | null;
+  value?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-migrations".
+ */
+export interface PayloadMigration {
+  id: string;
+  name?: string | null;
+  batch?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+
+
+declare module 'payload' {
+  export interface GeneratedTypes extends Config {}
 }

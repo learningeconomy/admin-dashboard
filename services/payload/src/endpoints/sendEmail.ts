@@ -2,7 +2,8 @@ import payload from 'payload';
 import { PayloadHandler } from 'payload/config';
 import Handlebars from 'handlebars';
 
-import { emailQueue } from '../jobs/queue.server';
+import { sendSingleEmail } from '../jobs/queue.server';
+
 import { generateJwtFromId } from '../helpers/jwtHelpers';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
 
@@ -89,7 +90,7 @@ export const sendEmail: PayloadHandler = async (req, res) => {
             });
         }
         console.log('///emailsData', email);
-        emailQueue.add('send-test-email', { email, collection });
+        sendSingleEmail(email, collection);
 
         res.status(200).json({ email, link });
     } catch (err) {

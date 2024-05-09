@@ -31,7 +31,6 @@ phases:
     post_build:
         commands:
             - ls
-            - cd services/payload
             - echo Build completed on `date`
             - echo Pushing the Docker images...
             - docker push $REPOSITORY_URI:latest

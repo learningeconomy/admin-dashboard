@@ -4,7 +4,7 @@ import { PayloadHandler } from 'payload/config';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../helpers/handlebarhelpers';
 import type { UnsignedVC } from '@learncard/types';
 import { areDidsEqual, getLearnCard } from '../helpers/learncard.helpers';
-import redis from '../helpers/redis.helpers';
+import getRedis from '../helpers/redis.helpers';
 import { inflateObject } from '../helpers/objects.helpers';
 
 export const selfIssueUserCredentials: PayloadHandler = async (req, res) => {
@@ -32,6 +32,7 @@ export const selfIssueUserCredentials: PayloadHandler = async (req, res) => {
 
     const did = decoded.vp.holder;
 
+    const redis = getRedis();
     const didStoredForChallenge = await redis.getdel(`challenge:${decoded.nonce}`);
 
     if (!didStoredForChallenge || !(await areDidsEqual(didStoredForChallenge, did))) {
