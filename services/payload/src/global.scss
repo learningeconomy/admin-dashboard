@@ -86,3 +86,11 @@
   display: flex;
   flex-direction: column;
 }
+
+.hamburger {
+  display: none;
+}
+
+.step-nav__home {
+  display: none !important;
+}
