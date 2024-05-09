@@ -9,7 +9,7 @@
         "build:payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload build",
         "typecheck": "tsc",
         "build:server": "swc src -d dist --strip-leading-paths",
-        "build": "pnpm copyfiles && pnpm build:server && pnpm build:payload",
+        "build": "pnpm copyfiles && pnpm build:payload",
         "serve": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js NODE_ENV=production node dist/server.js",
         "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png}\" dist/",
         "generate:types": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:types",
@@ -60,8 +60,6 @@
     },
     "devDependencies": {
         "@learncard/types": "^5.5.0",
-        "@swc/cli": "^0.3.12",
-        "@swc/core": "1.3.75",
         "@types/express": "^4.17.9",
         "@types/jsonwebtoken": "^9.0.2",
         "@types/papaparse": "^5.3.9",
