@@ -4,7 +4,7 @@ import path from 'path';
 
 import { seed } from './seed'
 
-require('dotenv').config();
+import 'dotenv/config';
 const app = express();
 
 app.use('/assets', express.static(path.resolve(__dirname, './assets')));
