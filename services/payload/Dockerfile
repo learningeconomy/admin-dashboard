@@ -25,6 +25,9 @@ RUN pnpm i --production
 COPY --from=builder /home/node/app/dist ./dist
 COPY --from=builder /home/node/app/build ./build
 
+RUN ls -l /home/node/app
+RUN ls -l /home/node/app/dist
+
 EXPOSE 3000
 
 CMD ["node", "./dist/server.js"]
