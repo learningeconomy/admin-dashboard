@@ -6,9 +6,15 @@ import { emailQueue } from '../jobs/queue.server';
 import { generateJwtFromId } from '../helpers/jwtHelpers';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
 
+import getDomainForRequest from '../utils/getDomainForRequest';
+
 export const sendEmail: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(400);
     // TODO: Add Multi-Tenancy Permissions
+
+    const tenantDomain = await getDomainForRequest(req);
+    if (!tenantDomain) throw new Error("No Domain Associated with Request for Sending Email");
+
 
     const { credentialId, collection = 'credential' } = req.body;
 
@@ -53,7 +59,7 @@ export const sendEmail: PayloadHandler = async (req, res) => {
     const claimPageBaseUrl = process.env.CLAIM_PAGE_URL || 'https://localhost:4321';
 
     const jwt = generateJwtFromId(credential.id, collection);
-    const link = `${claimPageBaseUrl}/?token=${jwt}&url=${payload.config.serverURL}/api`;
+    const link = `${claimPageBaseUrl}/?token=${jwt}&url=${tenantDomain}/api`;
     // replace handlebar variables in email template with record data
     const mergedRecordWithLink = {
         ...(credential.extraFields as any),

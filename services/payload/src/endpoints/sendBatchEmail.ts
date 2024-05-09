@@ -8,6 +8,8 @@ import { CREDENTIAL_BATCH_STATUS } from '../constants/batches';
 import { CredentialBatch } from 'payload/generated-types';
 import { checkPermissionToIssueCredentials } from '../utils/checkPermissionToIssueCredentials';
 
+import getDomainForRequest from '../utils/getDomainForRequest';
+
 export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     if (!req.user) throw new Forbidden();
 
@@ -23,6 +25,9 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
     // req.transactionID = transactionId;
     // console.log('///transactionId', transactionId);
 
+    const tenantDomain = await getDomainForRequest(req);
+    if (!tenantDomain) throw new Error("No Domain Associated with Request for Sending Email");
+    
     //get batch id
     const batchId = req?.body?.batchId;
     const emailTemplateId = req?.body?.emailTemplateId;
@@ -74,7 +79,7 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     const emails = data?.docs?.map(record => {
         const jwt = generateJwtFromId(record?.id, collection);
-        const link = `${claimPageBaseUrl}/?token=${jwt}&url=${payload.config.serverURL}/api`;
+        const link = `${claimPageBaseUrl}/?token=${jwt}&url=${tenantDomain}/api`;
         // replace handlebar variables in email template with record data
         const mergedRecordWithLink = {
             ...(record.extraFields as any),

@@ -38,7 +38,6 @@ import { forwardExchangeRequest } from './endpoints/exchange';
 import { permissionTo } from './endpoints/permissionTo';
 import { revokeCredential } from './endpoints/revokeCredential';
 import { getUserCredentials } from './endpoints/getUserCredentials';
-import { getCredentialsLinks } from './endpoints/getCredentialsLinks';
 import { selfIssueUserCredentials } from './endpoints/selfIssueUserCredentials';
 
 import DashboardRedirect from './components/DashboardRedirect';
@@ -98,9 +97,17 @@ export default buildConfig({
                         require.resolve('./mocks/emptyObject'),
                     [require.resolve('./endpoints/getUserCredentials')]:
                         require.resolve('./mocks/emptyObject'),
-                    [require.resolve('./endpoints/getCredentialsLinks')]:
-                        require.resolve('./mocks/emptyObject'),
                     [require.resolve('./endpoints/selfIssueUserCredentials')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./endpoints/getCredentialLinks')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./helpers/issuerCoordinator/internal/challenges')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./helpers/issuerCoordinator/internal/exchange')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./helpers/issuerCoordinator/internal/getCredentialLinks')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./helpers/issuerCoordinator/internal/revoke')]:
                         require.resolve('./mocks/emptyObject'),
                 },
             },
@@ -136,8 +143,9 @@ export default buildConfig({
         { method: 'get', path: '/permission-to/:operation/:id', handler: permissionTo },
         { method: 'post', path: '/revoke-credential/:id', handler: revokeCredential },
         { method: 'post', path: '/get-user-credentials', handler: getUserCredentials },
-        { method: 'post', path: '/get-credentials-links', handler: getCredentialsLinks },
+        { method: 'post', path: '/get-user-credentials/list', handler: getUserCredentials }, // Backward-Compat with /list endpoints
         { method: 'post', path: '/issue-user-credentials', handler: selfIssueUserCredentials },
+        { method: 'post', path: '/issue-user-credentials/issue', handler: selfIssueUserCredentials }, // Backward-Compat with /issue endpoints
     ],
     typescript: {
         outputFile: path.resolve(__dirname, 'payload-types.ts'),
