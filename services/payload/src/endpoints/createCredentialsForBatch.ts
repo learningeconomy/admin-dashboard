@@ -43,6 +43,7 @@ export const createBatchCredentials: PayloadHandler = async (req, res) => {
             draft: true,
             id,
             data: { csvFields: newFields },
+            req
         });
 
         // Queue up email jobs for the batch

@@ -10,6 +10,7 @@ const enablePublicVisibility: BeforeChangeHook = async ({ value, operation, req 
                 data: {
                     public: true,
                 },
+                req
             });
         }
     }

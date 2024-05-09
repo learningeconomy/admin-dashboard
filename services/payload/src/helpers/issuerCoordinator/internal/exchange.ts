@@ -10,6 +10,7 @@ import { CREDENTIAL_STATUS } from '../../../constants/credentials';
 import { getDelCredentialIdForChallenge } from './challenges';
 
 const exchange = async (
+	req: PayloadRequest, 
 	collection: string,
 	credentialId: string,
 	retrievalId: string,
@@ -91,6 +92,7 @@ const exchange = async (
 			status: CREDENTIAL_STATUS.CLAIMED,
 			...(collection === 'membership' ? { targetDid: credential.credentialSubject.id } : {}),
 		},
+		req
 	});
 
 	// Return Credential

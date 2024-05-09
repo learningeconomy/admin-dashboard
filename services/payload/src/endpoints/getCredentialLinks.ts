@@ -41,7 +41,7 @@ export const getCredentialLinks: PayloadHandler = async (req, res) => {
     const rootUrl = await getDomainForRequest(req);
 
     try {
-        const credentialLinks = await _getCredentialLinks(id, collection, token, rootUrl);
+        const credentialLinks = await _getCredentialLinks(req, id, collection, token, rootUrl);
         if (logs) console.log('[Get Credential Links] Credential Links', credentialLinks);
 
         if (!credentialLinks) {

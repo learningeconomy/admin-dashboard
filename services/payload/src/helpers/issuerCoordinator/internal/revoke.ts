@@ -2,7 +2,7 @@ import { PayloadHandler } from 'payload/config';
 import payload from 'payload';
 import { CREDENTIAL_STATUS } from '../../../constants/credentials';
 
-const revoke = async (credentialId: string, revocationReason: string, userId: string): Promise<{ status: number, result?: JSON, error?: any}> => {
+const revoke = async (req: PayloadRequest, credentialId: string, revocationReason: string, userId: string): Promise<{ status: number, result?: JSON, error?: any}> => {
     try {
 
         // Revoke Credential using Status List
@@ -18,6 +18,7 @@ const revoke = async (credentialId: string, revocationReason: string, userId: st
                 revocationDate: new Date().toISOString(),
                 revokedBy: userId,
             },
+            req
         });
 
         // TODO: Return revocation result

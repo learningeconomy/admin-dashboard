@@ -87,10 +87,11 @@ export const sendEmail: PayloadHandler = async (req, res) => {
                 collection,
                 id: credential.id,
                 data: { status: CREDENTIAL_STATUS.SENT },
+                req,
             });
         }
         console.log('///emailsData', email);
-        sendSingleEmail(email, collection);
+        sendSingleEmail(req, email, collection);
 
         res.status(200).json({ email, link });
     } catch (err) {

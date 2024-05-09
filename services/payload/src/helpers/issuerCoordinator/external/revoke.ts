@@ -4,7 +4,7 @@ import { CREDENTIAL_STATUS } from '../../../constants/credentials';
 
 const statusUrl = process.env.STATUS_URL ?? 'http://localhost:4008';
 
-const revoke = async (credentialId: string, revocationReason: string, userId: string): Promise<{ status: number, result?: JSON, error?: any}> => {
+const revoke = async (req: PayloadRequest, credentialId: string, revocationReason: string, userId: string): Promise<{ status: number, result?: JSON, error?: any}> => {
     try {
         const fetchResponse = await fetch(`${statusUrl}/credentials/status`, {
             method: 'POST',
@@ -25,6 +25,7 @@ const revoke = async (credentialId: string, revocationReason: string, userId: st
                     revocationDate: new Date().toISOString(),
                     revokedBy: userId,
                 },
+                req
             });
         }
 

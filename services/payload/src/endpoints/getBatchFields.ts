@@ -42,6 +42,7 @@ export const getBatchFields: PayloadHandler = async (req, res) => {
             collection: collection === 'credential' ? 'credential-batch' : 'membership-batch',
             id,
             data: { csvFields: fields },
+            req,
         });
 
         return res.status(200).json(fields);

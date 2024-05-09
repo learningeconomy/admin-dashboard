@@ -21,7 +21,7 @@ export const hasExternalStatusList = (): boolean => {
     return process.env.STATUS_URL?.includes('http') || false;
 }
 
-export const getCredentialLinks = async (id: string, collection: 'credential' | 'membership', token: string, domain: string) => {
+export const getCredentialLinks = async (req: PayloadRequest, id: string, collection: 'credential' | 'membership', token: string, domain: string) => {
     const credential = await payload.findByID({ id, collection, depth: 3 });
 
     if (
@@ -43,21 +43,21 @@ export const getCredentialLinks = async (id: string, collection: 'credential' | 
 
 
 
-export const exchange = async (collection: string, credentialId: string, retrievalId: string, challenge: string, didAuthVP: VP): Promise<number | VC> => {
+export const exchange = async (req: PayloadRequest, collection: string, credentialId: string, retrievalId: string, challenge: string, didAuthVP: VP): Promise<number | VC> => {
     if (logs) console.log(`[Exchange] - External (${hasExternalCoordinator()}) - ID (${credentialId}) - challenge (${challenge})`, retrievalId, didAuthVP)
 	if (hasExternalCoordinator()) {
-	    return exchangeExternal(collection, credentialId, retrievalId, challenge, didAuthVP);
+	    return exchangeExternal(req, collection, credentialId, retrievalId, challenge, didAuthVP);
 	} else {
-        return exchangeInternal(collection, credentialId, retrievalId, challenge, didAuthVP);
+        return exchangeInternal(req, collection, credentialId, retrievalId, challenge, didAuthVP);
 	}
 }
 
-export const revoke = async (credentialId: string, revocationReason: string, userId: string): Promise<{ status: number, result?: JSON, error?: any}> => {
+export const revoke = async (req: PayloadRequest, credentialId: string, revocationReason: string, userId: string): Promise<{ status: number, result?: JSON, error?: any}> => {
     if (logs) console.log(`[Revoke] - External (${hasExternalStatusList()}) - ID (${credentialId}) - User (${userId})`, revocationReason)
     if (hasExternalStatusList()) {
-        return revokeExternal(credentialId, revocationReason, userId);
+        return revokeExternal(req, credentialId, revocationReason, userId);
     } else {
-        return revokeInternal(credentialId, revocationReason, userId);
+        return revokeInternal(req, credentialId, revocationReason, userId);
     }
 }
 

@@ -7,7 +7,7 @@ const coordinatorUrl = process.env.COORDINATOR_URL ?? 'http://localhost:4005';
 
 const tenantName = process.env.TENANT_NAME ?? 'test';
 
-const exchange = async (collection: string, credentialId: string, retrievalId: string, challenge: string, didAuthVP: VP): Promise<number | VC> => {
+const exchange = async (req: PayloadRequest, collection: string, credentialId: string, retrievalId: string, challenge: string, didAuthVP: VP): Promise<number | VC> => {
 
     const response = await fetch(`${coordinatorUrl}/exchange/${retrievalId}/${challenge}`, {
         method: 'POST',
@@ -28,6 +28,7 @@ const exchange = async (collection: string, credentialId: string, retrievalId: s
                     ? { targetDid: credential.credentialSubject.id }
                     : {}),
             },
+            req,
         });
     }
 

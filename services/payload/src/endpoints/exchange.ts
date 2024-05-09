@@ -31,7 +31,7 @@ export const forwardExchangeRequest: PayloadHandler = async (req, res) => {
 
     if (logs) console.log('[Forward Exchange Request] Decoded: ', id, collection);
 
-    const statusCodeOrVC = await exchange(collection, id, a, b, req.body);
+    const statusCodeOrVC = await exchange(req, collection, id, a, b, req.body);
     if (logs) console.log('[Forward Exchange Request] Status Code:', statusCodeOrVC);
 
     if (typeof statusCodeOrVC === 'number') {

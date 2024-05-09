@@ -73,7 +73,7 @@ export const sendEmails = async (
     emails: Email[],
     collection: 'credential' | 'membership' = 'credential'
 ) => {
-    initializeQueues();
+    initializeQueues(req);
     return flowProducer.add({
         name: `send-emails-for-${batchId}`,
         queueName: 'emailsFinished',
@@ -86,12 +86,12 @@ export const sendEmails = async (
     });
 };
 
-export const sendSingleEmail = async (email: Email, collection: 'credential' | 'membership' = 'credential') => {
-    initializeQueues();
+export const sendSingleEmail = async (req: PayloadRequest, email: Email, collection: 'credential' | 'membership' = 'credential') => {
+    initializeQueues(req);
     emailQueue.add('send-test-email', { email, collection });
 };
 
-const initializeQueues = () => {
+const initializeQueues = (req: PayloadRequest) => {
     if (!flowProducer) {
         flowProducer = new FlowProducer({ connection });
     }
@@ -127,6 +127,7 @@ const initializeQueues = () => {
                         collection: job.data.collection,
                         id: credentialId,
                         data: { status: CREDENTIAL_STATUS.SENT },
+                        req
                     });
                 }
             }
@@ -146,6 +147,7 @@ const initializeQueues = () => {
                             : 'membership-batch',
                     id: job.data.batchId,
                     data: { status: CREDENTIAL_BATCH_STATUS.SENT },
+                    req
                 });
             }
         );

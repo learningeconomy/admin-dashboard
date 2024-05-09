@@ -15,7 +15,7 @@ export const revokeCredential: PayloadHandler = async (req, res) => {
     }
 
     try {
-        const revokeAttempt = await revoke(id, reason, req?.user?.id);
+        const revokeAttempt = await revoke(req, id, reason, req?.user?.id);
 
         if (revokeAttempt.error) {
             console.error(revokeAttempt.error);
