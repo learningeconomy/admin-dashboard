@@ -61,7 +61,7 @@ export default buildConfig({
         fromAddress: 'beestontaylor@learningeconomy.io',
     },
     editor: slateEditor({}),
-    db: mongooseAdapter({ url: process.env.MONGODB_URI ?? false }),
+    db: mongooseAdapter({ url: process.env.MONGODB_URI ?? false, transactionOptions: false }),
     // Server URL must be disabled for multi-tenancy to work and adapt to different subdomains
     //serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
     cors: '*',
@@ -124,7 +124,7 @@ export default buildConfig({
         CredentialsCollection,
         MembershipsCollection,
         EmailTemplatesCollection,
-        TrustRegistryCollection
+        TrustRegistryCollection,
     ],
     endpoints: [
         { method: 'get', path: '/health-check', handler: healthCheck },
@@ -145,7 +145,11 @@ export default buildConfig({
         { method: 'post', path: '/get-user-credentials', handler: getUserCredentials },
         { method: 'post', path: '/get-user-credentials/list', handler: getUserCredentials }, // Backward-Compat with /list endpoints
         { method: 'post', path: '/issue-user-credentials', handler: selfIssueUserCredentials },
-        { method: 'post', path: '/issue-user-credentials/issue', handler: selfIssueUserCredentials }, // Backward-Compat with /issue endpoints
+        {
+            method: 'post',
+            path: '/issue-user-credentials/issue',
+            handler: selfIssueUserCredentials,
+        }, // Backward-Compat with /issue endpoints
     ],
     typescript: {
         outputFile: path.resolve(__dirname, 'payload-types.ts'),
