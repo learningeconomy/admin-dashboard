@@ -61,21 +61,21 @@ button {
 }
 
 .select-row--checked button .select-row__input svg,
-.icon--check {
-    border-radius: 100px;
-    background-color: var(--green-500, #22c55e);
-    width: 16px;
-    height: 16px;
-    transform: translate(-1px, -1px);
-}
+// .icon--check {
+//     border-radius: 100px;
+//     background-color: var(--green-500, #22c55e);
+//     width: 16px;
+//     height: 16px;
+//     transform: translate(-1px, -1px);
+// }
 
-.icon--line .stroke {
-    transform: translate(-5px, -5px);
-}
+// .icon--line .stroke {
+//     transform: translate(-5px, -5px);
+// }
 
-.icon--check .stroke {
-    opacity: 0;
-}
+// .icon--check .stroke {
+//     opacity: 0;
+// }
 
 .list-controls__wrap,
 .search-filter__input {
