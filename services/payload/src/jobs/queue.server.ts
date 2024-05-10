@@ -38,7 +38,7 @@ let emailQueue;
  */
 export function registerQueue<T>(name: string, processor: Processor<T>) {
     if (!registeredQueues[name]) {
-        const queue = new Queue(name, { connection });
+        const queue = new Queue(name, { connection, prefix: '{bullmq}' });
         const queueEvents = new QueueEvents(name, {
             connection,
         });
