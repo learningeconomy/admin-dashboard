@@ -43,6 +43,8 @@ import { selfIssueUserCredentials } from './endpoints/selfIssueUserCredentials';
 import DashboardRedirect from './components/DashboardRedirect';
 import AccountSettings from './components/AccountSettings';
 
+import cloudStoragePlugin from './plugins/cloudStorage';
+
 export default buildConfig({
     email: {
         transportOptions: {
@@ -57,8 +59,8 @@ export default buildConfig({
             },
         },
         //logMockCredentials: true,
-        fromName: 'Learning Economy',
-        fromAddress: 'beestontaylor@learningeconomy.io',
+        fromName: 'LearnCloud',
+        fromAddress: 'no-reply@learncloud.ai',
     },
     editor: slateEditor({}),
     db: mongooseAdapter({ url: process.env.MONGODB_URI ?? false, transactionOptions: false }),
@@ -157,4 +159,5 @@ export default buildConfig({
     graphQL: {
         schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
     },
+    plugins: [cloudStoragePlugin],
 });
