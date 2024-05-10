@@ -12,26 +12,43 @@ import { isSuperAdmin } from '../utils/isSuperAdmin';
  */
 export const checkPermissionToRevokeCredential = async (
     user: User | undefined,
-    credentialId: string
+    credentialId: string | undefined
 ): Promise<boolean> => {
     if (!user) return false;
+    if (!credentialId) return false;
 
     if (isSuperAdmin(user)) {
         return true;
     }
 
-    const credential = await payload.findByID({
-        collection: 'credential',
-        id: credentialId,
-        depth: 2,
-        showHiddenFields: true,
-    });
-    const credentialTenant = credential?.tenant;
-    const credentialTenantId =
-        typeof credentialTenant === 'string' ? credentialTenant : credentialTenant?.id;
+    try {
+        const credentialDocs = await payload.find({
+            collection: 'credential',
+            where: {
+                id: {
+                   equals: credentialId
+                }
+            },
+            depth: 2,
+            showHiddenFields: true,
+        });
 
-    if (checkTenantRoles([TENANT_ROLES.REVOCATION_MANAGER], user, credentialTenantId)) {
-        return true;
+        if (credentialDocs.totalDocs === 0) {
+            return false;
+        }
+
+        const credential = credentialDocs.docs?.[0];
+
+        const credentialTenant = credential?.tenant;
+        const credentialTenantId =
+            typeof credentialTenant === 'string' ? credentialTenant : credentialTenant?.id;
+
+        if (checkTenantRoles([TENANT_ROLES.REVOCATION_MANAGER], user, credentialTenantId)) {
+            return true;
+        }
+
+    } catch (e) { 
+        console.error(e);
     }
 
     return false;

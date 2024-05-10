@@ -82,7 +82,7 @@ const MembershipBatchesCollection: CollectionConfig = {
             label: 'Email From',
             type: 'text',
             required: false,
-            admin: { description: 'Example: Bob <bob@gmail.com>' },
+            admin: { description: 'Example: Tracy P. Morgan' },
         },
         {
             name: 'csvFields',

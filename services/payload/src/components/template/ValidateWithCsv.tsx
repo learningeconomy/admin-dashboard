@@ -141,7 +141,7 @@ const ValidateWithCsv: React.FC<ValidateWithCsvProps> = ({ path }) => {
                 onClick={generateCsv}
                 className="w-full max-w-xs bg-green-500 rounded-xl mt-8 px-4 py-2 text-white font-inter text-xl font-semibold outline-none justify-self-end disabled:opacity-50"
             >
-                Generate Empty CSV
+                Download Template CSV
             </button>
         </section>
     );

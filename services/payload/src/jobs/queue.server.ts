@@ -111,15 +111,15 @@ const initializeQueues = (req: PayloadRequest) => {
 
                 const { to, from, subject, text, html, credentialId } = job.data.email;
 
+                const emailFromTitle = from || process.env.EMAIL_FROM_TITLE || 'LearnCloud';
+                const _from = process.env.EMAIL_FROM ? process.env.EMAIL_FROM : `${emailFromTitle} <${process.env.EMAIL_FROM_SENDER ?? 'no-reply@learncloud.ai'}>`;
+
                 await payload.sendEmail({
                     to,
                     subject,
                     text,
                     html,
-                    from:
-                        from ||
-                        process.env.EMAIL_FROM ||
-                        'Digital Credentials Consortium Demo Isser <DCC-support@mit.edu>',
+                    from: _from,
                 });
 
                 if (credentialId) {

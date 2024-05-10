@@ -110,6 +110,26 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
         });
     };
 
+    const generateCsvForTemplate = () => {
+        const csvContent =
+            templateFields.filter(field => !GENERATED_FIELDS.includes(field)).join(',') + '\n';
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+
+        // Pretend to click on a link for the user to prompt download
+        const link = document.createElement('a');
+
+        link.setAttribute('download', `${template?.title ?? 'CredentialsTemplate'}.csv`);
+
+        link.href = URL.createObjectURL(blob);
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+    };
+
     return (
         <section
             ref={ref}
@@ -159,6 +179,13 @@ const UploadCSV = React.forwardRef<HTMLElement, UploadCSVProps>(function UploadC
                             className="upload-csv-input"
                         />
                     </form>
+                    <button
+                        type="button"
+                        onClick={generateCsvForTemplate}
+                        className="w-full max-w-xs bg-green-500 rounded-xl mb-8 px-4 py-2 text-white font-inter text-xl font-semibold outline-none justify-self-end disabled:opacity-50"
+                    >
+                        Download Template CSV
+                    </button>
                 </>
             )}
 
