@@ -15,6 +15,8 @@ const connection = {
     port: redisPort,
 };
 
+const prefix = '{bullmq}';
+
 type AugmentedQueue<T> = Queue<T> & {
     events: QueueEvents;
 };
@@ -38,12 +40,14 @@ let emailQueue;
  */
 export function registerQueue<T>(name: string, processor: Processor<T>) {
     if (!registeredQueues[name]) {
-        const queue = new Queue(name, { connection, prefix: '{bullmq}' });
+        const queue = new Queue(name, { connection, prefix });
         const queueEvents = new QueueEvents(name, {
             connection,
+            prefix
         });
         const worker = new Worker<T>(name, processor, {
             connection,
+            prefix,
             lockDuration: 1000 * 60 * 15,
             concurrency: 8,
         });
@@ -93,7 +97,7 @@ export const sendSingleEmail = async (req: PayloadRequest, email: Email, collect
 
 const initializeQueues = (req: PayloadRequest) => {
     if (!flowProducer) {
-        flowProducer = new FlowProducer({ connection });
+        flowProducer = new FlowProducer({ connection, prefix });
     }
 
     if (!emailQueue) {
