@@ -8,6 +8,10 @@ export const getBatchFields: PayloadHandler = async (req, res) => {
 
     const { id, collection = 'credential' } = req.body;
 
+    if (!id) {
+        return res.sendStatus(500);
+    }
+
     try {
         let page = await payload.find({
             collection,

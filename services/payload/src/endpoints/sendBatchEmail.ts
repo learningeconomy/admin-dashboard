@@ -35,8 +35,6 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
 
     // console.log('///req transactionId', req?.transactionID);
 
-    console.log('//emailTemplateId', emailTemplateId);
-
     if (!batchId || !emailTemplateId) return res.sendStatus(400);
     //get email template for batch
     const emailTemplateRecord = await payload.findByID({
@@ -47,13 +45,9 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         locale: 'en',
     });
 
-    console.log('///emailTemplateRecord', emailTemplateRecord);
-
     // email template code
     const emailTemplate = emailTemplateRecord?.emailTemplatesHandlebarsCode;
     if (!emailTemplate) return res.sendStatus(500);
-
-    console.log('///emailTemplate', emailTemplate);
 
     // get all credentials records associated with batchId
     const query = {
@@ -62,7 +56,6 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
         },
     };
 
-    console.log('//req body', req?.body);
     const data = await payload.find({
         collection, // required
         depth: 2,
@@ -100,9 +93,6 @@ export const sendBatchEmail: PayloadHandler = async (req, res, next) => {
             html: `${parsedHtml}`,
         };
     });
-    console.log('///emails', emails);
-    console.log('///batchId', batchId);
-    console.log('///email map', emails);
 
     // this seems to conflict with an update that happens  when sending Emails
     try {

@@ -90,7 +90,7 @@ export const sendEmail: PayloadHandler = async (req, res) => {
                 req,
             });
         }
-        console.log('///emailsData', email);
+
         sendSingleEmail(req, email, collection);
 
         res.status(200).json({ email, link });

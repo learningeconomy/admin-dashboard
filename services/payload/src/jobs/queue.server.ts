@@ -107,13 +107,12 @@ const initializeQueues = (req: PayloadRequest) => {
         emailQueue = registerQueue(
             'email',
             async (job: Job<{ email: Email; collection: 'credential' | 'membership' }>) => {
-                console.log('///emailQueue job', job);
 
                 const { to, from, subject, text, html, credentialId } = job.data.email;
 
                 const emailFromTitle = from || process.env.EMAIL_FROM_TITLE || 'LearnCloud';
-                const _from = process.env.EMAIL_FROM ? process.env.EMAIL_FROM : `${emailFromTitle} <${process.env.EMAIL_FROM_SENDER ?? 'no-reply@learncloud.ai'}>`;
-
+                const _from = `${emailFromTitle} <${process.env.EMAIL_FROM_SENDER ?? 'no-reply@learncloud.ai'}>`;
+                console.log("[Send Email - Credential]: ", to, _from, credentialId);
                 await payload.sendEmail({
                     to,
                     subject,
@@ -138,7 +137,7 @@ const initializeQueues = (req: PayloadRequest) => {
         registerQueue(
             'emailsFinished',
             async (job: Job<{ batchId: string; collection: 'credential' | 'membership' }>) => {
-                console.log('///emailsFinishedQueu job', job);
+                console.log("[Email Finished - Batch]: ", batchId, collection);
 
                 return payload.update({
                     collection:

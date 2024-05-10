@@ -8,7 +8,7 @@ export const createBatchCredentials: PayloadHandler = async (req, res) => {
     // TODO: Finish Adding Multi-Tenancy Permissions—don't allow creating credentials against batch you don't have permissiont to access.
 
     try {
-        console.log('//req body', req?.body);
+        console.log('[Create Batch Credentials]', req?.body);
         const id = req?.body?.batchId;
         const newFields: string[] = req?.body?.fields ?? [];
         const isMembership = req?.body?.isMembership ?? false;
@@ -36,7 +36,7 @@ export const createBatchCredentials: PayloadHandler = async (req, res) => {
             })
         );
 
-        console.log('///CREATE CRED BATCH ENDPOINT', created);
+        console.log('[Credentials Created for Batch]', created);
 
         const newBatch = await payload.update({
             collection: isMembership ? 'membership-batch' : 'credential-batch',
