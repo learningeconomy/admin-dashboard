@@ -78,7 +78,7 @@ export const sendEmails = async (
     collection: 'credential' | 'membership' = 'credential'
 ) => {
     initializeQueues(req);
-    return flowProducer.add({
+    await flowProducer.add({
         name: `send-emails-for-${batchId}`,
         queueName: 'emailsFinished',
         data: { batchId, collection },
@@ -88,6 +88,8 @@ export const sendEmails = async (
             data: { email, collection },
         })),
     });
+    // TODO: Fix Queue so it marks batch sent after emails have been sent.
+    return markBatchAsSent(req, collection, batchId);
 };
 
 export const sendSingleEmail = async (req: PayloadRequest, email: Email, collection: 'credential' | 'membership' = 'credential') => {
@@ -95,8 +97,22 @@ export const sendSingleEmail = async (req: PayloadRequest, email: Email, collect
     emailQueue.add('send-test-email', { email, collection });
 };
 
+const markBatchAsSent = async (req: PayloadRequest, collection: 'credential' | 'membership' = 'credential', batchId: string) => {
+    console.log("[Mark Batch as Sent]", collection, batchId);
+    return payload.update({
+        collection:
+            collection === 'credential'
+                ? 'credential-batch'
+                : 'membership-batch',
+        id: batchId,
+        data: { status: CREDENTIAL_BATCH_STATUS.SENT },
+        req
+    });
+}
+
 const initializeQueues = (req: PayloadRequest) => {
     if (!flowProducer) {
+        console.log("[Registering FlowProducer]")
         flowProducer = new FlowProducer({ connection, prefix });
     }
 
@@ -108,6 +124,7 @@ const initializeQueues = (req: PayloadRequest) => {
         the registerQueue function, BullMQ will spawn a new process to run the file. 
         These are called sandboxed processors."
         */
+        console.log("[Registering Emails Queue]")
         emailQueue = registerQueue(
             'email',
             async (job: Job<{ email: Email; collection: 'credential' | 'membership' }>) => {
@@ -133,25 +150,20 @@ const initializeQueues = (req: PayloadRequest) => {
                         req
                     });
                 }
+               console.log("[Complete Email Task]", to);
+               return true;
             }
         );
     }
 
     if (!registeredQueues['emailsFinished']) {
+        console.log("[Registering Emails Finished Queue]")
         registerQueue(
             'emailsFinished',
             async (job: Job<{ batchId: string; collection: 'credential' | 'membership' }>) => {
                 console.log("[Email Finished - Batch]: ", batchId, collection);
 
-                return payload.update({
-                    collection:
-                        job.data.collection === 'credential'
-                            ? 'credential-batch'
-                            : 'membership-batch',
-                    id: job.data.batchId,
-                    data: { status: CREDENTIAL_BATCH_STATUS.SENT },
-                    req
-                });
+                return markBatchAsSent(req, collection, batchId);
             }
         );
     }
