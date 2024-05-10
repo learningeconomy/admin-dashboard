@@ -32,14 +32,14 @@ const RevocationWarning: React.FC<RevocationWarningProps> = ({ slug, credential 
     };
 
     useEffect(() => {
-        if (modalState[slug]?.isOpen) {
+        if (modalState?.[slug]?.isOpen) {
             fetch(`/api/credential-batch/${credential.batch}`)
                 .then(res => res.json())
                 .then(batch => {
                     setBatchName(batch.title);
                 });
         }
-    }, [slug, modalState[slug]?.isOpen]);
+    }, [slug, modalState?.[slug]?.isOpen]);
 
     return (
         <Drawer header={false} slug={slug} gutter={false}>

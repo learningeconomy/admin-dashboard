@@ -16,6 +16,7 @@ const CreateUser: React.FC<Props> = props => {
         data,
         collection,
         isEditing,
+        fieldTypes,
         onSave: onSaveFromProps,
         permissions,
         isLoading,

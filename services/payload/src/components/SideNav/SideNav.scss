@@ -9,6 +9,7 @@
     flex-shrink: 0;
     gap: 4.375rem;
     padding: 2.5rem 1.25rem;
+    overflow-y: auto;
 
     & > header {
         display: flex;

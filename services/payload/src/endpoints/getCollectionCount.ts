@@ -8,8 +8,8 @@ export const getCollectionCount: PayloadHandler = async (req, res) => {
     const payloadQuery = req?.body?.query;
 
     try {
-        const data = await payload.collections[collectionName].Model.count({ ...payloadQuery });
-
+        // const data = await payload.collections[collectionName].Model.count({ ...payloadQuery });
+        const data = await payload.db.collections[collectionName].count({ ...payloadQuery });
         return res.json({ count: data });
     } catch (err) {
         console.error(err);

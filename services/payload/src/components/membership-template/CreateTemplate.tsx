@@ -18,6 +18,7 @@ const CreateTemplate: React.FC<Props> = props => {
         isEditing,
         onSave: onSaveFromProps,
         permissions,
+        fieldTypes,
         isLoading,
         internalState,
         action,
@@ -45,7 +46,7 @@ const CreateTemplate: React.FC<Props> = props => {
     return (
         <OperationContext.Provider value={operation}>
             <Form
-                className={`${baseClass}__form`}
+                className={`${baseClass}__form h-auto flex-grow min-h-0`}
                 method={id ? 'patch' : 'post'}
                 action={action}
                 onSuccess={onSave}
