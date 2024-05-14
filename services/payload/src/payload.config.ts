@@ -145,11 +145,11 @@ export default buildConfig({
         { method: 'get', path: '/permission-to/:operation/:id', handler: permissionTo },
         { method: 'post', path: '/revoke-credential/:id', handler: revokeCredential },
         { method: 'post', path: '/get-user-credentials', handler: getUserCredentials },
-        { method: 'post', path: '/get-user-credentials/list', handler: getUserCredentials }, // Backward-Compat with /list endpoints
+        { method: 'post', path: '/data-source/list', handler: getUserCredentials }, // Backward-Compat with /list endpoints
         { method: 'post', path: '/issue-user-credentials', handler: selfIssueUserCredentials },
         {
             method: 'post',
-            path: '/issue-user-credentials/issue',
+            path: '/data-source/issue',
             handler: selfIssueUserCredentials,
         }, // Backward-Compat with /issue endpoints
     ],
