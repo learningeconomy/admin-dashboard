@@ -5,7 +5,7 @@ import { PayloadHandler } from 'payload/config';
 import { areDidsEqual, getLearnCard } from '../helpers/learncard.helpers';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
 import getRedis from '../helpers/redis.helpers';
-import getTemplateAssociatedWithMembership from '../helpers/membership.helpers';
+import { getTemplateAssociatedWithMembership } from '../helpers/membership.helpers';
 
 export const getUserCredentials: PayloadHandler = async (req, res) => {
     const { membership } = req.body;

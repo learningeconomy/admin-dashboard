@@ -1,4 +1,6 @@
 import type { VC, VP } from '@learncard/types';
+import type { PayloadRequest } from 'payload/dist/types'
+
 import payload from 'payload';
 import { Credential, Membership } from '../../payload-types';
 
@@ -43,7 +45,7 @@ export const getCredentialLinks = async (req: PayloadRequest, id: string, collec
 
 
 
-export const exchange = async (req: PayloadRequest, collection: string, credentialId: string, retrievalId: string, challenge: string, didAuthVP: VP): Promise<number | VC> => {
+export const exchange = async (req: PayloadRequest, collection: "membership" | "credential", credentialId: string, retrievalId: string, challenge: string, didAuthVP: VP): Promise<number | VC> => {
     if (logs) console.log(`[Exchange] - External (${hasExternalCoordinator()}) - ID (${credentialId}) - challenge (${challenge})`, retrievalId, didAuthVP)
 	if (hasExternalCoordinator()) {
 	    return exchangeExternal(req, collection, credentialId, retrievalId, challenge, didAuthVP);

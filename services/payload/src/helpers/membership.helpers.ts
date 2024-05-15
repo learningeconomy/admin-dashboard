@@ -1,6 +1,6 @@
 import payload from 'payload';
 
-const getTemplateAssociatedWithMembership = async (membershipId: string) => {
+export const getTemplateAssociatedWithMembership = async (membershipId: string) => {
     const membershipCredential = (
         await payload.find({
             collection: 'membership',
@@ -27,5 +27,3 @@ const getTemplateAssociatedWithMembership = async (membershipId: string) => {
         }
     }
 };
-
-export default getTemplateAssociatedWithMembership;

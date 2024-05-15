@@ -1,9 +1,11 @@
 import type { VP, VC, UnsignedVC } from '@learncard/types';
+import type { PayloadRequest } from 'payload/dist/types'
 import payload from 'payload';
 import { areDidsEqual, getLearnCard } from '../../../helpers/learncard.helpers';
 
 import { insertValuesIntoHandlebarsJsonTemplate } from '../../../helpers/handlebarhelpers';
 import { inflateObject } from '../../../helpers/objects.helpers';
+import { getTemplateAssociatedWithMembership } from '../../../helpers/membership.helpers';
 
 import { CREDENTIAL_STATUS } from '../../../constants/credentials';
 
@@ -11,7 +13,7 @@ import { getDelCredentialIdForChallenge } from './challenges';
 
 const exchange = async (
 	req: PayloadRequest,
-	collection: string,
+	collection: 'membership' | 'credential',
 	credentialId: string,
 	retrievalId: string,
 	challenge: string,
@@ -63,6 +65,13 @@ const exchange = async (
 
 		// Prep for sending to signing service
 		builtCredential.id = credential.id;
+
+		// If issuing a membership, make the ID the ID of the membership template.
+		if (collection === 'membership') {
+			const membershipTemplate = (await getTemplateAssociatedWithMembership(credentialId))?.docs?.[0];
+			if (membershipTemplate) builtCredential.id = membershipTemplate?.id;
+		}	
+
 		if (typeof builtCredential?.issuer === 'string') builtCredential.issuer = {};
 		builtCredential.issuer.id = learnCard.id.did();
 
