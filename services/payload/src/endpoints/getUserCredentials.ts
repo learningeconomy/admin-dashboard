@@ -5,6 +5,7 @@ import { PayloadHandler } from 'payload/config';
 import { areDidsEqual, getLearnCard } from '../helpers/learncard.helpers';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
 import getRedis from '../helpers/redis.helpers';
+import getTemplateAssociatedWithMembership from '../helpers/membership.helpers';
 
 export const getUserCredentials: PayloadHandler = async (req, res) => {
     const { membership } = req.body;
@@ -49,11 +50,21 @@ export const getUserCredentials: PayloadHandler = async (req, res) => {
 
     if (issuedMembership.totalDocs < 1) return res.sendStatus(401);
 
-    const membershipTemplate = await payload.find({
+
+    let membershipTemplate = await payload.find({
         collection: 'membership-template',
         where: { id: { equals: membership?.id } },
         depth: 0,
     });
+
+    /**
+     *  If the credential doesn't have the template as an ID, find the template associated with the ID.
+     * TODO: Update to match behavior of new memberships when that time comes.
+     **/
+    if (!membershipTemplate && membership?.id) {
+        const template = await getTemplateAssociatedWithMembership(membership?.id)
+        if (template) membershipTemplate = template;
+    }
 
     const ids = membershipTemplate.docs.flatMap<string>(
         doc => (doc.associatedCredentials as string[]) ?? []
