@@ -5,6 +5,7 @@ import { superAdmins } from '../../access/superAdmins'
 import { tenantAdmins } from './access/tenantAdmins'
 import { tenantManagers } from './access/tenantManagers'
 import enablePublicVisibility from './hooks/enablePublicVisibility';
+import upsertSigningIdentity from './hooks/upsertSigningIdentity';
 import { superAdminFieldAccess } from '../../access/superAdmins';
 
 const Tenants: CollectionConfig = {
@@ -96,6 +97,9 @@ const Tenants: CollectionConfig = {
       }
     },
   ],
+  hooks: {
+    afterChange: [upsertSigningIdentity]
+  }
 }
 
 export default Tenants;

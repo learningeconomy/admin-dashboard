@@ -15,6 +15,7 @@ import CredentialsCollection from './collections/Credentials';
 import MembershipsCollection from './collections/Memberships';
 import EmailTemplatesCollection from './collections/EmailTemplates';
 import TrustRegistryCollection from './collections/TrustRegistry';
+import SigningIdentitiesCollection from './collections/SigningIdentities';
 
 //components
 import { Logo } from './components/Logo';
@@ -127,6 +128,7 @@ export default buildConfig({
         MembershipsCollection,
         EmailTemplatesCollection,
         TrustRegistryCollection,
+        SigningIdentitiesCollection,
     ],
     endpoints: [
         { method: 'get', path: '/health-check', handler: healthCheck },
