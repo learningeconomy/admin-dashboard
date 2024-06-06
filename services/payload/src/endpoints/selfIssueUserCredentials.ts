@@ -4,6 +4,7 @@ import { PayloadHandler } from 'payload/config';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../helpers/handlebarhelpers';
 import type { UnsignedVC } from '@learncard/types';
 import { areDidsEqual, getLearnCard } from '../helpers/learncard.helpers';
+import { issueCredentialViaTenantIdentity } from '../helpers/signingIdentity.helpers';
 import getRedis from '../helpers/redis.helpers';
 import { inflateObject } from '../helpers/objects.helpers';
 
@@ -50,7 +51,7 @@ export const selfIssueUserCredentials: PayloadHandler = async (req, res) => {
 
     const credentials = credential.docs;
 
-    const builtCredentials = credentials
+    const batch = credentials
         .map(credential => {
             if (
                 typeof credential?.batch === 'string' ||
@@ -93,13 +94,20 @@ export const selfIssueUserCredentials: PayloadHandler = async (req, res) => {
                 builtCredential.issuanceDate = new Date().toISOString();
             }
 
-            return builtCredential;
+            return {
+                builtCredential,
+                tenant: credential.tenant,
+            };
         })
         .filter(Boolean);
 
     try {
         const issuedCreds = await Promise.all(
-            builtCredentials.map(uvc => learnCard.invoke.issueCredential(uvc))
+            batch.map(entry =>
+                entry?.tenant
+                    ? issueCredentialViaTenantIdentity(entry.tenant, entry.builtCredential, req)
+                    : learnCard.invoke.issueCredential(entry.builtCredential)
+            )
         );
 
         res.status(200).json(issuedCreds);

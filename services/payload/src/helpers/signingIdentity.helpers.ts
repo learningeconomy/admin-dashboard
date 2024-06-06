@@ -1,6 +1,9 @@
 import crypto from 'crypto';
-import { initLearnCard } from '@learncard/init';
-import { LearnCard, JWE } from '@learncard/types';
+import type { PayloadRequest } from 'payload/dist/types'
+import type { Tenant } from '../payload-types';
+import { initLearnCard, NetworkLearnCardFromSeed } from '@learncard/init';
+import { LearnCard, JWE, UnsignedVC, VC } from '@learncard/types';
+
 import { getLearnCard as getRootLearnCard } from './learncard.helpers';
 
 export type SigningIdentity = {
@@ -76,3 +79,35 @@ export const getSecretFromEncryptedSecretPhraseVC = async (
     const decrypted = await decryptJWE(rootLearnCard, encryptedSecretPhraseVC);
     return decrypted?.secret;
 };
+
+
+export const issueCredentialViaTenantIdentity = async (tenant: string | Tenant, credential: UnsignedVC, req: PayloadRequest): Promise<VC> => {
+    const tenantId = typeof tenant === 'string' ? tenant : tenant.id;
+    const tenantLC = await getSigningLearnCardForTenantId(tenantId, req);
+    if (typeof credential?.issuer === 'string') credential.issuer = {};
+    credential.issuer.id = tenantLC.id.did();
+    return tenantLC.issueCredential(credential);
+}
+
+export const getSigningLearnCardForTenantId = async (tenantId: string, req: PayloadRequest): Promise<LearnCard | undefined> => {
+       const signingIdentities = await req?.payload.find({
+            collection: 'signing-identities',
+            where: {
+                tenant: {
+                    equals: tenantId,
+                },
+            },
+            depth: 0,
+            limit: 1,
+            req,
+        });
+
+        if (signingIdentities.totalDocs > 0) {
+            const signingIdentity = signingIdentities.docs[0];
+            const seed = await getSecretFromEncryptedSecretPhraseVC(signingIdentity.encryptedSecret); 
+            return initLearnCard({ network: true, seed });
+        } 
+}
+
+
+
