@@ -84,10 +84,24 @@ export default buildConfig({
         bundler: webpackBundler(),
         webpack: config => ({
             ...config,
+            module: {
+                ...config?.module,
+                rules: [
+                    ...(config?.module?.rules || []),
+                    {
+                        test: /\.wasm$/,
+                        type: 'webassembly/async',
+                      },
+                    ]
+            },
+            experiments: {
+                ...(config?.experiments ?? {}),
+                asyncWebAssembly: true
+            },
             resolve: {
                 ...config.resolve,
                 alias: {
-                    ...config.resolve.alias,
+                    ...(config.resolve?.alias ?? {}),
                     [require.resolve('./helpers/jwtHelpers.ts')]:
                         require.resolve('./mocks/emptyObject'),
                     [require.resolve('./jobs/queue.server.ts')]:
@@ -113,6 +127,7 @@ export default buildConfig({
                     [require.resolve('./helpers/issuerCoordinator/internal/revoke')]:
                         require.resolve('./mocks/emptyObject'),
                 },
+                extensions: [...(config?.resolve?.extensions ?? []), '.wasm']
             },
         }),
     },

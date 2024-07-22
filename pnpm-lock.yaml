@@ -52,16 +52,16 @@ importers:
     dependencies:
       '@astrojs/tailwind':
         specifier: ^5.0.0
-        version: 5.0.0(astro@3.0.8(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2))(tailwindcss@3.3.3(ts-node@10.9.1(@types/node@20.4.4)(typescript@5.2.2)))(ts-node@10.9.1(@types/node@20.4.4)(typescript@5.2.2))
+        version: 5.0.0(astro@3.0.8(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2))(tailwindcss@3.3.3(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2)))(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2))
       '@learncard/init':
         specifier: ^1.0.22
-        version: 1.0.22(@aws-sdk/credential-providers@3.565.0(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)
+        version: 1.0.22(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)
       '@learncard/types':
         specifier: ^5.3.2
         version: 5.3.2
       astro:
         specifier: ^3.0.8
-        version: 3.0.8(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2)
+        version: 3.0.8(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2)
       credential-handler-polyfill:
         specifier: '3'
         version: 3.2.0
@@ -73,7 +73,7 @@ importers:
         version: 1.5.3
       tailwindcss:
         specifier: ^3.0.24
-        version: 3.3.3(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@20.4.4)(typescript@5.2.2))
+        version: 3.3.3(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2))
     devDependencies:
       '@types/qrcode':
         specifier: ^1.5.2
@@ -197,11 +197,11 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@learncard/didkit-plugin':
-        specifier: ^1.4.6
-        version: 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+        specifier: ^1.4.4
+        version: 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/init':
-        specifier: ^1.2.21
-        version: 1.2.21(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(socks@2.7.1)
+        specifier: ^1.2.19
+        version: 1.2.19(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)(socks@2.7.1)
       '@payloadcms/bundler-webpack':
         specifier: ^1.0.6
         version: 1.0.6(@swc/core@1.3.75)(payload@2.14.2(@types/react@18.2.21)(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(typescript@5.2.2)(webpack@5.88.2(@swc/core@1.3.75)(webpack-cli@4.10.0)))(sass@1.69.4)
@@ -321,8 +321,8 @@ importers:
         version: 2.25.4
     devDependencies:
       '@learncard/types':
-        specifier: ^5.5.1
-        version: 5.5.1
+        specifier: ^5.5.0
+        version: 5.5.0
       '@swc/cli':
         specifier: ^0.3.12
         version: 0.3.12(@swc/core@1.3.75)(chokidar@3.5.3)
@@ -2702,17 +2702,17 @@ packages:
   '@kwsites/promise-deferred@1.1.1':
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
 
-  '@learncard/ceramic-plugin@1.0.10':
-    resolution: {integrity: sha512-ntSYWQTG/FZc7enmVX2rJOH5p/1Kx6oRq/eV8MoF6OR8z+mlYgNGSH8PYe9Vnlm9xvNECgGyLB8NVvQztZRq4w==}
-
   '@learncard/ceramic-plugin@1.0.3':
     resolution: {integrity: sha512-mW4QZ9fP2KypQE+YDjDw4+dJmpDImCxbP8WousafROMY587vLPSiOELpNUb+Qu2FosUdZ/dbaVgoc9HzKdc4Bw==}
+
+  '@learncard/ceramic-plugin@1.0.9':
+    resolution: {integrity: sha512-3brSxQ8Jh3IXCgGFU6TtgLbivhohSS5IZ9GFZQI1zh6bi5uxirX3tA6FqYyT9MSlr0rjocdXSOvFysCk/ERxXg==}
 
   '@learncard/chapi-plugin@1.0.10':
     resolution: {integrity: sha512-wHg2+f2xug9/OBNi34UwuDZ+dUjCou+E6zIui+bSJXJTeBbadQqHP3Y+qCXEq9kcqd46APXkP1kREuuyFFDeTg==}
 
-  '@learncard/chapi-plugin@1.0.22':
-    resolution: {integrity: sha512-XxOsdgdiH4mAX+zT1CXg3HM/3K9SYvRR/XgiYgVBgk5K/nqrbPjSnfZUBWiqSUQQkbCXWMYHJF3pDLQBCJ/QDw==}
+  '@learncard/chapi-plugin@1.0.20':
+    resolution: {integrity: sha512-eg8K7s3kdzNrNZRrIxSWEbFfmEn0Lpvc6n0xPy+j+7xyp+SEMHMeKo+x05cpTJvKl+Vcl08YW5nBzazS9HhPaQ==}
 
   '@learncard/core@8.5.5':
     resolution: {integrity: sha512-PySZ+nUKuRWRmJPHhk9xmYq6imOcQMbVGxsehWLJuIROc1eE5okWGM5I9ASmcUAXtZyIY7ujRz9oZdA2V8Gwjw==}
@@ -2720,38 +2720,38 @@ packages:
   '@learncard/core@9.0.3':
     resolution: {integrity: sha512-3XyEnpkVt4XgGoHpA6toFg0fAE5NwI8KLwaItz9VQ0iw8TkD0FJPuRGMuFTqnCVnMMSMw2i3oq4g7i7PMCaH7A==}
 
-  '@learncard/core@9.2.1':
-    resolution: {integrity: sha512-8ZGJQ4VLC2N25sXVLA7+9FaCJZAe/Za8vOj5rrjphsBWDTT3BCIwrzusWWwyB9vkNyiwRq334NEkpgcQNUg9zA==}
-
-  '@learncard/crypto-plugin@1.0.10':
-    resolution: {integrity: sha512-SOoQcM/XY59C4phHdM6ZTdWWJjEpWbWl0K6twldF7d0kHENU/gcdrvrqjlOmZ7ze2pau43YVyccpTPQfjAb8og==}
+  '@learncard/core@9.2.0':
+    resolution: {integrity: sha512-EBtzpCyEf+RmXhzIVC6LW/4Br3ccFLhvHFhYfLQj8f+892AefnZBRosGgthaS+RnHQECTH9bFN1Fd5yUHniSvQ==}
 
   '@learncard/crypto-plugin@1.0.3':
     resolution: {integrity: sha512-M8OT3kntD07V7LDsUj3cl4/bF/fOPfPRjWVdLyDu7XPCMKqcwF1TDSWPVwz8/DKy3rRfaxjunaFwzup254b7KQ==}
 
+  '@learncard/crypto-plugin@1.0.9':
+    resolution: {integrity: sha512-45EQdNmNRnVnOj+OIF0q9h6TUAE057Rrwuq/6PuUeXzjm6TvpDZY13ek+ALyim5p+DE9pV2EiEHADVhpFOmKZg==}
+
   '@learncard/did-web-plugin@1.0.15':
     resolution: {integrity: sha512-kQJnQ2w5izUSVVqVx2AMj8ETPYy8hZxBW/9FS+NWiL4zA+jFgkwmnGN8Qhso3o58jKfLj+8jXsM4yelJHdYYAA==}
 
-  '@learncard/did-web-plugin@1.0.29':
-    resolution: {integrity: sha512-maPaNdgwWxC4Gp1dhGwPYwhXmAq3KvXeEoN7fy+OL5CkOwRMByQxhEKYCwOc1NwdUIzKjYX4MdG2ESVoUyQGoQ==}
-
-  '@learncard/didkey-plugin@1.0.10':
-    resolution: {integrity: sha512-3/ezlbMg3igdKdTtJyV5pU/TPwgDw7dyvSKt73Os7dUQU3XVBFIWjDOihvkhjVZpcD+DeXmjp7bA1KAd3fU2Ag==}
+  '@learncard/did-web-plugin@1.0.27':
+    resolution: {integrity: sha512-+/MSFo2JBwOPHnooDvSaUhHJOYZ5/qyRQtAjq7IeMQ4AesPkI25GV/05PkDmomnuCsplc5xCOg8+XSupp5VM0g==}
 
   '@learncard/didkey-plugin@1.0.3':
     resolution: {integrity: sha512-396njfy283vI3Vh0twndTPcxwoZ0bXunx5riApVGYiLMHN4RuwGYaxlHOpa1SCdybrbJTr4eECNVNB1peG5WLg==}
 
+  '@learncard/didkey-plugin@1.0.9':
+    resolution: {integrity: sha512-7ZwNSFh3K1UU+uOALL5iREcNVurXZmB4pP8oo2dcceK28u+YvLGUhU0+O+4kOV+DJcxxx4MxxIUpcApaElqGgA==}
+
   '@learncard/didkit-plugin@1.1.1':
     resolution: {integrity: sha512-ML3IG5ajq6glkOHVhfIgjPJ6TIqzbKcM3BUugdDTCLuISjzBUHzhgWlaJwUTCVQaElYPUpgqBd4FUoNvVoo/xQ==}
 
-  '@learncard/didkit-plugin@1.4.6':
-    resolution: {integrity: sha512-Nqey0KCPefBJA5LfG37EPp1+sQ/u5/J3bRzDsanyRwLeD07JREH7do9sCdqyf8DW/T/eY2sSfFkNu8hRGS28Gg==}
+  '@learncard/didkit-plugin@1.4.4':
+    resolution: {integrity: sha512-o8MjtAook07NeKAUbs/WEgHQkNNrV+ceVLB5J8QgfxgDyzWW8isbXs9HfvqSgGm51F7qRxTQ11+m/DEPuHHP8g==}
 
-  '@learncard/dynamic-loader-plugin@1.0.6':
-    resolution: {integrity: sha512-I7/yuYShhogw3lKuN/mMCeoe9IYPcviKei2hwvT4apvIMK4L28AMfVZmchKicQA8iZ5EzWi1cq7xvCYhovogAg==}
+  '@learncard/dynamic-loader-plugin@1.0.5':
+    resolution: {integrity: sha512-p+FT1jMzk5vHUYY1eyZIEaFfYR3GG7g3HXUmL/67bGElWLtcfDYp4J/w3sa9UYWddx+4b03MbziyhSmVpLrqBw==}
 
-  '@learncard/ethereum-plugin@1.0.11':
-    resolution: {integrity: sha512-E8REo4ZPRv5mT3JVDb3H8WoaCppIPLwwqWnPb5be2Z1Qmb19suiPvOFedm4WCabN/o7bNgme5H+FTb58sTIbNw==}
+  '@learncard/ethereum-plugin@1.0.10':
+    resolution: {integrity: sha512-fZ+ShDvrZC9k2BrXE0i9EBXkn6wpXxL5PL++bhyYPnyP9b84nbdQx1sJh5EVSQ/5GSx5tqW/qncOebzqJ2Myow==}
 
   '@learncard/ethereum-plugin@1.0.3':
     resolution: {integrity: sha512-yMNVfmf3Nyyf4xAtxZzhWooqUnRtrok2qHYE6/97UMMBzd9cyAbVh/yffv2KHVmyVBv3erKYyBE+utETb99hfg==}
@@ -2759,11 +2759,11 @@ packages:
   '@learncard/expiration-plugin@1.0.11':
     resolution: {integrity: sha512-FMH1Tx1fy0yk63eCpV5JcQ5brpW9nbSxDKW7Bv7GZzLmvVSE7g60m0uRTpYs6AwElpiF2BhHtUbDrCGacpeUdg==}
 
-  '@learncard/expiration-plugin@1.1.11':
-    resolution: {integrity: sha512-XJjQMaB9WU1tKuBrt/8S4yeCAN86rF0ukTw1Y1e5rVNiwnyYS5KWXyLpI9En0TFwWYobh2q3PdQsKw0IUMZ6wQ==}
+  '@learncard/expiration-plugin@1.1.9':
+    resolution: {integrity: sha512-h4LQoApLV7bQx0EYWP0ALcjhTpJPFz1L0PZ6UK1zV3R86mnfTPj/LCEy1lcoRxPAXHCZZPj5CouBNuAGTrm+ug==}
 
-  '@learncard/helpers@1.0.13':
-    resolution: {integrity: sha512-zDAE/D+EQOsvDPScgqgOs1UhqMtlHSk4kJsT97vG/NwxCsJmHTloSyeg3Lf/sVxbSw8XNEXWx8Bsvk8M2ugMkg==}
+  '@learncard/helpers@1.0.12':
+    resolution: {integrity: sha512-ISDHva40pBijbMXEU30mWQ9ebnRszYZromh2sTZlrvyuWcbx8Sb3kNlCMm80hl6Y1bvFZH40DjrEph20cyivig==}
 
   '@learncard/helpers@1.0.3':
     resolution: {integrity: sha512-mCCC9En5Qiw/HP2fBLPD4aW6uT347NF78a28uOKc3sPc9RGfo6J4ay4TAm798ZTAwaNF1dOdCM1I5TNMQU0Afg==}
@@ -2771,50 +2771,50 @@ packages:
   '@learncard/helpers@1.0.7':
     resolution: {integrity: sha512-6+5aedvVdOcPLiai/y2BxeR6k6EbpZwQW4AdUOkrjWzNdHqmM27zqlggLrIrSGQco/MLtvWYGIt1wj/iJ+f+tw==}
 
-  '@learncard/idx-plugin@1.0.10':
-    resolution: {integrity: sha512-DwbBpkAeTMq/FWNaz/iLQJmRlJXuU63QDBiQmCRRt8v3/w8vtil82aUU7sgsTahe+G9FbqU3JG1fNIKoEZSHlw==}
-
   '@learncard/idx-plugin@1.0.3':
     resolution: {integrity: sha512-BEFDy9nKO0FQCd+j59qEL5QGFewhCw1qfVSnWV44KVC6leocBjMbXw/BjGDx3eJ4/+kRN3AfwrA4nb9gYTk3Tw==}
+
+  '@learncard/idx-plugin@1.0.9':
+    resolution: {integrity: sha512-Dswy1cjBVBaiV+jpGmZz7HrQ2WKG0A67FkkH5JCXfULR3H/F1ZNGJvJ1rAMLjvfmGX/uAx2Qai/JHr1FqSduZQ==}
 
   '@learncard/init@1.0.22':
     resolution: {integrity: sha512-dRoyvnIvWV5GsDATq2Ls7I8pVGU/B0A/ym1cVQhXdq5C5rCd5Uf+/YQGBcaeY3ZJCg+bEeiarwgH+u8+JQNF/w==}
 
-  '@learncard/init@1.2.21':
-    resolution: {integrity: sha512-Ygf4h+lyVP+o9je1jN9MIJTJNIizPuy2bomWqSPbHl7IXj9syQ3BUsUjTW3Iz8SLkomUSTYMiK5EZkO+i3qzew==}
+  '@learncard/init@1.2.19':
+    resolution: {integrity: sha512-wzebqjdL8nOZqJkcjXLmM9nAiyPIev81uspxqjeJnPy9ZcACGKIGpYOqeJzyZl1Wo7utMeRjwqzawQlJ8vd5lw==}
 
   '@learncard/learn-card-plugin@1.0.11':
     resolution: {integrity: sha512-k59NvZ76qKeyID/Btg7IuOK9MDuveVcueTRY+nYdAQxDn9Psao75LKl3mXxYzZYFkPIkShBokPsLbmoVyfXOUw==}
 
-  '@learncard/learn-card-plugin@1.1.9':
-    resolution: {integrity: sha512-NmbSKrzMB5FA7xiHuXuO/Ma7gvYKELP+xT305RYDvXRuFRmYN4mUYvFPvHnfRZleKJAjfXMlMhv7QDq+0zVB0w==}
+  '@learncard/learn-card-plugin@1.1.7':
+    resolution: {integrity: sha512-cVLc70RmTPOFU4wnut+U34NMiu7vZWFp10AWX89VxkVchs0+GHR4XIDgjL/fEXJaXGoQNuZNL3/rNPp1rBqihw==}
 
   '@learncard/learn-cloud-client@1.1.13':
     resolution: {integrity: sha512-GEuvFLJSeeQ27Y05yXn33drACsb9UYTHi2lXsVRYF/Yfs4m7zR2wiM6+6g/8eW0GgOwgGRkBj0THD9x0oDwRbQ==}
 
-  '@learncard/learn-cloud-client@1.1.33':
-    resolution: {integrity: sha512-Sz8Sb3oCtlWAWopPx0tqvdtFAaEO/ROUPLKhpxovjBuMFWBP5QgibWc9INlOYUAaf0NNHBOZ7sE7oEedamvi7w==}
+  '@learncard/learn-cloud-client@1.1.31':
+    resolution: {integrity: sha512-MfHMP28T5jjMIhkIR4xY4SnTzLJMJb7Mqun53XFcEmD5HphWkmABfKbGxXbDI/bDA8PWnMhdFcAqMMnj+maOBQ==}
 
   '@learncard/learn-cloud-plugin@1.1.13':
     resolution: {integrity: sha512-L/CNFQ5zDHlzOmHkehLmIlvBfelf1JwY7DtV/CJp+LBOvCA0Oxed8oLX0X4sspmlycr0jyZsnYHxXGuq142O4g==}
 
-  '@learncard/learn-cloud-plugin@2.0.2':
-    resolution: {integrity: sha512-PeOVRH4gKrYaFtwL/JAtU13VK2cS/qIWlvXPLOM3zaSird5e33uom7pTC4TgiNcWCWZJCIBd7SWjGBJe0A30Lw==}
+  '@learncard/learn-cloud-plugin@2.0.0':
+    resolution: {integrity: sha512-0yNbJaJ/heCDem4fAyCCsR5zojk4OqDNIBjV3cgjKepKvqGWl9FHzKE4sEm0gpEJELRBjPMeA5QLFUVCHmGCVg==}
 
   '@learncard/learn-cloud-service@1.2.4':
     resolution: {integrity: sha512-47pZdrZy9eGVunhVetlT5kUH9pWSVDjS60ozwCm/0x0q2NQ2O5XXB+SIdsHRLKaqH6Vb1UGbIjI7MHLPy4EYZA==}
 
-  '@learncard/learn-cloud-service@2.0.2':
-    resolution: {integrity: sha512-MDJZ53Q0eZ3f3C9Nkp6Kf9aTNe/V9/wPepTcPQH4f4vPB6feyy4APbxkNvlcv1TOjXzprQunJKgQs+vAwccnQQ==}
+  '@learncard/learn-cloud-service@2.0.0':
+    resolution: {integrity: sha512-UqeSUSlkxVcL8BRTBJh4DovEUpx3So8sgy2NutRFUQAho9Q4eWzjaf0iP9I5N8fUjbpInPJqre3wloOhsI6/kw==}
 
-  '@learncard/network-brain-client@1.2.26':
-    resolution: {integrity: sha512-PczefwqUMA9Nx58OyAmHAOybc5XoTDSeXJEb5WVz81BgYYRq+93rvOmTayyfLf2bjRlBI1/epa71W5PWJ4lyvg==}
+  '@learncard/network-brain-client@1.2.24':
+    resolution: {integrity: sha512-SH+o2E8Q0HMCOwckR+YN4FenwkHjeJwBsGT+JNJd6WBt65t9W3PE9nQPv+aMCuHHvwnRsZJvSC/kb0XAR47GVQ==}
 
   '@learncard/network-brain-client@1.2.6':
     resolution: {integrity: sha512-auI4w7OIYsRb6EdmkDO6/W5f+9sYHCz8OcT7rttMquUxi0SnpUyOwVHnUGBdthBmd9QvH8wVeSnD/IAMdnG19Q==}
 
-  '@learncard/network-brain-service@1.10.6':
-    resolution: {integrity: sha512-QBXiG369IkC/9Y4KLiWhTJdIzy5PBxZ2KKfaotYrsgmihgx5+dYu3l18qj8OUv/Puu0UJpe9QWas2vNCN6IWRw==}
+  '@learncard/network-brain-service@1.10.4':
+    resolution: {integrity: sha512-BO3WlefUUdQvFZwzqRBiTozAz4+Qf4tT6NWStkYU/pkClIdnBccUlvT6vVx6F+NFhUSFhICa+W8aHcfq48ljCg==}
 
   '@learncard/network-brain-service@1.5.6':
     resolution: {integrity: sha512-kkOoEAH2Y6Q3dsOaNpiBVN4I9gE2ay7m6wz8Atg9+hA7oqqy7gknHPYLPXhBzsaAlj5tx2sSptY8AHEr2afwKA==}
@@ -2822,8 +2822,8 @@ packages:
   '@learncard/network-plugin@1.4.31':
     resolution: {integrity: sha512-oblL7VVlZxUIQk4HNHV8Pe+pOTUSBagUKKeJU/KA3PuYjpIWJWUQiPS4tZxTH5edvL6WpLArqGpat1jl6ENJ/g==}
 
-  '@learncard/network-plugin@1.7.6':
-    resolution: {integrity: sha512-YRqYxtZg8t3M6cXOsVeGDtafEYX9hWLGImBQVoYRUkV4yX3DF2Sj3gjU8tOwlgqMdk9Fh95/Us4U2BbJhCtDQQ==}
+  '@learncard/network-plugin@1.7.4':
+    resolution: {integrity: sha512-nSoLsdKNKsEgXfTQRj2PRJJyu+X05pFgkZRBDuUfu/Iz3zz9lOyxVfTybl8qXc8m5vG/iyjNGw3jZvNLDZPNkw==}
 
   '@learncard/types@5.3.2':
     resolution: {integrity: sha512-hX9ta7SbxGzcJY1/X3q65KfJLwOqQh9QA3eV9Gh+qYKil0cmQf9lhIV8eFpH7nSMZAGvk9cwSrR1IyRWaWKPGA==}
@@ -2831,32 +2831,32 @@ packages:
   '@learncard/types@5.4.0':
     resolution: {integrity: sha512-4GIBTjZ2jV4PhJ3sSzJGRvEw9B/qBf7AQxMUuv4sPyPtMiOWghS50YzaQC39muNpYUeTxCi331SLM15/QyCiGA==}
 
-  '@learncard/types@5.5.1':
-    resolution: {integrity: sha512-tsb5W7jvQhcc+UOGJPUiWr3+PbW6qjaYuJFn2NU1gqXkks+PW4uLKbylRxKTeMSzoRiaEQavJKlWHNOjkHxFRg==}
-
-  '@learncard/vc-api-plugin@1.0.10':
-    resolution: {integrity: sha512-pOv1culE5+LJlYvszsQq0SbXjomNW9u9YSs9sY07F8Y8rcYP9BtTZNIwm03+NXhTqaejPszhf6lzWtKu7p61Bg==}
+  '@learncard/types@5.5.0':
+    resolution: {integrity: sha512-4IXdtSgncaIEdNgOOB0k+FwF6A52l92P6fIQLMbDoL+IFl7+9mUYKvFDj5yze0m+NDTemmkl+ClYlTm/hCaydQ==}
 
   '@learncard/vc-api-plugin@1.0.3':
     resolution: {integrity: sha512-bJjdLuDa88+GITj4RhhTX3o7ISmY/SGWqndQ9wrfk/NolaFfooGMMMOWOufUrKAp6VLcV6aYG2RQGi+MK4QagQ==}
 
+  '@learncard/vc-api-plugin@1.0.9':
+    resolution: {integrity: sha512-/EOxfDzL1Xhhl7uAp0ebMjHQ7tNoltPvD0utvbaN/LWShK72/a76wqPuOcvBkgWEgegxCtHSng6BuP1yr4N0Wg==}
+
   '@learncard/vc-plugin@1.0.11':
     resolution: {integrity: sha512-X4ThN2F4qxmFPjLNCQi+Yi/KqsISkk3l8IFI5A75BXKLYkpAqCgGW73hcyc0VCb8H0rI17QxnqEi59VJmYMYYw==}
 
-  '@learncard/vc-plugin@1.1.11':
-    resolution: {integrity: sha512-LcN9gbfA/64N5JHSejF+oZV5QvrUJmqbs6toUKCUA5jGwwAC5nTTG2+xgGzAuaTyzGe6rEoL4aJPpsWp+J+k5w==}
+  '@learncard/vc-plugin@1.1.9':
+    resolution: {integrity: sha512-Sh/K+9meqxzo/JFHXPEe1E6B0D8ErimpxdRyolZqWn8Jc57NiU/8KEMhCAgKZVikka/ECeZRWMSQme4QhhZYgA==}
 
-  '@learncard/vc-templates-plugin@1.0.16':
-    resolution: {integrity: sha512-mRqTQ748CpRzQd6IHE0lwlmmjG8VPBDPxrXo2hHSQqMmZ04YwCrplomBoHRgZLx536i4/pjIWDfQFU3ofK1Ipg==}
+  '@learncard/vc-templates-plugin@1.0.14':
+    resolution: {integrity: sha512-Q5lphswsz2jMkdJM/JBaqWwECKC9W8NGdtmx7f39k5jYRNfJXXnW2Urskoe9C1Ee0a3gyJ3uQcOcLOhgZ3P9/w==}
 
   '@learncard/vc-templates-plugin@1.0.5':
     resolution: {integrity: sha512-j69yBihHzeccQhepH8Ctr1Zfp+B94grEjllKP8dQ05+rircUjQ0yuZgVkFK6sDJjOcURgvo5RhIO6873Aq9/GQ==}
 
-  '@learncard/vpqr-plugin@1.0.10':
-    resolution: {integrity: sha512-/HVmaFLu/wjdvPPbX4OhUlLf7Jl8l9duMkS0Bqwocr4nahxTifhkBMEyTBuXcCFwCsT1VvruVRaIzta6gzeNHg==}
-
   '@learncard/vpqr-plugin@1.0.3':
     resolution: {integrity: sha512-9/kiJsdMaFOnhHQx+UsrnHd2KNqmdAU0v5F2niAJtjLzxnBakXeJpLR/pYot1ZnAz4ox6aR+An3MJAswdG3Aaw==}
+
+  '@learncard/vpqr-plugin@1.0.9':
+    resolution: {integrity: sha512-mjbS3e8AjRX2R6IwckWwftGiC++/PHNx8cx7NliAyRegoOlufFVuZ+JMLjx349sOuonAcWNbnlLrtTT5iJ0iIw==}
 
   '@mole-inc/bin-wrapper@8.0.1':
     resolution: {integrity: sha512-sTGoeZnjI8N4KS+sW2AN95gDBErhAguvkw/tWdCjeM8bvxpz5lqrnd0vOJABA1A+Ic3zED7PYoLP/RANLgVotA==}
@@ -4385,6 +4385,10 @@ packages:
     engines: {'0': node >= 0.8.0}
     hasBin: true
 
+  ansi-regex@2.1.1:
+    resolution: {integrity: sha512-TIGnTpdo+E3+pCyAluZvtED5p5wCqLdezCyhPZzKPcxvFplEt4i+W7OONCKgeZFT3+y5NZZfOOS/Bdcanm1MYA==}
+    engines: {node: '>=0.10.0'}
+
   ansi-regex@4.1.1:
     resolution: {integrity: sha512-ILlv4k/3f6vfQ4OoP2AGvirOktlQ98ZEL1k9FaQjxa3L1abBgbuTDAdPOpvbGncC0BTVQrl+OM8xZGK6tWXt7g==}
     engines: {node: '>=6'}
@@ -4432,6 +4436,9 @@ packages:
   application-config-path@0.1.1:
     resolution: {integrity: sha512-zy9cHePtMP0YhwG+CfHm0bgwdnga2X3gZexpdCwEj//dpb+TKajtiC8REEUJUSq6Ab4f9cgNy2l8ObXzCXFkEw==}
 
+  aproba@1.2.0:
+    resolution: {integrity: sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==}
+
   arch@2.2.0:
     resolution: {integrity: sha512-Of/R0wqp83cgHozfIYLbBMnej79U/SVGOOyuB3VVFv1NRM/PSFMK12x9KVtiYzJqmnU5WR2qp0Z5rHb7sWGnFQ==}
 
@@ -4450,6 +4457,10 @@ packages:
   archiver@5.3.2:
     resolution: {integrity: sha512-+25nxyyznAXF7Nef3y0EbBeqmGZgeN/BxHX29Rs39djAfaFalmQ89SE6CWyDCHzGL0yt/ycBtNOmGTW0FyGWNw==}
     engines: {node: '>= 10'}
+
+  are-we-there-yet@1.1.7:
+    resolution: {integrity: sha512-nxwy40TuMiUGqMyRHgCSWZ9FM4VAoRP4xUYSTv5ImRog+h9yISPbVH7H8fASCIzYn9wlEv4zvFL7uKDMCFQm3g==}
+    deprecated: This package is no longer supported.
 
   arg@4.1.0:
     resolution: {integrity: sha512-ZWc51jO3qegGkVh8Hwpv636EkbesNV5ZNQPCtRa+0qytRYPEs9IYT9qITY9buezqUH5uqyzlWLcufrzU2rffdg==}
@@ -4713,6 +4724,9 @@ packages:
   binary-extensions@2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
+
+  bindings@1.5.0:
+    resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
 
   bl@1.2.3:
     resolution: {integrity: sha512-pvcNpa0UU69UT341rO6AYy4FVAIkUHuZXRIWbq+zHnsVcRzDDjIAhGuuYoi0d//cwIwtt4pkpKycWEfjdV+vww==}
@@ -5040,6 +5054,9 @@ packages:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
 
+  chownr@1.1.4:
+    resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}
+
   chownr@2.0.0:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
@@ -5152,6 +5169,10 @@ packages:
 
   co-body@6.1.0:
     resolution: {integrity: sha512-m7pOT6CdLN7FuXUcpuz/8lfQ/L77x8SchHCF4G0RBTJO20Wzmhn5Sp4/5WsKy8OSpifBSUrmg83qEqaDHdyFuQ==}
+
+  code-point-at@1.1.0:
+    resolution: {integrity: sha512-RpAVKQA5T63xEj6/giIbUEtZwJ4UFIc3ZtvEkiaUERylqe8xb5IvqcgOurZLahv93CLKfxcw5YI+DZcUBRyLXA==}
+    engines: {node: '>=0.10.0'}
 
   codeco@1.2.0:
     resolution: {integrity: sha512-SHTBW7QsiDtHGqEyhX10gZesmWlWV00gXteFyU2xLqyZmy658/+HlPyXG5EvY05+csQNWjBIfGg2mZrklR1RtQ==}
@@ -5286,6 +5307,9 @@ packages:
   consola@3.2.3:
     resolution: {integrity: sha512-I5qxpzLv+sJhTVEoLYNcTW+bThDCPsit0vLNKShZx6rLtpilNpmmeTPaeqJb9ZE9dV3DGaeby6Vuhrw38WjeyQ==}
     engines: {node: ^14.18.0 || >=16.10.0}
+
+  console-control-strings@1.1.0:
+    resolution: {integrity: sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==}
 
   console-table-printer@2.11.2:
     resolution: {integrity: sha512-uuUHie0sfPP542TKGzPFal0W1wo1beuKAqIZdaavcONx8OoqdnJRKjkinbRTOta4FaCa1RcIL+7mMJWX3pQGVg==}
@@ -5709,6 +5733,9 @@ packages:
   delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
+
+  delegates@1.0.0:
+    resolution: {integrity: sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==}
 
   denodeify@1.2.1:
     resolution: {integrity: sha512-KNTihKNmQENUZeKu5fzfpzRqR5S2VMp4gl9RFHiWzj9DfvYQPMJ6XHKNaQxaGCXwPk6y9yme3aUoaiAe+KX+vg==}
@@ -6427,6 +6454,10 @@ packages:
     resolution: {integrity: sha512-8iA79xD3uAch729dUG8xaaBBFGaEa0wdD2VkYLFHwlqosEj/jT66AzcreRDSgV7ehnNLBW2WR5jIXwGKjVdTLg==}
     engines: {node: '>=4'}
 
+  expand-template@2.0.3:
+    resolution: {integrity: sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==}
+    engines: {node: '>=6'}
+
   expand-tilde@2.0.2:
     resolution: {integrity: sha512-A5EmesHW6rfnZ9ysHQjPdJRni0SRar0tjtG5MNtm9n5TUvsYU8oozprtRD4AqHxcZWWlVuAmQo2nWKfN9oyjTw==}
     engines: {node: '>=0.10.0'}
@@ -6633,6 +6664,9 @@ packages:
   file-type@6.2.0:
     resolution: {integrity: sha512-YPcTBDV+2Tm0VqjybVd32MHdlEGAtuxS3VAYsumFokDSMG+ROT5wawGlnHDoz7bfMcMDt9hxuXvXwoKUx2fkOg==}
     engines: {node: '>=4'}
+
+  file-uri-to-path@1.0.0:
+    resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
 
   filename-reserved-regex@2.0.0:
     resolution: {integrity: sha512-lc1bnsSr4L4Bdif8Xb/qrtokGbq5zlsms/CYH8PP+WtCkGNF65DPiQY8vG3SakEdRn8Dlnm+gW/qWKKjS5sZzQ==}
@@ -6856,6 +6890,10 @@ packages:
   functions-have-names@1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
 
+  gauge@2.7.4:
+    resolution: {integrity: sha512-14x4kjc6lkD3ltw589k0NrPD6cCNTD6CWoVUNpB85+DrtONoZn+Rug6xZU5RvSC4+TZPxA5AnBibQYAvZn41Hg==}
+    deprecated: This package is no longer supported.
+
   gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
@@ -6929,6 +6967,9 @@ packages:
   git-sha1@0.1.2:
     resolution: {integrity: sha512-2e/nZezdVlyCopOCYHeW0onkbZg7xP1Ad6pndPy1rCygeRykefUS6r7oA5cJRGEFvseiaz5a/qUHFVX1dd6Isg==}
 
+  github-from-package@0.0.0:
+    resolution: {integrity: sha512-SyHy3T1v2NUXn29OsWdxmK6RwHD+vkj3v8en8AOBZ1wBQ/hCAQ5bAQTD02kW4W9tUp/3Qh6J8r9EvntiyCmOOw==}
+
   github-slugger@2.0.0:
     resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
 
@@ -6951,7 +6992,6 @@ packages:
 
   glob@6.0.4:
     resolution: {integrity: sha512-MKZeRNyYZAVVVG1oZeLaWie1uweH40m9AZwIwxyPbTSX4hHrVYSzLg0Ro5Z5R7XKkIX+Cc6oD1rqeDJnwsB8/A==}
-    deprecated: Glob versions prior to v9 are no longer supported
 
   glob@7.1.6:
     resolution: {integrity: sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==}
@@ -7108,6 +7148,9 @@ packages:
   has-tostringtag@1.0.0:
     resolution: {integrity: sha512-kFjcSNhnlGV1kyoGk7OXKSawH5JOb/LzUc5w9B02hOTO0dfFRjbHQKvg1d6cf3HbeUmtU9VbbV3qzZ2Teh97WQ==}
     engines: {node: '>= 0.4'}
+
+  has-unicode@2.0.1:
+    resolution: {integrity: sha512-8Rf9Y83NBReMnx0gFzA8JImQACstCYWUplepDa9xprwwtmgEZUF0h/i5xSA625zB/I37EtrswSST6OXxwaaIJQ==}
 
   has-yarn@2.1.0:
     resolution: {integrity: sha512-UqBRqi4ju7T+TqGNdqAO0PaSVGsDGJUBQvk9eUWNGRY1CFGDzYhLWoM7JQEemnlvVcv/YEmc2wNW8BC24EnUsw==}
@@ -7512,6 +7555,10 @@ packages:
 
   is-finalizationregistry@1.0.2:
     resolution: {integrity: sha512-0by5vtUJs8iFQb5TYUHHPudOR+qXYIMKtiUzvLIZITZUjknFmziyBJuLhVRc+Ds0dREFlskDNJKYIdIzu/9pfw==}
+
+  is-fullwidth-code-point@1.0.0:
+    resolution: {integrity: sha512-1pqUqRjkhPJ9miNq9SwMfdvi6lBJcd6eFxvfaivQhaH3SgisfiuudvFntdKOmxuee/77l+FPjKrQjWvmPjWrRw==}
+    engines: {node: '>=0.10.0'}
 
   is-fullwidth-code-point@2.0.0:
     resolution: {integrity: sha512-VHskAKYM8RfSFXwee5t5cbN5PZeq1Wrh6qd5bkyiXIf6UQcN6w/A0eXM9r6t8d+GYOh+o6ZhiEnb88LN/Y8m2w==}
@@ -8881,10 +8928,16 @@ packages:
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
+  nan@2.19.0:
+    resolution: {integrity: sha512-nO1xXxfh/RWNxfd/XPfbIfFk5vgLsAxUR9y5O0cHMJu/AW9U95JLXqthYHjEp+8gQ5p96K9jUp8nbVOxCdRbtw==}
+
   nanoid@3.3.6:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  napi-build-utils@1.0.2:
+    resolution: {integrity: sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==}
 
   native-promise-only@0.8.1:
     resolution: {integrity: sha512-zkVhZUA3y8mbz652WrL5x0fB0ehrBkulWT3TomAQ9iDtyXZvzKeEA6GPxAItBYeNYl5yngKRX612qHOhvMkDeg==}
@@ -8982,6 +9035,9 @@ packages:
     resolution: {integrity: sha512-WDD0bdg9mbq6F4mRxEYcPWwfA1vxd0mrvKOyxI7Xj/atfRHVeutzuWByG//jfm4uPzp0y4Kj051EORCBSQMycw==}
     engines: {node: '>=12.0.0'}
 
+  node-abi@2.30.1:
+    resolution: {integrity: sha512-/2D0wOQPgaUWzVSVgRMx+trKJRC2UG4SUc4oCJoXx9Uxjtp0Vy3/kt7zcbxHF8+Z/pK3UloLWzBISg72brfy1w==}
+
   node-abort-controller@3.1.1:
     resolution: {integrity: sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==}
 
@@ -9062,6 +9118,9 @@ packages:
   noms@0.0.0:
     resolution: {integrity: sha512-lNDU9VJaOPxUmXcLb+HQFeUgQQPtMI24Gt6hgfuMHRJgMRHMF/qZ4HJD3GDru4sSw9IQl2jPjAYnQrdIeLbwow==}
 
+  noop-logger@0.1.1:
+    resolution: {integrity: sha512-6kM8CLXvuW5crTxsAtva2YLrRrDaiTIkIePWs9moLHqbFWT94WpNFjwS/5dfLfECg5i/lkmw3aoqVidxt23TEQ==}
+
   nopt@1.0.10:
     resolution: {integrity: sha512-NWmpvLSqUrgrAC9HCuxEvb+PSloHpqVu+FqcO4eeF2h5qYRhA7ev6KvelyQAKtegUbC6RypJnlEOhd8vloNKYg==}
     hasBin: true
@@ -9101,6 +9160,10 @@ packages:
     resolution: {integrity: sha512-sJOdmRGrY2sjNTRMbSvluQqg+8X7ZK61yvzBEIDhz4f8z1TZFYABsqjjCBd/0PUNE9M6QDgHJXQkGUEm7Q+l9Q==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
+  npmlog@4.1.2:
+    resolution: {integrity: sha512-2uUqazuKlTaSI/dC8AzicUck7+IrEaOnN/e0jd3Xtt1KcGpwx30v50mL7oPyr/h9bL3E4aZccVwpwP+5W9Vjkg==}
+    deprecated: This package is no longer supported.
+
   nssocket@0.6.0:
     resolution: {integrity: sha512-a9GSOIql5IqgWJR3F/JXG4KpJTA3Z53Cj0MeMvGpglytB1nxE4PdFNC0jINe27CS7cGivoynwc054EzCcT3M3w==}
     engines: {node: '>= 0.10.x'}
@@ -9113,6 +9176,10 @@ packages:
 
   number-allocator@1.0.14:
     resolution: {integrity: sha512-OrL44UTVAvkKdOdRQZIJpLkAdjXGTRda052sN4sO77bKEzYYqWKMBjQvrJFzqygI99gL6Z4u2xctPW1tB8ErvA==}
+
+  number-is-nan@1.0.1:
+    resolution: {integrity: sha512-4jbtZXNAsfZbAHiiqjLPBiCl16dES1zI4Hpzzxw61Tk+loF+sBDBKx1ICKKKwIqQ7M0mFn1TmkN7euSncWgHiQ==}
+    engines: {node: '>=0.10.0'}
 
   ob1@0.76.7:
     resolution: {integrity: sha512-BQdRtxxoUNfSoZxqeBGOyuT9nEYSn18xZHwGMb0mMVpn2NBcYbnyKY4BK2LIHRgw33CBGlUmE+KMaNvyTpLLtQ==}
@@ -9981,6 +10048,11 @@ packages:
     resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
 
+  prebuild-install@5.3.0:
+    resolution: {integrity: sha512-aaLVANlj4HgZweKttFNUVNRxDukytuIuxeK2boIMHjagNJCiVKWFsKF4tCE3ql3GbrD2tExPQ7/pwtEJcHNZeg==}
+    engines: {node: '>=6'}
+    hasBin: true
+
   preferred-pm@3.1.2:
     resolution: {integrity: sha512-nk7dKrcW8hfCZ4H6klWcdRknBOXWzNQByJ0oJyX97BOupsYD+FzLS4hflgEu/uPUEHZCuRfMxzCBsuWd7OzT8Q==}
     engines: {node: '>=10'}
@@ -10098,6 +10170,12 @@ packages:
 
   pstree.remy@1.1.8:
     resolution: {integrity: sha512-77DZwxQmxKnu3aR542U+X8FypNzbfJ+C5XQDk3uWjWxn6151aIMGthWYRXTqT1E5oJvg+ljaa2OJi+VfvCOQ8w==}
+
+  pump@1.0.3:
+    resolution: {integrity: sha512-8k0JupWme55+9tCVE+FS5ULT3K6AbgqrGa58lTT49RpyfwwcGedHqaC5LlQNdEAumn/wFsu6aPwkuPMioy8kqw==}
+
+  pump@2.0.1:
+    resolution: {integrity: sha512-ruPMNRkN3MHP1cWJc9OWr+T/xDP0jhXYCLfJcBuX54hhfIBnaQmAUMfDcG4DM5UMWByBbJY69QSphm3jtDKIkA==}
 
   pump@3.0.0:
     resolution: {integrity: sha512-LwZy+p3SFs1Pytd/jYct4wpv49HiYCqd9Rlc5ZVdk0V+8Yzv6jR5Blk3TRmPL1ft69TxP0IMZGJ+WPFU2BFhww==}
@@ -10639,17 +10717,14 @@ packages:
 
   rimraf@2.4.5:
     resolution: {integrity: sha512-J5xnxTyqaiw06JjMftq7L9ouA448dw/E7dKghkP9WpKNuwmARNNg+Gk8/u5ryb9N/Yo2+z3MCwuqFK/+qPOPfQ==}
-    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
   rimraf@2.6.3:
     resolution: {integrity: sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==}
-    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
   rimraf@2.7.1:
     resolution: {integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==}
-    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
   rimraf@3.0.2:
@@ -10987,6 +11062,12 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
+  simple-concat@1.0.1:
+    resolution: {integrity: sha512-cSFtAPtRhljv69IK0hTVZQ+OfE9nePi/rtJmw5UjHeVyVroEqJXP1sFztKUy1qU+xvz3u/sfYJLa947b7nAN2Q==}
+
+  simple-get@2.8.2:
+    resolution: {integrity: sha512-Ijd/rV5o+mSBBs4F/x9oDPtTx9Zb6X9brmnXvMW4J7IR15ngi9q5xxqWBKU744jTZiaXtxaPL7uHG6vtN8kUkw==}
+
   simple-git@3.19.1:
     resolution: {integrity: sha512-Ck+rcjVaE1HotraRAS8u/+xgTvToTuoMkT9/l9lvuP5jftwnYUp6DwuJzsKErHgfyRk8IB8pqGHWEbM3tLgV1w==}
 
@@ -11047,6 +11128,9 @@ packages:
   smart-buffer@4.2.0:
     resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}
     engines: {node: '>= 6.0.0', npm: '>= 3.0.0'}
+
+  snappy@6.3.5:
+    resolution: {integrity: sha512-lonrUtdp1b1uDn1dbwgQbBsb5BbaiLeKq+AGwOk2No+en+VvJThwmtztwulEQsLinRF681pBqib0NUZaizKLIA==}
 
   socks-proxy-agent@8.0.3:
     resolution: {integrity: sha512-VNegTZKhuGq5vSD6XNKlbqWhyt/40CgoEw8XxD6dhnm8Jq9IEa3nIa4HwnM8XOqU0CdB0BwWVXusqiFXfHB3+A==}
@@ -11199,6 +11283,10 @@ packages:
     resolution: {integrity: sha512-QwiXZgpRcKkhTj2Scnn++4PKtWsH0kpzZ62L2R6c/LUVYv7hVnZqcg2+sMuT6R7Jusu1vviK/MFsu6kNJfWlEQ==}
     engines: {node: '>=4'}
 
+  string-width@1.0.2:
+    resolution: {integrity: sha512-0XsVpQLnVCXHJfyEs8tC0zpTVIr5PKKsQtkT29IwupnPTjtPmQ3xT/4yCREF9hYkV/3M3kzcUTSAZT6a6h81tw==}
+    engines: {node: '>=0.10.0'}
+
   string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
     engines: {node: '>=8'}
@@ -11235,6 +11323,10 @@ packages:
 
   stringify-entities@4.0.3:
     resolution: {integrity: sha512-BP9nNHMhhfcMbiuQKCqMjhDP5yBCAxsPu4pHFFzJ6Alo9dZgY4VLDPutXqIjpRiMoKdp7Av85Gr73Q5uH9k7+g==}
+
+  strip-ansi@3.0.1:
+    resolution: {integrity: sha512-VhumSSbBqDTP8p2ZLKj40UjBCV4+v8bUSEpUb4KjRgWk9pbqGF4REFj6KEagidb2f/M6AzC0EmFyDNGaw9OCzg==}
+    engines: {node: '>=0.10.0'}
 
   strip-ansi@5.2.0:
     resolution: {integrity: sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==}
@@ -11412,6 +11504,9 @@ packages:
   tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
+
+  tar-fs@1.16.3:
+    resolution: {integrity: sha512-NvCeXpYx7OsmOh8zIOP/ebG55zZmxLE0etfWRbWok+q2Qo8x/vOR/IJT1taADXPe+jsiu9axDb3X4B+iIgNlKw==}
 
   tar-stream@1.6.2:
     resolution: {integrity: sha512-rzS0heiNf8Xn7/mpdSVVSMAWAoy9bfb1WOTYC78Z0UQKeKa/CWS8FOq0lKGNa8DWKAn9gxjCvMLYc5PGXYlK2A==}
@@ -11650,6 +11745,9 @@ packages:
     engines: {node: '>= 6'}
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+
+  tunnel-agent@0.6.0:
+    resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
   tv4@1.3.0:
     resolution: {integrity: sha512-afizzfpJgvPr+eDkREK4MxJ/+r8nEEHcmitwgnPUqpaP+FpwQyadnxNoSACbgc/b1LsZYtODGoPiFxQrgJgjvw==}
@@ -12252,6 +12350,9 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
+  wide-align@1.1.5:
+    resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
+
   widest-line@3.1.0:
     resolution: {integrity: sha512-NsmoXalsWVDMGupxZ5R08ka9flZjjiLvHVAWYOKtiKM8ujtZWr9cRffak+uSE48+Ob8ObalXpwyeUiyDD6QFgg==}
     engines: {node: '>=8'}
@@ -12485,10 +12586,10 @@ snapshots:
 
   '@astrojs/internal-helpers@0.2.0': {}
 
-  '@astrojs/markdown-remark@3.0.0(astro@3.0.8(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2))':
+  '@astrojs/markdown-remark@3.0.0(astro@3.0.8(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2))':
     dependencies:
       '@astrojs/prism': 3.0.0
-      astro: 3.0.8(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2)
+      astro: 3.0.8(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2)
       github-slugger: 2.0.0
       import-meta-resolve: 3.0.0
       rehype-raw: 6.1.1
@@ -12508,13 +12609,13 @@ snapshots:
     dependencies:
       prismjs: 1.29.0
 
-  '@astrojs/tailwind@5.0.0(astro@3.0.8(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2))(tailwindcss@3.3.3(ts-node@10.9.1(@types/node@20.4.4)(typescript@5.2.2)))(ts-node@10.9.1(@types/node@20.4.4)(typescript@5.2.2))':
+  '@astrojs/tailwind@5.0.0(astro@3.0.8(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2))(tailwindcss@3.3.3(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2)))(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2))':
     dependencies:
-      astro: 3.0.8(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2)
+      astro: 3.0.8(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2)
       autoprefixer: 10.4.15(postcss@8.4.30)
       postcss: 8.4.30
-      postcss-load-config: 4.0.1(postcss@8.4.30)(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@20.4.4)(typescript@5.2.2))
-      tailwindcss: 3.3.3(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@20.4.4)(typescript@5.2.2))
+      postcss-load-config: 4.0.1(postcss@8.4.30)(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2))
+      tailwindcss: 3.3.3(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2))
     transitivePeerDependencies:
       - ts-node
 
@@ -12688,53 +12789,6 @@ snapshots:
       - '@aws-sdk/client-sts'
       - aws-crt
 
-  '@aws-sdk/client-cognito-identity@3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)':
-    dependencies:
-      '@aws-crypto/sha256-browser': 3.0.0
-      '@aws-crypto/sha256-js': 3.0.0
-      '@aws-sdk/core': 3.556.0
-      '@aws-sdk/credential-provider-node': 3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)
-      '@aws-sdk/middleware-host-header': 3.535.0
-      '@aws-sdk/middleware-logger': 3.535.0
-      '@aws-sdk/middleware-recursion-detection': 3.535.0
-      '@aws-sdk/middleware-user-agent': 3.540.0
-      '@aws-sdk/region-config-resolver': 3.535.0
-      '@aws-sdk/types': 3.535.0
-      '@aws-sdk/util-endpoints': 3.540.0
-      '@aws-sdk/util-user-agent-browser': 3.535.0
-      '@aws-sdk/util-user-agent-node': 3.535.0(aws-crt@1.21.2)
-      '@smithy/config-resolver': 2.2.0
-      '@smithy/core': 1.4.2
-      '@smithy/fetch-http-handler': 2.5.0
-      '@smithy/hash-node': 2.2.0
-      '@smithy/invalid-dependency': 2.2.0
-      '@smithy/middleware-content-length': 2.2.0
-      '@smithy/middleware-endpoint': 2.5.1
-      '@smithy/middleware-retry': 2.3.1
-      '@smithy/middleware-serde': 2.3.0
-      '@smithy/middleware-stack': 2.2.0
-      '@smithy/node-config-provider': 2.3.0
-      '@smithy/node-http-handler': 2.5.0
-      '@smithy/protocol-http': 3.3.0
-      '@smithy/smithy-client': 2.5.1
-      '@smithy/types': 2.12.0
-      '@smithy/url-parser': 2.2.0
-      '@smithy/util-base64': 2.3.0
-      '@smithy/util-body-length-browser': 2.2.0
-      '@smithy/util-body-length-node': 2.3.0
-      '@smithy/util-defaults-mode-browser': 2.2.1
-      '@smithy/util-defaults-mode-node': 2.3.1
-      '@smithy/util-endpoints': 1.2.0
-      '@smithy/util-middleware': 2.2.0
-      '@smithy/util-retry': 2.2.0
-      '@smithy/util-utf8': 2.3.0
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - '@aws-sdk/client-sso-oidc'
-      - '@aws-sdk/client-sts'
-      - aws-crt
-    optional: true
-
   '@aws-sdk/client-lambda@3.405.0(aws-crt@1.21.2)':
     dependencies:
       '@aws-crypto/sha256-browser': 3.0.0
@@ -12786,7 +12840,7 @@ snapshots:
       '@aws-crypto/sha1-browser': 3.0.0
       '@aws-crypto/sha256-browser': 3.0.0
       '@aws-crypto/sha256-js': 3.0.0
-      '@aws-sdk/client-sso-oidc': 3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
+      '@aws-sdk/client-sso-oidc': 3.572.0(aws-crt@1.21.2)
       '@aws-sdk/client-sts': 3.572.0(aws-crt@1.21.2)
       '@aws-sdk/core': 3.572.0
       '@aws-sdk/credential-provider-node': 3.572.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
@@ -12894,7 +12948,7 @@ snapshots:
       '@aws-crypto/sha256-js': 3.0.0
       '@aws-sdk/client-sts': 3.572.0(aws-crt@1.21.2)
       '@aws-sdk/core': 3.572.0
-      '@aws-sdk/credential-provider-node': 3.572.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
+      '@aws-sdk/credential-provider-node': 3.572.0(@aws-sdk/client-sso-oidc@3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
       '@aws-sdk/middleware-host-header': 3.567.0
       '@aws-sdk/middleware-logger': 3.568.0
       '@aws-sdk/middleware-recursion-detection': 3.567.0
@@ -12932,6 +12986,51 @@ snapshots:
       tslib: 2.6.2
     transitivePeerDependencies:
       - '@aws-sdk/client-sts'
+      - aws-crt
+
+  '@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2)':
+    dependencies:
+      '@aws-crypto/sha256-browser': 3.0.0
+      '@aws-crypto/sha256-js': 3.0.0
+      '@aws-sdk/client-sts': 3.572.0(aws-crt@1.21.2)
+      '@aws-sdk/core': 3.572.0
+      '@aws-sdk/credential-provider-node': 3.572.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
+      '@aws-sdk/middleware-host-header': 3.567.0
+      '@aws-sdk/middleware-logger': 3.568.0
+      '@aws-sdk/middleware-recursion-detection': 3.567.0
+      '@aws-sdk/middleware-user-agent': 3.572.0
+      '@aws-sdk/region-config-resolver': 3.572.0
+      '@aws-sdk/types': 3.567.0
+      '@aws-sdk/util-endpoints': 3.572.0
+      '@aws-sdk/util-user-agent-browser': 3.567.0
+      '@aws-sdk/util-user-agent-node': 3.568.0(aws-crt@1.21.2)
+      '@smithy/config-resolver': 2.2.0
+      '@smithy/core': 1.4.2
+      '@smithy/fetch-http-handler': 2.5.0
+      '@smithy/hash-node': 2.2.0
+      '@smithy/invalid-dependency': 2.2.0
+      '@smithy/middleware-content-length': 2.2.0
+      '@smithy/middleware-endpoint': 2.5.1
+      '@smithy/middleware-retry': 2.3.1
+      '@smithy/middleware-serde': 2.3.0
+      '@smithy/middleware-stack': 2.2.0
+      '@smithy/node-config-provider': 2.3.0
+      '@smithy/node-http-handler': 2.5.0
+      '@smithy/protocol-http': 3.3.0
+      '@smithy/smithy-client': 2.5.1
+      '@smithy/types': 2.12.0
+      '@smithy/url-parser': 2.2.0
+      '@smithy/util-base64': 2.3.0
+      '@smithy/util-body-length-browser': 2.2.0
+      '@smithy/util-body-length-node': 2.3.0
+      '@smithy/util-defaults-mode-browser': 2.2.1
+      '@smithy/util-defaults-mode-node': 2.3.1
+      '@smithy/util-endpoints': 1.2.0
+      '@smithy/util-middleware': 2.2.0
+      '@smithy/util-retry': 2.2.0
+      '@smithy/util-utf8': 2.3.0
+      tslib: 2.6.2
+    transitivePeerDependencies:
       - aws-crt
 
   '@aws-sdk/client-sso@3.405.0(aws-crt@1.21.2)':
@@ -13145,59 +13244,13 @@ snapshots:
       - '@aws-sdk/client-sso-oidc'
       - aws-crt
 
-  '@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2)':
-    dependencies:
-      '@aws-crypto/sha256-browser': 3.0.0
-      '@aws-crypto/sha256-js': 3.0.0
-      '@aws-sdk/core': 3.556.0
-      '@aws-sdk/credential-provider-node': 3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)
-      '@aws-sdk/middleware-host-header': 3.535.0
-      '@aws-sdk/middleware-logger': 3.535.0
-      '@aws-sdk/middleware-recursion-detection': 3.535.0
-      '@aws-sdk/middleware-user-agent': 3.540.0
-      '@aws-sdk/region-config-resolver': 3.535.0
-      '@aws-sdk/types': 3.535.0
-      '@aws-sdk/util-endpoints': 3.540.0
-      '@aws-sdk/util-user-agent-browser': 3.535.0
-      '@aws-sdk/util-user-agent-node': 3.535.0(aws-crt@1.21.2)
-      '@smithy/config-resolver': 2.2.0
-      '@smithy/core': 1.4.2
-      '@smithy/fetch-http-handler': 2.5.0
-      '@smithy/hash-node': 2.2.0
-      '@smithy/invalid-dependency': 2.2.0
-      '@smithy/middleware-content-length': 2.2.0
-      '@smithy/middleware-endpoint': 2.5.1
-      '@smithy/middleware-retry': 2.3.1
-      '@smithy/middleware-serde': 2.3.0
-      '@smithy/middleware-stack': 2.2.0
-      '@smithy/node-config-provider': 2.3.0
-      '@smithy/node-http-handler': 2.5.0
-      '@smithy/protocol-http': 3.3.0
-      '@smithy/smithy-client': 2.5.1
-      '@smithy/types': 2.12.0
-      '@smithy/url-parser': 2.2.0
-      '@smithy/util-base64': 2.3.0
-      '@smithy/util-body-length-browser': 2.2.0
-      '@smithy/util-body-length-node': 2.3.0
-      '@smithy/util-defaults-mode-browser': 2.2.1
-      '@smithy/util-defaults-mode-node': 2.3.1
-      '@smithy/util-endpoints': 1.2.0
-      '@smithy/util-middleware': 2.2.0
-      '@smithy/util-retry': 2.2.0
-      '@smithy/util-utf8': 2.3.0
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - '@aws-sdk/client-sso-oidc'
-      - aws-crt
-    optional: true
-
   '@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2)':
     dependencies:
       '@aws-crypto/sha256-browser': 3.0.0
       '@aws-crypto/sha256-js': 3.0.0
       '@aws-sdk/client-sso-oidc': 3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
       '@aws-sdk/core': 3.572.0
-      '@aws-sdk/credential-provider-node': 3.572.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
+      '@aws-sdk/credential-provider-node': 3.572.0(@aws-sdk/client-sso-oidc@3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
       '@aws-sdk/middleware-host-header': 3.567.0
       '@aws-sdk/middleware-logger': 3.568.0
       '@aws-sdk/middleware-recursion-detection': 3.567.0
@@ -13267,19 +13320,6 @@ snapshots:
       - '@aws-sdk/client-sso-oidc'
       - '@aws-sdk/client-sts'
       - aws-crt
-
-  '@aws-sdk/credential-provider-cognito-identity@3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)':
-    dependencies:
-      '@aws-sdk/client-cognito-identity': 3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)
-      '@aws-sdk/types': 3.535.0
-      '@smithy/property-provider': 2.2.0
-      '@smithy/types': 2.12.0
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - '@aws-sdk/client-sso-oidc'
-      - '@aws-sdk/client-sts'
-      - aws-crt
-    optional: true
 
   '@aws-sdk/credential-provider-env@3.398.0':
     dependencies:
@@ -13375,14 +13415,14 @@ snapshots:
       - '@aws-sdk/client-sso-oidc'
       - aws-crt
 
-  '@aws-sdk/credential-provider-ini@3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)':
+  '@aws-sdk/credential-provider-ini@3.572.0(@aws-sdk/client-sso-oidc@3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)':
     dependencies:
-      '@aws-sdk/client-sts': 3.565.0(aws-crt@1.21.2)
-      '@aws-sdk/credential-provider-env': 3.535.0
-      '@aws-sdk/credential-provider-process': 3.535.0
-      '@aws-sdk/credential-provider-sso': 3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
-      '@aws-sdk/credential-provider-web-identity': 3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))
-      '@aws-sdk/types': 3.535.0
+      '@aws-sdk/client-sts': 3.572.0(aws-crt@1.21.2)
+      '@aws-sdk/credential-provider-env': 3.568.0
+      '@aws-sdk/credential-provider-process': 3.572.0
+      '@aws-sdk/credential-provider-sso': 3.572.0(@aws-sdk/client-sso-oidc@3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(aws-crt@1.21.2)
+      '@aws-sdk/credential-provider-web-identity': 3.568.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))
+      '@aws-sdk/types': 3.567.0
       '@smithy/credential-provider-imds': 2.3.0
       '@smithy/property-provider': 2.2.0
       '@smithy/shared-ini-file-loader': 2.4.0
@@ -13391,7 +13431,6 @@ snapshots:
     transitivePeerDependencies:
       - '@aws-sdk/client-sso-oidc'
       - aws-crt
-    optional: true
 
   '@aws-sdk/credential-provider-ini@3.572.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)':
     dependencies:
@@ -13464,15 +13503,15 @@ snapshots:
       - '@aws-sdk/client-sts'
       - aws-crt
 
-  '@aws-sdk/credential-provider-node@3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)':
+  '@aws-sdk/credential-provider-node@3.572.0(@aws-sdk/client-sso-oidc@3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)':
     dependencies:
-      '@aws-sdk/credential-provider-env': 3.535.0
-      '@aws-sdk/credential-provider-http': 3.552.0
-      '@aws-sdk/credential-provider-ini': 3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)
-      '@aws-sdk/credential-provider-process': 3.535.0
-      '@aws-sdk/credential-provider-sso': 3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
-      '@aws-sdk/credential-provider-web-identity': 3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))
-      '@aws-sdk/types': 3.535.0
+      '@aws-sdk/credential-provider-env': 3.568.0
+      '@aws-sdk/credential-provider-http': 3.568.0
+      '@aws-sdk/credential-provider-ini': 3.572.0(@aws-sdk/client-sso-oidc@3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
+      '@aws-sdk/credential-provider-process': 3.572.0
+      '@aws-sdk/credential-provider-sso': 3.572.0(@aws-sdk/client-sso-oidc@3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(aws-crt@1.21.2)
+      '@aws-sdk/credential-provider-web-identity': 3.568.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))
+      '@aws-sdk/types': 3.567.0
       '@smithy/credential-provider-imds': 2.3.0
       '@smithy/property-provider': 2.2.0
       '@smithy/shared-ini-file-loader': 2.4.0
@@ -13482,7 +13521,6 @@ snapshots:
       - '@aws-sdk/client-sso-oidc'
       - '@aws-sdk/client-sts'
       - aws-crt
-    optional: true
 
   '@aws-sdk/credential-provider-node@3.572.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)':
     dependencies:
@@ -13552,6 +13590,19 @@ snapshots:
       - '@aws-sdk/client-sso-oidc'
       - aws-crt
 
+  '@aws-sdk/credential-provider-sso@3.572.0(@aws-sdk/client-sso-oidc@3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(aws-crt@1.21.2)':
+    dependencies:
+      '@aws-sdk/client-sso': 3.572.0(aws-crt@1.21.2)
+      '@aws-sdk/token-providers': 3.572.0(@aws-sdk/client-sso-oidc@3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))
+      '@aws-sdk/types': 3.567.0
+      '@smithy/property-provider': 2.2.0
+      '@smithy/shared-ini-file-loader': 2.4.0
+      '@smithy/types': 2.12.0
+      tslib: 2.6.2
+    transitivePeerDependencies:
+      - '@aws-sdk/client-sso-oidc'
+      - aws-crt
+
   '@aws-sdk/credential-provider-sso@3.572.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)':
     dependencies:
       '@aws-sdk/client-sso': 3.572.0(aws-crt@1.21.2)
@@ -13579,15 +13630,6 @@ snapshots:
       '@smithy/property-provider': 2.2.0
       '@smithy/types': 2.12.0
       tslib: 2.6.2
-
-  '@aws-sdk/credential-provider-web-identity@3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))':
-    dependencies:
-      '@aws-sdk/client-sts': 3.565.0(aws-crt@1.21.2)
-      '@aws-sdk/types': 3.535.0
-      '@smithy/property-provider': 2.2.0
-      '@smithy/types': 2.12.0
-      tslib: 2.6.2
-    optional: true
 
   '@aws-sdk/credential-provider-web-identity@3.565.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))':
     dependencies:
@@ -13626,29 +13668,6 @@ snapshots:
     transitivePeerDependencies:
       - '@aws-sdk/client-sso-oidc'
       - aws-crt
-
-  '@aws-sdk/credential-providers@3.565.0(aws-crt@1.21.2)':
-    dependencies:
-      '@aws-sdk/client-cognito-identity': 3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)
-      '@aws-sdk/client-sso': 3.556.0(aws-crt@1.21.2)
-      '@aws-sdk/client-sts': 3.565.0(aws-crt@1.21.2)
-      '@aws-sdk/credential-provider-cognito-identity': 3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)
-      '@aws-sdk/credential-provider-env': 3.535.0
-      '@aws-sdk/credential-provider-http': 3.552.0
-      '@aws-sdk/credential-provider-ini': 3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)
-      '@aws-sdk/credential-provider-node': 3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))(aws-crt@1.21.2)
-      '@aws-sdk/credential-provider-process': 3.535.0
-      '@aws-sdk/credential-provider-sso': 3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
-      '@aws-sdk/credential-provider-web-identity': 3.565.0(@aws-sdk/client-sts@3.565.0(aws-crt@1.21.2))
-      '@aws-sdk/types': 3.535.0
-      '@smithy/credential-provider-imds': 2.3.0
-      '@smithy/property-provider': 2.2.0
-      '@smithy/types': 2.12.0
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - '@aws-sdk/client-sso-oidc'
-      - aws-crt
-    optional: true
 
   '@aws-sdk/lib-storage@3.572.0(@aws-sdk/client-s3@3.572.0(aws-crt@1.21.2))':
     dependencies:
@@ -13901,8 +13920,17 @@ snapshots:
 
   '@aws-sdk/token-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))':
     dependencies:
-      '@aws-sdk/client-sso-oidc': 3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
+      '@aws-sdk/client-sso-oidc': 3.572.0(aws-crt@1.21.2)
       '@aws-sdk/types': 3.535.0
+      '@smithy/property-provider': 2.2.0
+      '@smithy/shared-ini-file-loader': 2.4.0
+      '@smithy/types': 2.12.0
+      tslib: 2.6.2
+
+  '@aws-sdk/token-providers@3.572.0(@aws-sdk/client-sso-oidc@3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))':
+    dependencies:
+      '@aws-sdk/client-sso-oidc': 3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
+      '@aws-sdk/types': 3.567.0
       '@smithy/property-provider': 2.2.0
       '@smithy/shared-ini-file-loader': 2.4.0
       '@smithy/types': 2.12.0
@@ -13910,7 +13938,7 @@ snapshots:
 
   '@aws-sdk/token-providers@3.572.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))':
     dependencies:
-      '@aws-sdk/client-sso-oidc': 3.572.0(@aws-sdk/client-sts@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
+      '@aws-sdk/client-sso-oidc': 3.572.0(aws-crt@1.21.2)
       '@aws-sdk/types': 3.567.0
       '@smithy/property-provider': 2.2.0
       '@smithy/shared-ini-file-loader': 2.4.0
@@ -16698,25 +16726,6 @@ snapshots:
 
   '@kwsites/promise-deferred@1.1.1': {}
 
-  '@learncard/ceramic-plugin@1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
-    dependencies:
-      '@ceramicnetwork/common': 2.13.0
-      '@ceramicnetwork/http-client': 2.7.0
-      '@ceramicnetwork/stream-tile': 2.9.0
-      '@glazed/tile-loader': 0.2.1
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/types': 5.5.1
-      did-jwt: 5.9.0
-      dids: 3.4.0
-      hex-lite: 1.5.0
-      key-did-provider-ed25519: 2.0.1
-      key-did-resolver: 2.3.0
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - encoding
-      - expo
-      - react-native
-
   '@learncard/ceramic-plugin@1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
       '@ceramicnetwork/common': 2.13.0
@@ -16736,10 +16745,29 @@ snapshots:
       - expo
       - react-native
 
+  '@learncard/ceramic-plugin@1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+    dependencies:
+      '@ceramicnetwork/common': 2.13.0
+      '@ceramicnetwork/http-client': 2.7.0
+      '@ceramicnetwork/stream-tile': 2.9.0
+      '@glazed/tile-loader': 0.2.1
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/types': 5.5.0
+      did-jwt: 5.9.0
+      dids: 3.4.0
+      hex-lite: 1.5.0
+      key-did-provider-ed25519: 2.0.1
+      key-did-resolver: 2.3.0
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - encoding
+      - expo
+      - react-native
+
   '@learncard/chapi-plugin@1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
       '@learncard/core': 9.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       credential-handler-polyfill: 3.2.0
       web-credential-handler: 2.0.2
     transitivePeerDependencies:
@@ -16747,10 +16775,10 @@ snapshots:
       - expo
       - react-native
 
-  '@learncard/chapi-plugin@1.0.22(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+  '@learncard/chapi-plugin@1.0.20(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       credential-handler-polyfill: 3.2.0
       web-credential-handler: 2.0.2
     transitivePeerDependencies:
@@ -16804,24 +16832,15 @@ snapshots:
       - expo
       - react-native
 
-  '@learncard/core@9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+  '@learncard/core@9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
-      '@learncard/helpers': 1.0.13
+      '@learncard/helpers': 1.0.12
       abort-controller: 3.0.0
       core-js: 3.32.1
       cross-fetch: 3.1.8
       isomorphic-fetch: 3.0.0
       isomorphic-webcrypto: 2.3.8(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       zod: 3.21.1
-    transitivePeerDependencies:
-      - encoding
-      - expo
-      - react-native
-
-  '@learncard/crypto-plugin@1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
-    dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      isomorphic-webcrypto: 2.3.8(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
     transitivePeerDependencies:
       - encoding
       - expo
@@ -16836,12 +16855,21 @@ snapshots:
       - expo
       - react-native
 
+  '@learncard/crypto-plugin@1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+    dependencies:
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      isomorphic-webcrypto: 2.3.8(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+    transitivePeerDependencies:
+      - encoding
+      - expo
+      - react-native
+
   '@learncard/did-web-plugin@1.0.15(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
       '@learncard/ceramic-plugin': 1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/core': 9.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/didkey-plugin': 1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/expiration-plugin': 1.0.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/helpers': 1.0.7
       '@learncard/learn-card-plugin': 1.0.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
@@ -16853,28 +16881,18 @@ snapshots:
       - expo
       - react-native
 
-  '@learncard/did-web-plugin@1.0.29(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+  '@learncard/did-web-plugin@1.0.27(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
-      '@learncard/ceramic-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkey-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/expiration-plugin': 1.1.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/helpers': 1.0.13
-      '@learncard/learn-card-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/types': 5.5.1
-      '@learncard/vc-plugin': 1.1.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/vc-templates-plugin': 1.0.16(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-    transitivePeerDependencies:
-      - encoding
-      - expo
-      - react-native
-
-  '@learncard/didkey-plugin@1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
-    dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/helpers': 1.0.13
-      hex-lite: 1.5.0
+      '@learncard/ceramic-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkey-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/expiration-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/helpers': 1.0.12
+      '@learncard/learn-card-plugin': 1.1.7(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/types': 5.5.0
+      '@learncard/vc-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/vc-templates-plugin': 1.0.14(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
     transitivePeerDependencies:
       - encoding
       - expo
@@ -16890,6 +16908,16 @@ snapshots:
       - expo
       - react-native
 
+  '@learncard/didkey-plugin@1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+    dependencies:
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/helpers': 1.0.12
+      hex-lite: 1.5.0
+    transitivePeerDependencies:
+      - encoding
+      - expo
+      - react-native
+
   '@learncard/didkit-plugin@1.1.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
       '@learncard/core': 9.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
@@ -16899,26 +16927,26 @@ snapshots:
       - expo
       - react-native
 
-  '@learncard/didkit-plugin@1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+  '@learncard/didkit-plugin@1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/types': 5.5.1
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/types': 5.5.0
     transitivePeerDependencies:
       - encoding
       - expo
       - react-native
 
-  '@learncard/dynamic-loader-plugin@1.0.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+  '@learncard/dynamic-loader-plugin@1.0.5(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
     transitivePeerDependencies:
       - encoding
       - expo
       - react-native
 
-  '@learncard/ethereum-plugin@1.0.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+  '@learncard/ethereum-plugin@1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@uniswap/default-token-list': 4.1.0
       ethers: 5.7.2
     transitivePeerDependencies:
@@ -16950,38 +16978,25 @@ snapshots:
       - expo
       - react-native
 
-  '@learncard/expiration-plugin@1.1.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+  '@learncard/expiration-plugin@1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/vc-plugin': 1.1.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/vc-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - encoding
       - expo
       - react-native
 
-  '@learncard/helpers@1.0.13':
+  '@learncard/helpers@1.0.12':
     dependencies:
-      '@learncard/types': 5.5.1
+      '@learncard/types': 5.5.0
 
   '@learncard/helpers@1.0.3': {}
 
   '@learncard/helpers@1.0.7':
     dependencies:
       '@learncard/types': 5.3.2
-
-  '@learncard/idx-plugin@1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
-    dependencies:
-      '@ceramicnetwork/http-client': 2.7.0
-      '@ceramicnetwork/streamid': 2.7.0
-      '@glazed/did-datastore': 0.3.2
-      '@learncard/ceramic-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/types': 5.5.1
-    transitivePeerDependencies:
-      - encoding
-      - expo
-      - react-native
 
   '@learncard/idx-plugin@1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
@@ -16996,7 +17011,20 @@ snapshots:
       - expo
       - react-native
 
-  '@learncard/init@1.0.22(@aws-sdk/credential-providers@3.565.0(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)':
+  '@learncard/idx-plugin@1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+    dependencies:
+      '@ceramicnetwork/http-client': 2.7.0
+      '@ceramicnetwork/streamid': 2.7.0
+      '@glazed/did-datastore': 0.3.2
+      '@learncard/ceramic-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/types': 5.5.0
+    transitivePeerDependencies:
+      - encoding
+      - expo
+      - react-native
+
+  '@learncard/init@1.0.22(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)':
     dependencies:
       '@learncard/ceramic-plugin': 1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/chapi-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
@@ -17010,7 +17038,7 @@ snapshots:
       '@learncard/helpers': 1.0.7
       '@learncard/idx-plugin': 1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/learn-card-plugin': 1.0.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/learn-cloud-plugin': 1.1.13(@aws-sdk/credential-providers@3.565.0(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)
+      '@learncard/learn-cloud-plugin': 1.1.13(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)
       '@learncard/network-plugin': 1.4.31(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)
       '@learncard/types': 5.3.2
       '@learncard/vc-api-plugin': 1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
@@ -17033,28 +17061,28 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@learncard/init@1.2.21(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(socks@2.7.1)':
+  '@learncard/init@1.2.19(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)(socks@2.7.1)':
     dependencies:
-      '@learncard/ceramic-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/chapi-plugin': 1.0.22(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/crypto-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/did-web-plugin': 1.0.29(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkey-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/dynamic-loader-plugin': 1.0.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/ethereum-plugin': 1.0.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/expiration-plugin': 1.1.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/helpers': 1.0.13
-      '@learncard/idx-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/learn-card-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/learn-cloud-plugin': 2.0.2(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(socks@2.7.1)
-      '@learncard/network-plugin': 1.7.6(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)
-      '@learncard/types': 5.5.1
-      '@learncard/vc-api-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/vc-plugin': 1.1.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/vc-templates-plugin': 1.0.16(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/vpqr-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/ceramic-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/chapi-plugin': 1.0.20(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/crypto-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/did-web-plugin': 1.0.27(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkey-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/dynamic-loader-plugin': 1.0.5(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/ethereum-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/expiration-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/helpers': 1.0.12
+      '@learncard/idx-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/learn-card-plugin': 1.1.7(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/learn-cloud-plugin': 2.0.0(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)(socks@2.7.1)
+      '@learncard/network-plugin': 1.7.4(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)
+      '@learncard/types': 5.5.0
+      '@learncard/vc-api-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/vc-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/vc-templates-plugin': 1.0.14(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/vpqr-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
     transitivePeerDependencies:
       - '@aws-sdk/credential-providers'
       - '@mongodb-js/zstd'
@@ -17076,7 +17104,7 @@ snapshots:
   '@learncard/learn-card-plugin@1.0.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
       '@learncard/core': 9.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/types': 5.3.2
       date-fns: 2.30.0
     transitivePeerDependencies:
@@ -17084,20 +17112,20 @@ snapshots:
       - expo
       - react-native
 
-  '@learncard/learn-card-plugin@1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+  '@learncard/learn-card-plugin@1.1.7(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/types': 5.5.1
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/types': 5.5.0
       date-fns: 2.30.0
     transitivePeerDependencies:
       - encoding
       - expo
       - react-native
 
-  '@learncard/learn-cloud-client@1.1.13(@aws-sdk/credential-providers@3.565.0(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)':
+  '@learncard/learn-cloud-client@1.1.13(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)':
     dependencies:
-      '@learncard/learn-cloud-service': 1.2.4(@aws-sdk/credential-providers@3.565.0(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)
+      '@learncard/learn-cloud-service': 1.2.4(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)
       '@trpc/client': 10.38.1(@trpc/server@10.38.1)
       '@trpc/server': 10.38.1
     transitivePeerDependencies:
@@ -17116,9 +17144,9 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@learncard/learn-cloud-client@1.1.33(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(socks@2.7.1)':
+  '@learncard/learn-cloud-client@1.1.31(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)(socks@2.7.1)':
     dependencies:
-      '@learncard/learn-cloud-service': 2.0.2(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(socks@2.7.1)
+      '@learncard/learn-cloud-service': 2.0.0(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)(socks@2.7.1)
       '@trpc/client': 10.38.1(@trpc/server@10.38.1)
       '@trpc/server': 10.38.1
     transitivePeerDependencies:
@@ -17139,12 +17167,12 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@learncard/learn-cloud-plugin@1.1.13(@aws-sdk/credential-providers@3.565.0(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)':
+  '@learncard/learn-cloud-plugin@1.1.13(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)':
     dependencies:
       '@learncard/core': 9.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/didkit-plugin': 1.1.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/helpers': 1.0.7
-      '@learncard/learn-cloud-client': 1.1.13(@aws-sdk/credential-providers@3.565.0(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)
+      '@learncard/learn-cloud-client': 1.1.13(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)
       json-stringify-deterministic: 1.0.10
       lodash: 4.17.21
       pbkdf2-hmac: 1.2.1
@@ -17164,12 +17192,12 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@learncard/learn-cloud-plugin@2.0.2(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(socks@2.7.1)':
+  '@learncard/learn-cloud-plugin@2.0.0(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)(socks@2.7.1)':
     dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/helpers': 1.0.13
-      '@learncard/learn-cloud-client': 1.1.33(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(socks@2.7.1)
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/helpers': 1.0.12
+      '@learncard/learn-cloud-client': 1.1.31(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)(socks@2.7.1)
       json-stringify-deterministic: 1.0.10
       lodash: 4.17.21
       pbkdf2-hmac: 1.2.1
@@ -17191,14 +17219,14 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@learncard/learn-cloud-service@1.2.4(@aws-sdk/credential-providers@3.565.0(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)':
+  '@learncard/learn-cloud-service@1.2.4(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)':
     dependencies:
       '@learncard/ceramic-plugin': 1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/core': 9.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/crypto-plugin': 1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/did-web-plugin': 1.0.15(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/didkey-plugin': 1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/expiration-plugin': 1.0.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/helpers': 1.0.7
       '@learncard/learn-card-plugin': 1.0.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
@@ -17220,7 +17248,7 @@ snapshots:
       jwt-decode: 3.1.2
       libsodium-wrappers: 0.7.11
       lodash: 4.17.21
-      mongodb: 5.8.1(@aws-sdk/credential-providers@3.565.0(aws-crt@1.21.2))
+      mongodb: 5.8.1(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(snappy@6.3.5)
       multiformats: 11.0.2
       neo4j-driver: 4.4.11
       neogma: 1.12.2
@@ -17245,20 +17273,20 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@learncard/learn-cloud-service@2.0.2(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(socks@2.7.1)':
+  '@learncard/learn-cloud-service@2.0.0(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)(snappy@6.3.5)(socks@2.7.1)':
     dependencies:
-      '@learncard/ceramic-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/crypto-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/did-web-plugin': 1.0.29(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkey-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/expiration-plugin': 1.1.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/helpers': 1.0.13
-      '@learncard/learn-card-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/types': 5.5.1
-      '@learncard/vc-plugin': 1.1.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/vc-templates-plugin': 1.0.16(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/ceramic-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/crypto-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/did-web-plugin': 1.0.27(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkey-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/expiration-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/helpers': 1.0.12
+      '@learncard/learn-card-plugin': 1.1.7(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/types': 5.5.0
+      '@learncard/vc-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/vc-templates-plugin': 1.0.14(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@sentry/esbuild-plugin': 2.16.1
       '@sentry/serverless': 7.67.0
       '@trpc/client': 10.38.1(@trpc/server@10.38.1)
@@ -17274,7 +17302,7 @@ snapshots:
       jwt-decode: 3.1.2
       libsodium-wrappers: 0.7.11
       lodash: 4.17.21
-      mongodb: 6.5.0(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(socks@2.7.1)
+      mongodb: 6.5.0(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(snappy@6.3.5)(socks@2.7.1)
       multiformats: 11.0.2
       neo4j-driver: 4.4.11
       neogma: 1.14.0
@@ -17301,9 +17329,9 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@learncard/network-brain-client@1.2.26(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)':
+  '@learncard/network-brain-client@1.2.24(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)':
     dependencies:
-      '@learncard/network-brain-service': 1.10.6(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)
+      '@learncard/network-brain-service': 1.10.4(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)
       '@trpc/client': 10.38.1(@trpc/server@10.38.1)
       '@trpc/server': 10.38.1
     transitivePeerDependencies:
@@ -17333,21 +17361,21 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@learncard/network-brain-service@1.10.6(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)':
+  '@learncard/network-brain-service@1.10.4(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)':
     dependencies:
       '@aws-sdk/client-sqs': 3.405.0(aws-crt@1.21.2)
-      '@learncard/ceramic-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/crypto-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/did-web-plugin': 1.0.29(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkey-plugin': 1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/expiration-plugin': 1.1.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/helpers': 1.0.13
-      '@learncard/learn-card-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/types': 5.5.1
-      '@learncard/vc-plugin': 1.1.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/vc-templates-plugin': 1.0.16(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/ceramic-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/crypto-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/did-web-plugin': 1.0.27(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkey-plugin': 1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/expiration-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/helpers': 1.0.12
+      '@learncard/learn-card-plugin': 1.1.7(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/types': 5.5.0
+      '@learncard/vc-plugin': 1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/vc-templates-plugin': 1.0.14(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@sentry/esbuild-plugin': 2.16.1
       '@sentry/serverless': 7.67.0
       '@trpc/server': 10.38.1
@@ -17386,7 +17414,7 @@ snapshots:
       '@learncard/crypto-plugin': 1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/did-web-plugin': 1.0.15(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/didkey-plugin': 1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/expiration-plugin': 1.0.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/helpers': 1.0.7
       '@learncard/learn-card-plugin': 1.0.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
@@ -17438,10 +17466,10 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@learncard/network-plugin@1.7.6(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)':
+  '@learncard/network-plugin@1.7.4(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)':
     dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/network-brain-client': 1.2.26(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/network-brain-client': 1.2.24(@types/ioredis-mock@8.2.2)(aws-crt@1.21.2)(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))(serverless@3.34.0)
     transitivePeerDependencies:
       - '@types/ioredis-mock'
       - aws-crt
@@ -17461,18 +17489,9 @@ snapshots:
     dependencies:
       zod: 3.21.1
 
-  '@learncard/types@5.5.1':
+  '@learncard/types@5.5.0':
     dependencies:
       zod: 3.21.1
-
-  '@learncard/vc-api-plugin@1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
-    dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/types': 5.5.1
-    transitivePeerDependencies:
-      - encoding
-      - expo
-      - react-native
 
   '@learncard/vc-api-plugin@1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
@@ -17483,30 +17502,39 @@ snapshots:
       - expo
       - react-native
 
+  '@learncard/vc-api-plugin@1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+    dependencies:
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/types': 5.5.0
+    transitivePeerDependencies:
+      - encoding
+      - expo
+      - react-native
+
   '@learncard/vc-plugin@1.0.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
       '@learncard/core': 9.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/types': 5.3.2
     transitivePeerDependencies:
       - encoding
       - expo
       - react-native
 
-  '@learncard/vc-plugin@1.1.11(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+  '@learncard/vc-plugin@1.1.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/didkit-plugin': 1.4.6(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/types': 5.5.1
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/didkit-plugin': 1.4.4(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/types': 5.5.0
     transitivePeerDependencies:
       - encoding
       - expo
       - react-native
 
-  '@learncard/vc-templates-plugin@1.0.16(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+  '@learncard/vc-templates-plugin@1.0.14(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/types': 5.5.1
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/types': 5.5.0
     transitivePeerDependencies:
       - encoding
       - expo
@@ -17521,21 +17549,21 @@ snapshots:
       - expo
       - react-native
 
-  '@learncard/vpqr-plugin@1.0.10(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
-    dependencies:
-      '@digitalbazaar/vpqr': 3.0.0
-      '@learncard/core': 9.2.1(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
-      '@learncard/types': 5.5.1
-    transitivePeerDependencies:
-      - encoding
-      - expo
-      - react-native
-
   '@learncard/vpqr-plugin@1.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
     dependencies:
       '@digitalbazaar/vpqr': 3.0.0
       '@learncard/core': 9.0.3(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
       '@learncard/types': 5.3.2
+    transitivePeerDependencies:
+      - encoding
+      - expo
+      - react-native
+
+  '@learncard/vpqr-plugin@1.0.9(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))':
+    dependencies:
+      '@digitalbazaar/vpqr': 3.0.0
+      '@learncard/core': 9.2.0(expo@49.0.9(@babel/core@7.22.15))(react-native@0.72.4(@babel/core@7.22.15)(@babel/preset-env@7.22.15(@babel/core@7.22.15))(react@18.2.0))
+      '@learncard/types': 5.5.0
     transitivePeerDependencies:
       - encoding
       - expo
@@ -17624,7 +17652,7 @@ snapshots:
 
   '@nuintun/qrcode@3.4.0':
     dependencies:
-      tslib: 2.6.2
+      tslib: 2.6.1
 
   '@opencensus/core@0.0.8':
     dependencies:
@@ -19689,6 +19717,9 @@ snapshots:
 
   ansi-html-community@0.0.8: {}
 
+  ansi-regex@2.1.1:
+    optional: true
+
   ansi-regex@4.1.1:
     optional: true
 
@@ -19724,6 +19755,9 @@ snapshots:
     optional: true
 
   application-config-path@0.1.1:
+    optional: true
+
+  aproba@1.2.0:
     optional: true
 
   arch@2.2.0: {}
@@ -19767,6 +19801,12 @@ snapshots:
       readdir-glob: 1.1.3
       tar-stream: 2.2.0
       zip-stream: 4.1.1
+
+  are-we-there-yet@1.1.7:
+    dependencies:
+      delegates: 1.0.0
+      readable-stream: 2.3.8
+    optional: true
 
   arg@4.1.0:
     optional: true
@@ -19863,11 +19903,11 @@ snapshots:
   astral-regex@1.0.0:
     optional: true
 
-  astro@3.0.8(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2):
+  astro@3.0.8(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2):
     dependencies:
       '@astrojs/compiler': 2.0.1
       '@astrojs/internal-helpers': 0.2.0
-      '@astrojs/markdown-remark': 3.0.0(astro@3.0.8(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2))
+      '@astrojs/markdown-remark': 3.0.0(astro@3.0.8(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2))
       '@astrojs/telemetry': 3.0.1
       '@babel/core': 7.22.15
       '@babel/generator': 7.22.15
@@ -19916,8 +19956,8 @@ snapshots:
       undici: 5.23.0
       unist-util-visit: 4.1.2
       vfile: 5.3.7
-      vite: 4.4.9(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2)
-      vitefu: 0.2.4(vite@4.4.9(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2))
+      vite: 4.4.9(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2)
+      vitefu: 0.2.4(vite@4.4.9(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2))
       which-pm: 2.1.1
       yargs-parser: 21.1.1
       zod: 3.21.1
@@ -20198,6 +20238,11 @@ snapshots:
       find-versions: 5.1.0
 
   binary-extensions@2.2.0: {}
+
+  bindings@1.5.0:
+    dependencies:
+      file-uri-to-path: 1.0.0
+    optional: true
 
   bl@1.2.3:
     dependencies:
@@ -20637,6 +20682,9 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
+  chownr@1.1.4:
+    optional: true
+
   chownr@2.0.0: {}
 
   chrome-trace-event@1.0.3: {}
@@ -20752,6 +20800,9 @@ snapshots:
       qs: 6.11.2
       raw-body: 2.5.2
       type-is: 1.6.18
+
+  code-point-at@1.1.0:
+    optional: true
 
   codeco@1.2.0: {}
 
@@ -20900,6 +20951,9 @@ snapshots:
     optional: true
 
   consola@3.2.3: {}
+
+  console-control-strings@1.1.0:
+    optional: true
 
   console-table-printer@2.11.2:
     dependencies:
@@ -21371,6 +21425,9 @@ snapshots:
     optional: true
 
   delayed-stream@1.0.0: {}
+
+  delegates@1.0.0:
+    optional: true
 
   denodeify@1.2.1:
     optional: true
@@ -22351,6 +22408,9 @@ snapshots:
     dependencies:
       pify: 2.3.0
 
+  expand-template@2.0.3:
+    optional: true
+
   expand-tilde@2.0.2:
     dependencies:
       homedir-polyfill: 1.0.3
@@ -22723,6 +22783,9 @@ snapshots:
 
   file-type@6.2.0: {}
 
+  file-uri-to-path@1.0.0:
+    optional: true
+
   filename-reserved-regex@2.0.0: {}
 
   filename-reserved-regex@3.0.0: {}
@@ -22991,6 +23054,18 @@ snapshots:
 
   functions-have-names@1.2.3: {}
 
+  gauge@2.7.4:
+    dependencies:
+      aproba: 1.2.0
+      console-control-strings: 1.1.0
+      has-unicode: 2.0.1
+      object-assign: 4.1.1
+      signal-exit: 3.0.7
+      string-width: 1.0.2
+      strip-ansi: 3.0.1
+      wide-align: 1.1.5
+    optional: true
+
   gensync@1.0.0-beta.2: {}
 
   get-caller-file@2.0.5: {}
@@ -23054,6 +23129,9 @@ snapshots:
       js-git: 0.7.8
 
   git-sha1@0.1.2: {}
+
+  github-from-package@0.0.0:
+    optional: true
 
   github-slugger@2.0.0: {}
 
@@ -23294,6 +23372,9 @@ snapshots:
   has-tostringtag@1.0.0:
     dependencies:
       has-symbols: 1.0.3
+
+  has-unicode@2.0.1:
+    optional: true
 
   has-yarn@2.1.0: {}
 
@@ -23769,6 +23850,11 @@ snapshots:
   is-finalizationregistry@1.0.2:
     dependencies:
       call-bind: 1.0.2
+
+  is-fullwidth-code-point@1.0.0:
+    dependencies:
+      number-is-nan: 1.0.1
+    optional: true
 
   is-fullwidth-code-point@2.0.0:
     optional: true
@@ -25452,22 +25538,24 @@ snapshots:
       - '@aws-sdk/client-sso-oidc'
       - aws-crt
 
-  mongodb@5.8.1(@aws-sdk/credential-providers@3.565.0(aws-crt@1.21.2)):
+  mongodb@5.8.1(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(snappy@6.3.5):
     dependencies:
       bson: 5.4.0
       mongodb-connection-string-url: 2.6.0
       socks: 2.7.1
     optionalDependencies:
-      '@aws-sdk/credential-providers': 3.565.0(aws-crt@1.21.2)
+      '@aws-sdk/credential-providers': 3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
       '@mongodb-js/saslprep': 1.1.5
+      snappy: 6.3.5
 
-  mongodb@6.5.0(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(socks@2.7.1):
+  mongodb@6.5.0(@aws-sdk/credential-providers@3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2))(snappy@6.3.5)(socks@2.7.1):
     dependencies:
       '@mongodb-js/saslprep': 1.1.5
       bson: 6.6.0
       mongodb-connection-string-url: 3.0.0
     optionalDependencies:
       '@aws-sdk/credential-providers': 3.565.0(@aws-sdk/client-sso-oidc@3.572.0(aws-crt@1.21.2))(aws-crt@1.21.2)
+      snappy: 6.3.5
       socks: 2.7.1
 
   mongoose-aggregate-paginate-v2@1.0.6: {}
@@ -25594,7 +25682,13 @@ snapshots:
       object-assign: 4.1.1
       thenify-all: 1.6.0
 
+  nan@2.19.0:
+    optional: true
+
   nanoid@3.3.6: {}
+
+  napi-build-utils@1.0.2:
+    optional: true
 
   native-promise-only@0.8.1: {}
 
@@ -25729,6 +25823,11 @@ snapshots:
   nocache@3.0.4:
     optional: true
 
+  node-abi@2.30.1:
+    dependencies:
+      semver: 5.7.2
+    optional: true
+
   node-abort-controller@3.1.1: {}
 
   node-addon-api@3.2.1:
@@ -25823,6 +25922,9 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 1.0.34
 
+  noop-logger@0.1.1:
+    optional: true
+
   nopt@1.0.10:
     dependencies:
       abbrev: 1.1.1
@@ -25867,6 +25969,14 @@ snapshots:
     dependencies:
       path-key: 4.0.0
 
+  npmlog@4.1.2:
+    dependencies:
+      are-we-there-yet: 1.1.7
+      console-control-strings: 1.1.0
+      gauge: 2.7.4
+      set-blocking: 2.0.0
+    optional: true
+
   nssocket@0.6.0:
     dependencies:
       eventemitter2: 0.4.14
@@ -25885,6 +25995,9 @@ snapshots:
       js-sdsl: 4.3.0
     transitivePeerDependencies:
       - supports-color
+
+  number-is-nan@1.0.1:
+    optional: true
 
   ob1@0.76.7:
     optional: true
@@ -26696,6 +26809,14 @@ snapshots:
       '@csstools/utilities': 1.0.0(postcss@8.4.31)
       postcss: 8.4.31
 
+  postcss-load-config@4.0.1(postcss@8.4.30)(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2)):
+    dependencies:
+      lilconfig: 2.1.0
+      yaml: 2.3.2
+    optionalDependencies:
+      postcss: 8.4.30
+      ts-node: 10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2)
+
   postcss-load-config@4.0.1(postcss@8.4.30)(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@20.4.4)(typescript@5.2.2)):
     dependencies:
       lilconfig: 2.1.0
@@ -26977,6 +27098,26 @@ snapshots:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
+  prebuild-install@5.3.0:
+    dependencies:
+      detect-libc: 1.0.3
+      expand-template: 2.0.3
+      github-from-package: 0.0.0
+      minimist: 1.2.8
+      mkdirp: 0.5.6
+      napi-build-utils: 1.0.2
+      node-abi: 2.30.1
+      noop-logger: 0.1.1
+      npmlog: 4.1.2
+      os-homedir: 1.0.2
+      pump: 2.0.1
+      rc: 1.2.8
+      simple-get: 2.8.2
+      tar-fs: 1.16.3
+      tunnel-agent: 0.6.0
+      which-pm-runs: 1.1.0
+    optional: true
+
   preferred-pm@3.1.2:
     dependencies:
       find-up: 5.0.0
@@ -27105,6 +27246,18 @@ snapshots:
   pseudomap@1.0.2: {}
 
   pstree.remy@1.1.8: {}
+
+  pump@1.0.3:
+    dependencies:
+      end-of-stream: 1.4.4
+      once: 1.4.0
+    optional: true
+
+  pump@2.0.1:
+    dependencies:
+      end-of-stream: 1.4.4
+      once: 1.4.0
+    optional: true
 
   pump@3.0.0:
     dependencies:
@@ -28298,6 +28451,16 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
+  simple-concat@1.0.1:
+    optional: true
+
+  simple-get@2.8.2:
+    dependencies:
+      decompress-response: 3.3.0
+      once: 1.4.0
+      simple-concat: 1.0.1
+    optional: true
+
   simple-git@3.19.1(supports-color@8.1.1):
     dependencies:
       '@kwsites/file-exists': 1.1.1(supports-color@8.1.1)
@@ -28375,6 +28538,13 @@ snapshots:
     optional: true
 
   smart-buffer@4.2.0: {}
+
+  snappy@6.3.5:
+    dependencies:
+      bindings: 1.5.0
+      nan: 2.19.0
+      prebuild-install: 5.3.0
+    optional: true
 
   socks-proxy-agent@8.0.3:
     dependencies:
@@ -28517,6 +28687,13 @@ snapshots:
 
   strict-uri-encode@2.0.0: {}
 
+  string-width@1.0.2:
+    dependencies:
+      code-point-at: 1.1.0
+      is-fullwidth-code-point: 1.0.0
+      strip-ansi: 3.0.1
+    optional: true
+
   string-width@4.2.3:
     dependencies:
       emoji-regex: 8.0.0
@@ -28578,6 +28755,11 @@ snapshots:
     dependencies:
       character-entities-html4: 2.1.0
       character-entities-legacy: 3.0.0
+
+  strip-ansi@3.0.1:
+    dependencies:
+      ansi-regex: 2.1.1
+    optional: true
 
   strip-ansi@5.2.0:
     dependencies:
@@ -28751,6 +28933,33 @@ snapshots:
     dependencies:
       tailwindcss: 3.3.3(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@20.4.4)(typescript@5.2.2))
 
+  tailwindcss@3.3.3(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2)):
+    dependencies:
+      '@alloc/quick-lru': 5.2.0
+      arg: 5.0.2
+      chokidar: 3.5.3
+      didyoumean: 1.2.2
+      dlv: 1.1.3
+      fast-glob: 3.3.1
+      glob-parent: 6.0.2
+      is-glob: 4.0.3
+      jiti: 1.19.3
+      lilconfig: 2.1.0
+      micromatch: 4.0.5
+      normalize-path: 3.0.0
+      object-hash: 3.0.0
+      picocolors: 1.0.0
+      postcss: 8.4.30
+      postcss-import: 15.1.0(postcss@8.4.30)
+      postcss-js: 4.0.1(postcss@8.4.30)
+      postcss-load-config: 4.0.1(postcss@8.4.30)(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2))
+      postcss-nested: 6.0.1(postcss@8.4.30)
+      postcss-selector-parser: 6.0.13
+      resolve: 1.22.4
+      sucrase: 3.34.0
+    transitivePeerDependencies:
+      - ts-node
+
   tailwindcss@3.3.3(ts-node@10.9.1(@swc/core@1.3.75)(@types/node@20.4.4)(typescript@5.2.2)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
@@ -28779,6 +28988,14 @@ snapshots:
       - ts-node
 
   tapable@2.2.1: {}
+
+  tar-fs@1.16.3:
+    dependencies:
+      chownr: 1.1.4
+      mkdirp: 0.5.6
+      pump: 1.0.3
+      tar-stream: 1.6.2
+    optional: true
 
   tar-stream@1.6.2:
     dependencies:
@@ -28995,6 +29212,27 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
+  ts-node@10.9.1(@swc/core@1.3.75)(@types/node@18.17.14)(typescript@5.2.2):
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      '@tsconfig/node10': 1.0.11
+      '@tsconfig/node12': 1.0.11
+      '@tsconfig/node14': 1.0.3
+      '@tsconfig/node16': 1.0.4
+      '@types/node': 18.17.14
+      acorn: 8.10.0
+      acorn-walk: 8.3.2
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      typescript: 5.2.2
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
+    optionalDependencies:
+      '@swc/core': 1.3.75
+    optional: true
+
   ts-node@10.9.1(@swc/core@1.3.75)(@types/node@20.4.4)(typescript@5.2.2):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
@@ -29043,6 +29281,11 @@ snapshots:
     dependencies:
       tslib: 1.14.1
       typescript: 4.9.3
+
+  tunnel-agent@0.6.0:
+    dependencies:
+      safe-buffer: 5.2.1
+    optional: true
 
   tv4@1.3.0: {}
 
@@ -29465,20 +29708,21 @@ snapshots:
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
 
-  vite@4.4.9(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2):
+  vite@4.4.9(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2):
     dependencies:
       esbuild: 0.18.20
       postcss: 8.4.31
       rollup: 3.28.1
     optionalDependencies:
-      '@types/node': 20.4.4
+      '@types/node': 18.17.14
       fsevents: 2.3.2
+      lightningcss: 1.19.0
       sass: 1.68.0
       terser: 5.19.2
 
-  vitefu@0.2.4(vite@4.4.9(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2)):
+  vitefu@0.2.4(vite@4.4.9(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2)):
     optionalDependencies:
-      vite: 4.4.9(@types/node@20.4.4)(sass@1.68.0)(terser@5.19.2)
+      vite: 4.4.9(@types/node@18.17.14)(lightningcss@1.19.0)(sass@1.68.0)(terser@5.19.2)
 
   vizion@2.2.1:
     dependencies:
@@ -29719,6 +29963,11 @@ snapshots:
     dependencies:
       siginfo: 2.0.0
       stackback: 0.0.2
+
+  wide-align@1.1.5:
+    dependencies:
+      string-width: 4.2.3
+    optional: true
 
   widest-line@3.1.0:
     dependencies:
