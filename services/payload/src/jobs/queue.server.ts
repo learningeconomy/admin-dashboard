@@ -87,6 +87,11 @@ export const sendEmails = async (
             queueName: 'email',
             data: { email, collection },
         })),
+    }, {
+        queuesOptions: {
+            connection,
+            prefix
+        }
     });
     // TODO: Fix Queue so it marks batch sent after emails have been sent.
     return markBatchAsSent(req, collection, batchId);

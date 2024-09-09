@@ -20,7 +20,7 @@
         "@faceless-ui/modal": "2.0.1",
         "@faceless-ui/window-info": "^2.1.1",
         "@learncard/didkit-plugin": "^1.4.4",
-        "@learncard/init": "^1.2.19",
+        "@learncard/init": "^1.2.20",
         "@payloadcms/bundler-webpack": "^1.0.6",
         "@payloadcms/db-mongodb": "^1.5.1",
         "@payloadcms/plugin-cloud": "^3.0.0",

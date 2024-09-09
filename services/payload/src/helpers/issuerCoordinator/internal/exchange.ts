@@ -6,6 +6,7 @@ import { areDidsEqual, getLearnCard } from '../../../helpers/learncard.helpers';
 import { insertValuesIntoHandlebarsJsonTemplate } from '../../../helpers/handlebarhelpers';
 import { inflateObject } from '../../../helpers/objects.helpers';
 import { getTemplateAssociatedWithMembership } from '../../../helpers/membership.helpers';
+import { issueCredentialViaTenantIdentity } from '../../../helpers/signingIdentity.helpers';
 
 import { CREDENTIAL_STATUS } from '../../../constants/credentials';
 
@@ -92,7 +93,9 @@ const exchange = async (
 		// TODO: Add Status List revocation into credential
 
 		// Sign VC
-		const issuedCredential = await learnCard.invoke.issueCredential(builtCredential);
+		const issuedCredential = credential?.tenant
+                    ? await issueCredentialViaTenantIdentity(credential.tenant, builtCredential, req)
+                    : await learnCard.invoke.issueCredential(builtCredential)
 
 		// Update VC Status to claimed
 		await payload.update({
