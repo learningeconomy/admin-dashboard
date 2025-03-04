@@ -3,6 +3,7 @@ FROM node:20.10-alpine as base
 FROM base as builder
 
 WORKDIR /home/node/app
+COPY package*.json ./
 
 COPY . .
 
@@ -17,7 +18,7 @@ ENV NODE_ENV=production
 ENV PAYLOAD_CONFIG_PATH=dist/payload.config.js
 
 WORKDIR /home/node/app
-COPY package.json ./
+COPY package*.json ./
 
 RUN npm i -g pnpm
 RUN pnpm i --production
@@ -25,6 +26,9 @@ RUN pnpm i --production
 COPY --from=builder /home/node/app/dist ./dist
 COPY --from=builder /home/node/app/build ./build
 
+RUN ls -l /home/node/app
+RUN ls -l /home/node/app/dist
+
 EXPOSE 3000
 
-CMD ["node", "dist/server.js"]
+CMD ["node", "./dist/server.js"]

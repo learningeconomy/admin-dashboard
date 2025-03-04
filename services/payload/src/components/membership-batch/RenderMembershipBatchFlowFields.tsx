@@ -31,6 +31,9 @@ import { dedupe } from '../../helpers/array.helpers';
 import { GENERATED_FIELDS } from '../../helpers/credential.helpers';
 import SelectEmailTemplate from './SelectEmailTemplate';
 
+import { CUSTOM_OPERATIONS } from '../../constants/roles/customOperations';
+import usePermissionTo from '../../hooks/usePermissionTo';
+
 import './batch.scss';
 
 const baseClass = 'render-fields';
@@ -269,6 +272,10 @@ const FormSteps = (props: Props) => {
     const [csvStepIsValid, setCsvStepIsValid] = useState(false);
     const [emailStepIsValid, setEmailStepIsValid] = useState(false);
 
+    const { allowed: allowedToIssue, loading: loadingPermission } = usePermissionTo(
+        CUSTOM_OPERATIONS.ISSUE_CREDENTIALS
+    );
+
     const valuesWithValidators = getFieldValuesWithValidators(
         currentPage + 1,
         fields,
@@ -330,7 +337,9 @@ const FormSteps = (props: Props) => {
     }, [currentPage, history, location.search]);
 
     const handleNextStep = async () => {
-        if (currentPage === 4 || !isValid) return submit();
+        if (allowedToIssue) {
+            if (currentPage === 4 || !isValid) return submit();
+        }
 
         goForward(false);
     };
@@ -344,6 +353,13 @@ const FormSteps = (props: Props) => {
             history.push(`${adminRoute}/collections/membership-batch/${newBatch.id}`);
         }
     };
+
+    let disabledNextStep = false;
+    let currentPageNextStepText = currentPage === 4 ? 'Send' : 'Continue';
+    if (currentPage === 4 && !loadingPermission && !allowedToIssue) {
+        disabledNextStep = true;
+        currentPageNextStepText = 'Not authorized to send';
+    }
 
     return (
         <>
@@ -386,11 +402,11 @@ const FormSteps = (props: Props) => {
                     isValid &&
                     (currentPage !== 2 || csvStepIsValid) &&
                     (currentPage !== 3 || emailStepIsValid) &&
-                    (!props.readOnly || currentPage !== 4)
+                    (!!allowedToIssue || !props.readOnly || currentPage !== 4)
                 }
                 secondaryText="Duplicate & Edit"
                 goBack={currentPage > 0 ? () => goBack(false) : undefined}
-                mainText={currentPage === 4 ? 'Send' : 'Continue'}
+                mainText={currentPageNextStepText}
                 quitText={props.readOnly ? 'Quit' : 'Save as Draft & Quit'}
                 quit={() => history.push(`${adminRoute}/collections/membership-batch`)}
             />

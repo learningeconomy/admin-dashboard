@@ -1,10 +1,12 @@
-import { payloadCloud } from '@payloadcms/plugin-cloud'
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { webpackBundler } from '@payloadcms/bundler-webpack'
-import { slateEditor } from '@payloadcms/richtext-slate'
-import { buildConfig } from 'payload/config'
+import { payloadCloud } from '@payloadcms/plugin-cloud';
+import { mongooseAdapter } from '@payloadcms/db-mongodb';
+import { webpackBundler } from '@payloadcms/bundler-webpack';
+import { slateEditor } from '@payloadcms/richtext-slate';
+import { buildConfig } from 'payload/config';
 import path from 'path';
 import Users from './collections/Users';
+import Tenants from './collections/Tenants';
+import Media from './collections/Media';
 import CredentialsTemplatesCollection from './collections/CredentialTemplates';
 import MembershipTemplatesCollection from './collections/MembershipTemplates';
 import CredentialsBatchesCollection from './collections/CredentialBatches';
@@ -12,12 +14,17 @@ import MembershipBatchesCollection from './collections/MembershipBatches';
 import CredentialsCollection from './collections/Credentials';
 import MembershipsCollection from './collections/Memberships';
 import EmailTemplatesCollection from './collections/EmailTemplates';
+import TrustRegistryCollection from './collections/TrustRegistry';
+
 //components
 import { Logo } from './components/Logo';
 import { Icon } from './components/Icon';
 import SideNav from './components/SideNav/SideNav';
 
 //endpoints
+import { healthCheck } from './endpoints/healthCheck';
+import { getTenantMetadata } from './endpoints/getTenantMetadata';
+import { trustRegistry } from './endpoints/trustRegistry';
 import { readPayloadVersion } from './endpoints/readPayloadVersion';
 import { createBatchCredentials } from './endpoints/createCredentialsForBatch';
 import { getBatchCredentials } from './endpoints/getBatchCredentials';
@@ -28,13 +35,15 @@ import { sendBatchEmail } from './endpoints/sendBatchEmail';
 import { getCollectionCount } from './endpoints/getCollectionCount';
 import { getCredentialLinks } from './endpoints/getCredentialLinks';
 import { forwardExchangeRequest } from './endpoints/exchange';
+import { permissionTo } from './endpoints/permissionTo';
 import { revokeCredential } from './endpoints/revokeCredential';
 import { getUserCredentials } from './endpoints/getUserCredentials';
-import { getCredentialsLinks } from './endpoints/getCredentialsLinks';
 import { selfIssueUserCredentials } from './endpoints/selfIssueUserCredentials';
 
 import DashboardRedirect from './components/DashboardRedirect';
 import AccountSettings from './components/AccountSettings';
+
+import cloudStoragePlugin from './plugins/cloudStorage';
 
 export default buildConfig({
     email: {
@@ -50,20 +59,21 @@ export default buildConfig({
             },
         },
         //logMockCredentials: true,
-        fromName: 'Learning Economy',
-        fromAddress: 'beestontaylor@learningeconomy.io',
+        fromName: 'LearnCloud',
+        fromAddress: 'no-reply@learncloud.ai',
     },
     editor: slateEditor({}),
-    db: mongooseAdapter({url: process.env.MONGODB_URI ?? false}),
-    serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
+    db: mongooseAdapter({ url: process.env.MONGODB_URI ?? false, transactionOptions: false }),
+    // Server URL must be disabled for multi-tenancy to work and adapt to different subdomains
+    //serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
     cors: '*',
     admin: {
         css: require.resolve('./components/global.scss'),
         user: Users.slug,
         meta: {
-            titleSuffix: '- LearnFleet Academy',
-            favicon: '/assets/Starfleet.webp',
-            ogImage: '/assets/Starfleet.webp',
+            titleSuffix: '- LearnCloud',
+            favicon: '/assets/lef-icon.png',
+            ogImage: '/assets/lef-icon.png',
         },
         components: {
             Nav: SideNav,
@@ -89,9 +99,17 @@ export default buildConfig({
                         require.resolve('./mocks/emptyObject'),
                     [require.resolve('./endpoints/getUserCredentials')]:
                         require.resolve('./mocks/emptyObject'),
-                    [require.resolve('./endpoints/getCredentialsLinks')]:
-                        require.resolve('./mocks/emptyObject'),
                     [require.resolve('./endpoints/selfIssueUserCredentials')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./endpoints/getCredentialLinks')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./helpers/issuerCoordinator/internal/challenges')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./helpers/issuerCoordinator/internal/exchange')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./helpers/issuerCoordinator/internal/getCredentialLinks')]:
+                        require.resolve('./mocks/emptyObject'),
+                    [require.resolve('./helpers/issuerCoordinator/internal/revoke')]:
                         require.resolve('./mocks/emptyObject'),
                 },
             },
@@ -99,6 +117,8 @@ export default buildConfig({
     },
     collections: [
         Users,
+        Tenants,
+        Media,
         CredentialsTemplatesCollection,
         MembershipTemplatesCollection,
         CredentialsBatchesCollection,
@@ -106,8 +126,12 @@ export default buildConfig({
         CredentialsCollection,
         MembershipsCollection,
         EmailTemplatesCollection,
+        TrustRegistryCollection,
     ],
     endpoints: [
+        { method: 'get', path: '/health-check', handler: healthCheck },
+        { method: 'get', path: '/get-tenant-metadata', handler: getTenantMetadata },
+        { method: 'get', path: '/registry', handler: trustRegistry },
         { method: 'post', path: '/send-email', handler: sendEmail },
         { method: 'post', path: '/send-batch-email', handler: sendBatchEmail },
         { method: 'get', path: '/payload-version', handler: readPayloadVersion },
@@ -118,10 +142,16 @@ export default buildConfig({
         { method: 'post', path: '/get-collection-count', handler: getCollectionCount },
         { method: 'get', path: '/get-credential-links', handler: getCredentialLinks },
         { method: 'post', path: '/exchange/:a/:b/:token', handler: forwardExchangeRequest },
+        { method: 'get', path: '/permission-to/:operation/:id', handler: permissionTo },
         { method: 'post', path: '/revoke-credential/:id', handler: revokeCredential },
         { method: 'post', path: '/get-user-credentials', handler: getUserCredentials },
-        { method: 'post', path: '/get-credentials-links', handler: getCredentialsLinks },
+        { method: 'post', path: '/data-source/list', handler: getUserCredentials }, // Backward-Compat with /list endpoints
         { method: 'post', path: '/issue-user-credentials', handler: selfIssueUserCredentials },
+        {
+            method: 'post',
+            path: '/data-source/issue',
+            handler: selfIssueUserCredentials,
+        }, // Backward-Compat with /issue endpoints
     ],
     typescript: {
         outputFile: path.resolve(__dirname, 'payload-types.ts'),
@@ -129,4 +159,5 @@ export default buildConfig({
     graphQL: {
         schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
     },
+    plugins: [cloudStoragePlugin],
 });

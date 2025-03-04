@@ -2,12 +2,20 @@ import payload from 'payload';
 import { PayloadHandler } from 'payload/config';
 import Handlebars from 'handlebars';
 
-import { emailQueue } from '../jobs/queue.server';
+import { sendSingleEmail } from '../jobs/queue.server';
+
 import { generateJwtFromId } from '../helpers/jwtHelpers';
 import { CREDENTIAL_STATUS } from '../constants/credentials';
 
+import getDomainForRequest from '../utils/getDomainForRequest';
+
 export const sendEmail: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(400);
+    // TODO: Add Multi-Tenancy Permissions
+
+    const tenantDomain = await getDomainForRequest(req);
+    if (!tenantDomain) throw new Error("No Domain Associated with Request for Sending Email");
+
 
     const { credentialId, collection = 'credential' } = req.body;
 
@@ -52,7 +60,7 @@ export const sendEmail: PayloadHandler = async (req, res) => {
     const claimPageBaseUrl = process.env.CLAIM_PAGE_URL || 'https://localhost:4321';
 
     const jwt = generateJwtFromId(credential.id, collection);
-    const link = `${claimPageBaseUrl}/?token=${jwt}&url=${payload.config.serverURL}/api`;
+    const link = `${claimPageBaseUrl}/?token=${jwt}&url=${tenantDomain}/api`;
     // replace handlebar variables in email template with record data
     const mergedRecordWithLink = {
         ...(credential.extraFields as any),
@@ -79,10 +87,11 @@ export const sendEmail: PayloadHandler = async (req, res) => {
                 collection,
                 id: credential.id,
                 data: { status: CREDENTIAL_STATUS.SENT },
+                req,
             });
         }
-        console.log('///emailsData', email);
-        emailQueue.add('send-test-email', { email, collection });
+
+        sendSingleEmail(req, email, collection);
 
         res.status(200).json({ email, link });
     } catch (err) {

@@ -4,8 +4,13 @@ import { credentialHasCsvField, getCsvFieldsFromCredential } from '../helpers/cr
 
 export const getBatchFields: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
+    // TODO: Add Multi-Tenancy Permissions
 
     const { id, collection = 'credential' } = req.body;
+
+    if (!id) {
+        return res.sendStatus(500);
+    }
 
     try {
         let page = await payload.find({
@@ -41,6 +46,7 @@ export const getBatchFields: PayloadHandler = async (req, res) => {
             collection: collection === 'credential' ? 'credential-batch' : 'membership-batch',
             id,
             data: { csvFields: fields },
+            req,
         });
 
         return res.status(200).json(fields);

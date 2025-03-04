@@ -15,6 +15,8 @@ const connection = {
     port: redisPort,
 };
 
+const prefix = '{bullmq}';
+
 type AugmentedQueue<T> = Queue<T> & {
     events: QueueEvents;
 };
@@ -28,7 +30,8 @@ declare global {
 }
 const registeredQueues = global.__registeredQueues || (global.__registeredQueues = {});
 
-const flowProducer = new FlowProducer({ connection });
+let flowProducer;
+let emailQueue;
 
 /**
  *
@@ -37,12 +40,14 @@ const flowProducer = new FlowProducer({ connection });
  */
 export function registerQueue<T>(name: string, processor: Processor<T>) {
     if (!registeredQueues[name]) {
-        const queue = new Queue(name, { connection });
+        const queue = new Queue(name, { connection, prefix });
         const queueEvents = new QueueEvents(name, {
             connection,
+            prefix
         });
         const worker = new Worker<T>(name, processor, {
             connection,
+            prefix,
             lockDuration: 1000 * 60 * 15,
             concurrency: 8,
         });
@@ -66,62 +71,14 @@ export type Email = {
     html?: string;
 };
 
-// This will run in the same thread as the main app
-// if this is more processor intensive then we should offload this to a background process
-/*
-"If we pass a path to a javascript file instead of a function to 
-the registerQueue function, BullMQ will spawn a new process to run the file. 
-These are called sandboxed processors."
-*/
-export const emailQueue = registerQueue(
-    'email',
-    async (job: Job<{ email: Email; collection: 'credential' | 'membership' }>) => {
-        console.log('///emailQueue job', job);
-
-        const { to, from, subject, text, html, credentialId } = job.data.email;
-
-        await payload.sendEmail({
-            to,
-            subject,
-            text,
-            html,
-            from:
-                from ||
-                process.env.EMAIL_FROM ||
-                'Learning Economy <beestontaylor@learningeconomy.io>',
-        });
-
-        if (credentialId) {
-            await payload.update({
-                collection: job.data.collection,
-                id: credentialId,
-                data: { status: CREDENTIAL_STATUS.SENT },
-            });
-        }
-    }
-);
-
-export const emailsFinishedQueue = registerQueue(
-    'emailsFinished',
-    async (job: Job<{ batchId: string; collection: 'credential' | 'membership' }>) => {
-        return payload.update({
-            collection:
-                job.data.collection === 'credential' ? 'credential-batch' : 'membership-batch',
-            id: job.data.batchId,
-            data: { status: CREDENTIAL_BATCH_STATUS.SENT },
-        });
-    }
-);
-
 export const sendEmails = async (
     req: PayloadRequest,
     batchId: string,
     emails: Email[],
     collection: 'credential' | 'membership' = 'credential'
 ) => {
-
-
-    return flowProducer.add({
+    initializeQueues(req);
+    await flowProducer.add({
         name: `send-emails-for-${batchId}`,
         queueName: 'emailsFinished',
         data: { batchId, collection },
@@ -131,4 +88,83 @@ export const sendEmails = async (
             data: { email, collection },
         })),
     });
+    // TODO: Fix Queue so it marks batch sent after emails have been sent.
+    return markBatchAsSent(req, collection, batchId);
+};
+
+export const sendSingleEmail = async (req: PayloadRequest, email: Email, collection: 'credential' | 'membership' = 'credential') => {
+    initializeQueues(req);
+    emailQueue.add('send-test-email', { email, collection });
+};
+
+const markBatchAsSent = async (req: PayloadRequest, collection: 'credential' | 'membership' = 'credential', batchId: string) => {
+    console.log("[Mark Batch as Sent]", collection, batchId);
+    return payload.update({
+        collection:
+            collection === 'credential'
+                ? 'credential-batch'
+                : 'membership-batch',
+        id: batchId,
+        data: { status: CREDENTIAL_BATCH_STATUS.SENT },
+        req
+    });
+}
+
+const initializeQueues = (req: PayloadRequest) => {
+    if (!flowProducer) {
+        console.log("[Registering FlowProducer]")
+        flowProducer = new FlowProducer({ connection, prefix });
+    }
+
+    if (!emailQueue) {
+        // This will run in the same thread as the main app
+        // if this is more processor intensive then we should offload this to a background process
+        /*
+        "If we pass a path to a javascript file instead of a function to 
+        the registerQueue function, BullMQ will spawn a new process to run the file. 
+        These are called sandboxed processors."
+        */
+        console.log("[Registering Emails Queue]")
+        emailQueue = registerQueue(
+            'email',
+            async (job: Job<{ email: Email; collection: 'credential' | 'membership' }>) => {
+
+                const { to, from, subject, text, html, credentialId } = job.data.email;
+
+                const emailFromTitle = from || process.env.EMAIL_FROM_TITLE || 'LearnCloud';
+                const _from = `${emailFromTitle} <${process.env.EMAIL_FROM_SENDER ?? 'no-reply@learncloud.ai'}>`;
+                console.log("[Send Email - Credential]: ", to, _from, credentialId);
+                await payload.sendEmail({
+                    to,
+                    subject,
+                    text,
+                    html,
+                    from: _from,
+                });
+
+                if (credentialId) {
+                    await payload.update({
+                        collection: job.data.collection,
+                        id: credentialId,
+                        data: { status: CREDENTIAL_STATUS.SENT },
+                        req
+                    });
+                }
+               console.log("[Complete Email Task]", to);
+               return true;
+            }
+        );
+    }
+
+    if (!registeredQueues['emailsFinished']) {
+        console.log("[Registering Emails Finished Queue]")
+        registerQueue(
+            'emailsFinished',
+            async (job: Job<{ batchId: string; collection: 'credential' | 'membership' }>) => {
+                console.log("[Email Finished - Batch]: ", batchId, collection);
+
+                return markBatchAsSent(req, collection, batchId);
+            }
+        );
+    }
 };

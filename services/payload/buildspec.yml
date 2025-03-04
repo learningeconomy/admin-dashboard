@@ -1,0 +1,43 @@
+version: 0.2
+
+env:
+    secrets-manager:
+        GITHUB_TOKEN: arn:aws:secretsmanager:us-east-1:206533012615:secret:welibrary-github-token-ify1Nc
+        DOCKER_TOKEN: arn:aws:secretsmanager:us-east-1:206533012615:secret:welibrary-docker-token-nyQDGR
+
+phases:
+    pre_build:
+        commands:
+            - echo Authenticating with Docker
+            - echo $DOCKER_TOKEN | docker login --username ntonani --password-stdin
+            - echo Logging in to Amazon ECR...
+            - aws --version
+            - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username $AWS_AUTH_USERNAME --password-stdin $AWS_AUTH_REGISTRY_URI
+            - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+            - IMAGE_TAG=${COMMIT_HASH:=latest}
+            - echo Appending GH creds to Docker image...
+            - echo //npm.pkg.github.com/:_authToken=$GITHUB_TOKEN >> .npmrc
+            # - echo Adding keys
+            # - base64 --help
+            - ls
+    build:
+        commands:
+            - ls
+            - cd services/payload
+            - echo Build started on `date`
+            - echo Building the Docker image...
+            - docker build -t $REPOSITORY_URI:latest .
+            - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+            - cd ../../
+    post_build:
+        commands:
+            - ls
+            - echo Build completed on `date`
+            - echo Pushing the Docker images...
+            - docker push $REPOSITORY_URI:latest
+            - docker push $REPOSITORY_URI:$IMAGE_TAG
+            - echo Writing image definitions file...
+            - printf '[{"name":"app","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+
+artifacts:
+    files: imagedefinitions.json

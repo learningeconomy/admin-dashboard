@@ -10,6 +10,8 @@
     gap: 4.375rem;
     padding: 2.5rem 1.25rem;
     overflow-y: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 
     & > header {
         display: flex;
@@ -17,7 +19,7 @@
         justify-content: center;
         align-items: center;
         gap: 2.5rem;
-        padding-bottom: 2.5rem;
+        /*padding-bottom: 2.5rem;*/
     }
 
     & > section {
@@ -48,6 +50,7 @@
 
         &.open {
             width: 100%;
+            max-width: 275px;
             transform: translateX(0);
 
             & > header > button {

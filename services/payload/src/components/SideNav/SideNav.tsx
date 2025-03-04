@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
+
 import './SideNav.scss';
 import { Link, NavLink } from 'react-router-dom';
 import { useConfig } from 'payload/dist/admin/components/utilities/Config';
@@ -16,12 +18,14 @@ import MembershipTemplates from '../../assets/file-edit.svg';
 import Users from '../../assets/users.svg';
 import Caret from '../svgs/Caret';
 import useScreenWidth from '../../hooks/useScreenWidth';
+import useTenantMetadata from '../../hooks/useTenantMetadata';
 
 const SideNav: React.FC = () => {
     const width = useScreenWidth();
 
     const [isOpen, setIsOpen] = useState(width > 1024);
-    const { user } = useAuth();
+    const { user, permissions } = useAuth();
+    const { tenant, logo, icon, favicon } = useTenantMetadata();
 
     const close = () => {
         if (width <= 1024) setIsOpen(false);
@@ -31,8 +35,24 @@ const SideNav: React.FC = () => {
         routes: { admin },
     } = useConfig();
 
+    const permissionOnCollection = (
+        collection: string,
+        permission: 'read' | 'create' | 'update' | 'delete' = 'read'
+    ): boolean | undefined => permissions?.collections?.[collection]?.[permission]?.permission;
+    const permissionOnOneOfCollection = (
+        collections: string[],
+        permission: 'read' | 'create' | 'update' | 'delete' = 'read'
+    ): boolean | undefined =>
+        collections
+            .map(collection => permissions?.collections?.[collection]?.[permission]?.permission)
+            .reduce((previousValue, currentValue) => previousValue || currentValue, false);
+
     return (
         <nav className={`navbar-wrapper relative ${isOpen ? 'open' : ''}`}>
+            <Helmet>
+                <link href={favicon} rel="icon" type="image/svg+xml" data-react-helmet="true" />
+                <link rel="icon" type="image/png" href={favicon} sizes="16x16" />
+            </Helmet>
             <header>
                 <button
                     className="flex px-5 py-1 bg-slate-100 rounded-3xl shadow-[0_4px_4px_0_rgba(0,0,0,.25)] relative dark:bg-slate-800"
@@ -40,131 +60,219 @@ const SideNav: React.FC = () => {
                     type="button"
                 >
                     <Caret
-                        className={`w-5 h-5 ${isOpen ? '-rotate-90' : 'rotate-90'
-                            } -mr-1 transition-transform`}
-                    />
-                    <Caret
-                        className={`w-5 h-5 ${isOpen ? 'rotate-90' : '-rotate-90'
-                            } -ml-1 transition-transform`}
+                        className={`w-5 h-5 ${
+                            isOpen ? 'rotate-90' : '-rotate-90'
+                        } -ml-1 transition-transform`}
                     />
                 </button>
 
                 <img
-                    className="h-[9.75rem]"
-                    src={'/assets/StarfleetTransparentLogoOnly.webp'}
-                    alt="Starfleet logo"
+                    className={`side-nav-logo ${isOpen ? 'open' : ''}`}
+                    src={isOpen ? logo?.src : icon?.src}
+                    alt={logo?.alt}
                 />
             </header>
 
             <section>
-                <NavLink
-                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
-                    to="/admin/collections/credential-batch"
-                    onClick={close}
-                >
-                    <img src={ListChecks} alt="credential-batch" />{' '}
-                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Issuance Overview
-                    </span>
-                </NavLink>
+                {permissionOnCollection('credential-batch') && (
+                    <NavLink
+                        className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                        to="/admin/collections/credential-batch"
+                        onClick={close}
+                    >
+                        <img src={ListChecks} alt="credential-batch" />{' '}
+                        <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
+                            Send Credentials
+                        </span>
+                    </NavLink>
+                )}
 
-                <NavLink
-                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
-                    to="/admin/collections/credential"
-                    onClick={close}
-                >
-                    <img src={FileCheck} alt="credential" />
-                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Credentials
-                    </span>
-                </NavLink>
+                {permissionOnCollection('credential-batch') && (
+                    <NavLink
+                        className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                        to="/admin/collections/credential"
+                        onClick={close}
+                    >
+                        <img src={FileCheck} alt="credential" />
+                        <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
+                            Find Credentials
+                        </span>
+                    </NavLink>
+                )}
 
-                <NavLink
-                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
-                    to="/admin/collections/credential-template"
-                    onClick={close}
-                >
-                    <img src={FileEdit} alt="credential-template" />{' '}
-                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Credential Templates
-                    </span>
-                </NavLink>
+                {permissionOnCollection('membership-batch') && (
+                    <NavLink
+                        className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                        to="/admin/collections/membership-batch"
+                        onClick={close}
+                    >
+                        <img src={MembershipBatches} alt="users" />
+                        <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
+                            Send Membership IDs
+                        </span>
+                    </NavLink>
+                )}
 
-                <NavLink
-                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
-                    to="/admin/collections/email-template"
-                    onClick={close}
-                >
-                    <img src={MailPlus} alt="email-template" />
-                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Email Templates
-                    </span>
-                </NavLink>
+                {permissionOnCollection('membership') && (
+                    <NavLink
+                        className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                        to="/admin/collections/membership"
+                        onClick={close}
+                    >
+                        <img src={Memberships} alt="users" />
+                        <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
+                            Find Memberships IDs
+                        </span>
+                    </NavLink>
+                )}
+                {(permissionOnCollection('users') || permissionOnCollection('tenants', 'update')) && (
+                    <>
+                        {isOpen && (
+                            <div className="relative flex py-5 items-center">
+                                <div className="flex-grow border-t border-gray-400"></div>
+                                <span className="flex-shrink mx-4 text-gray-400">Management</span>
+                                <div className="flex-grow border-t border-gray-400"></div>
+                            </div>
+                        )}
+                        {permissionOnCollection('users') && (
+                            <NavLink
+                                className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                                to="/admin/collections/users"
+                                onClick={close}
+                            >
+                                <img src={Users} alt="users" />
+                                <span
+                                    className={`transition-[font-size] ${
+                                        isOpen ? '' : 'text-zero'
+                                    }`}
+                                >
+                                    Users
+                                </span>
+                            </NavLink>
+                        )}
+                        {permissionOnCollection('tenants', 'update') && (
+                            <NavLink
+                                className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                                to="/admin/collections/tenants"
+                                onClick={close}
+                            >
+                                <img src={Users} alt="networks" />
+                                <span
+                                    className={`transition-[font-size] ${
+                                        isOpen ? '' : 'text-zero'
+                                    }`}
+                                >
+                                    Networks
+                                </span>
+                            </NavLink>
+                        )}
+                    </>
+                )}
+                {permissionOnOneOfCollection(
+                    ['credential-template', 'membership-template', 'email-template', 'trust-registry'],
+                    'create'
+                ) && (
+                    <>
+                        {isOpen && (
+                            <div className="relative flex py-5 items-center">
+                                <div className="flex-grow border-t border-gray-400"></div>
+                                <span className="flex-shrink mx-4 text-gray-400">
+                                    Configuration
+                                </span>
+                                <div className="flex-grow border-t border-gray-400"></div>
+                            </div>
+                        )}
 
-                <NavLink
-                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
-                    to="/admin/collections/membership-batch"
-                    onClick={close}
-                >
-                    <img src={MembershipBatches} alt="users" />
-                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Membership Batches
-                    </span>
-                </NavLink>
-
-                <NavLink
-                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
-                    to="/admin/collections/membership"
-                    onClick={close}
-                >
-                    <img src={Memberships} alt="users" />
-                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Memberships
-                    </span>
-                </NavLink>
-
-                <NavLink
-                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
-                    to="/admin/collections/membership-template"
-                    onClick={close}
-                >
-                    <img src={MembershipTemplates} alt="users" />
-                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Membership Templates
-                    </span>
-                </NavLink>
-
-                <NavLink
-                    className={`navbar-buttons ${isOpen ? 'open' : ''}`}
-                    to="/admin/collections/users"
-                    onClick={close}
-                >
-                    <img src={Users} alt="users" />
-                    <span className={`transition-[font-size] ${isOpen ? '' : 'text-zero'}`}>
-                        Users
-                    </span>
-                </NavLink>
+                        {permissionOnCollection('credential-template', 'create') && (
+                            <NavLink
+                                className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                                to="/admin/collections/credential-template"
+                                onClick={close}
+                            >
+                                <img src={FileEdit} alt="credential-template" />{' '}
+                                <span
+                                    className={`transition-[font-size] ${
+                                        isOpen ? '' : 'text-zero'
+                                    }`}
+                                >
+                                    Credential Templates
+                                </span>
+                            </NavLink>
+                        )}
+                        {permissionOnCollection('membership-template', 'create') && (
+                            <NavLink
+                                className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                                to="/admin/collections/membership-template"
+                                onClick={close}
+                            >
+                                <img src={MembershipTemplates} alt="users" />
+                                <span
+                                    className={`transition-[font-size] ${
+                                        isOpen ? '' : 'text-zero'
+                                    }`}
+                                >
+                                    Membership Templates
+                                </span>
+                            </NavLink>
+                        )}
+                        {permissionOnCollection('email-template', 'create') && (
+                            <NavLink
+                                className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                                to="/admin/collections/email-template"
+                                onClick={close}
+                            >
+                                <img src={MailPlus} alt="email-template" />
+                                <span
+                                    className={`transition-[font-size] ${
+                                        isOpen ? '' : 'text-zero'
+                                    }`}
+                                >
+                                    Email Templates
+                                </span>
+                            </NavLink>
+                        )}
+                        {permissionOnCollection('trust-registry', 'create') && (
+                            <NavLink
+                                className={`navbar-buttons ${isOpen ? 'open' : ''}`}
+                                to="/admin/collections/trust-registry"
+                                onClick={close}
+                            >
+                                <img src={Users} alt="trust-registry" />
+                                <span
+                                    className={`transition-[font-size] ${
+                                        isOpen ? '' : 'text-zero'
+                                    }`}
+                                >
+                                    Trust Registry
+                                </span>
+                            </NavLink>
+                        )}
+                    </>
+                )}
             </section>
 
             <footer className="flex flex-col gap-8">
                 <section>
                     <Link
                         to={`${admin}/account`}
-                        className={`flex justify-center transition-[gap] ${isOpen ? 'gap-5' : 'gap-0'
-                            }`}
+                        className={`flex justify-center transition-[gap] ${
+                            isOpen ? 'gap-5' : 'gap-0'
+                        }`}
                         onClick={close}
                     >
                         <Account className="w-15 h-15 border border-slate-50 rounded-full shadow-fours" />
                         <section className="flex flex-col">
                             <p
-                                className={`text-start m-0 transition-[font-size] font-inter text-lg font-medium ${isOpen ? '' : 'text-zero'
-                                    }`}
+                                className={`text-start m-0 transition-[font-size] font-inter text-lg font-medium ${
+                                    isOpen ? '' : 'text-zero'
+                                }`}
                             >
                                 {user.name}
                             </p>
                             <p
-                                className={`text-start text-base m-0 transition-[font-size] ${isOpen ? '' : 'text-zero'
-                                    }`}
+                                className={`text-start text-base m-0 transition-[font-size] ${
+                                    isOpen ? '' : 'text-zero'
+                                }`}
                             >
                                 {user.email}
                             </p>
@@ -175,10 +283,12 @@ const SideNav: React.FC = () => {
                 <section>
                     <Logout
                         onClick={close}
-                        className={`flex justify-center transition-[gap] ${isOpen ? 'gap-2' : 'gap-0'
-                            }`}
-                        textClassName={`text-xl transition-[font-size] ${isOpen ? '' : 'text-zero'
-                            }`}
+                        className={`flex justify-center transition-[gap] ${
+                            isOpen ? 'gap-2' : 'gap-0'
+                        }`}
+                        textClassName={`text-xl transition-[font-size] ${
+                            isOpen ? '' : 'text-zero'
+                        }`}
                     />
                 </section>
             </footer>

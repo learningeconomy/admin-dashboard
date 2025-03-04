@@ -1,0 +1,6 @@
+export enum CUSTOM_OPERATIONS {
+  REVOKE_CREDENTIAL = 'revokeCredential',
+  ISSUE_CREDENTIALS = 'issueCredentials',
+}
+
+export type CustomOperation = CUSTOM_OPERATIONS.REVOKE_CREDENTIAL | CUSTOM_OPERATIONS.ISSUE_CREDENTIALS;

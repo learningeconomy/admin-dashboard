@@ -1,12 +1,14 @@
 import React from 'react';
 import './logo.scss';
 
-export const Icon: React.FC = () => (
-  <div className="icon">
-    <img
-      src="/assets/tdm-logo.png"
-      alt="Tech D Monterrey"
-    />
-  </div>
-);
-          
+import useTenantMetadata from '../hooks/useTenantMetadata';
+
+export const Icon: React.FC = () => {
+    const { icon } = useTenantMetadata();
+
+    return (
+        <div className="icon">
+            <img src={icon?.src} alt={icon?.alt} />
+        </div>
+    );
+};

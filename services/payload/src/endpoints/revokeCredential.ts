@@ -1,41 +1,28 @@
 import { PayloadHandler } from 'payload/config';
-import payload from 'payload';
-import { CREDENTIAL_STATUS } from '../constants/credentials';
+import { checkPermissionToRevokeCredential } from '../utils/checkPermissionToRevokeCredential';
 
-const statusUrl = process.env.STATUS_URL ?? 'http://localhost:4008';
+import { revoke } from '../helpers/issuerCoordinator';
 
 export const revokeCredential: PayloadHandler = async (req, res) => {
     if (!req.user) return res.sendStatus(401);
+    // TODO: Add Multi-Tenancy Permissions
 
     const { id } = req.params;
     const { reason } = req.body;
 
-    try {
-        const fetchResponse = await fetch(`${statusUrl}/credentials/status`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                credentialId: id,
-                credentialStatus: [{ type: 'StatusList2021Credential', status: 'revoked' }],
-            }),
-        });
+    if (!(await checkPermissionToRevokeCredential(req.user, id))) {
+        return res.sendStatus(401);
+    }
 
-        if (fetchResponse.status === 200) {
-            await payload.update({
-                collection: 'credential',
-                id,
-                data: {
-                    status: CREDENTIAL_STATUS.REVOKED,
-                    revocationReason: reason,
-                    revocationDate: new Date().toISOString(),
-                    revokedBy: req.user.id,
-                },
-            });
+    try {
+        const revokeAttempt = await revoke(req, id, reason, req?.user?.id);
+
+        if (revokeAttempt.error) {
+            console.error(revokeAttempt.error);
+            res.sendStatus(revokeAttempt.status);
         }
 
-        const result = await fetchResponse.json();
-
-        res.status(fetchResponse.status).json(result);
+        res.status(revokeAttempt.status).json(revokeAttempt.result);
     } catch (error) {
         console.error(error);
         res.sendStatus(500);

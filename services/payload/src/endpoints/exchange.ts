@@ -1,18 +1,22 @@
-import { VC } from '@learncard/types';
 import { PayloadHandler } from 'payload/config';
-import payload from 'payload';
 import jwt from 'jsonwebtoken';
-import { CREDENTIAL_STATUS } from '../constants/credentials';
 
-const coordinatorUrl = process.env.COORDINATOR_URL ?? 'http://localhost:4005';
 const secret =
     process.env.PAYLOAD_SECRET ??
     'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa';
 
+import { exchange } from '../helpers/issuerCoordinator';
+
+const logs = true;
+
 export const forwardExchangeRequest: PayloadHandler = async (req, res) => {
+    // A = retrievalId
+    // B = challenge
     const { a, b, token } = req.params;
     let id: string;
     let collection: 'credential' | 'membership';
+
+    if (logs) console.log('[Forward Exchange Request] Request: ', a, b, token);
 
     try {
         const decoded = jwt.verify(token, secret);
@@ -25,27 +29,14 @@ export const forwardExchangeRequest: PayloadHandler = async (req, res) => {
         return res.sendStatus(401);
     }
 
-    const response = await fetch(`${coordinatorUrl}/exchange/${a}/${b}`, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(req.body),
-    });
+    if (logs) console.log('[Forward Exchange Request] Decoded: ', id, collection);
 
-    if (response.status !== 200) return res.sendStatus(response.status);
-    const credential = (await response.json()) as VC;
+    const statusCodeOrVC = await exchange(req, collection, id, a, b, req.body);
+    if (logs) console.log('[Forward Exchange Request] Status Code:', statusCodeOrVC);
 
-    if (credential?.credentialStatus?.id) {
-        await payload.update({
-            collection,
-            id,
-            data: {
-                status: CREDENTIAL_STATUS.CLAIMED,
-                ...(collection === 'membership'
-                    ? { targetDid: credential.credentialSubject.id }
-                    : {}),
-            },
-        });
+    if (typeof statusCodeOrVC === 'number') {
+        return res.sendStatus(statusCodeOrVC);
     }
 
-    return res.json(credential);
+    return res.json(statusCodeOrVC);
 };
